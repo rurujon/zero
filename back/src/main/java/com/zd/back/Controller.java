@@ -10,6 +10,7 @@ public class Controller {
     @GetMapping("/")
     @ResponseBody   //문자열 그대로 응답
     public String index(){
-        return "왜 안나오냐";
+        return "왜 안나오냐 + 푸쉬 테스트";
+        
     }
 }
