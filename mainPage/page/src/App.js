@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Square from './components/Square';
+import Body from './components/Body';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header/>
+      <Body/>
+      {/* <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Square width="60%" height="100px" color="red" />
+        <Square width="30%" height="150px" color="blue" />
+        <Square width="60%" height="30px" color="green" />
+        <Square width="60%" height="120px" color="orange" />
+        <Square width="30%" height="180px" color="purple" />
+      </div> */}
     </div>
   );
 }

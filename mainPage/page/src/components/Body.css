@@ -1,0 +1,26 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%; /* 좌우 여백 10% */
+    margin-top: 20px;
+  }
+  
+  .left-section {
+    flex: 0 0 65%; /* 좌측 섹션의 너비를 50%로 */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .right-section {
+    flex: 0 0 30%; /* 우측 섹션의 너비를 30%로 */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .board {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+  }
