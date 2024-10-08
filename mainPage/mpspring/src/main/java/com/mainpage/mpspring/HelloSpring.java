@@ -21,7 +21,8 @@ public class HelloSpring {
 	public String hello() {
 		
 		//return "bbs/list";
-		return "Hello Spring Boot!!!";
+		//return "Hello Spring Boot!!!";
+		return "Hello Spring Boot!!! ITWILL";
 	}
 
 }
