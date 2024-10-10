@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.back.imgboard.mapper.ImgBoardMapper">
+
+<select id="maxNo" resultType="int">
+	select nvl(max(no),0) from imgboard
+</select>
+
+<!-- userId, cate, title, content, filePath,created,auth,saveFileName,  -->
+<insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBoard">
+	insert into board (num,name,pwd,email,subject,content,ipAddr,hitCount,created) values
+	(#{num},#{name},#{pwd},#{email},#{subject},#{content},#{ipAddr},0,sysdate)
+</insert>
+
+
+
+</mapper>
