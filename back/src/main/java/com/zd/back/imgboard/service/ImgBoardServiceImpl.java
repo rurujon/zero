@@ -18,10 +18,7 @@ public class ImgBoardServiceImpl implements ImgBoardService {
         
     }
 
-    @Override
-    public void deleteImgBoard(int no) throws Exception {
-        
-    }
+
 
     @Override
     public int getImgBoardCount(String searchKey, String searchValue) throws Exception {
@@ -48,7 +45,11 @@ public class ImgBoardServiceImpl implements ImgBoardService {
         // TODO Auto-generated method stub
         
     }
-
+    
+    @Override
+    public void deleteImgBoard(int no) throws Exception {
+        
+    }
  
     
 }
