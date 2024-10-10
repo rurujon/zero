@@ -24,14 +24,14 @@ const LoginPage = ({ onLogin }) => {
     return (
         <div>
             <h2>로그인</h2>
-            <input type="text" placeholder="아이디" value={memId} onChange={(e) => setMemId(e.target.value)}/>
+            <input type="text" placeholder="아이디" value={memId} onChange={(e) => setMemId(e.target.value)}/><br/>
             <input type="password" placeholder="비밀번호" value={pwd} onChange={(e) => setPwd(e.target.value)}/>
             <button onClick={handleLogin}>로그인</button><br />
 
              <div>
                 {/* 구글 로그인 이미지 버튼 */}
                 <a href="/oauth2/authorization/google">
-                    <img src="/images/login/google.png" alt="Google Login" style={{ width: '50px', height: '50px' }}/>
+                    <img src="\images\login\google.png" alt="Google Login" style={{ width: '50px', height: '50px' }}/>
                 </a>&nbsp;&nbsp;
 
                 {/* 카카오 로그인 이미지 버튼 */}

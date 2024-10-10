@@ -5,8 +5,8 @@ import LoginApp from './components/login/LoginApp';
 function App() {
   return (
     <div>
-      <MainPageApp/>
-      {/* <LoginApp/> */}
+      {/* <MainPageApp/> */}
+      <LoginApp/>
     </div>
   );
 }

@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.mapper.MemberMapper">
+<mapper namespace="com.zd.back.login.mapper.MemberMapper">
 
-    <insert id="insertMember" parameterType="com.zd.back.model.Member">
+    <insert id="insertMember" parameterType="com.zd.back.login.model.Member">
         INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, point, grade)
         VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2}, 50, 'lv.1')
     </insert>
 
-    <select id="selectMemberById" parameterType="string" resultType="com.zd.back.model.Member">
+    <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
         SELECT * FROM member WHERE memId = #{memId}
     </select>
 
