@@ -2,6 +2,7 @@ import React from 'react';
 import './Body.css'; // 스타일 파일
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import Login from './Login';
+import MainPageNews from './MainPageNews';
 
 const Body = () => {
 
@@ -19,12 +20,12 @@ const Body = () => {
       <div style={styles.container}>
         {/* 첫 번째 층 */}
         <div style={styles.row} paddingTop="100px">
-          <div style={{ ...styles.box, flexGrow: 1 }}>Box 1</div>
-          <div style={{ ...styles.box, flexGrow: 2 }}>Box 2</div>
+          <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3 }}><MainPageNews/></div>
+          <div style={{ ...styles.box, flexGrow: 1 }}><Login/></div>
         </div>
         {/* 두 번째 층 */}
         <div style={styles.row}>
-          <div style={{ ...styles.box, flexGrow: 1 }}>Box 3</div>
+          <div style={{ ...styles.box, flexGrow: 1 }}><BasicExample/></div>
           <div style={{ ...styles.box, flexGrow: 1.5 }}>Box 4</div>
           <div style={{ ...styles.box, flexGrow: 1 }}>Box 5</div>
         </div>
@@ -65,6 +66,10 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
     margin:'20px'
+  },
+  alignTop: {
+    alignItems: 'flex-start', // 박스 안에서 위쪽으로 정렬
+    justifyContent: 'flex-start',
   },
 };
 
