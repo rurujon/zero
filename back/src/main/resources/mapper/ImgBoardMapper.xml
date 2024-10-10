@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(max(no),0) from imgboard
 </select>
 
+<!-- userId, cate, title, content, filePath,created,auth,saveFileName,  -->
 <insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBoard">
 	insert into board (num,name,pwd,email,subject,content,ipAddr,hitCount,created) values
 	(#{num},#{name},#{pwd},#{email},#{subject},#{content},#{ipAddr},0,sysdate)
