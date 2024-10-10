@@ -1,81 +1,92 @@
+import { Button } from 'bootstrap';
 import React, {useState} from 'react';
 
 const MainPageNews = () => {
-
-    const [activeMenu, setActiveMenu] = useState('notice'); // 현재 선택된 메뉴
-
-    const handleMenuClick = (menu) => {
-        setActiveMenu(menu); // 클릭한 메뉴를 활성화
+    const [activeTab, setActiveTab] = useState('notice');
+  
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
     };
-
+  
     return (
         <div>
             <ul style={styles.ul}>
                 <li style={styles.li}>
-                    <a href='#' onClick={() => handleMenuClick('notice')}>공지사항</a>
+                    <button onClick={() => handleTabClick('notice')} style={styles.button}>
+                        공지사항
+                    </button>
                 </li>
                 <li style={styles.li}>
-                    <a href='#' onClick={() => handleMenuClick('menu1')}>메뉴1</a>
+                    <button onClick={() => handleTabClick('menu1')} style={styles.button}>
+                        메뉴1
+                    </button>
                 </li>
                 <li style={styles.li}>
-                    <a href='#' onClick={() => handleMenuClick('menu2')}>메뉴2</a>
+                    <button onClick={() => handleTabClick('menu2')} style={styles.button}>
+                        메뉴2
+                    </button>
                 </li>
                 <li style={styles.li}>
-                    <a href='#' onClick={() => handleMenuClick('menu3')}>메뉴3</a>
+                    <button onClick={() => handleTabClick('menu3')} style={styles.button}>
+                        메뉴3
+                    </button>
                 </li>
             </ul>
-            
-            {activeMenu === 'notice' && (
-                <div>
+  
+            <div>
+                {activeTab === 'notice' && (
+                    <div>
+                        <ul>
+                            <li><a href='#'>공지사항 기사 1</a></li>
+                            <li><a href='#'>공지사항 기사 2</a></li>
+                        </ul>
+                    </div>
+                )}
+                {activeTab === 'menu1' && (
+                    <div>
                     <ul>
-                        <li><a href=''>공지사항 기사1</a></li>
-                        <li><a href=''>공지사항 기사2</a></li>
+                        <li><a href='#'>메뉴1 기사 1</a></li>
+                        <li><a href='#'>메뉴1 기사 2</a></li>
                     </ul>
-                </div>
-            )}
-
-            {/* 메뉴1 내용 */}
-            {activeMenu === 'menu1' && (
-                <div>
-                    <ul>
-                        <li><a href=''>메뉴1 기사1</a></li>
-                        <li><a href=''>메뉴1 기사2</a></li>
-                    </ul>
-                </div>
-            )}
-
-            {/* 메뉴2 내용 */}
-            {activeMenu === 'menu2' && (
-                <div>
-                    <ul>
-                        <li><a href=''>메뉴2 기사1</a></li>
-                        <li><a href=''>메뉴2 기사2</a></li>
-                    </ul>
-                </div>
-            )}
-
-            {/* 메뉴3 내용 */}
-            {activeMenu === 'menu3' && (
-                <div>
-                    <ul>
-                        <li><a href=''>메뉴3 기사1</a></li>
-                        <li><a href=''>메뉴3 기사2</a></li>
-                    </ul>
-                </div>
-            )}
+                    </div>
+                )}
+                {activeTab === 'menu2' && (
+                    <div>
+                        <ul>
+                            <li><a href='#'>메뉴2 기사 1</a></li>
+                            <li><a href='#'>메뉴2 기사 2</a></li>
+                        </ul>
+                    </div>
+                )}
+                {activeTab === 'menu3' && (
+                    <div>
+                        <ul>
+                            <li><a href='#'>메뉴3 기사 1</a></li>
+                            <li><a href='#'>메뉴3 기사 2</a></li>
+                        </ul>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
-
+  
 const styles = {
     ul: {
-        display: 'flex',  // 가로로 나열
-        listStyle: 'none', // 기본 목록 스타일 제거 (원형, 숫자 등)
-        padding: 0,        // 기본 패딩 제거
-        margin: 0,         // 기본 마진 제거
+      display: 'flex',
+      listStyle: 'none',
+      padding: 0,
+      margin: 0,
     },
     li: {
-        marginRight: '20px', // 메뉴 항목 간 간격 추가
+      marginRight: '20px',
+    },
+    button: {
+      background: 'none',
+      border: 'none',
+      color: 'blue',
+      textDecoration: 'underline',
+      cursor: 'pointer',
     }
 };
 
