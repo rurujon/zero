@@ -31,7 +31,7 @@ const LoginPage = ({ onLogin }) => {
              <div>
                 {/* 구글 로그인 이미지 버튼 */}
                 <a href="/oauth2/authorization/google">
-                    <img src="/images/login/google.png" alt="Google Login" style={{ width: '50px', height: '50px' }}/>
+                    <img src="\images\login\google.png" alt="Google Login" style={{ width: '50px', height: '50px' }}/>
                 </a>&nbsp;&nbsp;
 
                 {/* 카카오 로그인 이미지 버튼 */}
