@@ -7,8 +7,19 @@ import com.zd.back.imgboard.model.ImgBoard;
 public class ImgBoardServiceImpl implements ImgBoardService {
 
     @Override
-    public void deleteImgBoard(int no) throws Exception {
+    public int maxNo() throws Exception {
         // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void insertImgBoard(ImgBoard dto) throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deleteImgBoard(int no) throws Exception {
         
     }
 
@@ -30,17 +41,7 @@ public class ImgBoardServiceImpl implements ImgBoardService {
         return null;
     }
 
-    @Override
-    public void insertImgBoard(ImgBoard dto) throws Exception {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public int maxNo() throws Exception {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+ 
 
     @Override
     public void updateImgBoard(ImgBoard dto) throws Exception {
@@ -48,5 +49,6 @@ public class ImgBoardServiceImpl implements ImgBoardService {
         
     }
 
+ 
     
 }
