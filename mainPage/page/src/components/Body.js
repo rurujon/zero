@@ -16,6 +16,7 @@ const Body = () => {
         );
     }
 
+    
     return (
       <div style={styles.container}>
         {/* 첫 번째 층 */}
