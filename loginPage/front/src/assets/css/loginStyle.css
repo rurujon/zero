@@ -1,4 +1,4 @@
-input[type="text"], input[type="password"],input[type="email"],input[type="tel"] {
+input[type="text"], input[type="password"],input[type="email"],input[type="tel"],input[type="button"] {
 
     text-align: center;
     height: 40px; /* 버튼과 인풋 박스의 높이를 동일하게 설정 */
