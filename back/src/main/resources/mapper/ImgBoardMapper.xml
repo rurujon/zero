@@ -6,7 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.imgboard.mapper.ImgBoardMapper">
 
+<select id="maxNo" resultType="int">
+	select nvl(max(no),0) from imgboard
+</select>
 
+<insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBoard">
+	insert into board (num,name,pwd,email,subject,content,ipAddr,hitCount,created) values
+	(#{num},#{name},#{pwd},#{email},#{subject},#{content},#{ipAddr},0,sysdate)
+</insert>
 
 
 
