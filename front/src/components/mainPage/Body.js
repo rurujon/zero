@@ -1,6 +1,7 @@
 import React from 'react';
 import './Body.css'; // 스타일 파일
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login';
 import MainPageNews from './MainPageNews';
 
@@ -19,19 +20,19 @@ const Body = () => {
     return (
       <div style={styles.container}>
         {/* 첫 번째 층 */}
-        <div style={styles.row} paddingTop="100px">
+        <div style={styles.row}>
           <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNews/></div>
           <div style={{ ...styles.box, flexGrow: 1 }}><Login/></div>
         </div>
         {/* 두 번째 층 */}
         <div style={styles.row}>
-          <div style={{ ...styles.box, flexGrow: 1 }}><BasicExample/></div>
+          <div style={{ ...styles.box, flexGrow: 1 }}></div>
           <div style={{ ...styles.box, flexGrow: 1.5 }}>Box 4</div>
           <div style={{ ...styles.box, flexGrow: 1 }}>Box 5</div>
         </div>
         {/* 세 번째 층 */}
         <div style={styles.row}>
-          <div style={{ ...styles.box, flexGrow: 2 }}>Box 6</div>
+          <div style={{ ...styles.box, flexGrow: 2 }}><BasicExample/></div>
           <div style={{ ...styles.box, flexGrow: 1 }}>Box 7</div>
         </div>
       </div>
