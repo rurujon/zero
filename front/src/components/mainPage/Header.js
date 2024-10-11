@@ -33,7 +33,7 @@ function Header() {
 
       {/* 이미지 추가 */}
       <div style={styles.imageContainer}>
-        <Link to={"/"}><img src="/images/환경 로고 1.png" width="300px" alt="logo" style={styles.image} /></Link>
+        <Link to={"/"}><img src="/images/logo.png" width="300px" alt="logo" style={styles.image} /></Link>
       </div>
 
       {/* 두 번째 메뉴바 */}

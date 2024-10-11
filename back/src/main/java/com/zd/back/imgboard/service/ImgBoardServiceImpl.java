@@ -2,8 +2,11 @@ package com.zd.back.imgboard.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.zd.back.imgboard.model.ImgBoard;
 
+@Service
 public class ImgBoardServiceImpl implements ImgBoardService {
 
     @Override

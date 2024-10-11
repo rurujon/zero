@@ -13,8 +13,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/members/register", "/api/members/login").permitAll()
-            .anyRequest().authenticated()
+            //.antMatchers("/api/members/register", "/api/members/login").permitAll()
+            .anyRequest().permitAll()//authenticated()
             .and()
             .formLogin().disable();
         return http.build();
