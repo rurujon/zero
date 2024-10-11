@@ -26,7 +26,7 @@ const LoginPage = ({ onLogin }) => {
             <h2>로그인</h2>
             <input type="text" placeholder="아이디" value={memId} onChange={(e) => setMemId(e.target.value)}/><br/>
             <input type="password" placeholder="비밀번호" value={pwd} onChange={(e) => setPwd(e.target.value)}/>
-            <button onClick={handleLogin}>로그인aa</button><br />
+            <button onClick={handleLogin}>로그인</button><br />
 
              <div>
                 {/* 구글 로그인 이미지 버튼 */}
