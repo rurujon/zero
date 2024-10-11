@@ -1,4 +1,4 @@
-package com.zd.back.mapper;
+package com.zd.back.login_sy.mapper;
 
 import com.zd.back.model.Member;
 import org.apache.ibatis.annotations.Mapper;
