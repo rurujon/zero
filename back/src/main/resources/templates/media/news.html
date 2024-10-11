@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>뉴스 목록</title>
+</head>
+<body>
+    <div th:if="${error}" th:text="${error}"></div>
+    <ul th:each="news : ${news}">
+        <li>
+            <a th:href="${news.link}" target="_blank" rel="noopener noreferrer">
+                <h2 th:text="${news.title}"></h2>
+            </a>
+            <p th:text="${news.description}"></p>
+            <p>작성자: <span th:text="${news.writer}"></span></p>
+            <p>게시일: <span th:text="${#dates.format(news.pubDate, 'yyyy-MM-dd')}"></span></p>
+        </li>
+    </ul>
+</body>
+</html>

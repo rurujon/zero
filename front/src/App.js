@@ -3,13 +3,15 @@ import MainPageApp from './components/mainPage/MainPageApp';
 import { BrowserRouter } from 'react-router-dom';
 import Header from './components/mainPage/Header';
 import Footer from './components/mainPage/Footer';
+import NewsList from './components/naverapi/NewsList';
 
 function App() {
   return (
     <BrowserRouter>
 
-      <MainPageApp/>
+      {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
+      <NewsList/>
 
     </BrowserRouter>
   );
