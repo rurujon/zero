@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Header() {
   // 각 메뉴에 대한 하위 메뉴 표시 여부를 관리하는 상태 변수
@@ -14,6 +15,7 @@ function Header() {
     setActiveMenu(null);
   };
 
+
   return (
     <header style={styles.header}>
       {/* 로고와 첫 번째 메뉴바 */}
@@ -21,17 +23,17 @@ function Header() {
         <h1 style={styles.logo}>My Website</h1>
         <nav>
           <ul style={styles.navList}>
-            <li style={styles.navItem}><a href="/">Home</a></li>
-            <li style={styles.navItem}><a href="/about">About</a></li>
-            <li style={styles.navItem}><a href="/services">Services</a></li>
-            <li style={styles.navItem}><a href="/contact">Contact</a></li>
+            <li style={styles.navItem}><Link to="/loginMain">Login</Link></li>
+            <li style={styles.navItem}><a href="/about">메뉴2</a></li>
+            <li style={styles.navItem}><a href="/services">메뉴3</a></li>
+            <li style={styles.navItem}><a href="/contact">메뉴4</a></li>
           </ul>
         </nav>
       </div>
 
       {/* 이미지 추가 */}
       <div style={styles.imageContainer}>
-        <img src="/images/환경 로고 1.png" width="300px" alt="logo" style={styles.image} />
+        <Link to={"/"}><img src="/images/logo.png" width="300px" alt="logo" style={styles.image} /></Link>
       </div>
 
       {/* 두 번째 메뉴바 */}
