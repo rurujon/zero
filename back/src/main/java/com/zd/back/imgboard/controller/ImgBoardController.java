@@ -13,11 +13,14 @@ import com.zd.back.imgboard.util.MyPage;
 @RequestMapping("/api/imgboard") 
 public class ImgBoardController {
 
-    @Resource
+    @Resource 
     private ImgBoardService imgBoardService;
 
     @Autowired 
 	MyPage myPage;
+
+
+
 
 
 
