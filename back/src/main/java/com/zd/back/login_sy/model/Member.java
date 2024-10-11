@@ -1,4 +1,4 @@
-package com.zd.back.model;
+package com.zd.back.login_sy.model;
 
 import lombok.Data;
 

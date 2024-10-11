@@ -1,7 +1,7 @@
-package com.zd.back.service;
+package com.zd.back.login_sy.service;
 
-import com.zd.back.mapper.MemberMapper;
-import com.zd.back.model.Member;
+import com.zd.back.login_sy.mapper.MemberMapper;
+import com.zd.back.login_sy.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

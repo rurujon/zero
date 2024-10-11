@@ -1,7 +1,7 @@
-package com.zd.back.controller;
+package com.zd.back.login_sy.controller;
 
-import com.zd.back.model.Member;
-import com.zd.back.service.MemberService;
+import com.zd.back.login_sy.model.Member;
+import com.zd.back.login_sy.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

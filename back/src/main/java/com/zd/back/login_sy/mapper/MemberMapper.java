@@ -1,6 +1,6 @@
 package com.zd.back.login_sy.mapper;
 
-import com.zd.back.model.Member;
+import com.zd.back.login_sy.model.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
