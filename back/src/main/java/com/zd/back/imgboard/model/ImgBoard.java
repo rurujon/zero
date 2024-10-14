@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ImgBoard {
 
-    private long imgId ;     
+    private long imgBoardId ;     
     private String userId; 
     private String cate;     
     private String title;     
@@ -18,7 +18,6 @@ public class ImgBoard {
     private int auth; // 인증  1 일때 인증 ,0 일때 미인증 
     private String saveFileName; // 저장된 파일명   
     private String originalFileName; // 원본 파일명  
-    private int point;
     private Timestamp authDate;    
    
 

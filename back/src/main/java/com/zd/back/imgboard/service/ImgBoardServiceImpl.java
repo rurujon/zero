@@ -15,9 +15,9 @@ public class ImgBoardServiceImpl implements ImgBoardService {
     private ImgBoardMapper imgBoardMapper;
 
     @Override
-    public int maxNo() throws Exception {
+    public int maxImgBoardId() throws Exception {
     
-        return imgBoardMapper.maxNo();
+        return imgBoardMapper.maxImgBoardId();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ImgBoardServiceImpl implements ImgBoardService {
         
     }
 
-
+/* 
 
     @Override
     public int getImgBoardCount(String searchKey, String searchValue) throws Exception {
@@ -53,6 +53,6 @@ public class ImgBoardServiceImpl implements ImgBoardService {
     public void deleteImgBoard(int no) throws Exception {
         imgBoardMapper.deleteImgBoard(no);
     }
- 
+  */
     
 }

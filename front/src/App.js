@@ -11,9 +11,9 @@ function App() {
     <BrowserRouter>
     <div>
   
-       {/* <MainPageApp/> */}
-    {/*  <LoginApp/> */}
-    <ImgApp/> 
+       {/* <MainPageApp/>
+     <LoginApp/> */}
+    <ImgApp/>  
 
     
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Imgcreated.css'
+import '../../assets/css/Imgcreated.css';
 import axios from 'axios';
 
 const Imgcreated = () => {
@@ -12,13 +12,12 @@ const Imgcreated = () => {
 
 
 useEffect(()=>{
-    axios.get('/api/imgboard/created')
+    axios.get('http://localhost:3000/api/imgboard/imgcreated.action')
     .then(res=> { setImgData(res.data.imgData)})
     .catch(error=>console.log(error));
 },[])
 
     const changeInput =(evt)=>{
-
         const{value,name} = evt.target;
         setImgData({
             ...imgData,
@@ -42,8 +41,9 @@ useEffect(()=>{
 
 //btn 부분 ---------
 
-     const onSubmit = () => {
-        
+     const onSubmit = (evt) => {
+        evt.preventDefault();
+
         const formData = new FormData()
 
         Object.keys(imgData).forEach(key =>{   
@@ -51,13 +51,12 @@ useEffect(()=>{
             //imgData의 모든 속성가져와서 각 키에 해당하는 값 추가
         })
 
-        
-        axios.post('/api/imgboard/created_ok', formData,{headers:{
+        axios.post('/api/imgboard/imgcreated', formData,{headers:{
             'Content-Type' : 'multipart/form-data' //파일 업로드를 위함 
         }})
         .then(res=>{
             alert('게시물이 등록되었습니다!');  
-            window.location.href = '/list.action'
+            window.location.href = '/api/imgboard/imglist.action'
         })
         .catch(error=>console.log(error))
     }

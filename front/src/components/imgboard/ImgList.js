@@ -1,9 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-import './ImgList.css'; // 필요한 스타일 시트를 추가하세요.
+import '../../assets/css/ImgList.css';
 import axios from 'axios';
 
 const ImgList = () => {
+
     const [imgList, setImgList] = useState([]);
 
     useEffect(() => {
