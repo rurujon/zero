@@ -1,5 +1,3 @@
-// src/components/HomePage.jsx
-
 import React, { useState } from 'react';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
@@ -36,8 +34,23 @@ const HomePage = () => {
         alert('회원가입이 완료되었습니다. 로그인 해주세요.');
     };
 
+    const handleMemberInfo = () => {
+        const memberInfoUrl = '/member-info';
+        const windowFeatures = 'width=600,height=400,resizable,scrollbars=yes,status=1';
+        const newWindow = window.open(memberInfoUrl, 'MemberInfo', windowFeatures);
+
+        if (newWindow) {
+            newWindow.onload = function() {
+                const content = newWindow.document.body;
+                const newWidth = content.scrollWidth + 40;
+                const newHeight = content.scrollHeight + 40;
+                newWindow.resizeTo(newWidth, newHeight);
+            };
+        }
+    };
+
     return (
-        <div className="container">
+        <div>
             {!isLoggedIn ? (
                 <div>
                     {showLogin && <LoginPage onLogin={handleLogin} />}
@@ -46,15 +59,16 @@ const HomePage = () => {
                         <button onClick={handleShowRegister}>회원가입</button>
                     )}
                     {showRegister && (
-                        <div className="card">
+                        <div>
                             <RegisterPage onRegisterSuccess={handleRegisterSuccess} />
                             <button onClick={handleShowLogin}>로그인 돌아가기</button>
                         </div>
                     )}
                 </div>
             ) : (
-                <div className="card">
+                <div>
                     <h2>환영합니다, {memId}님!</h2>
+                    <button onClick={handleMemberInfo}>회원정보</button>
                     <button onClick={handleLogout}>로그아웃</button>
                 </div>
             )}

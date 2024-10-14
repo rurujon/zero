@@ -1,25 +1,27 @@
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import Body from "./Body";
-import Header from "./Header";
+import Header from "../headfootside/Header";
 import HomePage from "../login/HomePage";
 import React from "react";
-import Footer from "./Footer";
+import Footer from "../headfootside/Footer";
+import SideBar from "../headfootside/SideBar";
 
 
 function MainPageApp() {
+
+  //const location = useLocation();
+
     return (
       <div>
-        <Header/>
+        
           <Routes>
             <Route path="/" element={<Body/>}/>
-            <Route path="/loginMain" element={<HomePage/>}/>
           </Routes>
-
-        <Footer/>
-
 
       </div>
     );
 }
+
+
   
 export default MainPageApp;

@@ -6,14 +6,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.imgboard.mapper.ImgBoardMapper">
 
-<select id="maxNo" resultType="int">
-	select nvl(max(no),0) from imgboard
+<select id="maxImgBoardId" resultType="int">
+	select nvl(max(imgBoardId),0) from imgboard
 </select>
 
 <!-- userId, cate, title, content, filePath,created,saveFileName, originalFileName, pwd  -->
-<insert id="insertImgBoard" parameterType="ImgBoard">
-	insert into imgboard (no, userId, cate, title, content, filePath,created,saveFileName, originalFileName, pwd) values
-	(#{no}, #{userid}, #{cate}, #{title}, #{content}, #{filepath},SYSTIMESTAMP,  #{saveFileName}, #{originalFileName}, #{pwd})
+<!-- login 시 얻은 userId 연동해야함 (-) -->
+<insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBpard">
+	insert into imgboard (imgBoardId, userId, cate, title, content, filePath,created,saveFileName, originalFileName, ) values
+	(#{imgBoardId}, #{userid}, #{cate}, #{title}, #{content}, #{filepath},SYSTIMESTAMP,  #{saveFileName}, #{originalFileName})
 </insert>
 
 
