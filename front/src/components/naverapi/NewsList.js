@@ -1,51 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const NewsList = () => {
-    const [newsItems, setNewsItems] = useState([]); // 초기 상태를 빈 배열로 설정
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [newsData, setNewsData] = useState(null);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const response = await axios.get('media/news'); // API URL
-                console.log(response.data); // API 응답을 콘솔에 출력
-                setNewsItems(response.data.items || []); // items가 undefined인 경우 빈 배열로 설정
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    // Spring Boot 엔드포인트 호출
+    axios
+      .get("http://localhost:8080/api/news") // Spring Boot API 호출
+      .then((response) => {
+        setNewsData(response.data); // API 응답 데이터 저장
+      })
+      .catch((error) => {
+        setError("뉴스 데이터를 가져오는 데 실패했습니다.");
+        console.error(error);
+      });
+  }, []);
 
-        fetchNews();
-    }, []);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-
-    return (
-        <div>
-            <h1>뉴스 목록</h1>
-            <ul>
-                {newsItems.length > 0 ? (
-                    newsItems.map((item, index) => (
-                        <li key={index}>
-                            <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                <h2>{item.title}</h2>
-                            </a>
-                            <p>{item.description}</p>
-                            <p>작성자: {item.writer}</p>
-                            <p>게시일: {new Date(item.pubDate).toLocaleDateString()}</p>
-                        </li>
-                    ))
-                ) : (
-                    <p>뉴스가 없습니다.</p>
-                )}
-            </ul>
-        </div>
-    );
+  return (
+    <div>
+      <h1>네이버 뉴스</h1>
+      {error && <p>{error}</p>}
+      {newsData ? (
+        <pre>{JSON.stringify(newsData, null, 2)}</pre> // 데이터 출력
+      ) : (
+        <p>뉴스 데이터를 불러오는 중...</p>
+      )}
+    </div>
+  );
 };
 
 export default NewsList;

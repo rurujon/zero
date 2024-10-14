@@ -1,25 +1,25 @@
-package com.zd.back.login_sy.service;
+// package com.zd.back.login_sy.service;
 
-import com.zd.back.login_sy.mapper.MemberMapper;
-import com.zd.back.login_sy.model.Member;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+// import com.zd.back.login_sy.mapper.MemberMapper;
+// import com.zd.back.login_sy.model.Member;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
 
-@Service
-public class MemberService {
+// @Service
+// public class MemberService {
 
-    @Autowired
-    private MemberMapper memberMapper;
+//     @Autowired
+//     private MemberMapper memberMapper;
 
-    public void registerMember(Member member) {
-        memberMapper.insertMember(member);
-    }
+//     public void registerMember(Member member) {
+//         memberMapper.insertMember(member);
+//     }
 
-    public Member getMemberById(String memId) {
-        return memberMapper.selectMemberById(memId);
-    }
+//     public Member getMemberById(String memId) {
+//         return memberMapper.selectMemberById(memId);
+//     }
 
-    public void deleteMember(String memId) {
-        memberMapper.deleteMember(memId);
-    }
-}
+//     public void deleteMember(String memId) {
+//         memberMapper.deleteMember(memId);
+//     }
+// }
