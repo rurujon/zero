@@ -20,7 +20,7 @@ public class QuizServiceImp implements QuizService {
 
         QuizDTO dto;
 
-        for(int i=1; i<map.size(); i++){
+        for(int i=0; i<map.size(); i++){
             
             //int id = Integer.parseInt(map.get(i).toString());
             
@@ -31,7 +31,7 @@ public class QuizServiceImp implements QuizService {
             dto = new QuizDTO(id, qae[0],qae[1], qae[2]);
 
             
-            System.out.println(i+"번째 퀴즈 삽입 완료");
+            System.out.println(id+"번째 퀴즈 삽입 완료");
             System.out.println(qae[0]);
             System.out.println(qae[1]);
             System.out.println(qae[2]+"\n\n");

@@ -50,7 +50,7 @@ public class ReadJSON {
         try {
 
             if(array!= null){
-                for(int i=1; i<array.size(); i++){
+                for(int i=0; i<array.size(); i++){
                     JSONObject object = (JSONObject) array.get(i);
                     int id = i;
                     String question = (String)object.get("question");
