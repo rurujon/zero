@@ -9,12 +9,12 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class SecurityConfig {
 
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            //.antMatchers("/api/members/register", "/api/members/login").permitAll()
+            //.antMatchers("/member/register", "/member/login", "/member/info").permitAll()
             .anyRequest().permitAll()//authenticated()
             .and()
             .formLogin().disable();
@@ -24,9 +24,9 @@ public class SecurityConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-  
-  
+
+
     }
 
-    
+
 }

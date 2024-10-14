@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../assets/css/loginStyle.css';
+import '../assets/css/loginStyle.css'
 
 const RegisterPage = ({ onRegisterSuccess }) => {
     const [member, setMember] = useState({
@@ -28,7 +28,7 @@ const RegisterPage = ({ onRegisterSuccess }) => {
             return;
         }
 
-        axios.post('/api/members/register', member)
+        axios.post('/member/register', member)
             .then(response => {
                 alert(response.data);
                 onRegisterSuccess();
@@ -74,7 +74,7 @@ const RegisterPage = ({ onRegisterSuccess }) => {
     };
 
     return (
-        <div className="container">
+        <div>
             <h2>회원가입</h2>
             <form>
                 <input type="text" name="memId" placeholder="아이디" value={member.memId} onChange={handleChange}/><br />
@@ -89,26 +89,7 @@ const RegisterPage = ({ onRegisterSuccess }) => {
                 <button type="button" onClick={handleRegister}>회원가입하기</button>
                 <div>
 
-                <button className='google-button'>
-                <a href="/oauth2/authorization/google">
-                    <img src="/images/login/google.png" alt="Google Login" style={{ width: '30px', height: '30px' }}/>
-                    Google로 가입하기
-                </a>
-                </button><br/>
 
-                <button className='kakao-button'>
-                <a href="/oauth2/authorization/kakao">
-                    <img src="/images/login/kakao.png" alt="Kakao Login" style={{ width: '30px', height: '30px' }}/>
-                    카카오로 가입하기
-                </a>
-                </button><br/>
-
-                <button className='naver-button'>
-                <a href="/oauth2/authorization/naver">
-                    <img src="/images/login/naver.png" alt="Naver Login" style={{ width: '30px', height: '30px' }}/>
-                    네이버로 가입하기
-                </a>
-                </button>
             </div>
 
                 {/* <button type="button" onClick={() => window.location.href = '/'}>돌아가기</button> */}
