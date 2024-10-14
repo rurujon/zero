@@ -1,4 +1,4 @@
-package com.zd.back.domain.point;
+package com.zd.back.JY.domain.point;
 
 
 import lombok.Data;

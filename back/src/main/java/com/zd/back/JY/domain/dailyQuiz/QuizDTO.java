@@ -1,4 +1,4 @@
-package com.zd.back.domain.dailyQuiz;
+package com.zd.back.JY.domain.dailyQuiz;
 
 import lombok.Data;
 

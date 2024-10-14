@@ -1,16 +1,15 @@
-package com.zd.back.domain.dailyQuiz;
+package com.zd.back.JY.domain.dailyQuiz;
 
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zd.back.domain.point.PointService;
-import com.zd.back.work.ReadJSON;
+import com.zd.back.JY.work.ReadJSON;
+
 
 @Controller
 public class QuizController {

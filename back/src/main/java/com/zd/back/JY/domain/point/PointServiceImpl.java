@@ -1,4 +1,4 @@
-package com.zd.back.domain.point;
+package com.zd.back.JY.domain.point;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
