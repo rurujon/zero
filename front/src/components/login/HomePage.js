@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 
@@ -8,7 +7,6 @@ const HomePage = () => {
     const [memId, setMemId] = useState('');
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
-    const navigate = useNavigate();
 
     const handleLogin = (id) => {
         setIsLoggedIn(true);
@@ -37,7 +35,18 @@ const HomePage = () => {
     };
 
     const handleMemberInfo = () => {
-        navigate('/member-info');
+        const memberInfoUrl = '/member-info';
+        const windowFeatures = 'width=600,height=400,resizable,scrollbars=yes,status=1';
+        const newWindow = window.open(memberInfoUrl, 'MemberInfo', windowFeatures);
+
+        if (newWindow) {
+            newWindow.onload = function() {
+                const content = newWindow.document.body;
+                const newWidth = content.scrollWidth + 40;
+                const newHeight = content.scrollHeight + 40;
+                newWindow.resizeTo(newWidth, newHeight);
+            };
+        }
     };
 
     return (
