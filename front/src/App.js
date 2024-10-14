@@ -5,6 +5,7 @@ import Header from './components/mainPage/Header';
 import Footer from './components/mainPage/Footer';
 import ImgApp from './components/imgboard/ImgApp';
 import LoginApp from './components/login/LoginApp';
+import NewsList from './components/naverapi/NewsList';
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
 
     
     </div>
+      {/* <MainPageApp/> */}
+      {/* <LoginApp/> */}
+      <NewsList/>
+
     </BrowserRouter>
   );
 }
