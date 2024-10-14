@@ -12,7 +12,7 @@ const Imgcreated = () => {
 
 
 useEffect(()=>{
-    axios.get('http://localhost:3000/api/imgboard/imgcreated.action')
+    axios.get('/api/imgboard/imgcreated.action')
     .then(res=> { setImgData(res.data.imgData)})
     .catch(error=>console.log(error));
 },[])

@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ImgApp from './components/imgboard/ImgApp';
 import MainPageApp from './components/mainPage/MainPageApp';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/headfootside/Header';
@@ -7,7 +8,6 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
-import ImgApp from './components/imgboard/ImgApp';
 
 
 
@@ -28,7 +28,7 @@ function AppContent() {
       {/* <LoginApp/> */}
       {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
-      {/* <ImgApp/> */}
+      <ImgApp/>
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
@@ -46,6 +46,7 @@ function App() {
     <BrowserRouter>
       <AppContent />
     </BrowserRouter>
+
   );
 }
 
