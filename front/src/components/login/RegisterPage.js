@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../assets/css/loginStyle.css'
+import '../../assets/css/loginStyle.css';
 
 const RegisterPage = ({ onRegisterSuccess }) => {
     const [member, setMember] = useState({
