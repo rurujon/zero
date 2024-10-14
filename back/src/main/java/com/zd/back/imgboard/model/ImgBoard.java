@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ImgBoard {
 
-    private Long no;     
+    private long imgId ;     
     private String userId; 
     private String cate;     
     private String title;     
@@ -20,7 +20,6 @@ public class ImgBoard {
     private String originalFileName; // 원본 파일명  
     private int point;
     private Timestamp authDate;    
-    private String pwd;
    
 
 

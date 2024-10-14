@@ -1,58 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import './Imgcreated.css'
 import axios from 'axios';
-import FileUpload from './FileUpload';
 
 const Imgcreated = () => {
 //const Imgcreated = ({userId}) => { //login에서 userId 받아야함
 
-useEffect(()=>{
-    axios.get('/api/imgboard/imgcreated')
-    .then(res=> { 
-        setData(res.data)
-    })
-    .catch(error=>console.log(error));
+ const[imgData, setImgData] = useState({
+  userId: '',cate: '',title: '',content: '',originalFileName: '',saveFileName: '',file:null
+ })
+ const {userId, cate, title, content, originalFileName,saveFileName } = imgData 
 
+
+useEffect(()=>{
+    axios.get('/api/imgboard/created')
+    .then(res=> { setImgData(res.data.imgData)})
+    .catch(error=>console.log(error));
 },[])
 
-
-// userId, cate, title, content,created,saveFileName, originalFileName, pwd 
-
-    const [form,setForm] = useState({
-        userId:'', cate:'',title:'',content:'', selectFile:null,saveFileName:'',
-        originalFileName:'',pwd:'',
-    })
-
-    const {userId, cate, title, content,selectFile,saveFileName, originalFileName, pwd } = form
-  
-    const [data, setData] = useState([])
-    
     const changeInput =(evt)=>{
-        const{value,name} = evt.target
-        setForm({
-            ...form,
+
+        const{value,name} = evt.target;
+        setImgData({
+            ...imgData,
             [name]:value
         })
     }
+    const selectFile = (evt) => {
+        const file = evt.target.files[0];
 
-
+        if (file) {
+            setImgData({ // 배열복사 아닌 객체복사 위해 {}
+                ...imgData,
+                originalFileName: file.name,
+                saveFileName: file.name ,
+                file:file
+                
+            })
+        }
+    }
 
 
 //btn 부분 ---------
 
-
-    const onSubmit = () => {
-        alert('게시물이 등록되었습니다!');  
-        //DB에 insert 및 리다이렉트 필요 (-)
-    };
-
-
-    //다시입력
-    const boardReset = () => {
-        setForm('')
+     const onSubmit = () => {
         
-    };
+        const formData = new FormData()
 
+        Object.keys(imgData).forEach(key =>{   
+            formData.append(key,imgData[key])
+            //imgData의 모든 속성가져와서 각 키에 해당하는 값 추가
+        })
+
+        
+        axios.post('/api/imgboard/created_ok', formData,{headers:{
+            'Content-Type' : 'multipart/form-data' //파일 업로드를 위함 
+        }})
+        .then(res=>{
+            alert('게시물이 등록되었습니다!');  
+            window.location.href = '/list.action'
+        })
+        .catch(error=>console.log(error))
+    }
+
+    const boardReset = () => {
+        setImgData({
+            userId: '',cate: '',title: '',content: '',originalFileName: '',saveFileName: '',file:null
+        });
+    }
+    
 // ---------
 
 
@@ -97,7 +112,6 @@ useEffect(()=>{
                                 <input
                                     type="text"
                                     name="title"
-                                  
                                     className="boxTF"
                                     value={title}
                                     onChange={changeInput}
@@ -105,9 +119,6 @@ useEffect(()=>{
                             </dd>
                         </dl>
                     </div>
-
-
-
                     <div id="bbsCreated_content">
                         <dl>
                             <dt>내&nbsp;&nbsp;&nbsp;&nbsp;용</dt>
@@ -124,29 +135,45 @@ useEffect(()=>{
                             </dd>
                         </dl>
                     </div>
-
-
-                    <div className="bbsCreated_noLine">
-                        <dl>
-                            <dt>패스워드</dt>
-                            <dd>
-                                <input
-                                    type="password"
-                                    name="pwd"
-                                    size="35"
-                                    maxLength="7"
-                                    className="boxTF"
-                                    value={pwd}
-                                    onChange={changeInput}
-                                />
-                                &nbsp;게시물 수정 및 삭제 시 필요!!
-                            </dd>
-                        </dl>
-                    </div>
                 </div>
 
             {/*  파일 업로드  */}
-                <FileUpload  form={setForm} changeInput={changeInput} sendIt={onSubmit}  boardReset={boardReset}/>
+<div>
+                <label>파일 선택:</label>
+                <input type="file"  onChange={selectFile}/>
+                {originalFileName && (
+                    <div className="file-info">
+                        <p>선택된 파일: {originalFileName}</p>
+                    </div>
+                )}
+            </div>
+                 <div>
+                <p>저장 파일명: {saveFileName}</p>
+                </div> 
+             
+
+            <div id="bbsCreated_footer">
+                    <input
+                        type="button"
+                        value=" 등록하기 "
+                        className="btn2"
+                        onClick={onSubmit}
+                    />
+                    <input
+                        type="button"
+                        value="다시입력 "
+                        className="btn2"
+                        onClick={boardReset}
+                    />
+                    <input
+                        type="button"
+                        value=" 작성취소 "
+                        className="btn2"
+                        onClick={() => (window.location.href = '/imglist.action')}
+                    />
+                </div>
+
+
 
             </form>
         </div>
