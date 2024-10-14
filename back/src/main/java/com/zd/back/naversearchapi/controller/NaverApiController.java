@@ -22,7 +22,8 @@ public class NaverApiController {
     public ResponseEntity<String> getNaverNews() {
         try {
             // 검색어 인코딩
-            String query = URLEncoder.encode("환경", StandardCharsets.UTF_8.toString());
+            //String query = URLEncoder.encode("환경", StandardCharsets.UTF_8.toString());
+            String query ="환경";
 
             // API 요청 URL 설정
             String apiURL = "https://openapi.naver.com/v1/search/news?query=" + query;
