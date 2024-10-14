@@ -34,7 +34,7 @@ public class QuizController {
         quizService.insertquiz(map);
 
         mav.setViewName("index");
-
+        //s
         return mav;
     }
     
