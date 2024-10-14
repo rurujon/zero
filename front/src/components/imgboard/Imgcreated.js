@@ -1,43 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import './Imgcreated.css'
 import axios from 'axios';
+import FileUpload from './FileUpload';
 
 const Imgcreated = () => {
 //const Imgcreated = ({userId}) => { //login에서 userId 받아야함
 
+useEffect(()=>{
+    axios.get('/api/imgboard/imgcreated')
+    .then(res=> { 
+        setData(res.data)
+    })
+    .catch(error=>console.log(error));
+
+},[])
 
 
-// userId, cate, title, content, filePath,created,saveFileName, originalFileName, pwd 
+// userId, cate, title, content,created,saveFileName, originalFileName, pwd 
 
+    const [form,setForm] = useState({
+        userId:'', cate:'',title:'',content:'', selectFile:null,saveFileName:'',
+        originalFileName:'',pwd:'',
+    })
 
-    const [userId, setUserId] = useState('');
-    const [cate, setCate] = useState('');
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [filePath, setFilePath] = useState('');
-    const [saveFileName, setSaveFileName] = useState('');
-    const [originalFileName, setOriginalFileName] = useState('');
-    const [pwd, setPwd] = useState('');
-
+    const {userId, cate, title, content,selectFile,saveFileName, originalFileName, pwd } = form
+  
     const [data, setData] = useState([])
     
-    useEffect(()=>{
-        axios.get('/api/imgboard/imgcreated')
-        .then(res=> { 
-            setData(res.data)
+    const changeInput =(evt)=>{
+        const{value,name} = evt.target
+        setForm({
+            ...form,
+            [name]:value
         })
-        .catch(error=>console.log(error));
-
-    },[])
-
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -45,29 +41,19 @@ const Imgcreated = () => {
 //btn 부분 ---------
 
 
-    const sendIt = () => {
+    const onSubmit = () => {
         alert('게시물이 등록되었습니다!');  
+        //DB에 insert 및 리다이렉트 필요 (-)
     };
 
 
     //다시입력
     const boardReset = () => {
-        setUserId('')
-        setCate('')
-        setTitle('')
-        setContent('')
-        setFilePath('')
-        setSaveFileName('')
-        setOriginalFileName('')
-        setPwd('');
+        setForm('')
+        
     };
 
 // ---------
-
-
-
-
-
 
 
     return (
@@ -83,11 +69,9 @@ const Imgcreated = () => {
                                 <input
                                     type="text"
                                     name="userId"
-                                    size="35"
-                                    maxLength="20"
                                     className="boxTF"
                                     value={userId}
-                                    onChange={(e) => setUserId(e.target.value)}
+                                    onChange={changeInput}
                                 />
                             </dd>
                         </dl>
@@ -98,12 +82,10 @@ const Imgcreated = () => {
                             <dd>
                                 <input
                                     type="text"
-                                    name="cate"
-                                    size="35"
-                                    maxLength="50"
+                                    name="cate"                            
                                     className="boxTF"
                                     value={cate}
-                                    onChange={(e) => setCate(e.target.value)}
+                                    onChange={changeInput}
                                 />
                             </dd>
                         </dl>
@@ -115,11 +97,10 @@ const Imgcreated = () => {
                                 <input
                                     type="text"
                                     name="title"
-                                    size="60"
-                                    maxLength="100"
+                                  
                                     className="boxTF"
                                     value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={changeInput}
                                 />
                             </dd>
                         </dl>
@@ -138,27 +119,12 @@ const Imgcreated = () => {
                                     name="content"
                                     style={{ resize: 'none', backgroundColor: '#ffffff' }}
                                     value={content}
-                                    onChange={(e) => setContent(e.target.value)}
+                                    onChange={changeInput}
                                 />
                             </dd>
                         </dl>
                     </div>
 
-
-                    <div>
-                        <dl>
-                            <dt>파일</dt>
-                            <dd>
-                                <input type='file'
-                                  name="file"
-                                  size="35"
-                                  className="boxTF"
-                                  value={originalFileName}
-                                />
-
-                            </dd>
-                        </dl>
-                    </div>
 
                     <div className="bbsCreated_noLine">
                         <dl>
@@ -171,49 +137,17 @@ const Imgcreated = () => {
                                     maxLength="7"
                                     className="boxTF"
                                     value={pwd}
-                                    onChange={(e) => setPwd(e.target.value)}
+                                    onChange={changeInput}
                                 />
-                                &nbsp;(게시물 수정 및 삭제 시 필요!!)
+                                &nbsp;게시물 수정 및 삭제 시 필요!!
                             </dd>
                         </dl>
                     </div>
                 </div>
 
-                <div>
-                    <label>파일 선택:</label>
-                    <input type="file" onChange={handleFileChange} />
-                    {originalFileName && (
-                        <div className="file-info">
-                            <p>선택된 파일: {originalFileName}</p>
-                        </div>
-                    )}
-                </div>
-                <div className="file-details">
-                    <p>원본 파일명: {originalFileName}</p>
-                    <p>저장 파일명: {saveFileName}</p>
-                </div>
-   
+            {/*  파일 업로드  */}
+                <FileUpload  form={setForm} changeInput={changeInput} sendIt={onSubmit}  boardReset={boardReset}/>
 
-                <div id="bbsCreated_footer">
-                    <input
-                        type="button"
-                        value=" 등록하기 "
-                        className="btn2"
-                        onClick={sendIt}
-                    />
-                    <input
-                        type="reset"
-                        value=" 다시입력 "
-                        className="btn2"
-                        onClick={boardReset}
-                    />
-                    <input
-                        type="button"
-                        value=" 작성취소 "
-                        className="btn2"
-                        onClick={() => (window.location.href = '/list.action')}
-                    />
-                </div>
             </form>
         </div>
     )
