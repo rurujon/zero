@@ -5,7 +5,9 @@ import lombok.Data;
 
 @Data
 public class PointDTO {
-    private int id;
-    private int usedPoint;
+    private int pointid;
     private int maxPoint;
+    private int usedPoint;
+    private String memId;
+    private String grade;
 }

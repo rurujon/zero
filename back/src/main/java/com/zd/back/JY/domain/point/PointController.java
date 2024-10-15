@@ -29,7 +29,7 @@ public class PointController {
     @GetMapping(value="/")
     public ModelAndView index() throws Exception{
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("index");
+        mav.setViewName("/JY/index");
 
         return mav;
     }
@@ -39,7 +39,7 @@ public class PointController {
     public ModelAndView result_ok(PointDTO dto, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
 
-        dto.setId(pointService.maxNum()+1);
+        dto.setPointid(pointService.maxNum()+1);
 
         // pointService.insertData(dto);
         
@@ -47,13 +47,13 @@ public class PointController {
 
         dto = pointService.findById(2);
 
-        System.out.println("findById \n\n\n" +dto.getId() +"\n\n\n findById");
+        System.out.println("findById \n\n\n" +dto.getPointid() +"\n\n\n findById");
 
-        mav.addObject("id", dto.getId());
+        mav.addObject("id", dto.getPointid());
         mav.addObject("usedPoint", dto.getUsedPoint());
         mav.addObject("maxPoint", dto.getMaxPoint());
 
-        mav.setViewName("result");
+        mav.setViewName("/JY/result");
 
         return mav;
     }
@@ -63,7 +63,7 @@ public class PointController {
 
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("PointManage");
+        mav.setViewName("/JY/PointManage");
 
         return mav;
     }
@@ -97,10 +97,10 @@ public class PointController {
 
 
         
-        mav.addObject("id", dto.getId());
+        mav.addObject("id", dto.getPointid());
         mav.addObject("usedPoint", dto.getUsedPoint());
         mav.addObject("maxPoint", dto.getMaxPoint());
-        mav.setViewName("result");
+        mav.setViewName("/JY/result");
 
 
         return mav;
@@ -112,7 +112,7 @@ public class PointController {
         ModelAndView mav = new ModelAndView();
 
 
-        mav.setViewName("signup");
+        mav.setViewName("/JY/signup");
 
         return mav;
     }
@@ -125,13 +125,13 @@ public class PointController {
         
         dto = new PointDTO();
 
-        dto.setId(maxNum+1);
+        dto.setPointid(maxNum+1);
 
         pointService.insertData(dto);
 
-        System.out.println("등록 완료 id: "+dto.getId());
+        System.out.println("등록 완료 id: "+dto.getPointid());
 
-        mav.setViewName("index");
+        mav.setViewName("/JY/index");
 
         return mav;
     }
@@ -140,7 +140,7 @@ public class PointController {
     public ModelAndView getMethodName() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("findById");
+        mav.setViewName("/JY/findById");
 
         return mav;
     }
@@ -154,11 +154,11 @@ public class PointController {
 
         dto = pointService.findById(id);
 
-        mav.addObject("id", dto.getId());
+        mav.addObject("id", dto.getPointid());
         mav.addObject("usedPoint", dto.getUsedPoint());
         mav.addObject("maxPoint",dto.getMaxPoint());
 
-        mav.setViewName("result");
+        mav.setViewName("/JY/result");
 
         return mav;
     }
