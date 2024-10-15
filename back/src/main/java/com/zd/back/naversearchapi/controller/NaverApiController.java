@@ -25,7 +25,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/naver")
-@CrossOrigin(origins = "http://localhost:3000")
 public class NaverApiController {
 
     @GetMapping("/news")
