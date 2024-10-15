@@ -8,7 +8,7 @@ const ImgList = () => {
     const [imgList, setImgList] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/imgboard/imglist')  
+        axios.get('/imgboard/imglist')  
             .then(res => {
                 setImgList(res.data.imgList); 
             })
@@ -22,7 +22,7 @@ const ImgList = () => {
                 {imgList.map((imgData, index) => (
                     <div className="bbsListItem" key={index}>
                         <div className="bbsListThumbnail">
-                            <img src={imgData.thumbnailUrl} alt={imgData.title} /> {/* 썸네일 이미지 */}
+                           {/*  <img src={imgData.thumbnailUrl} alt={imgData.title} /> */} {/* 썸네일 이미지 */}
                         </div>
                         <div className="bbsListContent">
                             <h3>{imgData.title}</h3>

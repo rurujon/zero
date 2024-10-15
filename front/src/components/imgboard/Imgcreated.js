@@ -9,7 +9,7 @@ const Imgcreated = () => {
 //( userId, cate, title, content, created) 
 // (img 테이블)(-)
  const[imgData, setImgData] = useState({
-     userId: '',cate: '',title: '',content: '' 
+     userId: 'userid연동(-)',cate: '',title: '',content: '' 
  })
  const { userId, cate, title, content} = imgData 
 
@@ -25,7 +25,7 @@ const Imgcreated = () => {
     
 
 
-//btn 부분 ---------
+//btn  ---------
 
      const onSubmit = () => {
          
@@ -33,8 +33,13 @@ const Imgcreated = () => {
      
         axios.post('/imgboard/created', imgData)
         .then(res=>{
+
+            //res.data from controller
             alert(res.data)  
             
+            //redirecrt
+            window.location.href ='/imgboard/list'
+
         })
         .catch(error=>{
             console.error(error)
@@ -42,9 +47,9 @@ const Imgcreated = () => {
         })
     }
 
-    const boardReset = () => { //(imgPostId, userId, cate, title, content, created)
+    const boardReset = () => { //(imgPostId, cate, title, content, created) //file(-)
         setImgData({
-            imgPostId: '',userId: '',cate:'',title: '',content: '',created: ''
+            imgPostId: '',cate:'',title: '',content: '',created: ''
         });
     }
     
@@ -66,7 +71,7 @@ const Imgcreated = () => {
                                     name="userId"
                                     className="boxTF"
                                     value={userId}
-                                    onChange={changeInput}
+                                    readOnly
                                 />
                             </dd>
                         </dl>

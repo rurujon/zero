@@ -7,6 +7,7 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
+import ImgApp from './components/imgboard/ImgApp';
 
 
 
