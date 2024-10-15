@@ -1,21 +1,39 @@
 package com.zd.back.config;
 
+<<<<<<< HEAD
 import java.util.Arrays;
 
+=======
+
+import javax.management.relation.Role;
+
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> Jun_Young
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+<<<<<<< HEAD
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+=======
+
+import lombok.RequiredArgsConstructor;
+
+>>>>>>> Jun_Young
 
 @Configuration
+@RequiredArgsConstructor
+@EnableWebSecurity
 public class SecurityConfig {
 
 
     @Bean
+<<<<<<< HEAD
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors()
         .and()
@@ -47,4 +65,19 @@ public class SecurityConfig {
     }
 
 
+=======
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        
+        http
+        .cors().and().csrf().disable().headers().frameOptions().disable()
+        .and()
+        .authorizeRequests()
+        .anyRequest().permitAll()
+        .and()
+		.logout().logoutSuccessUrl("/");
+
+        return http.build();
+    }
+
+>>>>>>> Jun_Young
 }

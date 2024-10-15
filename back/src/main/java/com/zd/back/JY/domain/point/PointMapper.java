@@ -11,5 +11,5 @@ public interface PointMapper {
     
     public void updatePoint(PointDTO dto);
 
-    public PointDTO findById(int id);
+    public PointDTO findById(int pointid);
 } 

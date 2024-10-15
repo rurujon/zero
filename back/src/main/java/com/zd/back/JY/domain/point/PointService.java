@@ -14,6 +14,7 @@ public interface PointService {
 
     @Transactional
     public void insertData(PointDTO dto);
+    
     @Transactional
     public void updatePoint(PointDTO dto);
 

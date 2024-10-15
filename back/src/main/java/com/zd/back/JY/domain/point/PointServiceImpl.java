@@ -22,8 +22,8 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDTO findById(int id){
-        return pointMapper.findById(id);
+    public PointDTO findById(int pointid){
+        return pointMapper.findById(pointid);
     }
 
     @Override
