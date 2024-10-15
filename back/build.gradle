@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.zd'
 version = '0.0.1-SNAPSHOT'
- 
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(8)
@@ -17,7 +17,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-} 
+}
 
 repositories {
 	mavenCentral()
@@ -38,9 +38,6 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
 
-
- 	//2024-10-14 조준영 추가
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
 tasks.named('test') {

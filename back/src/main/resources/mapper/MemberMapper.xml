@@ -6,8 +6,8 @@
 <mapper namespace="com.zd.back.login.mapper.MemberMapper">
 
     <insert id="insertMember" parameterType="com.zd.back.login.model.Member">
-        INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, point, grade)
-        VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2}, 50, 'lv.1')
+        INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2)
+        VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2})
     </insert>
 
     <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
@@ -17,5 +17,9 @@
     <delete id="deleteMember" parameterType="string">
         DELETE FROM member WHERE memId = #{memId}
     </delete>
+
+    <update id="updateMember" parameterType="com.zd.back.login.model.Member">
+        UPDATE member SET pwd = #{pwd},memName = #{memName},email = #{email},tel = #{tel},post = #{post},addr1 = #{addr1},addr2 = #{addr2} WHERE memId = #{memId}
+    </update>
 
 </mapper>

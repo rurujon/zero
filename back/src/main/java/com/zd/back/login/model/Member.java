@@ -12,6 +12,6 @@ public class Member {
     private String post;
     private String addr1;
     private String addr2;
-    private int point;
-    private String grade;
+    // private int point;
+    // private String grade;
 }

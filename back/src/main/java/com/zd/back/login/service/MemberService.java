@@ -19,6 +19,10 @@ public class MemberService {
         return memberMapper.selectMemberById(memId);
     }
 
+    public void updateMember(Member member) {
+        memberMapper.updateMember(member);
+    }
+
     public void deleteMember(String memId) {
         memberMapper.deleteMember(memId);
     }

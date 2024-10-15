@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const LoginPage = ({ onLogin }) => {
     const [memId, setMemId] = useState('');
@@ -8,7 +9,7 @@ const LoginPage = ({ onLogin }) => {
     const handleLogin = () => {
         axios.post('/member/login', null, {
             params: { memId, pwd },
-            withCredentials: true // 이 옵션을 추가하여 쿠키를 받을 수 있게 함
+            withCredentials: true // 쿠키를 받을 수 있게 함
         })
             .then(response => {
                 if (response.data === '로그인 성공') {
@@ -24,12 +25,43 @@ const LoginPage = ({ onLogin }) => {
     };
 
     return (
-        <div>
-            <h2>로그인</h2>
-            <input type="text" placeholder="아이디" value={memId} onChange={(e) => setMemId(e.target.value)}/>
-            <input type="password" placeholder="비밀번호" value={pwd} onChange={(e) => setPwd(e.target.value)}/>
-            <button onClick={handleLogin}>로그인</button><br />
-
+        <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
+            <h2>로그인</h2><br />
+            <form>
+                <div className="dl-item">
+                    <dt>아이디</dt>
+                    <dd>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={memId}
+                            onChange={(e) => setMemId(e.target.value)}
+                            style={{ width: '400px' }}
+                        />
+                    </dd>
+                </div>
+                <div className="dl-item">
+                    <dt>비밀번호</dt>
+                    <dd>
+                        <input
+                            type="password"
+                            className="form-control"
+                            value={pwd}
+                            onChange={(e) => setPwd(e.target.value)}
+                            style={{ width: '400px' }}
+                        />
+                    </dd>
+                </div>
+                <div className="dl-item" style={{ marginBottom: '15px' }}>
+                    <button
+                        type="button"
+                        onClick={handleLogin}
+                        className="btn btn-primary btn-sm"
+                    >
+                        로그인
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };
