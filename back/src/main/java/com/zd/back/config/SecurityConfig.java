@@ -21,7 +21,7 @@ public class SecurityConfig {
         .and()
         .csrf().disable()
         .authorizeHttpRequests()
-        .antMatchers("/member/register", "/member/login", "/member/info", "/member/**", "/member/logout","/*", "/api/imgboard","/api/naver").permitAll()
+        .antMatchers("/member/register", "/member/login", "/member/info", "/member/**", "/member/logout","/*","/api/naver").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin().disable();
