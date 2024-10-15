@@ -7,6 +7,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [member, setMember] = useState({
         memId: '',
         pwd: '',
+        pwdConfirm: '',
         memName: '',
         email: '',
         tel: '',
@@ -20,7 +21,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             setMember(prevState => ({
                 ...prevState,
                 ...initialData,
-                pwd: ''
+                pwd: '',
+                pwdConfirm: ''
             }));
             adjustWindowSize(window, initialData, true, []);
         }
@@ -32,13 +34,27 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             ...prevState,
             [name]: value
         }));
-        adjustWindowSize(window, {...member, [name]: value}, true, []);
+
+        // 비밀번호와 비밀번호 재확인 길이 검증
+        if (name === 'pwdConfirm') {
+            if (value.length > 0 && value.length === member.pwd.length && value !== member.pwd) {
+                alert('비밀번호가 일치하지 않습니다.');
+            }
+        }
+
+        adjustWindowSize(window, { ...member, [name]: value }, true, []);
     };
 
     const handleSubmit = () => {
         if (!member.memId || (!isEditing && !member.pwd) || !member.memName || !member.email || !member.tel || !member.post || !member.addr1 || !member.addr2) {
             alert('모든 항목을 입력하세요.');
             return;
+        }
+
+        // 비밀번호가 비어있지 않고, 재확인도 비어있지 않으며 길이가 동일한 경우에만 확인
+        if (!isEditing && member.pwd !== member.pwdConfirm) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;  // 비밀번호가 일치하지 않을 경우 제출 중지
         }
 
         const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
@@ -73,7 +89,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     post: data.zonecode,
                     addr1: data.address
                 }));
-                adjustWindowSize(window, {...member, post: data.zonecode, addr1: data.address}, true, []);
+                adjustWindowSize(window, { ...member, post: data.zonecode, addr1: data.address }, true, []);
             }
         }).open();
     };
@@ -89,6 +105,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {/* 비밀번호 입력란 */}
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">비밀번호</label>
                     <div className="col-sm-10">
@@ -96,6 +113,17 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {/* 비밀번호 재확인 입력란 */}
+                {!isEditing && (
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">비밀번호 재확인</label>
+                        <div className="col-sm-10">
+                            <input type="password" name="pwdConfirm" className="form-control" placeholder="비밀번호 재확인" value={member.pwdConfirm || ''} onChange={handleChange} />
+                        </div>
+                    </div>
+                )}
+
+                {/* 나머지 입력란 */}
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">이름</label>
                     <div className="col-sm-10">
