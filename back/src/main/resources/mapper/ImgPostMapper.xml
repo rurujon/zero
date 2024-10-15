@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.back.imgboard.mapper.ImgPostMapper">
+
+<select id="maxImgPostId" resultType="int">
+    SELECT NVL(MAX(imgPostId), 0) FROM ImgPost
+</select>
+
+<insert id="insertData" parameterType="com.zd.back.imgboard.model.ImgPost">
+    INSERT INTO ImgPost (imgPostId, userId, cate, title, content, created)
+    VALUES (#{imgPostId}, #{userId}, #{cate}, #{title}, #{content}, SYSDATE)
+</insert>
+
+
+</mapper>

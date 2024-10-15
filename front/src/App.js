@@ -8,6 +8,7 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
+import ImgApp from './components/imgboard/ImgApp';
 
 
 
@@ -26,9 +27,9 @@ function AppContent() {
 
       {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
-      <NewsList/>
-      {/* <SmartMapApp/> */}
-      {/* <ImgApp/> */}
+{/*       <NewsList/>
+ */}      {/* <SmartMapApp/> */}
+      <ImgApp/>
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
