@@ -8,7 +8,7 @@ const NewsList = () => {
   useEffect(() => {
     // Spring Boot 엔드포인트 호출
     axios
-      .get("http://localhost:8080/api/news") // Spring Boot API 호출
+      .get("http://localhost:8080/api/naver/news") // Spring Boot API 호출
       .then((response) => {
         setNewsData(response.data); // API 응답 데이터 저장
       })
