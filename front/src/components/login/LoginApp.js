@@ -6,7 +6,7 @@ import MemberInfoPage from './MemberInfoPage';
 
 function LoginApp() {
     return (
-        <Router>
+        <>
             <div className="App">
                 <Routes>
                     <Route path="/" element={<HomePage/>} />
@@ -14,7 +14,7 @@ function LoginApp() {
                     <Route path="/member-info" element={<MemberInfoPage/>} />
                 </Routes>
             </div>
-        </Router>
+        </>
     );
 }
 

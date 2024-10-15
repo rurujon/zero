@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- userId, cate, title, content, filePath,created,saveFileName, originalFileName, pwd  -->
 <!-- login 시 얻은 userId 연동해야함 (-) -->
-<insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBpard">
+<insert id="insertImgBoard" parameterType="com.zd.back.imgboard.model.ImgBoard">
 	insert into imgboard (imgBoardId, userId, cate, title, content, filePath,created,saveFileName, originalFileName, ) values
 	(#{imgBoardId}, #{userid}, #{cate}, #{title}, #{content}, #{filepath},SYSTIMESTAMP,  #{saveFileName}, #{originalFileName})
 </insert>
