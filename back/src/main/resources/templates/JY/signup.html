@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+
+    <script>
+        const sendIt = () => {
+            f= document.myForm;
+
+            f.action="/signup_ok";
+
+            f.submit();
+        }
+
+    </script>
+
+</head>
+<body>
+    <form action="" method="post" name="myForm">
+        <div>
+            <div>회원 등록</div>
+
+            <div>
+                <button onclick="location.href='/signup_ok'">Signup - 링크</button>
+                <input type="button" onclick="sendIt()" value="submit-링크"/>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
