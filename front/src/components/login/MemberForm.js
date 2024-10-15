@@ -140,8 +140,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="mt-3">
-                    <button type="button" className="btn btn-primary btn-sm" onClick={handleSubmit}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel}>{isEditing ? '수정취소' : '가입취소'}</button>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={handleSubmit} style={{marginBottom:'20px'}}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel} style={{marginBottom:'20px'}}>{isEditing ? '수정취소' : '가입취소'}</button>
                 </div>
             </form>
         </div>
