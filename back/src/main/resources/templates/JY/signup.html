@@ -8,8 +8,15 @@
         const sendIt = () => {
             f= document.myForm;
 
-            f.action="/signup_ok";
+            str=f.memId.value;
+            if(!str){
+                alert("유져아이디를 입력하세요")
+                f.memId.focus();
+                return;
+            }
 
+
+            f.action="/signup_ok";
             f.submit();
         }
 
@@ -19,11 +26,10 @@
 <body>
     <form action="" method="post" name="myForm">
         <div>
-            <div>회원 등록</div>
-
+            <span>유져 아이디</span>
+            <input type="text" name="memId" placeholder="유저 아이디 입력">
             <div>
-                <button onclick="location.href='/signup_ok'">Signup - 링크</button>
-                <input type="button" onclick="sendIt()" value="submit-링크"/>
+                <input type="button" onclick="sendIt()" value="생성"/>
             </div>
         </div>
     </form>
