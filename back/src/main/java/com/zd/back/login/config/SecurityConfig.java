@@ -14,16 +14,18 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/member/register", "/member/login", "/member/info", "/member/**", "/member/logout").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin().disable()
-            .cors();
-        return http.build();
-    }
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.cors()
+        .and()
+        .csrf().disable()
+        .authorizeHttpRequests()
+        .antMatchers("/member/register", "/member/login", "/member/info", "/member/**", "/member/logout").permitAll()
+        .anyRequest().authenticated()
+        .and()
+        .formLogin().disable();
+    return http.build();
+}
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

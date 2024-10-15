@@ -15,7 +15,6 @@ function Header() {
     setActiveMenu(null);
   };
 
-
   return (
     <header style={styles.header}>
       {/* 로고와 첫 번째 메뉴바 */}
@@ -24,9 +23,9 @@ function Header() {
         <nav>
           <ul style={styles.navList}>
             <li style={styles.navItem}><Link to="/loginMain">Login</Link></li>
-            <li style={styles.navItem}><a href="/about">메뉴2</a></li>
-            <li style={styles.navItem}><a href="/services">메뉴3</a></li>
-            <li style={styles.navItem}><a href="/contact">메뉴4</a></li>
+            <li style={styles.navItem}><Link to="/about">메뉴2</Link></li>
+            <li style={styles.navItem}><Link to="/services">메뉴3</Link></li>
+            <li style={styles.navItem}><Link to="/contact">메뉴4</Link></li>
           </ul>
         </nav>
       </div>
@@ -44,11 +43,11 @@ function Header() {
             onMouseEnter={() => handleMouseEnter('zero-donghaeng')}
             onMouseLeave={handleMouseLeave}
           >
-            <a href="/zero-donghaeng">제로동행</a>
+            <Link to="/zero-donghaeng">제로동행</Link>
             {activeMenu === 'zero-donghaeng' && (
               <ul style={styles.subMenu}>
-                <li><a href="/sub1">하위 메뉴 1</a></li>
-                <li><a href="/sub2">하위 메뉴 2</a></li>
+                <li><Link to="/sub1">제로웨이스트 소개</Link></li>
+                <li><Link to="/sub2">리사이클링 소개</Link></li>
               </ul>
             )}
           </li>
@@ -57,11 +56,11 @@ function Header() {
             onMouseEnter={() => handleMouseEnter('eco-news')}
             onMouseLeave={handleMouseLeave}
           >
-            <a href="/eco-news">에코뉴스</a>
+            <Link to="/eco-news">에코뉴스</Link>
             {activeMenu === 'eco-news' && (
               <ul style={styles.subMenu}>
-                <li><a href="/sub1">하위 메뉴 1</a></li>
-                <li><a href="/sub2">하위 메뉴 2</a></li>
+                <li><Link to="/sub1">네이버 뉴스 api</Link></li>
+                <li><Link to="/sub2">환경 관련 검색어</Link></li>
               </ul>
             )}
           </li>
@@ -70,11 +69,12 @@ function Header() {
             onMouseEnter={() => handleMouseEnter('zero-news')}
             onMouseLeave={handleMouseLeave}
           >
-            <a href="/zero-news">제로소식</a>
+            <Link to="/zero-news">제로소식</Link>
             {activeMenu === 'zero-news' && (
               <ul style={styles.subMenu}>
-                <li><a href="/sub1">하위 메뉴 1</a></li>
-                <li><a href="/sub2">하위 메뉴 2</a></li>
+                <li><Link to="/sub1">서울시</Link></li>
+                <li><Link to="/sub2">기업</Link></li>
+                <li><Link to="/sub2">환경단체</Link></li>
               </ul>
             )}
           </li>
@@ -83,11 +83,11 @@ function Header() {
             onMouseEnter={() => handleMouseEnter('zero-activity')}
             onMouseLeave={handleMouseLeave}
           >
-            <a href="/zero-activity">제로활동</a>
+            <Link to="/zero-activity">제로활동</Link>
             {activeMenu === 'zero-activity' && (
               <ul style={styles.subMenu}>
-                <li><a href="/sub1">하위 메뉴 1</a></li>
-                <li><a href="/sub2">하위 메뉴 2</a></li>
+                <li><Link to="/sub1">하위 메뉴 1</Link></li>
+                <li><Link to="/sub2">하위 메뉴 2</Link></li>
               </ul>
             )}
           </li>
@@ -96,11 +96,11 @@ function Header() {
             onMouseEnter={() => handleMouseEnter('zero-consumer')}
             onMouseLeave={handleMouseLeave}
           >
-            <a href="/zero-consumer">제로슈머</a>
+            <Link to="/zero-consumer">제로슈머</Link>
             {activeMenu === 'zero-consumer' && (
               <ul style={styles.subMenu}>
-                <li><a href="/sub1">하위 메뉴 1</a></li>
-                <li><a href="/sub2">하위 메뉴 2</a></li>
+                <li><Link to="/sub1">하위 메뉴 1</Link></li>
+                <li><Link to="/sub2">하위 메뉴 2</Link></li>
               </ul>
             )}
           </li>

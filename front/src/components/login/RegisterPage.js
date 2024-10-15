@@ -1,6 +1,5 @@
 import React from 'react';
 import MemberForm from './MemberForm';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const RegisterPage = ({ onRegisterSuccess, onRegisterCancel }) => {
     const handleRegisterSuccess = () => {

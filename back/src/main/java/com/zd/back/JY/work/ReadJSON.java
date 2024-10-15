@@ -8,6 +8,10 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 
 
 
@@ -46,7 +50,7 @@ public class ReadJSON {
         try {
 
             if(array!= null){
-                for(int i=1; i<array.size(); i++){
+                for(int i=0; i<array.size(); i++){
                     JSONObject object = (JSONObject) array.get(i);
                     int id = i;
                     String question = (String)object.get("question");
