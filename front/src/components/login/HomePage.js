@@ -3,7 +3,7 @@ import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { adjustWindowSize } from './utils';
+import { adjustWindowSize } from './utils/Sizing';
 
 const HomePage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -96,15 +96,16 @@ const HomePage = () => {
         <div className="container mt-4">
             {!isLoggedIn ? (
                 <div>
-                    {showLogin && <LoginPage onLogin={handleLogin} />}
-                    {!showRegister && showLogin && (
-                        <button
-                            onClick={handleShowRegister}
-                            className="btn btn-outline-secondary btn-sm"
-                            style={{ marginLeft: '30px' }}
-                        >
-                            회원가입
-                        </button>
+                    {showLogin && (
+                        <>
+                            <LoginPage onLogin={handleLogin} />
+                            <button
+                                onClick={handleShowRegister}
+                                className="btn btn-outline-secondary btn-sm mt-3"
+                            >
+                                회원가입
+                            </button>
+                        </>
                     )}
                     {showRegister && (
                         <div>
@@ -114,8 +115,7 @@ const HomePage = () => {
                             />
                             <button
                                 onClick={handleShowLogin}
-                                className="btn btn-outline-secondary btn-sm"
-                                style={{ marginLeft: '30px' }}
+                                className="btn btn-outline-secondary btn-sm mt-3"
                             >
                                 로그인 돌아가기
                             </button>

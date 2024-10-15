@@ -10,4 +10,5 @@ public interface MemberMapper {
     Member selectMemberById(@Param("memId") String memId);
     void updateMember(Member member);
     void deleteMember(@Param("memId") String memId);
+    String findIdByEmail(@Param("email") String email);
 }

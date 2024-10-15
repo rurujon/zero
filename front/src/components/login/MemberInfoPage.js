@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { adjustWindowSize } from './utils';
+import { adjustWindowSize } from './utils/Sizing';
 
 const MemberInfoPage = () => {
     const [member, setMember] = useState(null);
