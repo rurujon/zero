@@ -86,11 +86,18 @@ const MemberInfoPage = () => {
     };
 
     const handleEditSuccess = () => {
-        setIsEditing(false);
-        fetchMemberInfo();
+        setIsEditing(false)
+        fetchMemberInfo()
     };
+    const handleCloseWindow=()=>{
+        window.close()
+        if(!window.closed){
+            alert("창을 닫을 수 없습니다. 브라우저 설정을 확인해주세요.")
 
-    if (!member) return <div>로딩 중...</div>;
+        }
+    }
+
+    if (!member) return <div>유효한 회원정보를 가져올수 없습니다.회원가입 또는 로그인하세요.</div>;
 
     return (
         <div className="container" id="memberInfoContent" style={{ marginTop: '20px' }}>
@@ -102,6 +109,7 @@ const MemberInfoPage = () => {
                     <p>이메일: {member.email}</p>
                     <p>전화번호: {member.tel}</p>
                     <p>주소: {member.addr1} {member.addr2}</p>
+                    <button className="btn btn-primary btn-sm" onClick={handleCloseWindow}>창 닫 기</button>&nbsp;
                     <button className="btn btn-primary btn-sm" onClick={handleEditClick}>정보 수정</button>&nbsp;
                     <button className="btn btn-outline-secondary btn-sm" onClick={handleDeleteRequest}>회원 탈퇴</button>
                 </>
