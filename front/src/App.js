@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import MainPageApp from './components/mainPage/MainPageApp';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/headfootside/Header';
@@ -28,7 +27,7 @@ function AppContent() {
       <LoginApp/>
       {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
-      {/* <ImgApp/> */}
+      <ImgApp/>
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
