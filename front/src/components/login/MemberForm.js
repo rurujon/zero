@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { adjustWindowSize } from './utils';
 
 const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [member, setMember] = useState({
@@ -19,8 +20,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             setMember(prevState => ({
                 ...prevState,
                 ...initialData,
-                pwd: '' // 보안상 비밀번호는 초기화
+                pwd: ''
             }));
+            adjustWindowSize(window, initialData, true, []);
         }
     }, [initialData]);
 
@@ -30,6 +32,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             ...prevState,
             [name]: value
         }));
+        adjustWindowSize(window, {...member, [name]: value}, true, []);
     };
 
     const handleSubmit = () => {
@@ -70,6 +73,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     post: data.zonecode,
                     addr1: data.address
                 }));
+                adjustWindowSize(window, {...member, post: data.zonecode, addr1: data.address}, true, []);
             }
         }).open();
     };

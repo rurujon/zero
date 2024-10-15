@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { adjustWindowSize } from './utils';
 
 const MemberInfoPage = () => {
     const [member, setMember] = useState(null);
@@ -14,15 +15,31 @@ const MemberInfoPage = () => {
         axios.get('/member/info', { withCredentials: true })
             .then(response => {
                 setMember(response.data);
+                adjustWindowSize(window, response.data, isEditing, getAdditionalContent());
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
             });
-    }, []);
+    }, [isEditing]);
 
     useEffect(() => {
         fetchMemberInfo();
     }, [fetchMemberInfo]);
+
+    const getAdditionalContent = () => {
+        return [
+            'editButton',
+            'deleteButton',
+            ...(showConfirmDialog ? ['confirmDialog'] : []),
+            ...(showDeleteDialog ? ['deleteDialog'] : [])
+        ];
+    };
+
+    useEffect(() => {
+        if (member) {
+            adjustWindowSize(window, member, isEditing, getAdditionalContent());
+        }
+    }, [isEditing, showConfirmDialog, showDeleteDialog, member]);
 
     const handleDeleteRequest = () => {
         setShowConfirmDialog(true);
@@ -46,7 +63,9 @@ const MemberInfoPage = () => {
             axios.delete(`/member/${member.memId}`, { withCredentials: true })
                 .then(() => {
                     alert('회원 탈퇴가 완료되었습니다.');
-                    window.opener.handleLogout();
+                    if (window.opener && typeof window.opener.handleLogout === 'function') {
+                        window.opener.handleLogout();
+                    }
                     window.close();
                 })
                 .catch(error => {
