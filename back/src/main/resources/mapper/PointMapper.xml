@@ -4,24 +4,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zd.back.JY.domain.point.PointMapper">
+
     <select id="maxNum" resultType="int">
-        SELECT NVL(MAX(id), 0) FROM point
+        SELECT NVL(MAX(pointId), 0) FROM point
     </select>
 
 
     <insert id="insertData" parameterType="com.zd.back.JY.domain.point.PointDTO">
         insert into Point
-        (id) values (#{id})
+        (pointId, memId) values (#{pointId}, #{memId})
     </insert>
 
     <select id="findById" parameterType="int" resultType="com.zd.back.JY.domain.point.PointDTO">
-        select id, usedPoint,maxPoint from Point
-        where id=#{id}
+        select pointId, usedPoint,maxPoint, memId, grade from Point
+        where pointId=#{pointId}
     </select>
 
     <update id="updatePoint" parameterType="com.zd.back.JY.domain.point.PointDTO">
         update Point
-        set usedPoint = #{usedPoint}, maxPoint = #{maxPoint}
-        where id = #{id}
+        set usedPoint = #{usedPoint}, maxPoint = #{maxPoint}, grade = #{grade}
+        where pointId = #{pointId}
     </update>
 </mapper>
