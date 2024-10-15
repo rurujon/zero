@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ImgPost {
      private int imgPostId; // 게시판 번호
-    private String userId; // 사용자 ID
+    private String memId; // 사용자 ID
     private String cate; // 카테고리
     private String title; // 게시글 제목
     private String content; // 게시글 내용

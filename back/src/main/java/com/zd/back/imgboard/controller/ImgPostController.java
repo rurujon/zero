@@ -43,10 +43,6 @@ public class ImgPostController {
     }
  */
 
-
-
- 
-
     @PostMapping("/created")
     public String created(@RequestBody ImgPost dto) {
         try {

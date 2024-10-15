@@ -3,15 +3,15 @@ import '../../assets/css/Imgcreated.css';
 import axios from 'axios';
 
 const Imgcreated = () => {
-//const Imgcreated = ({userId}) => { //login에서 userId 받아야함
+//const Imgcreated = ({memId}) => { //login에서 memId 받아야함
 
 
-//( userId, cate, title, content, created) 
+//( memId, cate, title, content, created) 
 // (img 테이블)(-)
  const[imgData, setImgData] = useState({
-     userId: 'userid연동(-)',cate: '',title: '',content: '' 
+     memId: 'memId연동(-)',cate: '',title: '',content: '' 
  })
- const { userId, cate, title, content} = imgData 
+ const { memId, cate, title, content} = imgData 
 
 
 
@@ -68,9 +68,9 @@ const Imgcreated = () => {
                             <dd>
                                 <input
                                     type="text"
-                                    name="userId"
+                                    name="memId"
                                     className="boxTF"
-                                    value={userId}
+                                    value={memId}
                                     readOnly
                                 />
                             </dd>

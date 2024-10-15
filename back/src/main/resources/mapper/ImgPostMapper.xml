@@ -10,8 +10,8 @@
 </select>
 
 <insert id="insertData" parameterType="com.zd.back.imgboard.model.ImgPost">
-    INSERT INTO ImgPost (imgPostId, userId, cate, title, content, created)
-    VALUES (#{imgPostId}, #{userId}, #{cate}, #{title}, #{content}, SYSDATE)
+    INSERT INTO ImgPost (imgPostId, memId, cate, title, content, created)
+    VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE)
 </insert>
 
 
