@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ImgApp from './components/imgboard/ImgApp';
+
 import MainPageApp from './components/mainPage/MainPageApp';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/headfootside/Header';
