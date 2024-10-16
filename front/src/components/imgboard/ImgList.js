@@ -5,12 +5,22 @@ import axios from 'axios';
 
 const ImgList = () => {
 
-    const [imgList, setImgList] = useState([]);
+
+    // map 으로 받은 데이터 
+    const [imgData, setImgData] = useState([])
+    const [dataCount ,setDataCount] = useState(0)
+    const []
+    
+
+
+
+
+
 
     useEffect(() => {
-        axios.get('/imgboard/imglist')  
+        axios.get('/imgboard/list')  
             .then(res => {
-                setImgList(res.data.imgList); 
+                setImgData(res.data.imgData); 
             })
             .catch(error => console.log(error));
     }, []);
@@ -18,8 +28,8 @@ const ImgList = () => {
     return (
         <div id="bbs">
             <div id="bbs_title">게시물 리스트</div>
-            <div id="bbsList">
-                {imgList.map((imgData, index) => (
+            <div id="bbsList"> 
+                {imgData.map((imgData, index) => (
                     <div className="bbsListItem" key={index}>
                         <div className="bbsListThumbnail">
                            {/*  <img src={imgData.thumbnailUrl} alt={imgData.title} /> */} {/* 썸네일 이미지 */}
@@ -27,7 +37,7 @@ const ImgList = () => {
                         <div className="bbsListContent">
                             <h3>{imgData.title}</h3>
                             <p>{imgData.content}</p>
-                            <p>작성자: {imgData.userId}</p>
+                            <p>작성자: {imgData.memId}</p>
                             <p>카테고리: {imgData.cate}</p>
                         </div>
                     </div>
