@@ -17,11 +17,9 @@ import com.zd.back.login.security.JwtFilter;
 
 import lombok.RequiredArgsConstructor;
 
-//24-10-16추가 정우준
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 @Configuration
 @RequiredArgsConstructor
@@ -32,36 +30,38 @@ public class SecurityConfig {
     private JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+
+
+    //     http
+    //     .cors().and().csrf().disable().headers().frameOptions().disable()
+    //     .and()
+    //     .authorizeRequests()
+    //     .anyRequest().permitAll()
+    //     .and()
+    //     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    //     http
+    //     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+	// 	.logout().logoutSuccessUrl("/");
+
+    //     return http.build();
+    // }
 
         http
-        .cors().and().csrf().disable().headers().frameOptions().disable()
-        .and()
-        .authorizeRequests()
-        .anyRequest().permitAll()
-        .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-		.logout().logoutSuccessUrl("/");
+            .cors().and()
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/", "/member/register", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .formLogin().disable();
 
         return http.build();
     }
-
-    // @Bean
-    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    //     http.cors()
-    //     .and()
-    //     .csrf().disable()
-    //     .authorizeHttpRequests()
-    //     .antMatchers("/","/member/register", "/member/login", "/member/info", "/member/**", "/member/logout","/*", "/api/naver").permitAll()
-    //     .anyRequest().authenticated()
-    //     .and()
-    //     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    //     http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    //     .formLogin().disable();
-    // return http.build();
-    // }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -81,38 +81,8 @@ public class SecurityConfig {
         return source;
     }
 
-    //24-10-16 정우준 추가
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
-
 }
-
-
-
-
-
-// @Configuration
-// @RequiredArgsConstructor
-// @EnableWebSecurity
-// public class SecurityConfig {
-
-
-//     @Bean
-//     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
-//         http
-//         .cors().and().csrf().disable().headers().frameOptions().disable()
-//         .and()
-//         .authorizeRequests()
-//         .anyRequest().permitAll()
-//         .and()
-// 		.logout().logoutSuccessUrl("/");
-
-//         return http.build();
-//     }
-
-// }
-

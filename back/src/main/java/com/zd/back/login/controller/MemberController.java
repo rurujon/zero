@@ -136,13 +136,17 @@ public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") Stri
 
 
     @PostMapping("/find-password")
-    public ResponseEntity<String> findPassword(@RequestParam String memId, @RequestParam String email) {
-        boolean isSuccess = memberService.resetPassword(memId, email);
-        if (isSuccess) {
-            return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-        }
-        return ResponseEntity.badRequest().body("비밀번호를 재설정할 수 없습니다.");
+public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+    String memId = request.get("memId");
+    String email = request.get("email");
+
+    boolean result = memberService.resetPassword(memId, email);
+    if (result) {
+        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+    } else {
+        return ResponseEntity.badRequest().body("비밀번호 재설정에 실패했습니다.");
     }
+}
 
     @GetMapping("/check-login")
     public ResponseEntity<?> checkLoginStatus(@RequestHeader("Authorization") String authHeader) {

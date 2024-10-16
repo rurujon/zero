@@ -16,7 +16,9 @@ const MemberInfoPage = () => {
     const { token, logout } = useContext(AuthContext);
 
     const fetchMemberInfo = useCallback(() => {
-        axios.get('/member/info')
+        axios.get('/member/info', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
             .then(response => {
                 setMember(response.data);
                 adjustWindowSize(window, response.data, isEditing, getAdditionalContent());
@@ -26,9 +28,11 @@ const MemberInfoPage = () => {
                 if (error.response && error.response.status === 401) {
                     logout();
                     alert('인증이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.');
+                } else {
+                    alert('회원 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해주세요.');
                 }
             });
-    }, [isEditing, logout]);
+    }, [token, isEditing, logout]);
 
     useEffect(() => {
         fetchMemberInfo();
@@ -68,7 +72,9 @@ const MemberInfoPage = () => {
 
     const handleFinalDelete = () => {
         if (deleteConfirmation.toLowerCase() === '탈퇴') {
-            axios.delete(`/member/${member.memId}`)
+            axios.delete(`/member/${member.memId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
                 .then(() => {
                     alert('회원 탈퇴가 완료되었습니다.');
                     logout();
@@ -110,39 +116,39 @@ const MemberInfoPage = () => {
             {!isEditing ? (
                 <div style={{ marginLeft: '20px'}}>
                     <h2>회원 정보</h2>
-                    <div class="mb-3 row" >
-                        <label class="col-sm-2 col-form-label">아이디</label>
-                        <div class="col-sm-10">
-                        <label class="col-sm-7 col-form-label">{member.memId}</label>
+                    <div className="mb-3 row" >
+                        <label className="col-sm-2 col-form-label">아이디</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.memId}</label>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">이름</label>
-                        <div class="col-sm-10">
-                        <label class="col-sm-7 col-form-label">{member.memName}</label>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">이름</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.memName}</label>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">이메일</label>
-                        <div class="col-sm-10">
-                        <label class="col-sm-7 col-form-label">{member.email}</label>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">이메일</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.email}</label>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">전화번호</label>
-                        <div class="col-sm-10">
-                        <label class="col-sm-7 col-form-label">{member.tel}</label>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">전화번호</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.tel}</label>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">주소</label>
-                        <div class="col-sm-10">
-                        <label class="col-sm-7 col-form-label">{`${member.addr1} ${member.addr2}`}</label>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">주소</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{`${member.addr1} ${member.addr2}`}</label>
                         </div>
                     </div>
-                    <button className="btn btn-primary btn-sm" onClick={handleCloseWindow}>창 닫 기</button>&nbsp;
+                    <button className="btn btn-primary btn-sm" onClick={handleCloseWindow}>창 닫기</button>&nbsp;
                     <button className="btn btn-primary btn-sm" onClick={handleEditClick}>정보 수정</button>&nbsp;
-                    <button className="btn btn-outline-secondary btn-sm " onClick={handleDeleteRequest}>회원 탈퇴</button><br/><br/>
+                    <button className="btn btn-outline-secondary btn-sm" onClick={handleDeleteRequest}>회원 탈퇴</button><br/><br/>
                 </div>
             ) : (
                 <MemberForm

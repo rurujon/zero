@@ -47,9 +47,9 @@ function App() {
   return (
     <AuthProvider>
       <AxiosInterceptor>
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
       </AxiosInterceptor>
     </AuthProvider>
   );

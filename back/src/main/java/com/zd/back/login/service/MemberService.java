@@ -2,11 +2,12 @@ package com.zd.back.login.service;
 
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 
@@ -15,6 +16,9 @@ public class MemberService {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     public void registerMember(Member member) {
         memberMapper.insertMember(member);
@@ -42,17 +46,22 @@ public class MemberService {
             String tempPassword = UUID.randomUUID().toString().substring(0, 8);
             member.setPwd(tempPassword);
             memberMapper.updateMember(member);
-            // 이메일 전송 로직 (실제 구현 필요)
             sendPasswordResetEmail(email, tempPassword);
             return true;
         }
         return false;
     }
 
+    private String generateTempPassword() {
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
+
     private void sendPasswordResetEmail(String email, String tempPassword) {
-        // 이메일 전송 로직 구현
-        // 실제 이메일 전송 기능을 구현해야 합니다.
-        System.out.println("임시 비밀번호 " + tempPassword + "를 " + email + "로 전송했습니다.");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("비밀번호 재설정");
+        message.setText("임시 비밀번호: " + tempPassword);
+        emailSender.send(message);
     }
 
     public boolean isIdDuplicate(String memId) {
