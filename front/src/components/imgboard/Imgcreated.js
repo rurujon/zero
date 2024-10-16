@@ -9,7 +9,7 @@ const Imgcreated = () => {
 //( memId, cate, title, content, created) 
 // (img 테이블)(-)
  const[imgData, setImgData] = useState({
-     memId: 'memId연동(-)',cate: '',title: '',content: '' 
+     memId: 'memId(-)',cate: '',title: '',content: '' 
  })
  const { memId, cate, title, content} = imgData 
 

@@ -7,30 +7,39 @@ const ImgList = () => {
 
 
     // map 으로 받은 데이터 
-    const [imgData, setImgData] = useState([])
+    const [imgList, setImgList] = useState([])
     const [dataCount ,setDataCount] = useState(0)
-    const []
+    const [pageIndexList,setPageIndexList] = useState('')
+    const [aticleUrl,setArticleUrl] = useState('')
+
+    //현재페이지
+    const [currentPage,setCurrentPage] = useState(1)
     
-
-
-
-
-
-
     useEffect(() => {
-        axios.get('/imgboard/list')  
-            .then(res => {
-                setImgData(res.data.imgData); 
-            })
-            .catch(error => console.log(error));
-    }, []);
+
+        const fetchData = async () => {
+           
+            try {
+                const res = await axios.get('/imgboard/list')
+                setImgList(res.data.lists); 
+                setDataCount(res.data.dataCount); 
+                setPageIndexList(res.data.pageIndexList); 
+                setArticleUrl(res.data.articleUrl); 
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData(); // currentPage 변할때마다 실행 
+    }, [currentPage]);
 
     return (
         <div id="bbs">
             <div id="bbs_title">게시물 리스트</div>
             <div id="bbsList"> 
-                {imgData.map((imgData, index) => (
-                    <div className="bbsListItem" key={index}>
+                {imgList.map((imgData, index) => (
+                    <div className="bbsListItem" key={imgData.imgPostId}>
                         <div className="bbsListThumbnail">
                            {/*  <img src={imgData.thumbnailUrl} alt={imgData.title} /> */} {/* 썸네일 이미지 */}
                         </div>
