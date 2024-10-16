@@ -1,33 +1,41 @@
-
 #bbs {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
 #bbs_title {
     font-size: 24px;
+    font-weight: bold;
     margin-bottom: 20px;
-}
-
-#bbsList {
-    display: flex;
-    flex-wrap: wrap;
+    text-align: center;
 }
 
 .bbsListItem {
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 10px;
     padding: 10px;
-    width: 300px; /* 원하는 너비로 조정 */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    background-color: #fff;
+    transition: box-shadow 0.2s;
 }
 
-.bbsListThumbnail img {
-    width: 100%; /* 썸네일 이미지가 컨테이너에 맞게 조정 */
-    height: auto;
-    border-radius: 5px;
+.bbsListItem:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.bbsListContent {
-    margin-top: 10px;
+.bbsListThumbnail {
+    margin-bottom: 10px;
+}
+
+.bbsListContent h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.bbsListContent p {
+    margin: 5px 0;
 }

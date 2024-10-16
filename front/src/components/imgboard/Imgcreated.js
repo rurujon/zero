@@ -9,13 +9,13 @@ const Imgcreated = () => {
 //( memId, cate, title, content, created) 
 // (img 테이블)(-)
  const[imgData, setImgData] = useState({
-     memId: 'memId(-)',cate: '',title: '',content: '' 
+     memId: 'memId(-)',cate: '',title: '',content: ''
  })
+
  const { memId, cate, title, content} = imgData 
 
-
-
     const changeInput =(evt)=>{
+
         const{value,name} = evt.target;
         setImgData({
             ...imgData,
@@ -38,12 +38,12 @@ const Imgcreated = () => {
             alert(res.data)  
             
             //redirecrt
-            window.location.href ='/imgboard/list'
+            window.location.href ='/imgboard/list/action'
 
         })
         .catch(error=>{
             console.error(error)
-            alert("에러임 : " + error)
+            alert("게시물 등록 중 문제가 발생했습니다. " + error)
         })
     }
 
@@ -141,7 +141,7 @@ const Imgcreated = () => {
                         type="button"
                         value=" 작성취소 "
                         className="btn2"
-                        onClick={() => (window.location.href = '/imglist.action')}
+                        onClick={() => (window.location.href = '/imgboard/list.action')}
                     />
                 </div>
 

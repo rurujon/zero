@@ -14,23 +14,8 @@
     VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE)
 </insert>
 
-
-<select id="getDataCount" parameterType="map" resultType="int">
-    SELECT NVL(COUNT(*), 0) FROM ImgPost
-    WHERE ${searchKey} LIKE '%' || #{searchValue} || '%'
+<select id="getLists" resultType="com.zd.back.imgboard.model.ImgPost">
+        SELECT * FROM ImgPost ORDER BY imgPostId DESC
 </select>
-
-<select id="getLists" parameterType="map" resultType="com.zd.back.imgboard.model.ImgPost">
-    SELECT * FROM (
-        SELECT ROWNUM rnum, data.* FROM (
-            SELECT imgPostId, memId, cate, title, TO_CHAR(created, 'YYYY-MM-DD') AS created, auth 
-            FROM ImgPost
-            WHERE ${searchKey} LIKE '%' || #{searchValue} || '%'
-            ORDER BY imgPostId DESC
-        ) data
-    )
-    <![CDATA[ WHERE rnum >= #{start} AND rnum <= #{end} ]]>
-</select>
-
 
 </mapper>

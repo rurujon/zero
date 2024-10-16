@@ -25,15 +25,10 @@ public class ImgPostService {
    }
 
 
-	public int getDataCount(String searchKey, String searchValue) throws Exception {
-		return imgPostMapper.getDataCount(searchKey, searchValue);
-	}
 
-	
-	public List<ImgPost> getLists(int start,int end, String searchKey,String searchValue)throws Exception{
-		
-		return imgPostMapper.getLists(start, end, searchKey, searchValue);
-	}
+    public List<ImgPost> getLists() throws Exception {
+        return imgPostMapper.getLists();
+    }
 
 
 

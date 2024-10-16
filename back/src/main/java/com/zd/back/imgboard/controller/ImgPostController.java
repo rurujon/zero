@@ -2,10 +2,10 @@ package com.zd.back.imgboard.controller;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
-import com.zd.back.imgboard.util.MyPage;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -29,139 +27,74 @@ import org.springframework.web.bind.annotation.RequestParam;
 	//Controller -> Service(c) -> Mapper(I) -> Mapper.xml
 	
 
+	@RestController
+	@RequestMapping("/imgboard")
+	public class ImgPostController {
+	
+		@Autowired
+		private ImgPostService imgPostService;
+	
+		@PostMapping("/created") //(+)
+		public ResponseEntity<String> created(@RequestBody ImgPost dto) {
+			try {
+				int maxImgPostId = imgPostService.maxImgPostId();
+				dto.setImgPostId(maxImgPostId+1);
+				imgPostService.insertData(dto);
+				return ResponseEntity.ok("게시물이 등록되었습니다.");
 
-@RestController
-@RequestMapping("/imgboard")
-public class ImgPostController {
-    
-    @Autowired
-    private ImgPostService imgPostService;
+			} catch (Exception e) {
 
-    @Autowired
-    MyPage myPage;
+				return ResponseEntity.status(500).body("게시물 등록 중 오류가 발생했습니다.");
+				//500 에러시 메세지 뜨도록 함 
+			}
+		}
 
-//확인 (-)
-/* @GetMapping("/created")   
-public ResponseEntity<String> created(@RequestParam String memId) {
-    try {
-   
-        return ResponseEntity.ok("여기는 get Create controller 입니다."); // 성공적으로 결과 반환
-       
-    } catch (Exception e) {
-        return ResponseEntity.status(500).body("게시물 조회 중 오류가 발생했습니다.");
-    }
-}
- */
+		@GetMapping("/list") //페이징 처리전(-)
+		public ResponseEntity<Map<String, Object>> getLists() {
+			try {
+				List<ImgPost> lists = imgPostService.getLists();
+				Map<String, Object> response = new HashMap<>();
+				response.put("lists", lists);
+				return ResponseEntity.ok(response);
 
-    @PostMapping("/created")
-    public ResponseEntity<String> created(@RequestBody ImgPost dto) {
+			} catch (Exception e) {
 
-        //main 에서 memId 를 받아야함 (-)
+				return ResponseEntity.status(500).body(null);
+			}
+		} 
+
+
+		/*  페이징 처리 시
+		    @GetMapping("/list")
+    public ResponseEntity<Map<String, Object>> getLists(@RequestParam(defaultValue = "1") int pageNum) {
         try {
-            int maxImgPostId = imgPostService.maxImgPostId();
-            dto.setImgPostId(maxImgPostId + 1);
-            imgPostService.insertData(dto);
- 
-            return ResponseEntity.ok("인증게시물이 등록되었습니다.");
-           
-        } catch (Exception e) { //예외처리
- 
-            return ResponseEntity.status(500).body("게시물 등록 중 오류가 발생했습니다.");
-            // 오류 발생 시 500 Internal Server Error와 같은 적절한 상태 코드를 반환
-        }
-    
-    
-    }
+            int numPerPage = 5; // 페이지당 게시물 수
+            int dataCount = imgPostService.getDataCount(); // 전체 게시물 수
+            int totalPage = myPage.getPageCount(numPerPage, dataCount); // 전체 페이지 수
 
-	// Map<String,Object>형식으로 보낼 것임 -- 확정 (-)
-   @GetMapping("/list")
-    public ResponseEntity<Map<String,Object>> getLists(HttpServletRequest req) { 
-		
-		Map<String,Object> map = new HashMap<>(); 
+            if (pageNum > totalPage) {
+                pageNum = totalPage; // 요청한 페이지가 총 페이지 수보다 크면 마지막 페이지로 설정
+            }
 
-		try {
-			
-			String pageNum = req.getParameter("pageNum");
+            int start = (pageNum - 1) * numPerPage + 1;
+            int end = pageNum * numPerPage;
 
-			int currentPage = 1;
+            List<ImgPost> lists = imgPostService.getLists(start, end);
 
-			if (pageNum != null) {
-				currentPage = Integer.parseInt(pageNum);
-			}
+            // 페이지 인덱스 리스트 생성
+            String listUrl = "/imgboard/list?pageNum="; // 페이지 URL
+            String pageIndexList = myPage.pageIndexList(pageNum, totalPage, listUrl); // 페이지 인덱스 생성
 
-			String searchKey = req.getParameter("searchKey");
-			String searchValue = req.getParameter("searchValue");
+            Map<String, Object> response = new HashMap<>();
+            response.put("lists", lists);
+            response.put("dataCount", dataCount);
+            response.put("pageIndexList", pageIndexList); // 페이지 인덱스 리스트 추가
 
-			//검색--------------------------
-			if (searchValue != null) {
-
-				if (req.getMethod().equalsIgnoreCase("GET")) {
-					searchValue = URLDecoder.decode(searchValue, "UTF-8");
-				}        
-
-			} else {
-				searchKey = "subject";
-				searchValue = "";
-			}
-			//------------------------------
-
-			int dataCount = imgPostService.getDataCount(searchKey, searchValue);
-			int numPerPage = 5;
-			int totalPage = myPage.getPageCount(numPerPage, dataCount);
-
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-
-			int start = (currentPage - 1) * numPerPage + 1;
-			int end = currentPage * numPerPage;
-
-			List<ImgPost> lists =  imgPostService.getLists(start, end, searchKey, searchValue);
-
-			// 검색 --------------------------------------
-			String param = "";
-			if (!searchValue.equals("")) {
-
-				param = "?searchKey=" + searchKey;
-				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");    
-			}    
-			//---------------------------------------------
-
-			String listUrl =  "/list.action" + param;
-			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
-
-			String articleUrl =  "/article.action";
-
-			if (param.equals("")) {
-				articleUrl += "?pageNum=" + currentPage;    
-			} else {
-				articleUrl += param + "&pageNum=" + currentPage;
-			}
-
-			map.put("lists",lists);
-			map.put("dataCount",dataCount);
-			map.put("pageIndexList",pageIndexList);
-			map.put("articleUrl",articleUrl);
-
-			return ResponseEntity.ok(map);
-
-            
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); 
+            return ResponseEntity.status(500).body(null);
         }
-    
-    
-    
-   }
-
-
-
-
-
-
-
-    
-
-
-
-}
+    }
+		 */
+	}
+	

@@ -12,9 +12,6 @@ public interface ImgPostMapper {
      int maxImgPostId() throws Exception ; 
 
      void insertData(ImgPost dto) throws Exception;
-
-     int getDataCount(String searchKey, String searchValue) throws Exception;
-
-     List<ImgPost> getLists(int start,int end, String searchKey,String searchValue)throws Exception;
-
+   
+     List<ImgPost> getLists() throws Exception;
 }
