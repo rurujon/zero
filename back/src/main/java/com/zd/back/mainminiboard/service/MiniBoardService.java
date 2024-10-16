@@ -10,6 +10,5 @@ import com.zd.back.mainminiboard.model.MiniBoard;
 public interface MiniBoardService {
 
     public List<MiniBoard> getNotices() throws Exception;
-    // public List<MiniBoard> getNews() throws Exception;
     
 }

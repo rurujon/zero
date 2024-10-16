@@ -38,5 +38,10 @@ public class SearchApiServiceImpl implements SearchApiService{
     public List<News> searchNews(String keyword) {
         return searchApiMapper.searchNews(keyword);
     }
+
+    @Override
+    public List<News> miniNews(){
+        return searchApiMapper.miniNews();
+    }
     
 }

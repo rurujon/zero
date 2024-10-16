@@ -23,10 +23,5 @@ public class MiniBoardServiceImpl implements MiniBoardService{
         return miniBoardMapper.selectNotice();
     }
 
-    // @Override
-    // public List<MiniBoard> getNews() throws Exception {
-    //     return miniBoardMapper.selectNews();
-    // }
-
     
 }

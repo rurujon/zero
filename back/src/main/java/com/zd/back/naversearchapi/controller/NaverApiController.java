@@ -8,9 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +19,6 @@ import com.zd.back.naversearchapi.ReadNaverJSON;
 import com.zd.back.naversearchapi.model.News;
 import com.zd.back.naversearchapi.service.SearchApiService;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +117,13 @@ public class NaverApiController {
         List<News> searchResults = searchApiService.searchNews(keyword);
         return ResponseEntity.ok(searchResults);
     }
+
+    @GetMapping("/news/miniNews")
+    public ResponseEntity<List<News>> searchMiniNews() {
+        List<News> miniNews = searchApiService.miniNews();
+        return ResponseEntity.ok(miniNews);
+    }
+    
 
     
 }

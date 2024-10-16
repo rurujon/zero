@@ -19,8 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM naverNews order by pubDate desc
     </select>
 
+    <!-- DB에서 검색한 뉴스 데이터를 가져오기 -->
     <select id="searchNews" parameterType="String" resultType="News">
         SELECT * FROM naverNews WHERE title LIKE '%' || #{keyword} || '%' OR description LIKE '%' || #{keyword} || '%'
+    </select>
+
+    <!-- 메인화면에 표시될 최신 10개의 뉴스 데이터 가져오기 -->
+    <select id="miniNews" resultType="com.zd.back.naversearchapi.model.News">
+        select * from (SELECT * FROM naverNews ORDER BY pubDate DESC) where rownum &lt;=10
     </select>
 
 </mapper>

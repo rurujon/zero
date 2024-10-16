@@ -24,9 +24,9 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
-      {/* <MainPageApp/> */}
+      <MainPageApp/>
       {/* <LoginApp/> */}
-      <NewsList/>
+      {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
 

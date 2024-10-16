@@ -16,4 +16,5 @@ public interface SearchApiMapper {
     News selectNewsByTitle(String title);
     List<News> selectAllNews();    // DB에서 모든 뉴스 데이터를 가져오기
     List<News> searchNews(@Param("keyword") String keyword);
+    List<News> miniNews();
 }

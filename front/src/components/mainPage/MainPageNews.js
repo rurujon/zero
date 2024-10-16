@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Button } from 'bootstrap';
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +15,7 @@ const MainPageNews = () => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await axios.get('/miniNotice');
+                const response = await axios.get('/api/miniboard/miniNotice');
                 console.log('Notices data:', response.data); // 데이터가 제대로 받아졌는지 콘솔에 출력
                 setNotices(response.data);
             } catch (error) {
@@ -24,18 +23,18 @@ const MainPageNews = () => {
             }
         };
 
-        // const fetchNews = async () => {
-        //     try {
-        //         const response = await axios.get('/miniNews');
-        //         console.log('Notices data:', response.data); // 데이터가 제대로 받아졌는지 콘솔에 출력
-        //         setNews(response.data);
-        //     } catch (error) {
-        //         console.error('Error fetching news:', error);
-        //     }
-        // };
+        const fetchNews = async () => {
+            try {
+                const response = await axios.get('/api/naver/news/miniNews');
+                console.log('News data:', response.data); // 데이터가 제대로 받아졌는지 콘솔에 출력
+                setNews(response.data);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        };
 
         fetchNotices();
-        // fetchNews();
+        fetchNews();
     },[])
 
 
@@ -88,11 +87,12 @@ const MainPageNews = () => {
                 {activeTab === 'news' && (
                     <div>
                         <ul>
-                            {/* {news.map((newsItem, index) => (
+                            {news.map((newsItem, index) => (
                                 <li key={index}>
-                                    <Link to={`/news/${index}`}>{newsItem.title} - {newsItem.writer} - {newsItem.created}</Link>
+                                    {/* <Link to={`/news/${index}`}>{newsItem.title}</Link> */}
+                                    <a href={newsItem.link} target="_blank" rel="noopener noreferrer">{newsItem.title}</a>
                                 </li>
-                            ))} */}
+                            ))}
                         </ul>
                     </div>
                 )}
