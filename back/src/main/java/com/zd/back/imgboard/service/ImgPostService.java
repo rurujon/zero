@@ -1,5 +1,7 @@
 package com.zd.back.imgboard.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,20 @@ public class ImgPostService {
     }
 
    public void insertData(ImgPost dto) throws Exception{
-
         imgPostMapper.insertData(dto);
    }
+
+
+	public int getDataCount(String searchKey, String searchValue) throws Exception {
+		return imgPostMapper.getDataCount(searchKey, searchValue);
+	}
+
+	
+	public List<ImgPost> getLists(int start,int end, String searchKey,String searchValue)throws Exception{
+		
+		return imgPostMapper.getLists(start, end, searchKey, searchValue);
+	}
+
+
 
 }

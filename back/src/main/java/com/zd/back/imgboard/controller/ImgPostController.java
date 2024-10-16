@@ -31,30 +31,40 @@ public class ImgPostController {
     @Autowired
     MyPage myPage;
 
-    // 이미지 생성 정보 가져오는 메서드
-/*     @GetMapping("/created") // 적절한 경로 설정
-    public ResponseEntity<List<ImgPost>> getImgCreated() {
-        try {
+
+    @GetMapping("/created")
+    public ResponseEntity<List<ImgPost>> getImgCreated() { 
+     /*    try {
             List<ImgPost> imgPosts = imgPostService.getAllImgPosts(); // 서비스 메서드 호출
             return ResponseEntity.ok(imgPosts); // 성공적으로 데이터 반환
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null); // 에러 발생 시 500 상태 코드 반환
-        }
+        } */
+    
+    
+    
+    
     }
- */
+ 
+
+    
+
+
+
 
     @PostMapping("/created")
-    public String created(@RequestBody ImgPost dto) {
+    public ResponseEntity<String> created(@RequestBody ImgPost dto) {
         try {
             int maxImgPostId = imgPostService.maxImgPostId();
             dto.setImgPostId(maxImgPostId + 1);
             imgPostService.insertData(dto);
 
-            return "인증게시물이 등록되었습니다.";
+            return ResponseEntity.ok("인증게시물이 등록되었습니다.");
            
         } catch (Exception e) { //예외처리
 
-            return "게시물 등록 중 오류가 발생했습니다" ;
+            return ResponseEntity.status(500).body("게시물 등록 중 오류가 발생했습니다.");
+            // 오류 발생 시 500 Internal Server Error와 같은 적절한 상태 코드를 반환
         }
     
     
