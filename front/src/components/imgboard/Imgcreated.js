@@ -32,9 +32,9 @@ const Imgcreated = () => {
         //유효성 검사 코딩 (-)
      
         axios.post('/imgboard/created', imgData)
-        .then(res=>{
+        .then(res=>{ 
 
-            //res.data from controller
+            //from controller
             alert(res.data)  
             
             //redirecrt

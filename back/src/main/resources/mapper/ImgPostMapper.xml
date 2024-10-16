@@ -15,7 +15,7 @@
 </insert>
 
 
-<select id="getDataCount" resultType="int">
+<select id="getDataCount" parameterType="map" resultType="int">
     SELECT NVL(COUNT(*), 0) FROM ImgPost
     WHERE ${searchKey} LIKE '%' || #{searchValue} || '%'
 </select>
