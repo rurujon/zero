@@ -71,6 +71,7 @@ public ResponseEntity<String> created(@RequestParam String memId) {
     
     }
 
+	// List 아닌, map 형식으로 보낼 것임 -- 확정 (-)
    @GetMapping("/list")
     public ResponseEntity<List<ImgPost>> getLists(HttpServletRequest request) { 
 
@@ -121,11 +122,9 @@ public ResponseEntity<String> created(@RequestParam String memId) {
 		}    
 		//---------------------------------------------
 
-		// 페이징 처리
 		String listUrl =  "/list.action" + param;
 		String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
 
-		// article 페이지 링크
 		String articleUrl =  "/article.action";
 
 		if (param.equals("")) {
@@ -134,11 +133,10 @@ public ResponseEntity<String> created(@RequestParam String memId) {
 			articleUrl += param + "&pageNum=" + currentPage;
 		}
 
-        // gpt 야 이부분 코딩해줘 
-
+        return ResponseEntity.ok(lists);
             
         } catch (Exception e) {
-
+            return ResponseEntity.status(500).body(null); 
         }
     
     
