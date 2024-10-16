@@ -15,5 +15,5 @@ public interface SearchApiMapper {
     void insertNews(News news);
     News selectNewsByTitle(String title);
     List<News> selectAllNews();    // DB에서 모든 뉴스 데이터를 가져오기
-    public List<News> searchNews(@Param("keyword") String keyword);
+    List<News> searchNews(@Param("keyword") String keyword);
 }
