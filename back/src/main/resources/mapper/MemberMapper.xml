@@ -22,4 +22,8 @@
         UPDATE member SET pwd = #{pwd},memName = #{memName},email = #{email},tel = #{tel},post = #{post},addr1 = #{addr1},addr2 = #{addr2} WHERE memId = #{memId}
     </update>
 
+    <select id="findIdByEmail" parameterType="string" resultType="string">
+        SELECT memId FROM member WHERE email = #{email}
+    </select>
+
 </mapper>

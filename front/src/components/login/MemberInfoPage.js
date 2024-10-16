@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { adjustWindowSize } from './utils';
+import { adjustWindowSize } from './utils/Sizing';
 
 const MemberInfoPage = () => {
     const [member, setMember] = useState(null);
@@ -88,6 +88,8 @@ const MemberInfoPage = () => {
     const handleEditSuccess = () => {
         setIsEditing(false)
         fetchMemberInfo()
+        setIsEditing(false)
+        fetchMemberInfo()
     };
     const handleCloseWindow=()=>{
         window.close()
@@ -96,7 +98,15 @@ const MemberInfoPage = () => {
 
         }
     }
+    const handleCloseWindow=()=>{
+        window.close()
+        if(!window.closed){
+            alert("창을 닫을 수 없습니다. 브라우저 설정을 확인해주세요.")
 
+        }
+    }
+
+    if (!member) return <div>유효한 회원정보를 가져올수 없습니다.회원가입 또는 로그인하세요.</div>;
     if (!member) return <div>유효한 회원정보를 가져올수 없습니다.회원가입 또는 로그인하세요.</div>;
 
     return (
