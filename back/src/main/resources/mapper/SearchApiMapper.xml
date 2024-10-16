@@ -4,8 +4,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.mainminiboard.mapper.MiniBoardMapper">
-    
+<mapper namespace="com.zd.back.naversearchapi.mapper.SearchApiMapper">
+    <insert id="insertNews" parameterType="com.zd.back.naversearchapi.model.News">
+        INSERT INTO naverNews (title, originallink, link, description, pubDate)
+        VALUES (#{title}, #{originallink}, #{link}, #{description}, #{pubDate})
+    </insert>
 
+    <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.naversearchapi.model.News">
+        SELECT * FROM naverNews WHERE title = #{title}
+    </select>
+
+    <!-- DB에서 모든 뉴스 데이터를 가져오기 -->
+    <select id="selectAllNews" resultType="com.zd.back.naversearchapi.model.News">
+        SELECT * FROM naverNews order by pubDate desc
+    </select>
+
+    <select id="searchNews" parameterType="String" resultType="News">
+        SELECT * FROM naverNews
+        WHERE title LIKE CONCAT('%', #{keyword}, '%')
+        OR description LIKE CONCAT('%', #{keyword}, '%')
+    </select>
 
 </mapper>
