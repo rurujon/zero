@@ -163,4 +163,12 @@ public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") Stri
         response.put("memId", memId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/check-id")
+    public ResponseEntity<Boolean> checkDuplicateId(@RequestParam("memId") String memId) {
+        boolean isDuplicate = memberService.isIdDuplicate(memId);
+        return ResponseEntity.ok(isDuplicate);
+    }
+
+
 }
