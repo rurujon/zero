@@ -9,7 +9,7 @@ import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import ImgApp from './components/imgboard/ImgApp';
-
+import QuizModal from './components/dailyQuiz/QuizModal'
 
 
 function AppContent() {
@@ -29,7 +29,8 @@ function AppContent() {
       {/* <LoginApp/> */}
 {/*       <NewsList/>
  */}      {/* <SmartMapApp/> */}
-      <ImgApp/>
+      {/* <ImgApp/> */}
+      <QuizModal/>
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
