@@ -54,4 +54,8 @@ public class MemberService {
         // 실제 이메일 전송 기능을 구현해야 합니다.
         System.out.println("임시 비밀번호 " + tempPassword + "를 " + email + "로 전송했습니다.");
     }
+
+    public boolean isIdDuplicate(String memId) {
+        return memberMapper.countByMemId(memId) > 0; // 0보다 크면 중복된 아이디
+    }
 }

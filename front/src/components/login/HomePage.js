@@ -102,6 +102,7 @@ const HomePage = () => {
                             <button
                                 onClick={handleShowRegister}
                                 className="btn btn-outline-secondary btn-sm mt-3"
+                                style={{marginLeft:'25px'}}
                             >
                                 회원가입
                             </button>
@@ -116,6 +117,7 @@ const HomePage = () => {
                             <button
                                 onClick={handleShowLogin}
                                 className="btn btn-outline-secondary btn-sm mt-3"
+                                style={{marginLeft:'25px', marginBottom:'20px'}}
                             >
                                 로그인 돌아가기
                             </button>

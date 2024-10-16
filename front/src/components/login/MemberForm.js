@@ -31,6 +31,31 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
     }, [initialData]);
 
+    const [memId, setMemId] = useState('');
+    const [isDuplicate, setIsDuplicate] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
+
+    const checkDuplicateId = () => {
+
+        if (!member.memId || member.memId.trim() === '') {
+            alert('아이디를 입력해주세요.');
+            return; // 아이디가 없으면 함수 실행 중단
+        }
+
+        // member.memId를 사용해서 중복 체크 요청을 보냄
+        axios.get('/member/check-id', { params: { memId: member.memId } })
+            .then(response => {
+                setIsDuplicate(response.data);
+                setIsChecked(true);
+            })
+            .catch(error => {
+                console.error('아이디 중복 체크 오류:', error);
+            });
+    };
+
+
+
     const validateForm = () => {
         const newErrors = {};
         Object.keys(member).forEach(key => {
@@ -60,6 +85,11 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         const { name, value } = e.target;
         setMember(prev => ({ ...prev, [name]: value }));
 
+        // 아이디 입력시 체크 초기화
+        if (name === 'memId') {
+            setIsChecked(false);
+        }
+
         if (isEditing && name === 'pwd' && value.trim() === '') {
             // 수정 모드에서 비밀번호 필드가 비어있으면 에러 메시지 제거
             setErrors(prev => ({ ...prev, pwd: undefined }));
@@ -86,6 +116,18 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!isChecked) {
+            alert('아이디 중복 체크를 해주세요.');
+            return;
+        }
+        if (isDuplicate) {
+            alert('이미 사용 중인 아이디입니다.');
+            return;
+        }
+
+        // 아이디가 중복되지 않으면 회원가입 처리 로직 실행
+
         if (validateForm()) {
             const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
             const data = isEditing && !member.pwd ? { ...member, pwd: undefined } : member;
@@ -125,6 +167,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }).open();
     };
 
+    
+
     return (
         <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
             <h2>{isEditing ? '회원정보 수정' : '회원가입'}</h2><br/>
@@ -133,11 +177,20 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     <label className="col-sm-2 col-form-label col-form-label-sm">아이디</label>
                     <div className="col-sm-10">
                         <input type="text" name="memId" className="form-control" value={member.memId || ''} onChange={handleInputChange} readOnly={isEditing} required />
+                        {!isEditing && (<input type="button" onClick={checkDuplicateId} className="btn btn-primary btn-sm mt-2" value="중복 확인" />)}
+                        {isChecked && (
+                        <div>
+                            {isDuplicate ? (
+                                <span style={{ color: 'red' }}>이미 사용 중인 아이디입니다.</span>
+                            ) : (
+                                <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
+                            )}
+                        </div>
+                    )}
                         <ValidationMessage message={errors.memId} />
                     </div>
                 </div>
 
-                {/* 비밀번호 입력란 */}
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">비밀번호</label>
                     <div className="col-sm-10">
@@ -203,8 +256,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="mt-3">
-                    <button type="submit" className="btn btn-primary btn-sm">{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel}>{isEditing ? '수정취소' : '가입취소'}</button>
+                    <button type="submit" className="btn btn-primary btn-sm" style={{marginBottom:'20px'}}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel} style={{marginBottom:'20px'}}>{isEditing ? '수정취소' : '가입취소'}</button>
                 </div>
             </form>
         </div>

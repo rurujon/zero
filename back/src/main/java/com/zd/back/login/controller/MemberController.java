@@ -131,4 +131,10 @@ public class MemberController {
         }
         return ResponseEntity.badRequest().body("비밀번호를 재설정할 수 없습니다.");
     }
+
+    @GetMapping("/check-id")
+    public ResponseEntity<Boolean> checkDuplicateId(@RequestParam("memId") String memId) {
+        boolean isDuplicate = memberService.isIdDuplicate(memId);
+        return ResponseEntity.ok(isDuplicate);
+    }
 }

@@ -98,15 +98,7 @@ const MemberInfoPage = () => {
 
         }
     }
-    const handleCloseWindow=()=>{
-        window.close()
-        if(!window.closed){
-            alert("창을 닫을 수 없습니다. 브라우저 설정을 확인해주세요.")
 
-        }
-    }
-
-    if (!member) return <div>유효한 회원정보를 가져올수 없습니다.회원가입 또는 로그인하세요.</div>;
     if (!member) return <div>유효한 회원정보를 가져올수 없습니다.회원가입 또는 로그인하세요.</div>;
 
     return (
@@ -179,7 +171,7 @@ const MemberInfoPage = () => {
                         onChange={handleDeleteConfirmation}
                         style={{marginBottom:'20px'}}
                     />
-                    <button className="btn btn-danger" onClick={handleFinalDelete}>확인</button>
+                    <button className="btn btn-danger" onClick={handleFinalDelete} style={{marginBottom:'20px'}}>확인</button>
                 </div>
             )}
         </div>
