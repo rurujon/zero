@@ -96,13 +96,11 @@ const LoginPage = ({ onLogin }) => {
                         className="btn btn-primary btn-sm"
                     >
                         로그인
-                    </button>
+                    </button>&nbsp;
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>&nbsp;
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
                 </div>
             </form>
-            <div>
-                <Button variant="link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</Button>
-                <Button variant="link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</Button>
-            </div>
 
             <Modal show={showFindIdModal} onHide={() => setShowFindIdModal(false)}>
                 <Modal.Header closeButton>

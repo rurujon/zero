@@ -93,6 +93,7 @@ const HomePage = () => {
                             <button
                                 onClick={handleShowRegister}
                                 className="btn btn-outline-secondary btn-sm mt-3"
+                                style={{marginLeft:'25px'}}
                             >
                                 Register
                             </button>
@@ -107,6 +108,7 @@ const HomePage = () => {
                             <button
                                 onClick={handleShowLogin}
                                 className="btn btn-outline-secondary btn-sm mt-3"
+                                style={{marginLeft:'25px', marginBottom:'20px'}}
                             >
                                 Back to Login
                             </button>
