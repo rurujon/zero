@@ -2,12 +2,12 @@ package com.zd.back.login.controller;
 
 import com.zd.back.login.model.Member;
 import com.zd.back.login.service.MemberService;
+import com.zd.back.login.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.util.HashMap;
@@ -20,6 +20,9 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
@@ -34,39 +37,52 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String memId, @RequestParam String pwd, HttpSession session) {
+    public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
         Member member = memberService.getMemberById(memId);
         if (member != null && member.getPwd().equals(pwd)) {
-            session.setAttribute("memId", memId);
-            return ResponseEntity.ok("로그인 성공");
+            String token = jwtUtil.generateToken(memId);
+            Map<String, String> response = new HashMap<>();
+            response.put("token", token);
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.badRequest().body("로그인 실패");
     }
 
 
     @GetMapping("/info")
-    public ResponseEntity<Member> getMemberInfo(HttpSession session) {
-        String memId = (String) session.getAttribute("memId");
-        if (memId == null) {
-            return ResponseEntity.status(401).build();
-        }
-        Member member = memberService.getMemberById(memId);
-        if (member != null) {
-            member.setPwd(null);
-            return ResponseEntity.ok(member);
-        }
-        return ResponseEntity.notFound().build();
+public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        return ResponseEntity.status(401).build();
     }
+    String token = authHeader.substring(7);
+    if (!jwtUtil.validateToken(token)) {
+        return ResponseEntity.status(401).build();
+    }
+    String memId = jwtUtil.extractMemId(token);
+    Member member = memberService.getMemberById(memId);
+    if (member != null) {
+        member.setPwd(null);
+        return ResponseEntity.ok(member);
+    }
+    return ResponseEntity.notFound().build();
+}
 
     @PostMapping("/update/{memId}")
-    public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, HttpSession session) {
+    public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream()
                 .map(error -> error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
             return ResponseEntity.badRequest().body(errors);
         }
-        String loggedInMemId = (String) session.getAttribute("memId");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("인증이 필요합니다.");
+        }
+        String token = authHeader.substring(7);
+        if (!jwtUtil.validateToken(token)) {
+            return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
+        }
+        String loggedInMemId = jwtUtil.extractMemId(token);
         if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
             return ResponseEntity.status(403).body("권한이 없습니다.");
         }
@@ -84,19 +100,25 @@ public class MemberController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpSession session) {
-        session.invalidate();
-        return ResponseEntity.ok("로그아웃성공");
+    public ResponseEntity<String> logout() {
+        // JWT는 상태 비저장이므로 클라이언트에서 토큰을 삭제하도록 안내
+        return ResponseEntity.ok("로그아웃 성공");
     }
 
     @DeleteMapping("/{memId}")
-    public ResponseEntity<String> deleteMember(@PathVariable String memId, HttpSession session) {
-        String loggedInMemId = (String) session.getAttribute("memId");
-        if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
+    public ResponseEntity<String> deleteMember(@PathVariable String memId, @RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("인증이 필요합니다.");
+        }
+        String token = authHeader.substring(7);
+        if (!jwtUtil.validateToken(token)) {
+            return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
+        }
+        String loggedInMemId = jwtUtil.extractMemId(token);
+        if (!loggedInMemId.equals(memId)) {
             return ResponseEntity.status(403).body("권한이 없습니다.");
         }
         memberService.deleteMember(memId);
-        session.invalidate();
         return ResponseEntity.ok("회원 탈퇴 성공");
     }
 
@@ -112,16 +134,6 @@ public class MemberController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/check-login")
-    public ResponseEntity<?> checkLoginStatus(HttpSession session) {
-        String memId = (String) session.getAttribute("memId");
-        Map<String, Object> response = new HashMap<>();
-        response.put("isLoggedIn", memId != null);
-        if (memId != null) {
-            response.put("memId", memId);
-        }
-        return ResponseEntity.ok(response);
-    }
 
     @PostMapping("/find-password")
     public ResponseEntity<String> findPassword(@RequestParam String memId, @RequestParam String email) {
@@ -130,5 +142,25 @@ public class MemberController {
             return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
         }
         return ResponseEntity.badRequest().body("비밀번호를 재설정할 수 없습니다.");
+    }
+
+    @GetMapping("/check-login")
+    public ResponseEntity<?> checkLoginStatus(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("isLoggedIn", false);
+            return ResponseEntity.ok(response);
+        }
+        String token = authHeader.substring(7);
+        if (!jwtUtil.validateToken(token)) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("isLoggedIn", false);
+            return ResponseEntity.ok(response);
+        }
+        String memId = jwtUtil.extractMemId(token);
+        Map<String, Object> response = new HashMap<>();
+        response.put("isLoggedIn", true);
+        response.put("memId", memId);
+        return ResponseEntity.ok(response);
     }
 }

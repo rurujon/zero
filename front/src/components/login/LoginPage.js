@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+// src/components/login/LoginPage.js
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { AuthContext } from './context/AuthContext';
 
 const LoginPage = ({ onLogin }) => {
     const [memId, setMemId] = useState('');
@@ -10,15 +12,18 @@ const LoginPage = ({ onLogin }) => {
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
     const [email, setEmail] = useState('');
     const [foundId, setFoundId] = useState('');
+    const [result, setResult] = useState('');
+
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('/member/login', null, {
-            params: { memId, pwd },
-            withCredentials: true
+            params: { memId, pwd }
         })
             .then(response => {
-                if (response.data === '로그인 성공') {
+                if (response.data.token) {
+                    login(response.data.token, memId);
                     onLogin(memId);
                 } else {
                     alert('로그인 실패');
@@ -45,11 +50,12 @@ const LoginPage = ({ onLogin }) => {
     const handleFindPassword = () => {
         axios.post('/member/find-password', { memId, email })
             .then(response => {
-                alert('임시 비밀번호가 이메일로 전송되었습니다.');
+                setResult('임시 비밀번호가 이메일로 전송되었습니다.');
                 setShowFindPasswordModal(false);
             })
             .catch(error => {
                 console.error('비밀번호 찾기 실패:', error);
+                setResult('비밀번호를 찾을 수 없습니다.');
                 alert('비밀번호를 찾을 수 없습니다.');
             });
     };
@@ -67,6 +73,7 @@ const LoginPage = ({ onLogin }) => {
                             value={memId}
                             onChange={(e) => setMemId(e.target.value)}
                             style={{ width: '400px' }}
+                            required
                         />
                     </dd>
                 </div>
@@ -79,6 +86,7 @@ const LoginPage = ({ onLogin }) => {
                             value={pwd}
                             onChange={(e) => setPwd(e.target.value)}
                             style={{ width: '400px' }}
+                            required
                         />
                     </dd>
                 </div>
@@ -101,7 +109,7 @@ const LoginPage = ({ onLogin }) => {
                     <Modal.Title>아이디 찾기</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={(e) => { e.preventDefault(); handleFindId(); }}>
                         <Form.Group>
                             <Form.Label>이메일</Form.Label>
                             <Form.Control
@@ -109,17 +117,18 @@ const LoginPage = ({ onLogin }) => {
                                 placeholder="이메일을 입력하세요"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                required
                             />
                         </Form.Group>
+                        <Button variant="primary" type="submit" className="mt-3">
+                            아이디 찾기
+                        </Button>
                     </Form>
-                    {foundId && <p>찾은 아이디: {foundId}</p>}
+                    {foundId && <p className="mt-3">찾은 아이디: {foundId}</p>}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowFindIdModal(false)}>
                         닫기
-                    </Button>
-                    <Button variant="primary" onClick={handleFindId}>
-                        아이디 찾기
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -129,7 +138,7 @@ const LoginPage = ({ onLogin }) => {
                     <Modal.Title>비밀번호 찾기</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={(e) => { e.preventDefault(); handleFindPassword(); }}>
                         <Form.Group>
                             <Form.Label>아이디</Form.Label>
                             <Form.Control
@@ -137,30 +146,34 @@ const LoginPage = ({ onLogin }) => {
                                 placeholder="아이디를 입력하세요"
                                 value={memId}
                                 onChange={(e) => setMemId(e.target.value)}
+                                required
                             />
                         </Form.Group>
-                        <Form.Group>
+                        <Form.Group className="mt-3">
                             <Form.Label>이메일</Form.Label>
                             <Form.Control
                                 type="email"
                                 placeholder="이메일을 입력하세요"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                required
                             />
                         </Form.Group>
+                        <Button variant="primary" type="submit" className="mt-3">
+                            비밀번호 찾기
+                        </Button>
                     </Form>
+                    {result && <p className="mt-3">{result}</p>}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowFindPasswordModal(false)}>
                         닫기
                     </Button>
-                    <Button variant="primary" onClick={handleFindPassword}>
-                        비밀번호 찾기
-                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>
     );
+
 };
 
 export default LoginPage;

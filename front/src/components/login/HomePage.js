@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+// src/components/login/HomePage.js
+import React, { useState, useEffect, useContext } from 'react';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
+import { AuthContext } from './context/AuthContext';
+import { jwtDecode } from 'jwt-decode'; // Named import
 
 const HomePage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,37 +14,26 @@ const HomePage = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
 
+    const { token, logout } = useContext(AuthContext);
+
     useEffect(() => {
-        checkLoginStatus();
-    }, []);
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                setMemId(decoded.sub);
+                setIsLoggedIn(true);
+            } catch (e) {
+                console.error('Token decoding failed:', e);
+                logout();
+            }
+        }
+    }, [token, logout]);
 
     const handleLogout = () => {
-        axios.post('/member/logout', null, { withCredentials: true })
-            .then(() => {
-                setIsLoggedIn(false);
-                setMemId('');
-            })
-            .catch(error => {
-                console.error('로그아웃 실패:', error);
-            });
-    };
-
-    useEffect(() => {
-        window.handleLogout = handleLogout;
-        return () => {
-            delete window.handleLogout;
-        };
-    }, []);
-
-    const checkLoginStatus = () => {
-        axios.get('/member/check-login', { withCredentials: true })
-            .then(response => {
-                if (response.data.isLoggedIn) {
-                    setIsLoggedIn(true);
-                    setMemId(response.data.memId);
-                }
-            })
-            .catch(error => console.error('Login status check failed:', error));
+        logout();
+        setIsLoggedIn(false);
+        setMemId('');
+        alert('Logout successful');
     };
 
     const handleLogin = (id) => {
@@ -62,7 +54,7 @@ const HomePage = () => {
     const handleRegisterSuccess = () => {
         setShowRegister(false);
         setShowLogin(true);
-        alert('회원가입이 완료되었습니다. 로그인 해주세요.');
+        alert('Registration completed. Please log in.');
     };
 
     const handleRegisterCancel = () => {
@@ -71,24 +63,23 @@ const HomePage = () => {
     };
 
     const handleMemberInfo = async () => {
-        const memberInfoUrl = '/member-info';
-
         try {
-            const response = await axios.get('/member/info', { withCredentials: true });
+            const response = await axios.get('/member/info');
             const memberData = response.data;
 
             if (!memberData || typeof memberData !== 'object') {
-                throw new Error('회원 정보 데이터가 유효하지 않습니다.');
+                throw new Error('Invalid member data.');
             }
 
+            const memberInfoUrl = '/member-info';
             const newWindow = window.open(memberInfoUrl, 'MemberInfo', 'width=600,height=400,resizable=yes');
 
             newWindow.addEventListener('load', () => {
                 adjustWindowSize(newWindow, memberData, false, []);
             });
         } catch (error) {
-            console.error('회원 정보 가져오기 실패:', error);
-            alert('회원 정보를 가져오는 데 실패했습니다.');
+            console.error('Failed to retrieve member info:', error);
+            alert('Failed to retrieve member information.');
         }
     };
 
@@ -103,7 +94,7 @@ const HomePage = () => {
                                 onClick={handleShowRegister}
                                 className="btn btn-outline-secondary btn-sm mt-3"
                             >
-                                회원가입
+                                Register
                             </button>
                         </>
                     )}
@@ -117,16 +108,16 @@ const HomePage = () => {
                                 onClick={handleShowLogin}
                                 className="btn btn-outline-secondary btn-sm mt-3"
                             >
-                                로그인 돌아가기
+                                Back to Login
                             </button>
                         </div>
                     )}
                 </div>
             ) : (
                 <div>
-                    <h2>환영합니다, {memId}님!</h2>
-                    <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
-                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
+                    <h2>Welcome, {memId}!</h2>
+                    <button onClick={handleMemberInfo} className="btn btn-info">Member Info</button>&nbsp;
+                    <button onClick={handleLogout} className="btn btn-danger">Logout</button>
                 </div>
             )}
         </div>

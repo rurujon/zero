@@ -8,6 +8,8 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
+import { AuthProvider } from './components/login/context/AuthContext';
+import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 
 
 
@@ -43,10 +45,13 @@ function AppContent() {
 //App.js의 구조를 살짝 변경했습니다. 프론트 확인은 하던대로 위쪽에서 진행하시면 됩니다.
 function App() {
   return (
+    <AuthProvider>
+      <AxiosInterceptor>
     <BrowserRouter>
       <AppContent />
     </BrowserRouter>
-
+      </AxiosInterceptor>
+    </AuthProvider>
   );
 }
 
