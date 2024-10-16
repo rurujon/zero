@@ -2,7 +2,9 @@ package com.zd.back.imgboard.controller;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,69 +73,78 @@ public ResponseEntity<String> created(@RequestParam String memId) {
     
     }
 
-	// List 아닌, map 형식으로 보낼 것임 -- 확정 (-)
+	// Map<String,Object>형식으로 보낼 것임 -- 확정 (-)
    @GetMapping("/list")
-    public ResponseEntity<List<ImgPost>> getLists(HttpServletRequest request) { 
+    public ResponseEntity<Map<String,Object>> getLists(HttpServletRequest req) { 
+		
+		Map<String,Object> map = new HashMap<>(); 
 
-        try {
-            String pageNum = request.getParameter("pageNum");
+		try {
+			
+			String pageNum = req.getParameter("pageNum");
 
-		int currentPage = 1;
+			int currentPage = 1;
 
-		if (pageNum != null) {
-			currentPage = Integer.parseInt(pageNum);
-		}
+			if (pageNum != null) {
+				currentPage = Integer.parseInt(pageNum);
+			}
 
-        String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
+			String searchKey = req.getParameter("searchKey");
+			String searchValue = req.getParameter("searchValue");
 
-        //검색--------------------------
-		if (searchValue != null) {
+			//검색--------------------------
+			if (searchValue != null) {
 
-			if (request.getMethod().equalsIgnoreCase("GET")) {
-				searchValue = URLDecoder.decode(searchValue, "UTF-8");
-			}        
+				if (req.getMethod().equalsIgnoreCase("GET")) {
+					searchValue = URLDecoder.decode(searchValue, "UTF-8");
+				}        
 
-		} else {
-			searchKey = "subject";
-			searchValue = "";
-		}
-        //------------------------------
+			} else {
+				searchKey = "subject";
+				searchValue = "";
+			}
+			//------------------------------
 
-        int dataCount = imgPostService.getDataCount(searchKey, searchValue);
-        int numPerPage = 5;
-		int totalPage = myPage.getPageCount(numPerPage, dataCount);
+			int dataCount = imgPostService.getDataCount(searchKey, searchValue);
+			int numPerPage = 5;
+			int totalPage = myPage.getPageCount(numPerPage, dataCount);
 
-		if (currentPage > totalPage) {
-			currentPage = totalPage;
-		}
+			if (currentPage > totalPage) {
+				currentPage = totalPage;
+			}
 
-		int start = (currentPage - 1) * numPerPage + 1;
-		int end = currentPage * numPerPage;
+			int start = (currentPage - 1) * numPerPage + 1;
+			int end = currentPage * numPerPage;
 
-		List<ImgPost> lists =  imgPostService.getLists(start, end, searchKey, searchValue);
+			List<ImgPost> lists =  imgPostService.getLists(start, end, searchKey, searchValue);
 
-		// 검색 --------------------------------------
-		String param = "";
-		if (!searchValue.equals("")) {
+			// 검색 --------------------------------------
+			String param = "";
+			if (!searchValue.equals("")) {
 
-			param = "?searchKey=" + searchKey;
-			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");    
-		}    
-		//---------------------------------------------
+				param = "?searchKey=" + searchKey;
+				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");    
+			}    
+			//---------------------------------------------
 
-		String listUrl =  "/list.action" + param;
-		String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
+			String listUrl =  "/list.action" + param;
+			String pageIndexList = myPage.pageIndexList(currentPage, totalPage, listUrl);
 
-		String articleUrl =  "/article.action";
+			String articleUrl =  "/article.action";
 
-		if (param.equals("")) {
-			articleUrl += "?pageNum=" + currentPage;    
-		} else {
-			articleUrl += param + "&pageNum=" + currentPage;
-		}
+			if (param.equals("")) {
+				articleUrl += "?pageNum=" + currentPage;    
+			} else {
+				articleUrl += param + "&pageNum=" + currentPage;
+			}
 
-        return ResponseEntity.ok(lists);
+			map.put("lists",lists);
+			map.put("dataCount",dataCount);
+			map.put("pageIndexList",pageIndexList);
+			map.put("articleUrl",articleUrl);
+
+			return ResponseEntity.ok(map);
+
             
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null); 
