@@ -35,15 +35,17 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
 
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [isVerified, setIsVerified] = useState(false);
+    const [isPhoneVerificationRequired, setIsPhoneVerificationRequired] = useState(false);
 
     const checkDuplicateId = () => {
-
         if (!member.memId || member.memId.trim() === '') {
             alert('아이디를 입력해주세요.');
-            return; // 아이디가 없으면 함수 실행 중단
+            return;
         }
 
-        // member.memId를 사용해서 중복 체크 요청을 보냄
         axios.get('/member/check-id', { params: { memId: member.memId } })
             .then(response => {
                 setIsDuplicate(response.data);
@@ -61,7 +63,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 newErrors[key] = '이 필드는 필수입니다.';
             } else if (key !== 'pwdConfirm' && key !== 'post' && key !== 'addr1' && key !== 'addr2') {
                 if (isEditing && key === 'pwd' && member[key].trim() === '') {
-                    // 수정 모드에서 비밀번호가 비어있으면 유효성 검사 건너뛰기
                     return;
                 }
                 const errorMessage = validateField(key, member[key]);
@@ -83,13 +84,11 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         const { name, value } = e.target;
         setMember(prev => ({ ...prev, [name]: value }));
 
-        // 아이디 입력시 체크 초기화
         if (name === 'memId') {
             setIsChecked(false);
         }
 
         if (isEditing && name === 'pwd' && value.trim() === '') {
-            // 수정 모드에서 비밀번호 필드가 비어있으면 에러 메시지 제거
             setErrors(prev => ({ ...prev, pwd: undefined }));
         } else {
             const errorMessage = validateField(name, value);
@@ -114,8 +113,13 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!isVerified) {
+        if (!isEditing && !isVerified) {
             alert('휴대폰 인증을 완료해주세요.');
+            return;
+        }
+
+        if (isEditing && isPhoneVerificationRequired && !isVerified) {
+            alert('휴대폰 재인증을 완료해주세요.');
             return;
         }
 
@@ -130,11 +134,13 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             }
         }
 
-        // 아이디가 중복되지 않으면 회원가입 처리 로직 실행
-
         if (validateForm()) {
             const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
-            const data = isEditing && !member.pwd ? { ...member, pwd: undefined } : member;
+            const data = {
+                ...member,
+                pwd: isEditing && !member.pwd ? undefined : member.pwd,
+                tel: isPhoneVerificationRequired ? phoneNumber : member.tel
+            };
 
             axios.post(url, data, { withCredentials: true })
                 .then(response => {
@@ -171,13 +177,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }).open();
     };
 
-    //회원가입시 핸드폰 본인인증
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [verificationCode, setVerificationCode] = useState('');
-    const [isVerified, setIsVerified] = useState(false);
-
     const handleSendVerification = () => {
-        axios.post('/api/auth/send-verification', { phoneNumber },{withCredentials: true})
+        axios.post('/api/auth/send-verification', { phoneNumber }, { withCredentials: true })
             .then(() => alert('인증번호가 발송되었습니다.'))
             .catch(error => console.error('인증번호 발송 실패:', error));
     };
@@ -195,7 +196,12 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             .catch(error => console.error('인증 실패:', error));
     };
 
-
+    const handlePhoneReauthentication = () => {
+        setIsPhoneVerificationRequired(true);
+        setIsVerified(false);
+        setPhoneNumber('');
+        setVerificationCode('');
+    };
 
     return (
         <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
@@ -254,26 +260,34 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">휴대폰 번호</label>
+                    <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
                     <div className="col-sm-10">
-                        <input type="tel" name="tel" className="form-control" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} required />
-                        <button type="button" onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">인증번호 발송</button>
-                        </div>
+                        <input type="tel" name="tel" className="form-control" value={isEditing && !isPhoneVerificationRequired ? member.tel : phoneNumber} placeholder=' (변경시에만 입력)' onChange={e => isPhoneVerificationRequired ? setPhoneNumber(e.target.value) : handleInputChange(e)} readOnly={isEditing && !isPhoneVerificationRequired} />
+                        {isEditing && !isPhoneVerificationRequired && (
+                            <button type="button" onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">핸드폰 재인증</button>
+                        )}
+                        {(isPhoneVerificationRequired || !isEditing) && (
+                            <button type="button" onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">인증번호 발송</button>
+                        )}
                     </div>
+                </div>
+                {(isPhoneVerificationRequired || !isEditing) && (
                     <div className="row mb-3">
                         <label className="col-sm-2 col-form-label col-form-label-sm">인증번호</label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" value={verificationCode} onChange={e => setVerificationCode(e.target.value)} required />
+                            <input type="text" className="form-control" value={verificationCode} onChange={e => setVerificationCode(e.target.value)} />
                             <button type="button" onClick={handleVerifyCode} className="btn btn-secondary btn-sm mt-2">인증하기</button>
                         </div>
                     </div>
-                    <div className="row mb-3">
-                        <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
-                        <div className="col-sm-10">
-                            <input type="text" id="post" name="post" className="form-control" value={member.post || ''} onChange={handleInputChange} readOnly required />
-                            <input type="button" onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2" value="우편번호 찾기" />
-                        </div>
+                )}
+
+                <div className="row mb-3">
+                    <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
+                    <div className="col-sm-10">
+                        <input type="text" id="post" name="post" className="form-control" value={member.post || ''} onChange={handleInputChange} readOnly required />
+                        <input type="button" onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2" value="우편번호 찾기" />
                     </div>
+                </div>
 
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">주소</label>
@@ -288,6 +302,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         <input type="text" id="addr2" name="addr2" className="form-control" value={member.addr2 || ''} onChange={handleInputChange} required />
                     </div>
                 </div>
+
 
                 <div className="mt-3">
                     <button type="submit" className="btn btn-primary btn-sm" style={{marginBottom:'20px'}}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
