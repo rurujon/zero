@@ -12,7 +12,7 @@ import com.zd.back.seoulcrawler.model.SeoulNews;
 @Mapper
 public interface CrawlerMapper {
 
-    void insertSeoulNews();
+    void insertSeoulNews(SeoulNews seoulNews);
     List<SeoulNews> selectSeoulNews();
 
     
