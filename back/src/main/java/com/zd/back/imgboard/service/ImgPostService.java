@@ -8,28 +8,23 @@ import org.springframework.stereotype.Service;
 import com.zd.back.imgboard.mapper.ImgPostMapper;
 import com.zd.back.imgboard.model.ImgPost;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ImgPostService {
     
-    @Autowired
-    private ImgPostMapper imgPostMapper;
-
-    public int maxImgPostId() throws Exception{
-       
+    private final ImgPostMapper imgPostMapper;
+    
+    public int maxImgPostId() {
         return imgPostMapper.maxImgPostId();
-
     }
 
-   public void insertData(ImgPost dto) throws Exception{
-        imgPostMapper.insertData(dto);
-   }
-
-
-
-    public List<ImgPost> getLists() throws Exception {
-        return imgPostMapper.getLists();
+    public void createImgPost(ImgPost imgPost) {
+        imgPostMapper.insertImgPost(imgPost);
     }
 
-
-
+    public List<ImgBoard> getAllImgBoards() {
+        return imgPostMapper.selectAllImgBoards();
+    }
 }

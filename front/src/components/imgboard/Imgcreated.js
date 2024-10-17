@@ -1,155 +1,54 @@
 import React, { useState } from 'react';
-import '../../assets/css/Imgcreated.css';
 import axios from 'axios';
 
-const Imgcreated = () => {
-//const Imgcreated = ({memId}) => { //login에서 memId 받아야함
+const ImgCreated = () => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [file, setFile] = useState(null);
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
 
-//( memId, cate, title, content, created) 
-// (img 테이블)(-)
- const[imgData, setImgData] = useState({
-     memId: 'memId(-)',cate: '',title: '',content: ''
- })
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
- const { memId, cate, title, content} = imgData 
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('file', file);
 
-    const changeInput =(evt)=>{
-
-        const{value,name} = evt.target;
-        setImgData({
-            ...imgData,
-            [name]:value
-        })
-    }
-    
-
-
-//btn  ---------
-
-     const onSubmit = () => {
-         
-        //유효성 검사 코딩 (-)
-     
-        axios.post('/imgboard/created', imgData)
-        .then(res=>{ 
-
-            //from controller
-            alert(res.data)  
-            
-            //redirecrt
-            window.location.href ='/imgboard/list/action'
-
-        })
-        .catch(error=>{
-            console.error(error)
-            alert("게시물 등록 중 문제가 발생했습니다. " + error)
-        })
-    }
-
-    const boardReset = () => { //(imgPostId, cate, title, content, created) //file(-)
-        setImgData({
-            imgPostId: '',cate:'',title: '',content: '',created: ''
-        });
-    }
-    
-// ---------
-
+        try {
+            await axios.post('/imgboard/created', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert('게시글이 등록되었습니다.');
+        } catch (error) {
+            console.error('Error uploading the file', error);
+        }
+    };
 
     return (
-        <div id="bbs">
-            <div id="bbs_title">게 시 판</div>
-
-            <form name="myForm">
-                <div id="bbsCreated">
-                    <div className="bbsCreated_bottomLine">
-                        <dl>
-                            <dt>작 성 자</dt>
-                            <dd>
-                                <input
-                                    type="text"
-                                    name="memId"
-                                    className="boxTF"
-                                    value={memId}
-                                    readOnly
-                                />
-                            </dd>
-                        </dl>
-                    </div>
-                    <div className="bbsCreated_bottomLine">
-                        <dl>
-                            <dt>카테고리</dt>
-                            <dd>
-                                <input
-                                    type="text"
-                                    name="cate"                            
-                                    className="boxTF"
-                                    value={cate}
-                                    onChange={changeInput}
-                                />
-                            </dd>
-                        </dl>
-                    </div>
-                    <div className="bbsCreated_bottomLine">
-                        <dl>
-                            <dt>제&nbsp;&nbsp;&nbsp;&nbsp;목</dt>
-                            <dd>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    className="boxTF"
-                                    value={title}
-                                    onChange={changeInput}
-                                />
-                            </dd>
-                        </dl>
-                    </div>
-                    <div id="bbsCreated_content">
-                        <dl>
-                            <dt>내&nbsp;&nbsp;&nbsp;&nbsp;용</dt>
-                            <dd>
-                                <textarea
-                                    rows="12"
-                                    cols="63"
-                                    className="boxTA"
-                                    name="content"
-                                    style={{ resize: 'none', backgroundColor: '#ffffff' }}
-                                    value={content}
-                                    onChange={changeInput}
-                                />
-                            </dd>
-                        </dl>
-                    </div>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>제목</label>
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
-
-            {/*  파일 업로드  */}
-
-            <div id="bbsCreated_footer">
-                    <input
-                        type="button"
-                        value=" 등록하기 "
-                        className="btn2"
-                        onClick={onSubmit}
-                    />
-                    <input
-                        type="button"
-                        value="다시입력 "
-                        className="btn2"
-                        onClick={boardReset}
-                    />
-                    <input
-                        type="button"
-                        value=" 작성취소 "
-                        className="btn2"
-                        onClick={() => (window.location.href = '/imgboard/list.action')}
-                    />
+                <div>
+                    <label>내용</label>
+                    <textarea value={content} onChange={(e) => setContent(e.target.value)} />
                 </div>
-
-
-
+                <div>
+                    <label>파일 선택</label>
+                    <input type="file" onChange={handleFileChange} />
+                </div>
+                <button type="submit">등록</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default Imgcreated;
+export default ImgCreated;

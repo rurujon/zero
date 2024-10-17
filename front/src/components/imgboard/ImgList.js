@@ -1,48 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import '../../assets/css/ImgList.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const ImgList = () => {
-    const [lists, setLists] = useState([])
+    const [imgBoardList, setImgBoardList] = useState([]);
 
     useEffect(() => {
-        fetchImgData()
-    }, [])
+        const fetchImgBoards = async () => {
+            try {
+                const response = await axios.get('/imgboard/list');
+                setImgBoardList(response.data);
+            } catch (error) {
+                console.error('Error fetching the list', error);
+            }
+        };
 
-    const fetchImgData = () => {
-        axios.get('/imgboard/list')
-            .then(res => {
-                setLists(res.data.lists);
-            })
-            .catch(err => {
-                console.error(err);
-                alert('게시물 조회 중 오류가 발생했습니다.');
-            })
-    }
+        fetchImgBoards();
+    }, []);
 
     return (
-        <div id="bbs">
-            <div id="bbs_title">게시물 리스트</div>
-            <div>
-                {lists.map(imgData => (
-                    <div className="bbsListItem" key={imgData.imgPostId}>
-                        <div className="bbsListThumbnail">
-                            {/* 썸네일 이미지추가 */}
-                            {/* <img src={imgData.thumbnailUrl} alt={imgData.title} /> */}
-                        </div>
-                        <div className="bbsListContent">
-                            <Link to={`/imgboard/article`}>
-                            <h3>{imgData.title}</h3></Link>
-                            <p>{imgData.content}</p>
-                            <p>작성자: {imgData.memId}</p>
-                            <p>카테고리: {imgData.cate}</p>
-                        </div>
-                    </div>
+        <div>
+            <h1>이미지 게시판 목록</h1>
+            <ul>
+                {imgBoardList.map((imgBoard) => (
+                    <li key={imgBoard.imgPost.imgPostId}>
+                        <h2>{imgBoard.imgPost.title}</h2>
+                        <p>{imgBoard.imgPost.content}</p>
+                        {imgBoard.images.map((img) => (
+                            <img key={img.imgId} src={img.filePath} alt={img.originalFileName} />
+                        ))}
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
-    )
-}
+    );
+};
 
 export default ImgList;

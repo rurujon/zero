@@ -3,22 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.zd.back.imgboard.mapper.ImgMapper">
 
-<select id="maxImgId" resultType="int">
-    SELECT NVL(MAX(imgId), 0) FROM Img
-</select>
-
-
-<insert id="insertImg" >
-    INSERT INTO Img (ImgId, imgPostId, originalfilename, savefilename, filepath, filedate)
-    VALUES (#{ImgId}, #{imgPostId}, #{originalfilename}, #{savefilename}, #{filepath}, SYSTIMESTAMP)
-</insert>
-
-
-
-
-
-
+    <insert id="insertImg">
+        INSERT INTO Img (imgId, imgPostId, originalFileName, saveFileName, filePath, fileDate)
+        VALUES (#{imgId}, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
+    </insert>
 </mapper>
