@@ -132,9 +132,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         if (validateForm()) {
             const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
-            const data = isEditing && !member.pwd ? { ...member, pwd: undefined } : member;
+            // const data = isEditing && !member.pwd ? { ...member, pwd: undefined } : member;
 
-            axios.post(url, data, { withCredentials: true })
+            axios.post(url, member, { withCredentials: true })
                 .then(response => {
                     console.log(response);
                     alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');

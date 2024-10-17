@@ -42,8 +42,9 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
-        Member member = memberService.getMemberById(memId);
-        if (member != null && member.getPwd().equals(pwd)) {
+        boolean isValid = memberService.validateLogin(memId, pwd);
+
+        if (isValid) {
             String token = jwtUtil.generateToken(memId);
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
