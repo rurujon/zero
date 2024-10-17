@@ -117,13 +117,15 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!isChecked) {
-            alert('아이디 중복 체크를 해주세요.');
-            return;
-        }
-        if (isDuplicate) {
-            alert('이미 사용 중인 아이디입니다.');
-            return;
+        if (!isEditing) {
+            if (!isChecked) {
+                alert('아이디 중복 체크를 해주세요.');
+                return;
+            }
+            if (isDuplicate) {
+                alert('이미 사용 중인 아이디입니다.');
+                return;
+            }
         }
 
         // 아이디가 중복되지 않으면 회원가입 처리 로직 실행
