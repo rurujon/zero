@@ -12,11 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import com.zd.back.login.security.JwtFilter;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -31,8 +28,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-
 
     //     http
     //     .cors().and().csrf().disable().headers().frameOptions().disable()
@@ -49,10 +44,10 @@ public class SecurityConfig {
     // }
 
         http
-            .cors().and()
+            .cors().configurationSource(corsConfigurationSource()).and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/", "/member/register", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver").permitAll()
+            .antMatchers("/", "/member/register", "/api/auth/**", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

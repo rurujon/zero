@@ -52,7 +52,6 @@ public class MemberController {
         return ResponseEntity.badRequest().body("로그인 실패");
     }
 
-
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
         try {
@@ -110,7 +109,6 @@ public class MemberController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
-        // JWT는 상태 비저장이므로 클라이언트에서 토큰을 삭제하도록 안내
         return ResponseEntity.ok("로그아웃 성공");
     }
 
@@ -143,19 +141,18 @@ public class MemberController {
         return ResponseEntity.notFound().build();
     }
 
-
     @PostMapping("/find-password")
-public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
-    String memId = request.get("memId");
-    String email = request.get("email");
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+        String memId = request.get("memId");
+        String email = request.get("email");
 
-    boolean result = memberService.resetPassword(memId, email);
-    if (result) {
-        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-    } else {
-        return ResponseEntity.badRequest().body("비밀번호 재설정에 실패했습니다.");
+        boolean result = memberService.resetPassword(memId, email);
+        if (result) {
+            return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("비밀번호 재설정에 실패했습니다.");
+        }
     }
-}
 
     @GetMapping("/check-login")
     public ResponseEntity<?> checkLoginStatus(@RequestHeader("Authorization") String authHeader) {
@@ -182,6 +179,4 @@ public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request)
         boolean isDuplicate = memberService.isIdDuplicate(memId);
         return ResponseEntity.ok(isDuplicate);
     }
-
-
 }

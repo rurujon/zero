@@ -54,8 +54,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             });
     };
 
-
-
     const validateForm = () => {
         const newErrors = {};
         Object.keys(member).forEach(key => {
@@ -116,6 +114,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!isVerified) {
+            alert('휴대폰 인증을 완료해주세요.');
+            return;
+        }
 
         if (!isEditing) {
             if (!isChecked) {
@@ -169,7 +171,31 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }).open();
     };
 
-    
+    //회원가입시 핸드폰 본인인증
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [isVerified, setIsVerified] = useState(false);
+
+    const handleSendVerification = () => {
+        axios.post('/api/auth/send-verification', { phoneNumber },{withCredentials: true})
+            .then(() => alert('인증번호가 발송되었습니다.'))
+            .catch(error => console.error('인증번호 발송 실패:', error));
+    };
+
+    const handleVerifyCode = () => {
+        axios.post('/api/auth/verify-code', { phoneNumber, code: verificationCode })
+            .then(response => {
+                if (response.data.isValid) {
+                    setIsVerified(true);
+                    alert('인증이 완료되었습니다.');
+                } else {
+                    alert('인증번호가 올바르지 않습니다.');
+                }
+            })
+            .catch(error => console.error('인증 실패:', error));
+    };
+
+
 
     return (
         <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
@@ -228,20 +254,26 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">전화번호</label>
+                    <label className="col-sm-2 col-form-label col-form-label-sm">휴대폰 번호</label>
                     <div className="col-sm-10">
-                        <input type="tel" name="tel" className="form-control" value={member.tel || ''} onChange={handleInputChange} required />
-                        <ValidationMessage message={errors.tel} />
+                        <input type="tel" name="tel" className="form-control" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} required />
+                        <button type="button" onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">인증번호 발송</button>
+                        </div>
                     </div>
-                </div>
-
-                <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
-                    <div className="col-sm-10">
-                        <input type="text" id="post" name="post" className="form-control" value={member.post || ''} onChange={handleInputChange} readOnly required />
-                        <input type="button" onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2" value="우편번호 찾기" />
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">인증번호</label>
+                        <div className="col-sm-10">
+                            <input type="text" className="form-control" value={verificationCode} onChange={e => setVerificationCode(e.target.value)} required />
+                            <button type="button" onClick={handleVerifyCode} className="btn btn-secondary btn-sm mt-2">인증하기</button>
+                        </div>
                     </div>
-                </div>
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
+                        <div className="col-sm-10">
+                            <input type="text" id="post" name="post" className="form-control" value={member.post || ''} onChange={handleInputChange} readOnly required />
+                            <input type="button" onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2" value="우편번호 찾기" />
+                        </div>
+                    </div>
 
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">주소</label>
