@@ -13,10 +13,14 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/member")
 public class MemberController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
     private MemberService memberService;
@@ -50,22 +54,27 @@ public class MemberController {
 
 
     @GetMapping("/info")
-public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        return ResponseEntity.status(401).build();
+    public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).build();
+            }
+            String token = authHeader.substring(7);
+            if (!jwtUtil.validateToken(token)) {
+                return ResponseEntity.status(401).build();
+            }
+            String memId = jwtUtil.extractMemId(token);
+            Member member = memberService.getMemberById(memId);
+            if (member != null) {
+                member.setPwd(null);
+                return ResponseEntity.ok(member);
+            }
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            logger.error("Error in getMemberInfo", e);
+            return ResponseEntity.status(500).build();
+        }
     }
-    String token = authHeader.substring(7);
-    if (!jwtUtil.validateToken(token)) {
-        return ResponseEntity.status(401).build();
-    }
-    String memId = jwtUtil.extractMemId(token);
-    Member member = memberService.getMemberById(memId);
-    if (member != null) {
-        member.setPwd(null);
-        return ResponseEntity.ok(member);
-    }
-    return ResponseEntity.notFound().build();
-}
 
     @PostMapping("/update/{memId}")
     public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {

@@ -16,23 +16,16 @@ const MemberInfoPage = () => {
     const { token, logout } = useContext(AuthContext);
 
     const fetchMemberInfo = useCallback(() => {
-        axios.get('/member/info', {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+        axios.get('/member/info')
             .then(response => {
                 setMember(response.data);
                 adjustWindowSize(window, response.data, isEditing, getAdditionalContent());
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
-                if (error.response && error.response.status === 401) {
-                    logout();
-                    alert('인증이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.');
-                } else {
-                    alert('회원 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해주세요.');
-                }
+                // 401 에러 처리는 AxiosInterceptor에서 처리되므로 여기서는 별도 처리 불필요
             });
-    }, [token, isEditing, logout]);
+    }, [isEditing]);
 
     useEffect(() => {
         fetchMemberInfo();
