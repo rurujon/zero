@@ -13,4 +13,5 @@ public interface QuizMapper {
 
     public void insertquiz(QuizDTO dto);
 
+    public QuizDTO getRandomQuiz();
 }
