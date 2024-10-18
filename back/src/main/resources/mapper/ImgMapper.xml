@@ -8,10 +8,9 @@
     <select id="maxImgId" resultType="int">
         SELECT NVL(MAX(imgId), 0) FROM Img
     </select>
-
-    <insert id="insertImg" parameterType="com.zd.back.imgboard.model.Img">
-        INSERT INTO Img (imgId, imgPostId, originalFileName, saveFileName, filePath, fileDate)
-        VALUES (#{imgId}, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
-    </insert>
+<insert id="insertImg" parameterType="com.zd.back.imgboard.model.Img">
+    INSERT INTO Img (imgId, imgPostId, originalFileName, saveFileName, filePath, fileDate)
+    VALUES (imgseq.NEXTVAL, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
+</insert>
 
 </mapper>

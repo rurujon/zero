@@ -8,6 +8,5 @@ import com.zd.back.imgboard.model.Img;
 public interface ImgMapper {
     
     int maxImgId();
-
     void insertImg(Img img);
 }

@@ -25,14 +25,9 @@ const ImgCreated = () => {
 
         // null 값이 아닌 이미지 갯수 확인
         const nonEmptyImages = images.filter(img => img !== null);
-        
-        if (nonEmptyImages.length === 0) {
-            alert("인증 이미지 파일을 최소 1개 이상 업로드해야 합니다.");
-            return;
-        }
      
-        if (nonEmptyImages.length > 3) {
-            alert("인증 이미지 파일은 최대 3개까지 업로드할 수 있습니다.");
+        if ( nonEmptyImages.length===0) {
+            alert("인증 이미지 파일을 최소 1개 이상 업로드해야 합니다.");
             return;
         }
 

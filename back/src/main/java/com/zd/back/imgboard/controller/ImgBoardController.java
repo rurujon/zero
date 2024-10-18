@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,11 +40,12 @@ public class ImgBoardController {
     private final long MAX_FILE_SIZE = 100 * 1024 * 1024; // 최대 파일 크기 (10MB --스마트폰 사진은 보통 5~15MB)
 
     @PostMapping("/created")
+    @Transactional
     public ResponseEntity<String> createImgBoard(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
         try {
            
-            int maxImgPostId = imgPostService.maxImgPostId();
-            imgPost.setImgPostId(maxImgPostId + 1);
+            int maxImgPostId = imgPostService.maxImgPostId() ;
+            imgPost.setImgPostId(maxImgPostId+1);
             imgPostService.createImgPost(imgPost);
 
             // 1.디렉토리 확인 및 생성 
@@ -55,7 +58,12 @@ public class ImgBoardController {
             validateImageCount(images.length);
 
             for (MultipartFile imgFile : images) {
-                if (!imgFile.isEmpty()) {
+
+               
+                if(imgFile.isEmpty()){
+                    return new ResponseEntity<>("최소 1개 이상의 이미지 파일이 필요합니다.", HttpStatus.BAD_REQUEST); //상태코드 400
+                }
+               // else if (!imgFile.isEmpty()) {
 
                     // 3.파일 사이즈 검증
                     validateFileSize(imgFile.getSize());
@@ -66,18 +74,18 @@ public class ImgBoardController {
 
                     // 5.Img 반환 받고 리스트에 추가
                     imgList.add(createImgObject(imgFile, maxImgPostId, saveFileName));
-                }
+                //}
             }
 
             //  이미지 정보 DB에 저장           
             imgService.saveImg(imgList);
             return new ResponseEntity<>("인증 게시물이 등록되었습니다.", HttpStatus.CREATED);
 
-        }catch (IllegalArgumentException e) {
-            e.printStackTrace(); // 오류 로그를 출력
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
-            e.printStackTrace(); // 오류 로그를 출력
+            e.printStackTrace();
             return new ResponseEntity<>("파일 저장 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -113,28 +121,38 @@ public class ImgBoardController {
     private String createUniqueFileName(int postId, String originalFilename) {
         return postId + "_" + UUID.randomUUID().toString() + "_" + originalFilename;
     }
+
     private void saveImageFile(MultipartFile imgFile, String saveFileName) throws IOException {
+
         Path savePath = Paths.get(uploadDir, saveFileName);
-        Files.copy(imgFile.getInputStream(), savePath);
+
+        InputStream inputStream = null; 
+
+        try {
+            inputStream = imgFile.getInputStream(); 
+            Files.copy(inputStream, savePath);
+
+        } finally {
+            if (inputStream != null) {
+                
+                    inputStream.close();  
+              
+            }
+        }
     }
+    
 
     //5.Img  객체 생성 후 반환 - 리스트에 추가 
     private Img createImgObject(MultipartFile imgFile, int imgPostId, String saveFileName) {
         Img img = new Img();
-        int maxImgId = imgService.maxImgId();
-        int maxImgPostId = imgPostService.maxImgPostId();
 
-        img.setImgId(maxImgId);
-        img.setImgPostId(maxImgPostId + 1);
+        //imgId 경우 sequence 로 설정 
+        img.setImgPostId(imgPostId+1);
         img.setOriginalFileName(imgFile.getOriginalFilename());
         img.setSaveFileName(saveFileName);
         img.setFilePath(Paths.get(uploadDir, saveFileName).toString());
         
         return img;
     }
-
-    //------------------------------------
-
-
-
+    
 }
