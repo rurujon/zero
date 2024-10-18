@@ -155,7 +155,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 tel: isPhoneVerificationRequired ? phoneNumber : member.tel
             };
 
-            axios.post(url, member, { withCredentials: true })
+            axios.post(url, data, { withCredentials: true })
                 .then(response => {
                     console.log(response);
                     alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');
@@ -272,28 +272,28 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
-                    <div className="col-sm-10">
-                        <input
-                            type="tel"
-                            name="tel"
-                            className="form-control"
-                            value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
-                            placeholder={isEditing ? '(변경시에만 재인증)' : ''}
-                            onChange={(e) => {
-                                if (isEditing) {
-                                    if (isPhoneVerificationRequired) {
-                                        setPhoneNumber(e.target.value);
-                                    } else {
-                                        handleInputChange(e);
-                                    }
-                                } else {
-                                    setPhoneNumber(e.target.value);
-                                    handleInputChange(e);
-                                }
-                            }}
-                            readOnly={isEditing && !isPhoneVerificationRequired}
-                        />
+            <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
+            <div className="col-sm-10">
+                <input
+                    type="tel"
+                    name="tel"
+                    className="form-control"
+                    value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
+                    placeholder={isEditing ? '(변경시에만 재인증)' : ''}
+                    onChange={(e) => {
+                        if (isEditing) {
+                            if (isPhoneVerificationRequired) {
+                                setPhoneNumber(e.target.value);
+                            } else {
+                                handleInputChange(e);
+                            }
+                        } else {
+                            setPhoneNumber(e.target.value);
+                            handleInputChange(e);
+                        }
+                    }}
+                    readOnly={isEditing && !isPhoneVerificationRequired}
+                />
                         {isEditing && !isPhoneVerificationRequired && (
                             <button type="button" onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">핸드폰 재인증</button>
                         )}
