@@ -54,7 +54,7 @@ public class MemberService {
     public boolean resetPassword(String memId, String email) {
         Member member = memberMapper.selectMemberById(memId);
         if (member != null && member.getEmail().equals(email)) {
-            String tempPassword = UUID.randomUUID().toString().substring(0, 8);
+            String tempPassword = generateTempPassword();
             member.setPwd(tempPassword);
             memberMapper.updateMember(member);
             sendPasswordResetEmail(email, tempPassword);
@@ -76,7 +76,7 @@ public class MemberService {
     }
 
     public boolean isIdDuplicate(String memId) {
-        return memberMapper.countByMemId(memId) > 0; // 0보다 크면 중복된 아이디
+        return memberMapper.countByMemId(memId) > 0;
     }
 
     public boolean validateLogin(String memId, String rawPassword) {

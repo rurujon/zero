@@ -10,6 +10,7 @@ const RegisterPage = ({ onRegisterSuccess, onRegisterCancel }) => {
         onRegisterCancel();
     };
 
+
     return (
         <MemberForm
             onSubmit={handleRegisterSuccess}
