@@ -9,6 +9,10 @@ import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import { routes } from './routes';
+import SeoulNewsAir from './components/seoulnews/SeoulNewsAir';
+import SeoulNewsEco from './components/seoulnews/SeoulNewsEco';
+import SeoulNewsGreen from './components/seoulnews/SeoulNewsGreen';
+import SeoulNewsEnv from './components/seoulnews/SeoulNewsEnv';
 
 
 
@@ -30,6 +34,8 @@ function AppContent() {
       {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
+      {/* <SeoulNewsGreen/> */}
+      <SeoulNewsAir/>
 
       {/* <Routes>
         {routes.map((route) => (

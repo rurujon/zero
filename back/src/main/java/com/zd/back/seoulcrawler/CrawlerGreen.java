@@ -17,7 +17,7 @@ import com.zd.back.seoulcrawler.model.SeoulNews;
 
 //크롤러 로직을 따로 분리했습니다. 크롤링이 필요하신 분들은 가져가서 고쳐 쓰세요.
 
-public class Crawler {
+public class CrawlerGreen {
 
     public List<SeoulNews> SeoulNewsCrawl(int totalPage) { 
         //받아올 데이터에 맞춰 DTO를 만드시고, 그 DTO로 반환값을 바꿔주시면 됩니다.
