@@ -10,7 +10,7 @@ import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
-
+import AutoLogout from './components/login/AutoLogout';
 
 
 function AppContent() {
@@ -35,6 +35,7 @@ function AppContent() {
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
       <Footer />
+      <AutoLogout />
 
 
     </div>

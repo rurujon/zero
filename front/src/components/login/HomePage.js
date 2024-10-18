@@ -6,39 +6,33 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import { AuthContext } from './context/AuthContext';
-import { jwtDecode } from 'jwt-decode'; // Named import
+import { jwtDecode } from 'jwt-decode';
+import AutoLogout from './AutoLogout';
 
 const HomePage = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [memId, setMemId] = useState('');
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
 
-    const { token, logout } = useContext(AuthContext);
+    const { token, logout, login, memId, showLogoutMessage, setShowLogoutMessage } = useContext(AuthContext);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (token) {
             try {
-                const decoded = jwtDecode(token);
-                setMemId(decoded.sub);
+                jwtDecode(token);
                 setIsLoggedIn(true);
             } catch (e) {
                 console.error('Token decoding failed:', e);
                 logout();
             }
+        } else {
+            setIsLoggedIn(false);
         }
     }, [token, logout]);
 
     const handleLogout = () => {
         logout();
-        setIsLoggedIn(false);
-        setMemId('');
-        alert('Logout successful');
-    };
-
-    const handleLogin = (id) => {
-        setIsLoggedIn(true);
-        setMemId(id);
+        alert('로그아웃되었습니다.');
     };
 
     const handleShowRegister = () => {
@@ -54,7 +48,7 @@ const HomePage = () => {
     const handleRegisterSuccess = () => {
         setShowRegister(false);
         setShowLogin(true);
-        alert('Registration completed. Please log in.');
+        alert('회원가입이 완료되었습니다. 로그인해주세요.');
     };
 
     const handleRegisterCancel = () => {
@@ -78,24 +72,33 @@ const HomePage = () => {
                 adjustWindowSize(newWindow, memberData, false, []);
             });
         } catch (error) {
-            console.error('Failed to retrieve member info:', error);
-            alert('Failed to retrieve member information.');
+            console.error('회원 정보 조회 실패:', error);
+            alert('회원 정보를 불러오는데 실패했습니다.');
         }
     };
 
     return (
         <div className="container mt-4">
+            <AutoLogout />
+            {showLogoutMessage && (
+                <div className="alert alert-warning" role="alert">
+                    사용이 없어 자동으로 로그아웃되었습니다. 다시 로그인하세요.
+                    <button type="button" className="close" onClick={() => setShowLogoutMessage(false)}>
+                        <span>&times;</span>
+                    </button>
+                </div>
+            )}
             {!isLoggedIn ? (
                 <div>
                     {showLogin && (
                         <>
-                            <LoginPage onLogin={handleLogin} />
+                            <LoginPage onLogin={login} />
                             <button
                                 onClick={handleShowRegister}
                                 className="btn btn-outline-secondary btn-sm mt-3"
                                 style={{marginLeft:'25px'}}
                             >
-                                Register
+                                회원가입
                             </button>
                         </>
                     )}
@@ -110,16 +113,16 @@ const HomePage = () => {
                                 className="btn btn-outline-secondary btn-sm mt-3"
                                 style={{marginLeft:'25px', marginBottom:'20px'}}
                             >
-                                Back to Login
+                                로그인으로 돌아가기
                             </button>
                         </div>
                     )}
                 </div>
             ) : (
                 <div>
-                    <h2>Welcome, {memId}!</h2>
-                    <button onClick={handleMemberInfo} className="btn btn-info">Member Info</button>&nbsp;
-                    <button onClick={handleLogout} className="btn btn-danger">Logout</button>
+                    <h2>환영합니다, {memId}님!</h2>
+                    <button onClick={handleMemberInfo} className="btn btn-info">회원 정보</button>&nbsp;
+                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
                 </div>
             )}
         </div>

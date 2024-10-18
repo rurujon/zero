@@ -1,9 +1,8 @@
 // src/components/login/LoginPage.js
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { AuthContext } from './context/AuthContext';
 
 const LoginPage = ({ onLogin }) => {
     const [memId, setMemId] = useState('');
@@ -14,8 +13,6 @@ const LoginPage = ({ onLogin }) => {
     const [foundId, setFoundId] = useState('');
     const [result, setResult] = useState('');
 
-    const { login } = useContext(AuthContext);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('/member/login', null, {
@@ -23,8 +20,7 @@ const LoginPage = ({ onLogin }) => {
         })
             .then(response => {
                 if (response.data.token) {
-                    login(response.data.token, memId);
-                    onLogin(memId);
+                    onLogin(response.data.token, memId);
                 } else {
                     alert('로그인 실패');
                 }
