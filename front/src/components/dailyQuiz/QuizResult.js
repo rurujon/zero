@@ -2,16 +2,14 @@ import React from 'react';
 import QuizO from './QuizO';
 import QuizX from './QuizX';
 
-const QuizResult = ({setIsOpen, answer, result}) => {
+const QuizResult = ({setIsOpen, answer, result,explanation}) => {
     return (
         <>
-            <div>
-                <button onClick={()=> setIsOpen(false)}className="close">나가기</button>
-            </div>
+
             {
-                answer===result ? <QuizO/>
+                answer===result ? <QuizO setIsOpen={setIsOpen} explanation={explanation}/>
                 :
-                <QuizX/>
+                <QuizX setIsOpen={setIsOpen} explanation={explanation}/>
             }
         </>
     );

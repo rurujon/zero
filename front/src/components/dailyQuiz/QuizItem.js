@@ -1,30 +1,32 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 
-const QuizItem = ({setQuiz, quiz, setAnswer}) => {
+const QuizItem = ({setQuiz, quiz}) => {
 
     useEffect(()=> {
         //boot호출
         axios.get('http://localhost:8080/getQuiz')
         .then(response => {
-            console.log('response.data넘어옴 ----------------'+response.data);
-
-            setQuiz(response.data);
 
             // quiz가 로딩된 후 answer을 설정
             if (response.data) {
-                setAnswer(response.data.answer); // quiz.answer를 부모로 전달
+                setQuiz(response.data);
+                console.log('response.data넘어옴 ----------------'+response.data);
+                
             }
         })
         .catch(error => {
             console.error("데이터 없음 ㅋㅋ", error);
         })
-    },[setQuiz, setAnswer])
+    },[setQuiz])
 
     return (
         <div className='Quiz'>
                 <div className='box'>
                     {/* <span className='span'>오늘의 O,X퀴즈</span> */}
+                    <span style={{paddingTop:'30px', marginBottom:'0%'}}>
+                        <p style={{fontSize: '50px',}}>Q.</p>
+                    </span>
                     <span className='span'>
                         {quiz ? ( // quiz가 null이 아닐 때만 렌더링
                             <span>

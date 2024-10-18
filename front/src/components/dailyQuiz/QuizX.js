@@ -1,9 +1,16 @@
 import React from 'react';
-
-const QuizX = () => {
+import './QuizModal.css';
+const QuizX = ({setIsOpen, explanation}) => {
     return (
         <>
-            틀렸습니다
+            <div>
+                <button onClick={()=> setIsOpen(false)}className="close">나가기</button>
+
+            </div>
+            <div>
+                {explanation}
+            </div>
+
         </>
     );
 };

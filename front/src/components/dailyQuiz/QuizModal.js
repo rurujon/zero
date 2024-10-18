@@ -17,14 +17,9 @@ const QuizModal = () => {
     //사용자의 O,X
     const [result, setResult] = useState("ON");
 
-    const [onoff, setOnoff] = useState(true);
+    const [explanation, setExplanation] = useState("null");
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
-
-
-    useEffect(()=> {
-        alert(result);
-    }, [])
 
 
     return (
@@ -40,15 +35,15 @@ const QuizModal = () => {
                 isOpen={isOpen}
                 //onRequestClose = {() => setIsOpen(true)} 
                 contentLabel = "QOX"
-                className='modal'
+                className={result ==='ON' ? 'modal' : 'smallModal'}
             >
                 
 
             {
                 result === "ON" ? (
-                    <Quiz isOpen={isOpen} setIsOpen={setIsOpen} setResult={setResult} result={result} setAnswer={setAnswer}/>
+                    <Quiz setIsOpen={setIsOpen} setResult={setResult} setAnswer={setAnswer} setExplanation={setExplanation}/>
                     
-                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result}/>
+                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation}/>
             }
             </Modal>
         </>
