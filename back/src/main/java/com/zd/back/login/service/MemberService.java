@@ -27,10 +27,8 @@ public class MemberService {
         System.out.println("암호화된 비밀번호: " + encryptedPassword); // 콘솔에 출력해 확인
         member.setPwd(encryptedPassword);
 
-        // DB 저장 전 비밀번호 상태 확인
         System.out.println("DB에 저장될 비밀번호: " + member.getPwd());
         
-        // MyBatis를 사용해 데이터베이스에 저장
         memberMapper.insertMember(member);
         
     }
