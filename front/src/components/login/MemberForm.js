@@ -19,6 +19,13 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     });
     const [errors, setErrors] = useState({});
 
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [isVerified, setIsVerified] = useState(false);
+    const [isPhoneVerificationRequired, setIsPhoneVerificationRequired] = useState(false);
+    const [isDuplicate, setIsDuplicate] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
     useEffect(() => {
         if (initialData) {
             setMember(prevState => ({
@@ -27,18 +34,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 pwd: '',
                 pwdConfirm: ''
             }));
+            setPhoneNumber(initialData.tel || '');
             adjustWindowSize(window, initialData, true, []);
         }
     }, [initialData]);
-
-    const [memId, setMemId] = useState('');
-    const [isDuplicate, setIsDuplicate] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
-
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [verificationCode, setVerificationCode] = useState('');
-    const [isVerified, setIsVerified] = useState(false);
-    const [isPhoneVerificationRequired, setIsPhoneVerificationRequired] = useState(false);
 
     const checkDuplicateId = () => {
         if (!member.memId || member.memId.trim() === '') {
@@ -76,6 +75,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             newErrors.pwdConfirm = '비밀번호가 일치하지 않습니다.';
         }
 
+        if (isEditing && isPhoneVerificationRequired && !isVerified) {
+            newErrors.tel = '핸드폰 번호 변경 시 인증이 필요합니다.';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -86,6 +89,16 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         if (name === 'memId') {
             setIsChecked(false);
+        }
+
+        if (name === 'tel' && isEditing) {
+            if (value !== initialData.tel) {
+                setIsPhoneVerificationRequired(true);
+                setIsVerified(false);
+            } else {
+                setIsPhoneVerificationRequired(false);
+                setIsVerified(true);
+            }
         }
 
         if (isEditing && name === 'pwd' && value.trim() === '') {
@@ -119,7 +132,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         if (isEditing && isPhoneVerificationRequired && !isVerified) {
-            alert('휴대폰 재인증을 완료해주세요.');
+            alert('휴대폰 번호가 변경되었습니다. 재인증을 완료해주세요.');
             return;
         }
 
@@ -199,8 +212,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const handlePhoneReauthentication = () => {
         setIsPhoneVerificationRequired(true);
         setIsVerified(false);
-        setPhoneNumber('');
-        setVerificationCode('');
+        setPhoneNumber(member.tel);
     };
 
     return (
@@ -262,21 +274,54 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
                     <div className="col-sm-10">
-                        <input type="tel" name="tel" className="form-control" value={isEditing && !isPhoneVerificationRequired ? member.tel : phoneNumber} placeholder=' (변경시에만 입력)' onChange={e => isPhoneVerificationRequired ? setPhoneNumber(e.target.value) : handleInputChange(e)} readOnly={isEditing && !isPhoneVerificationRequired} />
+                        <input
+                            type="tel"
+                            name="tel"
+                            className="form-control"
+                            value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
+                            placeholder={isEditing ? '(변경시에만 재인증)' : ''}
+                            onChange={(e) => {
+                                if (isEditing) {
+                                    if (isPhoneVerificationRequired) {
+                                        setPhoneNumber(e.target.value);
+                                    } else {
+                                        handleInputChange(e);
+                                    }
+                                } else {
+                                    setPhoneNumber(e.target.value);
+                                    handleInputChange(e);
+                                }
+                            }}
+                            readOnly={isEditing && !isPhoneVerificationRequired}
+                        />
                         {isEditing && !isPhoneVerificationRequired && (
                             <button type="button" onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">핸드폰 재인증</button>
                         )}
                         {(isPhoneVerificationRequired || !isEditing) && (
                             <button type="button" onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">인증번호 발송</button>
                         )}
+                        <ValidationMessage message={errors.tel} />
                     </div>
                 </div>
+
                 {(isPhoneVerificationRequired || !isEditing) && (
                     <div className="row mb-3">
                         <label className="col-sm-2 col-form-label col-form-label-sm">인증번호</label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" value={verificationCode} onChange={e => setVerificationCode(e.target.value)} />
-                            <button type="button" onClick={handleVerifyCode} className="btn btn-secondary btn-sm mt-2">인증하기</button>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={verificationCode}
+                                onChange={(e) => setVerificationCode(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleVerifyCode}
+                                className="btn btn-secondary btn-sm mt-2"
+                                disabled={isVerified}
+                            >
+                                인증하기
+                            </button>
                         </div>
                     </div>
                 )}
@@ -302,7 +347,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         <input type="text" id="addr2" name="addr2" className="form-control" value={member.addr2 || ''} onChange={handleInputChange} required />
                     </div>
                 </div>
-
 
                 <div className="mt-3">
                     <button type="submit" className="btn btn-primary btn-sm" style={{marginBottom:'20px'}}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
