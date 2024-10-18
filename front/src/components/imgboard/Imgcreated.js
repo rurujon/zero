@@ -6,19 +6,29 @@ const ImgCreated = () => {
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [images, setImages] = useState(Array(3).fill(null)); // 이미지 배열 초기화
+    const [images, setImages] = useState(Array(3).fill(null));
 
     const handleImageChange = (index, e) => {
         const newImages = [...images];
-        newImages[index] = e.target.files[0]; // 선택한 파일로 업데이트
+        newImages[index] = e.target.files[0]; 
         setImages(newImages);
+        
+        setTimeout(() => {
+            setImages([...newImages]);
+        }, 0);
     };
 
-    const handleImageReset = (index) => {
+/*      const handleImageReset = (index) => {
         const newImages = [...images];
         newImages[index] = null; // 해당 인덱스의 이미지를 null로 리셋
         setImages(newImages);
+
+        const fileInput = document.querySelector(`input[type="file"]:nth-of-type(${index})`);
+        if (fileInput) {
+            fileInput.value = ''; // 파일 입력 박스 리셋
+        } 
     };
+*/
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -113,15 +123,17 @@ const ImgCreated = () => {
                     {images.map((image, index) => (
                         <div key={index}>
                             <input
-                                type="file"
-                                onChange={(e) => handleImageChange(index, e)}
-                                accept="image/*"
-                            />
-                            <button onClick={() => handleImageReset(index)}>파일다시선택</button>
+                            type="file"
+                            onChange={(e) => handleImageChange(index, e)}
+                            accept="image/*"
+                        />
+
                         </div>
-                    ))}
+                     ))}
+
                 </div>
                 <button type="submit">게시물 등록</button>
+    
             </form>
         </div>
     );
