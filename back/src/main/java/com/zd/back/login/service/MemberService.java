@@ -40,6 +40,12 @@ public class MemberService {
     }
 
     public void updateMember(Member member) {
+        String encryptedPassword = passwordEncoder.encode(member.getPwd());
+        System.out.println("암호화된 비밀번호: " + encryptedPassword);
+        member.setPwd(encryptedPassword);
+
+        System.out.println("DB에 저장될 비밀번호: " + member.getPwd());
+
         memberMapper.updateMember(member);
     }
 
