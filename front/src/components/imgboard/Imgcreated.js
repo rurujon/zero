@@ -2,67 +2,77 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ImgCreated = () => {
-    const [memId, setMemId] = useState(''); // 사용자 ID
-    const [cate, setCate] = useState(''); // 카테고리
-    const [title, setTitle] = useState(''); // 게시글 제목
-    const [content, setContent] = useState(''); // 게시글 내용
-    const [images, setImages] = useState([]); // 이미지 파일
+    const [memId, setMemId] = useState('');
+    const [cate, setCate] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [images, setImages] = useState(Array(3).fill(null)); // 이미지 배열 초기화
 
-    // 이미지 파일 선택 핸들러
-    const handleImageChange = (e) => {
-        setImages(Array.from(e.target.files))
-    }
+    const handleImageChange = (index, e) => {
+        const newImages = [...images];
+        newImages[index] = e.target.files[0]; // 선택한 파일로 업데이트
+        setImages(newImages);
+    };
 
-    //handleImageReset
-    const handleImageReset = (e) =>{
-        e.preventDefault();
-        setImages([])
-    }
+    const handleImageReset = (index) => {
+        const newImages = [...images];
+        newImages[index] = null; // 해당 인덱스의 이미지를 null로 리셋
+        setImages(newImages);
+    };
 
-    // 폼 제출 핸들러
     const handleSubmit = async (e) => {
         e.preventDefault();
- 
-            // 이미지 갯수 및 크기 체크
-    if (images.length > 3) {
-        alert("이미지 파일은 최대 3개까지 업로드할 수 있습니다.");
-        return;
-    }
 
-    for (let img of images) {
-        if (img.size > 1 * 1024 * 1024) {
-            alert("파일 크기는 최대 1MB까지 허용됩니다.");
+        // null 값이 아닌 이미지 갯수 확인
+        const nonEmptyImages = images.filter(img => img !== null);
+        
+        if (nonEmptyImages.length === 0) {
+            alert("인증 이미지 파일을 최소 1개 이상 업로드해야 합니다.");
             return;
         }
-    }
+     
+        if (nonEmptyImages.length > 3) {
+            alert("인증 이미지 파일은 최대 3개까지 업로드할 수 있습니다.");
+            return;
+        }
 
+        for (let img of nonEmptyImages) {
+            if (img.size > 1 * 1024 * 1024) {
+                alert("인증 이미지 파일 크기는 최대 1MB까지 허용됩니다.");
+                return;
+            }
+        }
 
-
-
-
-        // FormData 사용하여 데이터 전송 (이미지 파일 포함)
         const formData = new FormData();
         formData.append('memId', memId);
         formData.append('cate', cate);
         formData.append('title', title);
         formData.append('content', content);
 
-        // 이미지 파일들 추가
-        for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
+        for (let img of nonEmptyImages) {
+            formData.append('images', img);
         }
 
-        axios.post('/imgboard/created', formData, {
-            
-        })
-        .then((response) => {
-            alert(response.data);  // 성공적으로 응답을 받으면 alert 표시
-        })
-        .catch((error) => {
+        try {
+            const response = await axios.post('/imgboard/created', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log('서버 응답:', response.data);
+            alert(response.data);
+
+        } catch (error) {
             console.error('게시물 등록 중 오류 발생:', error);
-            alert('게시물 등록 중 오류가 발생했습니다. from js:  ' + error);  // 오류 발생 시 alert 표시
-        });
-    }
+            if (error.response) {
+                console.error('응답 데이터:', error.response.data);
+                console.error('응답 상태:', error.response.status);
+                console.error('응답 헤더:', error.response.headers);
+            }
+            alert(`게시물 등록 중 오류가 발생했습니다: ${error.message}`);
+        }
+    };
+
     return (
         <div>
             <h1>이미지 게시물 등록</h1>
@@ -104,12 +114,22 @@ const ImgCreated = () => {
                 </div>
                 <div>
                     <label>이미지 선택:</label>
-                    <input type="file" multiple onChange={handleImageChange} />
-                    <button onClick={handleImageReset}>파일다시선택</button>
+                    {/* 이미지 선택 입력 필드 3개 추가 */}
+                    {images.map((image, index) => (
+                        <div key={index}>
+                            <input
+                                type="file"
+                                onChange={(e) => handleImageChange(index, e)}
+                                accept="image/*"
+                            />
+                            <button onClick={() => handleImageReset(index)}>파일다시선택</button>
+                        </div>
+                    ))}
                 </div>
                 <button type="submit">게시물 등록</button>
             </form>
         </div>
-    )
-}
+    );
+};
+
 export default ImgCreated;

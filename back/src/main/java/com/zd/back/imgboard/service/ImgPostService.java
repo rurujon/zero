@@ -25,7 +25,7 @@ public class ImgPostService {
         imgPostMapper.insertImgPost(imgPost);
     }
 
-    public List<ImgBoard> getAllImgBoards() {
+/*     public List<ImgBoard> getAllImgBoards() {
         return imgPostMapper.selectAllImgBoards();
-    }
+    } */
 }

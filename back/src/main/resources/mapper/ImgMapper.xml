@@ -11,7 +11,7 @@
 
     <insert id="insertImg" parameterType="com.zd.back.imgboard.model.Img">
         INSERT INTO Img (imgId, imgPostId, originalFileName, saveFileName, filePath, fileDate)
-        VALUES (#{imgId}, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSTIMESTAMP)
+        VALUES (#{imgId}, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
     </insert>
 
 </mapper>
