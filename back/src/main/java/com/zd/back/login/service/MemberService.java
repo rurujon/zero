@@ -60,8 +60,14 @@ public class MemberService {
         if (member != null && member.getEmail().equals(email)) {
             String tempPassword = generateTempPassword();
             member.setPwd(tempPassword);
-            memberMapper.updateMember(member);
             sendPasswordResetEmail(email, tempPassword);
+
+            String encryptedPassword = passwordEncoder.encode(member.getPwd());
+            System.out.println("암호화된 비밀번호: " + encryptedPassword);
+            member.setPwd(encryptedPassword);
+
+            memberMapper.updateMember(member);
+
             return true;
         }
         return false;
@@ -91,10 +97,7 @@ public class MemberService {
             return false; // 회원 정보가 없을 경우
         }
     
-        // DB에서 가져온 암호화된 비밀번호 출력
         System.out.println("DB에서 가져온 암호화된 비밀번호: " + member.getPwd());
-    
-        // 사용자가 입력한 비밀번호 출력
         System.out.println("사용자가 입력한 비밀번호: " + rawPassword);
     
         // 입력한 비밀번호와 암호화된 비밀번호를 비교
