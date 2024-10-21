@@ -1,4 +1,3 @@
-// src/components/login/HomePage.js
 import React, { useState, useEffect, useContext } from 'react';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
@@ -13,7 +12,7 @@ const HomePage = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
 
-    const { token, logout, login, memId, showLogoutMessage, setShowLogoutMessage } = useContext(AuthContext);
+    const { token, logout, login, memId, showLogoutMessage, setShowLogoutMessage, isAutoLogout } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -80,7 +79,7 @@ const HomePage = () => {
     return (
         <div className="container mt-4">
             <AutoLogout />
-            {showLogoutMessage && (
+            {isAutoLogout && showLogoutMessage && (
                 <div className="alert alert-warning" role="alert">
                     사용이 없어 자동으로 로그아웃되었습니다. 다시 로그인하세요.
                     <button type="button" className="close" onClick={() => setShowLogoutMessage(false)}>

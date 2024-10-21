@@ -29,21 +29,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    //     http
-    //     .cors().and().csrf().disable().headers().frameOptions().disable()
-    //     .and()
-    //     .authorizeRequests()
-    //     .anyRequest().permitAll()
-    //     .and()
-    //     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    //     http
-    //     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-	// 	.logout().logoutSuccessUrl("/");
-
-    //     return http.build();
-    // }
-
         http
+        .cors().and().csrf().disable().headers().frameOptions().disable()
+        .and()
+        .authorizeRequests()
+        .anyRequest().permitAll()
+        .and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+	 	.logout().logoutSuccessUrl("/");
+
+        return http.build();
+        }
+
+        /* http
             .cors().configurationSource(corsConfigurationSource()).and()
             .csrf().disable()
             .authorizeRequests()
@@ -58,7 +58,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+ */
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
@@ -76,9 +76,8 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    @Bean
+     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-}
+} 

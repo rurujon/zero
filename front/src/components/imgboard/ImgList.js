@@ -47,7 +47,8 @@ function ImgPostList() {
                 ))}
             </ul>
 
-       
+            <h2>여기용</h2>
+            <img src={'http://localhost:8080/images/0_6847493b-c09e-4493-bcd8-9bf470b3d52a_00.png'} />
         </div>
     );
 }

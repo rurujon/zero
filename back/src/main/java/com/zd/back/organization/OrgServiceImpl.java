@@ -1,5 +1,7 @@
 package com.zd.back.organization;
 
-public class OrgServiceImpl {
+public class OrgServiceImpl implements OrgService{
+
+    
     
 }

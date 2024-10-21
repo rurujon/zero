@@ -11,7 +11,7 @@ import SmartMapApp from './components/smartmap/SmartMapApp';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
-
+import ImgApp from './components/imgboard/ImgApp';
 
 function AppContent() {
 
@@ -27,14 +27,18 @@ function AppContent() {
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* <MainPageApp/> */}
       <LoginApp/>
       {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
 =======
       <MainPageApp/>
+=======
+      {/* <MainPageApp/> */}
+>>>>>>> e07d35bff631f7fbdc90379cce9adfee58bd7ee0
       {/* <LoginApp/> */}
-      {/* <NewsList/> */}
+      <NewsList/>
       {/* <SmartMapApp/> */}
 >>>>>>> cc371fe3c5ee7caf1fb7b739fa77429ea24ed855
       {/* <ImgApp/> */}
@@ -48,9 +52,9 @@ function AppContent() {
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
-      <Footer />
+ {/*      <Footer />
       <AutoLogout />
-
+ */}
 
     </div>
   );
