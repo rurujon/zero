@@ -55,7 +55,6 @@ public class NaverApiController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.exchange(apiURL, HttpMethod.GET, entity, String.class);
 
-
             //----------- 여기까지가, 네이버 api에서 db를 가져오는 과정 ------------------
             //이렇게 받아온 db의 데이터는 JSONObject 안에 item 이란 이름의 JSONArray를 품고 있는 형태다.
             //우리에게 필요한 건 이 item이란 이름의 JSONArray를 추출해 데이터화 시키는 것.

@@ -11,6 +11,7 @@ public class OrgData {
 
     private String location;
     private String name;
-    private String description; 
+    private String description;
+    private String imgUrl;
     private String link;
 }
