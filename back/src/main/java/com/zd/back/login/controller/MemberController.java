@@ -77,6 +77,7 @@ public class MemberController {
     if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
         return ResponseEntity.status(403).body("권한이 없습니다.");
     }
+    
     memberService.deleteMember(memId);
     session.invalidate();
     return ResponseEntity.ok("회원 탈퇴 성공");

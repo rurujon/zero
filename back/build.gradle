@@ -40,6 +40,10 @@ dependencies {
 
 	//2024-10-14 조준영 추가
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+	//2024-10-17 정윤재 추가 - 웹 사이트 크롤링 관련.
+	implementation 'org.jsoup:jsoup:1.16.1' // Jsoup 최신 버전 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 tasks.named('test') {

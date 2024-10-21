@@ -10,6 +10,12 @@ import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import ImgApp from './components/imgboard/ImgApp';
 import QuizModal from './components/dailyQuiz/QuizModal'
+import { routes } from './routes';
+import SeoulNewsAir from './components/seoulnews/SeoulNewsAir';
+import SeoulNewsEco from './components/seoulnews/SeoulNewsEco';
+import SeoulNewsGreen from './components/seoulnews/SeoulNewsGreen';
+import SeoulNewsEnv from './components/seoulnews/SeoulNewsEnv';
+
 
 
 function AppContent() {
@@ -25,11 +31,19 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar />} {/* 사이드바 조건부 렌더링 */}
 
-      {/* <MainPageApp/> */}
-      <LoginApp/>
-{/*       <NewsList/>
- */}      {/* <SmartMapApp/> */}
+      <MainPageApp/>
+      {/* <LoginApp/> */}
+      {/* <NewsList/> */}
+      {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
+      {/* <SeoulNewsGreen/> */}
+      <SeoulNewsAir/>
+
+      {/* <Routes>
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes> */}
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
