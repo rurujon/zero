@@ -14,4 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (QUIZID, question, answer, explanation)
         values(#{QUIZID}, #{question},#{answer},#{explanation})
     </insert>
+
+    <select id="getRandomQuiz" resultType="com.zd.back.JY.domain.dailyQuiz.QuizDTO">
+        select QUIZID, question, answer, explanation from 
+        (select QUIZID, question, answer, explanation from quiz order by DBMS_RANDOM.VALUE) 
+        where ROWNUM =1
+    </select>
 </mapper>

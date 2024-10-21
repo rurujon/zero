@@ -8,7 +8,8 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
-
+import ImgApp from './components/imgboard/ImgApp';
+import QuizModal from './components/dailyQuiz/QuizModal'
 
 
 function AppContent() {
@@ -22,13 +23,14 @@ function AppContent() {
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header />
 
-      {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
+      {location.pathname !== '/' && <SideBar />} {/* 사이드바 조건부 렌더링 */}
 
       {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
-      <NewsList/>
-      {/* <SmartMapApp/> */}
+      {/*       <NewsList/>
+ */}      {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
+      <QuizModal />
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}

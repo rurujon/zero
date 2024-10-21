@@ -43,5 +43,10 @@ public class QuizServiceImp implements QuizService {
         //map을 받아서 dto로 만든다음에 넣어준다.
     }
 
+    @Override
+    public QuizDTO getRandomQuiz() {
+        return quizMapper.getRandomQuiz();
+    }
+
 }
 

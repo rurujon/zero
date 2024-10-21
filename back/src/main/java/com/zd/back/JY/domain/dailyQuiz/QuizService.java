@@ -5,4 +5,6 @@ import java.util.Map;
 public interface QuizService {
     public int maxNum();
     public void insertquiz(Map map);
+
+    public QuizDTO getRandomQuiz();
 }
