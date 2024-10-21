@@ -47,7 +47,7 @@ public class SecurityConfig {
             .cors().configurationSource(corsConfigurationSource()).and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/", "/member/register", "/api/auth/**", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver").permitAll()
+            .antMatchers("/", "/member/register", "/api/auth/**", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver", "/imgboard/**", "/api/miniboard/**", "/api/naver/**", "/api/seoul/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
