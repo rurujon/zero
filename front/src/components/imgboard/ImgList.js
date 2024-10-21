@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
-
+  
     useEffect(() => {
         axios.get('/imgboard/list')
             .then(response => {
@@ -17,38 +17,55 @@ function ImgList() {
    
     return (
         <div>
-            <h2>Image Posts</h2>
-            <ul>
-                {imgPosts.map((board, index) => (  
-                    <li key={`${board.imgPost.imgPostId}_${index}`}>  {/* ImgPost의 ID 사용 */}
-                        <h3>{board.imgPost.imgPostId}</h3>
-                        <p>승인여부: {board.imgPost.auth}</p>
-                        <p>목록: {board.imgPost.cate}</p>
-
+            <h2>인증게시판 리스트</h2>
+            <p>
+                <button type='button' onClick={() => window.location.href = '/imgboard/created.action'}>
+                    인증 글쓰기
+                </button>
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
+                {imgPosts.map((board, index) => (
+                    <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
+                        border: '2px solid red', 
+                        margin: '15px', // 간격 조정
+                        padding: '10px', 
+                        borderRadius: '5px', 
+                        backgroundColor: '#f0f0f0', 
+                        width: '22%' // 4개가 가로로 보이도록 설정
+                    }}>
+                        
                         {/* 이미지 목록 출력 */}
-                        {board.images && board.images.length > 0 ? (
-                            <div>
-                                {board.images.map((img, imgIndex) => (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
+                            {board.images && board.images.length > 0 ? (
+                                board.images.map((img) => (
                                     <img
-                                        key={img.imgId}  // 각 이미지의 ID를 키로 사용
-                                        src={`/images/${img.saveFileName}`} 
+                                        key={img.imgId}
+                                        src={`/images/${img.saveFileName}`}
                                         alt={img.saveFileName}
-                                        style={{ width: '100px', height: '100px', margin: '5px' }}
+                                        style={{ 
+                                            width: '350px', 
+                                            height: '200px', 
+                                            margin: '5px', 
+                                            display: 'block', 
+                                            verticalAlign: 'top' // vertical-align 조정
+                                        }}
                                     />
-                                ))}
-                            </div>
-                        ) : (
-                            <p>등록된 이미지가 없습니다.</p> // 이미지가 없을 경우 메시지 표시
-                        )}
-
-                        <p>제목: {board.imgPost.title}</p>
-                        <p>작성일: {board.imgPost.created}</p>
-                    </li>
+                                ))
+                            ) : (
+                                <p>등록된 이미지가 없습니다.</p>
+                            )}
+                        </div>
+    
+                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
+                            <p style={{ color: '#fff' }}>승인여부: {board.imgPost.auth}</p>
+                        </div>
+                        <p>목록: {board.imgPost.cate}</p>
+                        <p>작성자: {board.imgPost.memId}</p>
+                        <p>제목: <a href='/imgboard/article.action'>{board.imgPost.title}</a> </p>
+                        <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
+                    </div>
                 ))}
-            </ul>
-
-            <h2>여기용</h2>
-            <img src={'http://localhost:8080/images/0_6847493b-c09e-4493-bcd8-9bf470b3d52a_00.png'} />
+            </div>
         </div>
     );
 }

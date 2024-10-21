@@ -102,68 +102,71 @@ const ImgCreated = () => {
     };
 
     return (
-        <div>
-            <h1>이미지 게시물 등록</h1>
-            <form onSubmit={handleSubmit} method='post'>
-            <div>    
-                <div>
-                    <label>사용자 ID:</label>
+        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', backgroundColor: '#f9f9f9' }}>
+            <h1 style={{ textAlign: 'center', color: '#333' }}>이미지 게시물 등록</h1>
+            <form onSubmit={handleSubmit}>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>사용자 ID:</label>
                     <input
                         type="text"
                         value={memId}
-                        readOnly 
-                       
+                        readOnly
+                        style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
                     />
                 </div>
-                <div>
-                <label>인증유형:</label>
-                        <select
-                            value={cate}
-                            onChange={(evt) => setCate(evt.target.value)}
-                        >
-                            <option value="">인증 유형을 선택하세요</option>
-                            <option value="tum">텀블러 이용</option>
-                            <option value="buy">물품 구매</option>
-                            <option value="group">단체 활동</option>
-                        </select>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>인증유형:</label>
+                    <select
+                        value={cate}
+                        onChange={(evt) => setCate(evt.target.value)}
+                        style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+                    >
+                        <option value="">인증 유형을 선택하세요</option>
+                        <option value="tum">텀블러 이용</option>
+                        <option value="buy">물품 구매</option>
+                        <option value="group">단체 활동</option>
+                    </select>
                 </div>
-                <div>
-                    <label>제목:</label>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>제목:</label>
                     <input
                         type="text"
                         value={title}
                         onChange={(evt) => setTitle(evt.target.value)}
+                        style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
                     />
                 </div>
-                <div>
-                    <label>내용:</label>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>내용:</label>
                     <textarea
                         value={content}
                         onChange={(evt) => setContent(evt.target.value)}
+                        style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
                     />
                 </div>
-                <button type='button' onClick={handleTextReset}>다시작성</button>
+                <button type='button' onClick={handleTextReset} style={{ marginBottom: '20px', padding: '10px 15px', backgroundColor: '#f44336', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                    다시작성
+                </button>
 
-            </div>    
-                <div>
-                    <label>이미지 선택:</label>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>이미지 선택:</label>
                     {images.map((image, index) => (
-                        <div key={index}>
+                        <div key={index} style={{ marginBottom: '10px' }}>
                             <input
                                 type="file"
                                 ref={el => fileInputRefs.current[index] = el}
                                 onChange={(evt) => handleImageChange(index, evt)}
                                 accept="image/*"
+                                style={{ display: 'block', marginBottom: '5px' }}
                             />
-                           {imagePreviews[index] && (
-                                <div>
+                            {imagePreviews[index] && (
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <img
                                         src={imagePreviews[index]}
                                         alt='선택이미지 미리보기'
-                                        style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                        style={{ width: '100px', height: '100px', objectFit: 'cover', marginRight: '10px' }}
                                     />
-
-                                    <button type="button" onClick={() => handleImageRemove(index)}>
+                                    <button type="button" onClick={() => handleImageRemove(index)} style={{ padding: '5px 10px', backgroundColor: '#f44336', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                                         파일 선택 취소
                                     </button>
                                 </div>
@@ -171,12 +174,15 @@ const ImgCreated = () => {
                         </div>
                     ))}
                 </div>
-                <button type="submit" onClick={() => window.location.href = '/imgboard/list.action'}>등록하기</button>
-                <button type='button' onClick={() => window.location.href = '/imgboard/list.action'}>작성취소</button> 
-        
+                <button type="submit" style={{ padding: '10px 15px', backgroundColor: '#4CAF50', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', marginRight: '10px' }}>
+                    등록하기
+                </button>
+                <button type='button' onClick={() => window.location.href = '/imgboard/list.action'} style={{ padding: '10px 15px', backgroundColor: '#f44336', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                    작성취소
+                </button>
             </form>
         </div>
     );
 };
 
-export default ImgCreated;  
+export default ImgCreated;
