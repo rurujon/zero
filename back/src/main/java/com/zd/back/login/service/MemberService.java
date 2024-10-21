@@ -27,7 +27,7 @@ public class MemberService {
         System.out.println("암호화된 비밀번호: " + encryptedPassword); // 콘솔에 출력해 확인
         member.setPwd(encryptedPassword);
         memberMapper.insertMember(member);
-        
+
     }
 
     public Member getMemberById(String memId) {
@@ -35,10 +35,19 @@ public class MemberService {
     }
 
     public void updateMember(Member member) {
-        String encryptedPassword = passwordEncoder.encode(member.getPwd());
-        System.out.println("암호화된 비밀번호: " + encryptedPassword);
-        member.setPwd(encryptedPassword);
-        memberMapper.updateMember(member);
+        Member existingMember = memberMapper.selectMemberById(member.getMemId());
+        if (existingMember != null) {
+            if (member.getPwd() != null && !member.getPwd().isEmpty()) {
+                // 새 비밀번호가 제공된 경우에만 암호화
+                String encryptedPassword = passwordEncoder.encode(member.getPwd());
+                System.out.println("암호화된 새 비밀번호: " + encryptedPassword);
+                member.setPwd(encryptedPassword);
+            } else {
+                // 비밀번호가 제공되지 않은 경우 기존 비밀번호 유지
+                member.setPwd(existingMember.getPwd());
+            }
+            memberMapper.updateMember(member);
+        }
     }
 
     public void deleteMember(String memId) {
@@ -90,14 +99,14 @@ public class MemberService {
             System.out.println("회원 정보를 찾을 수 없음");
             return false; // 회원 정보가 없을 경우
         }
-    
+
         System.out.println("DB에서 가져온 암호화된 비밀번호: " + member.getPwd());
         System.out.println("사용자가 입력한 비밀번호: " + rawPassword);
-    
+
         // 입력한 비밀번호와 암호화된 비밀번호를 비교
         boolean isPasswordMatch = passwordEncoder.matches(rawPassword, member.getPwd());
         System.out.println("비밀번호 일치 여부: " + isPasswordMatch);
-    
+
         return isPasswordMatch;
     }
 
