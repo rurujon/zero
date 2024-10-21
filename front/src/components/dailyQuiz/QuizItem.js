@@ -28,7 +28,7 @@ const QuizItem = ({setQuiz, quiz}) => {
                         <p style={{fontSize: '50px',}}>Q.</p>
                     </span>
                     <span className='span'>
-                        {quiz ? ( // quiz가 null이 아닐 때만 렌더링
+                        {quiz ? ( // quiz가 null이 아닐 때만 렌더링ㄴ
                             <span>
                             
                             <h4 key={quiz.id}>{quiz.question}</h4>

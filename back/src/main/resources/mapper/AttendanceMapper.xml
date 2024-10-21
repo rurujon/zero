@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.zd.back.JY.domain.attendance.AttendanceMapper">
+
+    <select id="maxNum" resultType="int">
+        SELECT NVL(MAX(attId), 0) FROM attendance
+    </select>
+
+    <insert id="insertAtt" parameterType="String">
+        insert into attendance (attId, attDate, memId) values(#{attId}, to_char(sysdate, 'YY/MM/DD'), #{memId})
+    </insert>
+  
+    <select id="checkToday" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
+        select * from attendance where attDate = to_char(sysdate, ('YY/MM/DD')) AND memId = #{memId}
+    </select>
+
+  </mapper>
