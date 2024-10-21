@@ -17,10 +17,13 @@ public class SearchApiServiceImpl implements SearchApiService{
     @Override
     public void saveNews(News news){
 
+
         // 중복 체크 후 삽입 로직
         if (searchApiMapper.selectNewsByTitle(news.getTitle()) == null) {
             searchApiMapper.insertNews(news);
         }
+
+        System.out.println(news.getTitle());
     }
 
     @Override

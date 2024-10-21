@@ -54,6 +54,8 @@ public class NaverApiController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.exchange(apiURL, HttpMethod.GET, entity, String.class);
 
+            System.out.println(response.getBody());
+
             //----------- 여기까지가, 네이버 api에서 db를 가져오는 과정 ------------------
             //이렇게 받아온 db의 데이터는 JSONObject 안에 item 이란 이름의 JSONArray를 품고 있는 형태다.
             //우리에게 필요한 건 이 item이란 이름의 JSONArray를 추출해 데이터화 시키는 것.
@@ -63,9 +65,11 @@ public class NaverApiController {
             JSONObject jsonResponse = (JSONObject) new JSONParser().parse(response.getBody());
             JSONArray naverNewsArray = (JSONArray) jsonResponse.get("items");
 
+
             //JSON 데이터 Map 형식 변환
             ReadNaverJSON readNaverJSON = new ReadNaverJSON();
             Map<Integer,Map<String,String>> newsMap = readNaverJSON.unzipArray(naverNewsArray);
+
 
             // 뉴스 데이터를 pubDate 기준으로 정렬
             // 네이버 api 에서 가져오는 데이터는 기본적으로 최신순으로 정렬되어 제공되지만, 네트워크 지연이나 비동기 처리로 인해 순서가 미묘하게 바뀔 수 있습니다.
@@ -80,6 +84,7 @@ public class NaverApiController {
                 })
                 .collect(Collectors.toList());
 
+
             // Map 데이터를 News 객체로 변환하여 DB에 저장
             for (Map<String, String> newsData : sortedNews) {
                 News news = new News();
@@ -90,12 +95,16 @@ public class NaverApiController {
                 news.setDescription(newsData.get("description"));
                 news.setPubDate(newsData.get("pubDate"));
 
+                System.out.println(news.getTitle());
+                System.out.println(news.getPubDate());
+
                 // 뉴스가 이미 존재하는지 확인하고 저장
                 // 확인은 title의 일치여부로 확인하며, 서비스에 있습니다.
                 searchApiService.saveNews(news);
             }
 
 
+            System.out.println("여기까진 왔나4");
             return ResponseEntity.ok(newsMap);
 
         } catch (Exception e) {

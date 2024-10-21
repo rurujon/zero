@@ -5,17 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.organization.OrgMapper">
 
-    <select id="maxNum" resultType="int">
-        SELECT NVL(MAX(Org_id), 0) FROM organization
-    </select>
-
     <select id="selectAll" resultType="com.zd.back.organization.OrgData">
         Select * from organization
     </select>
 
     <insert id="insertOrg" parameterType="com.zd.back.organization.OrgData">
-        INSERT INTO organization (Org_id, location, name, description, link)
-        Values (#{Org_id}, #{location}, #{name}, #{description}, #{link})
+        INSERT INTO organization (location, name, description, link)
+        Values (#{location}, #{name}, #{description}, #{link})
     </insert>
 
 </mapper>
