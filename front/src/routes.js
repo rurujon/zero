@@ -1,5 +1,6 @@
+import ImgArticle from "./components/imgboard/ImgArticle";
 import ImgCreated from "./components/imgboard/Imgcreated";
-import ImgPostList from "./components/imgboard/ImgList";
+import ImgList from "./components/imgboard/ImgList";
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
@@ -26,7 +27,9 @@ export const routes = [
 
 
     { path: '/imgboard/created.action', element: <ImgCreated /> },
-    { path: '/imgboard/list.action', element: <ImgPostList /> },
+    { path: '/imgboard/list.action', element: <ImgList /> },
+    { path: '/imgboard/article.action', element: <ImgArticle/> },
+  
     
        
 

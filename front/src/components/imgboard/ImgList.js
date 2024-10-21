@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function ImgPostList() {
+function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
 
     useEffect(() => {
@@ -53,4 +53,4 @@ function ImgPostList() {
     );
 }
 
-export default ImgPostList;
+export default ImgList;
