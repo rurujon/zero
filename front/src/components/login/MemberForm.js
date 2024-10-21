@@ -27,7 +27,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [termsContent, setTermsContent] = useState('');
-    
+
 
     useEffect(() => {
 
@@ -92,8 +92,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             newErrors.tel = '핸드폰 번호 변경 시 인증이 필요합니다.';
         }
 
-        if (!member.termsAccepted) {
-            newErrors.termsAccepted = '이용약관에 동의해야 합니다.';  // 이용약관 미동의 시 에러 메시지 추가
+        if (!isEditing && !member.termsAccepted) {
+            newErrors.termsAccepted = '이용약관에 동의해야 합니다.';
         }
 
         setErrors(newErrors);
@@ -324,29 +324,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         <ValidationMessage message={errors.tel} />
                     </div>
                 </div>
-
-                {(isPhoneVerificationRequired || !isEditing) && (
-                    <div className="row mb-3">
-                        <label className="col-sm-2 col-form-label col-form-label-sm">인증번호</label>
-                        <div className="col-sm-10">
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={verificationCode}
-                                onChange={(e) => setVerificationCode(e.target.value)}
-                            />
-                            <button
-                                type="button"
-                                onClick={handleVerifyCode}
-                                className="btn btn-secondary btn-sm mt-2"
-                                disabled={isVerified}
-                            >
-                                인증하기
-                            </button>
-                        </div>
-                    </div>
-                )}
-
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
                     <div className="col-sm-10">
@@ -373,10 +350,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
                     <div className="col-sm-10">
-                        <textarea 
-                            className="form-control" 
-                            value={termsContent} 
-                            readOnly 
+                        <textarea
+                            className="form-control"
+                            value={termsContent}
+                            readOnly
                             rows="6"
                             style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
                         />
