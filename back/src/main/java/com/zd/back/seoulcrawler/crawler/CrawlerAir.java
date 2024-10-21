@@ -1,4 +1,4 @@
-package com.zd.back.seoulcrawler;
+package com.zd.back.seoulcrawler.crawler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

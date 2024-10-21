@@ -1,4 +1,4 @@
-package com.zd.back.seoulcrawler;
+package com.zd.back.seoulcrawler.crawler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import com.zd.back.seoulcrawler.model.SeoulNews;
 
 //크롤러 로직을 따로 분리했습니다. 크롤링이 필요하신 분들은 가져가서 고쳐 쓰세요.
 
-public class CrawlerGreen {
+public class CrawlerEco {
 
     public List<SeoulNews> SeoulNewsCrawl(int totalPage) { 
         //받아올 데이터에 맞춰 DTO를 만드시고, 그 DTO로 반환값을 바꿔주시면 됩니다.
@@ -28,7 +28,7 @@ public class CrawlerGreen {
 
             for(int i=1; i<totalPage; i++){ //페이징 수가 여럿일 때 수행하기 위한 반복문입니다.
 
-                String url = "https://news.seoul.go.kr/env/archives/category/green-energy-news_c1/green-energy-news-n1/page/" + i;
+                String url = "https://news.seoul.go.kr/env/archives/category/eco-news_c1/eco-news-n1/page/" + i;
                 //크롤링해올 url
 
                 Document doc = Jsoup.connect(url).get();
@@ -86,7 +86,7 @@ public class CrawlerGreen {
                         content = article.select(".topicCont").text();
                     }
 
-                    String seoulNewsGroup = "green";
+                    String seoulNewsGroup = "eco";
                     //서울시 소식은 기후환경, 친환경, 대기, 녹색에너지 등으로 그룹이 나눠져 있어서 그룹을 지정했습니다.
 
                     SeoulNews seoulNews = new SeoulNews(title,link,content,publishedDate,seoulNewsGroup);

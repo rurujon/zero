@@ -77,7 +77,7 @@ public class Crawler {
                     String link = article.select("h3.tit a").attr("href"); // 링크 추출
 
                     String publishedDateString = article.select(".time").first().ownText(); // "등록일 : 2024-10-07"
-                    String dateString = publishedDateString.replace("등록일 : ", ""); // "2024-10-18"
+                    String dateString = publishedDateString.replace("등록일 : ", ""); // 2024-10-07
                     LocalDate publishedDate = LocalDate.parse(dateString); // 변환
 
                     // content 추출: topicCont_1이나 topicCont 중 하나를 시도

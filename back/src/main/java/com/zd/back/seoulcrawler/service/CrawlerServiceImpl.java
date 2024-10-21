@@ -5,11 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zd.back.seoulcrawler.Crawler;
-import com.zd.back.seoulcrawler.CrawlerAir;
-import com.zd.back.seoulcrawler.CrawlerEco;
-import com.zd.back.seoulcrawler.CrawlerEnv;
-import com.zd.back.seoulcrawler.CrawlerGreen;
+import com.zd.back.seoulcrawler.crawler.CrawlerAir;
+import com.zd.back.seoulcrawler.crawler.CrawlerEco;
+import com.zd.back.seoulcrawler.crawler.CrawlerEnv;
+import com.zd.back.seoulcrawler.crawler.CrawlerGreen;
 import com.zd.back.seoulcrawler.mapper.CrawlerMapper;
 import com.zd.back.seoulcrawler.model.SeoulNews;
 
