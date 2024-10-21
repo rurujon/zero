@@ -15,7 +15,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         tel: '',
         post: '',
         addr1: '',
-        addr2: ''
+        addr2: '',
+        termsAccepted: false // 이용약관 동의 필드
     });
     const [errors, setErrors] = useState({});
 
@@ -25,18 +26,29 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isPhoneVerificationRequired, setIsPhoneVerificationRequired] = useState(false);
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [termsContent, setTermsContent] = useState('');
+    
 
     useEffect(() => {
+
+        setTermsContent(`이용약관\n\n1. 이용자는 ...\n2. 서비스 제공 ...\n3. ...\n내용은 추후 수정`);
+
         if (initialData) {
             setMember(prevState => ({
                 ...prevState,
                 ...initialData,
                 pwd: '',
-                pwdConfirm: ''
+                pwdConfirm: '',
+                termsAccepted: false
             }));
             setPhoneNumber(initialData.tel || '');
             adjustWindowSize(window, initialData, true, []);
         }
+
+        axios.get('/api/terms')
+        .then(response => setTermsContent(response.data))  // 응답 데이터로 이용약관 내용을 설정
+        .catch(error => console.error('이용약관 불러오기 오류:', error));
+
     }, [initialData]);
 
     const checkDuplicateId = () => {
@@ -58,10 +70,11 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const validateForm = () => {
         const newErrors = {};
         Object.keys(member).forEach(key => {
-            if (key !== 'pwd' && key !== 'pwdConfirm' && member[key].trim() === '') {
+            const value = member[key];
+            if (key !== 'pwd' && key !== 'pwdConfirm' && typeof value === 'string' && value.trim() === '') {
                 newErrors[key] = '이 필드는 필수입니다.';
             } else if (key !== 'pwdConfirm' && key !== 'post' && key !== 'addr1' && key !== 'addr2') {
-                if (isEditing && key === 'pwd' && member[key].trim() === '') {
+                if (isEditing && key === 'pwd' && typeof value === 'string' && value.trim() === '') {
                     return;
                 }
                 const errorMessage = validateField(key, member[key]);
@@ -79,13 +92,21 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             newErrors.tel = '핸드폰 번호 변경 시 인증이 필요합니다.';
         }
 
+        if (!member.termsAccepted) {
+            newErrors.termsAccepted = '이용약관에 동의해야 합니다.';  // 이용약관 미동의 시 에러 메시지 추가
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setMember(prev => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+
+        setMember(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value  // 체크박스일 경우 checked 상태 반영
+        }));
 
         if (name === 'memId') {
             setIsChecked(false);
@@ -121,7 +142,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             }
         }
 
-        adjustWindowSize(window, { ...member, [name]: value }, true, []);
+        adjustWindowSize(window, { ...member, [name]: type === 'checkbox' ? checked : value }, true, []);
     };
 
     const handleSubmit = (e) => {
@@ -346,6 +367,28 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     <div className="col-sm-10">
                         <input type="text" id="addr2" name="addr2" className="form-control" value={member.addr2 || ''} onChange={handleInputChange} required />
                     </div>
+                </div>
+
+                <div className="row mb-3">
+                    <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
+                    <div className="col-sm-10">
+                        <textarea 
+                            className="form-control" 
+                            value={termsContent} 
+                            readOnly 
+                            rows="6"
+                            style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+                        />
+
+
+                <div className="form-check mb-3">
+                    <input className="form-check-input" type="checkbox" name="termsAccepted" checked={member.termsAccepted} onChange={handleInputChange} />
+                    <label className="form-check-label" htmlFor="termsAccepted">
+                        이용약관에 동의합니다.
+                    </label>
+                    {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
+                </div>
+                </div>
                 </div>
 
                 <div className="mt-3">

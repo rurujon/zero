@@ -36,6 +36,10 @@ public class MemberController {
                 .collect(Collectors.joining(", "));
             return ResponseEntity.badRequest().body(errors);
         }
+
+        if (!member.isTermsAccepted()) {
+            return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
+        }
         memberService.registerMember(member);
         return ResponseEntity.ok("회원가입 성공");
     }
