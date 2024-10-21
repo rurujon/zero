@@ -14,4 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         Values (#{location}, #{name}, #{description}, #{link})
     </insert>
 
+    <select id="selectByName" parameterType="String" resultType="com.zd.back.organization.OrgData">
+        SELECT * FROM organization WHERE name = #{name}
+    </select>
+
 </mapper>

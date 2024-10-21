@@ -1,4 +1,5 @@
 package com.zd.back.naversearchapi.controller;
+import org.apache.commons.text.StringEscapeUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -54,7 +55,6 @@ public class NaverApiController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.exchange(apiURL, HttpMethod.GET, entity, String.class);
 
-            System.out.println(response.getBody());
 
             //----------- 여기까지가, 네이버 api에서 db를 가져오는 과정 ------------------
             //이렇게 받아온 db의 데이터는 JSONObject 안에 item 이란 이름의 JSONArray를 품고 있는 형태다.
@@ -87,24 +87,24 @@ public class NaverApiController {
 
             // Map 데이터를 News 객체로 변환하여 DB에 저장
             for (Map<String, String> newsData : sortedNews) {
+
+                // HTML 태그 제거 (정규식 사용) 및 HTML 엔티티 디코딩
+                String cleanedTitle = cleanText(newsData.get("title"));
+                String cleanedDescription = cleanText(newsData.get("description"));
+
                 News news = new News();
-                news.setTitle(newsData.get("title"));
-                news.setOriginallink(newsData.get("originallink"));
+                news.setTitle(cleanedTitle);
  
                 news.setLink(newsData.get("link"));
-                news.setDescription(newsData.get("description"));
+                news.setDescription(cleanedDescription);
                 news.setPubDate(newsData.get("pubDate"));
-
-                System.out.println(news.getTitle());
-                System.out.println(news.getPubDate());
 
                 // 뉴스가 이미 존재하는지 확인하고 저장
                 // 확인은 title의 일치여부로 확인하며, 서비스에 있습니다.
-                searchApiService.saveNews(news);
+                searchApiService.insertNews(news);
             }
 
 
-            System.out.println("여기까진 왔나4");
             return ResponseEntity.ok(newsMap);
 
         } catch (Exception e) {
@@ -137,6 +137,17 @@ public class NaverApiController {
     public ResponseEntity<List<News>> searchMiniNews() {
         List<News> miniNews = searchApiService.miniNews();
         return ResponseEntity.ok(miniNews);
+    }
+
+    // HTML 태그 제거 및 엔티티 디코딩 메서드
+    private String cleanText(String input) {
+        // 1. HTML 태그 제거 (정규식)
+        String noHtml = input.replaceAll("<[^>]*>", "");
+
+        // 2. HTML 엔티티 디코딩 (&quot;, &amp; 등)
+        String decodedText = StringEscapeUtils.unescapeHtml4(noHtml);
+
+        return decodedText;
     }
     
 

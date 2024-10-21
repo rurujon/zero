@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.naversearchapi.mapper.SearchApiMapper">
     <insert id="insertNews" parameterType="com.zd.back.naversearchapi.model.News">
-        INSERT INTO naverNews (title, originallink, link, description, pubDate)
-        VALUES (#{title}, #{originallink}, #{link}, #{description}, #{pubDate})
+        INSERT INTO naverNews (title, link, description, pubDate)
+        VALUES (#{title}, #{link}, #{description}, #{pubDate})
     </insert>
 
     <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.naversearchapi.model.News">

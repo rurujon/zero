@@ -71,7 +71,7 @@ const NewsList = () => {
         <ul>
           {newsData.map((news, index) => (
             <li key={index}>
-              <a href={news.originallink} target="_blank" rel="noopener noreferrer">
+              <a href={news.link} target="_blank" rel="noopener noreferrer">
                 {news.title}
               </a>
             </li>

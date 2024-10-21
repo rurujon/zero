@@ -52,6 +52,9 @@ dependencies {
 	//2024-10-17 정우준 추가
 	implementation 'net.nurigo:sdk:4.2.7'
 
+	//2024-10-21 정윤재 추가 - 네이버 api db 안 정규화 표현식 제거용
+	implementation 'org.apache.commons:commons-text:1.9'
+
 }
 
 tasks.named('test') {
