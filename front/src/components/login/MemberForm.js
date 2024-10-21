@@ -369,6 +369,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {!isEditing && (
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
                     <div className="col-sm-10">
@@ -390,6 +391,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
                 </div>
                 </div>
+                )}
 
                 <div className="mt-3">
                     <button type="submit" className="btn btn-primary btn-sm" style={{marginBottom:'20px'}}>{isEditing ? '수정완료' : '입력완료'}</button>&nbsp;
