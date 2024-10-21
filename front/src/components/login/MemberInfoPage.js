@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+// src/components/login/MemberInfoPage.js
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { adjustWindowSize } from './utils';
+import { adjustWindowSize } from './utils/Sizing';
+import { AuthContext } from './context/AuthContext';
 
 const MemberInfoPage = () => {
     const [member, setMember] = useState(null);
@@ -11,14 +13,17 @@ const MemberInfoPage = () => {
     const [deleteConfirmation, setDeleteConfirmation] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
+    const { token, logout } = useContext(AuthContext);
+
     const fetchMemberInfo = useCallback(() => {
-        axios.get('/member/info', { withCredentials: true })
+        axios.get('/member/info')
             .then(response => {
                 setMember(response.data);
                 adjustWindowSize(window, response.data, isEditing, getAdditionalContent());
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
+                // 401 에러 처리는 AxiosInterceptor에서 처리되므로 여기서는 별도 처리 불필요
             });
     }, [isEditing]);
 
@@ -60,12 +65,12 @@ const MemberInfoPage = () => {
 
     const handleFinalDelete = () => {
         if (deleteConfirmation.toLowerCase() === '탈퇴') {
-            axios.delete(`/member/${member.memId}`, { withCredentials: true })
+            axios.delete(`/member/${member.memId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
                 .then(() => {
                     alert('회원 탈퇴가 완료되었습니다.');
-                    if (window.opener && typeof window.opener.handleLogout === 'function') {
-                        window.opener.handleLogout();
-                    }
+                    logout();
                     window.close();
                 })
                 .catch(error => {
@@ -90,21 +95,54 @@ const MemberInfoPage = () => {
         fetchMemberInfo();
     };
 
-    if (!member) return <div>로딩 중...</div>;
+    const handleCloseWindow = () => {
+        window.close();
+        if (!window.closed) {
+            alert("창을 닫을 수 없습니다. 브라우저 설정을 확인해주세요.");
+        }
+    };
+
+    if (!member) return <div>유효한 회원정보를 가져올 수 없습니다. 회원가입 또는 로그인하세요.</div>;
 
     return (
-        <div className="container" id="memberInfoContent" style={{ marginTop: '20px' }}>
+        <div className="container" id="memberInfoContent" style={{ marginTop: '20px'}}>
             {!isEditing ? (
-                <>
-                    <h2>회원 정보</h2><br/>
-                    <p>아이디: {member.memId}</p>
-                    <p>이름: {member.memName}</p>
-                    <p>이메일: {member.email}</p>
-                    <p>전화번호: {member.tel}</p>
-                    <p>주소: {member.addr1} {member.addr2}</p>
+                <div style={{ marginLeft: '20px'}}>
+                    <h2>회원 정보</h2>
+                    <div className="mb-3 row" >
+                        <label className="col-sm-2 col-form-label">아이디</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.memId}</label>
+                        </div>
+                    </div>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">이름</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.memName}</label>
+                        </div>
+                    </div>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">이메일</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.email}</label>
+                        </div>
+                    </div>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">전화번호</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{member.tel}</label>
+                        </div>
+                    </div>
+                    <div className="mb-3 row">
+                        <label className="col-sm-2 col-form-label">주소</label>
+                        <div className="col-sm-10">
+                            <label className="col-sm-7 col-form-label">{`${member.addr1} ${member.addr2}`}</label>
+                        </div>
+                    </div>
+                    <button className="btn btn-primary btn-sm" onClick={handleCloseWindow}>창 닫기</button>&nbsp;
                     <button className="btn btn-primary btn-sm" onClick={handleEditClick}>정보 수정</button>&nbsp;
-                    <button className="btn btn-outline-secondary btn-sm" onClick={handleDeleteRequest}>회원 탈퇴</button>
-                </>
+                    <button className="btn btn-outline-secondary btn-sm" onClick={handleDeleteRequest}>회원 탈퇴</button><br/><br/>
+                </div>
             ) : (
                 <MemberForm
                     initialData={member}
@@ -115,17 +153,17 @@ const MemberInfoPage = () => {
             )}
 
             {showConfirmDialog && (
-                <div className="dialog"><br/>
+                <div className="container">
                     <div className="alert alert-warning" role="alert">
                         정말로 탈퇴하시겠습니까?
                     </div>
-                    <button className="btn btn-primary" onClick={handleConfirmDelete}>확인</button>&nbsp;
-                    <button className="btn btn-secondary" onClick={handleCancelDelete}>취소</button>
+                    <button className="btn btn-primary" onClick={handleConfirmDelete} style={{marginBottom:'20px'}}>확인</button>&nbsp;
+                    <button className="btn btn-secondary" onClick={handleCancelDelete} style={{marginBottom:'20px'}}>취소</button>
                 </div>
             )}
 
             {showDeleteDialog && (
-                <div className="dialog">
+                <div className="container">
                     <div className="alert alert-info" role="alert">
                         탈퇴를 원하시면 '탈퇴'라고 입력해주세요.
                     </div>
@@ -134,8 +172,9 @@ const MemberInfoPage = () => {
                         className="form-control"
                         value={deleteConfirmation}
                         onChange={handleDeleteConfirmation}
+                        style={{marginBottom:'20px'}}
                     />
-                    <button className="btn btn-danger" onClick={handleFinalDelete}>확인</button>
+                    <button className="btn btn-danger" onClick={handleFinalDelete} style={{marginBottom:'20px'}}>확인</button>
                 </div>
             )}
         </div>

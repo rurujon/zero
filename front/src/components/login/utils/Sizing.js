@@ -1,4 +1,4 @@
-// utils.js 파일을 생성하고 아래 함수들을 추가합니다.
+
 export const adjustWindowSize = (windowRef, memberData, isEditing, additionalContent) => {
     const maxFieldLength = Math.max(...Object.values(memberData).map(value => String(value).length));
 

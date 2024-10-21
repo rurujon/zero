@@ -16,6 +16,9 @@ import SeoulNewsEco from './components/seoulnews/SeoulNewsEco';
 import SeoulNewsGreen from './components/seoulnews/SeoulNewsGreen';
 import SeoulNewsEnv from './components/seoulnews/SeoulNewsEnv';
 
+import { AuthProvider } from './components/login/context/AuthContext';
+import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
+import AutoLogout from './components/login/AutoLogout';
 
 
 function AppContent() {
@@ -48,6 +51,7 @@ function AppContent() {
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
       <Footer />
+      <AutoLogout />
 
 
     </div>
@@ -58,10 +62,13 @@ function AppContent() {
 //App.js의 구조를 살짝 변경했습니다. 프론트 확인은 하던대로 위쪽에서 진행하시면 됩니다.
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-
+    <AuthProvider>
+      <AxiosInterceptor>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </AxiosInterceptor>
+    </AuthProvider>
   );
 }
 

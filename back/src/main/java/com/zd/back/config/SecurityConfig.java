@@ -12,39 +12,52 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import com.zd.back.login.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private JwtFilter jwtFilter;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+    //     http
+    //     .cors().and().csrf().disable().headers().frameOptions().disable()
+    //     .and()
+    //     .authorizeRequests()
+    //     .anyRequest().permitAll()
+    //     .and()
+    //     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    //     http
+    //     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+	// 	.logout().logoutSuccessUrl("/");
+
+    //     return http.build();
+    // }
+
         http
-        .cors().and().csrf().disable().headers().frameOptions().disable()
-        .and()
-        .authorizeRequests()
-        .anyRequest().permitAll()
-        .and()
-		.logout().logoutSuccessUrl("/");
+            .cors().configurationSource(corsConfigurationSource()).and()
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/", "/member/register", "/api/auth/**", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .formLogin().disable()
+            .httpBasic().disable();
 
         return http.build();
     }
-
-    // @Bean
-    // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    //     http.cors()
-    //     .and()
-    //     .csrf().disable()
-    //     .authorizeHttpRequests()
-    //     .antMatchers("/","/member/register", "/member/login", "/member/info", "/member/**", "/member/logout","/*", "/api/naver").permitAll()
-    //     .anyRequest().authenticated()
-    //     .and()
-    //     .formLogin().disable();
-    // return http.build();
-    // }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -64,32 +77,8 @@ public class SecurityConfig {
         return source;
     }
 
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
 }
-
-
-
-
-
-// @Configuration
-// @RequiredArgsConstructor
-// @EnableWebSecurity
-// public class SecurityConfig {
-
-
-//     @Bean
-//     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        
-//         http
-//         .cors().and().csrf().disable().headers().frameOptions().disable()
-//         .and()
-//         .authorizeRequests()
-//         .anyRequest().permitAll()
-//         .and()
-// 		.logout().logoutSuccessUrl("/");
-
-//         return http.build();
-//     }
-
-// }
-
