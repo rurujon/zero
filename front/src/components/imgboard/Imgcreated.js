@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const ImgCreated = () => {
 
-    const [memId, setMemId] = useState('');
+    const [memId, setMemId] = useState('user(-)');
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -54,17 +54,15 @@ const ImgCreated = () => {
         }
     };
 
-
-   
-
-
     const handleSubmit = async (evt) => {
         
         evt.preventDefault();
         const nonEmptyImages = images.filter(img => img !== null);
-
-        if(!memId){
-            alert ("모든 항목을 최소 1개 이상 기입해야 합니다.")
+        
+        //유효성 검사
+        if(!title){
+            alert("제목을 필수로 입력해야합니다.")
+            
         }
 
         if (nonEmptyImages.length === 0) {
@@ -113,18 +111,21 @@ const ImgCreated = () => {
                     <input
                         type="text"
                         value={memId}
-                        onChange={(evt) => setMemId(evt.target.value)}
+                        readOnly 
                        
                     />
                 </div>
                 <div>
-                    <label>인증 유형:</label>
-                    <input
-                        type="text"
-                        value={cate}
-                        onChange={(evt) => setCate(evt.target.value)}
-                        
-                    />
+                <label>인증유형:</label>
+                        <select
+                            value={cate}
+                            onChange={(evt) => setCate(evt.target.value)}
+                        >
+                            <option value="">인증 유형을 선택하세요</option>
+                            <option value="tum">텀블러 이용</option>
+                            <option value="buy">물품 구매</option>
+                            <option value="group">단체 활동</option>
+                        </select>
                 </div>
                 <div>
                     <label>제목:</label>

@@ -101,7 +101,7 @@ function Header() {
             {activeMenu === 'zero-consumer' && (
               <ul style={styles.subMenu}>
                 <li><Link to="/sub1">하위 메뉴 1</Link></li>
-                <li><Link to="/sub2">하위 메뉴 2</Link></li>
+                <li><Link to="/imgboard/list.action">인증게시판</Link></li>
               </ul>
             )}
           </li>

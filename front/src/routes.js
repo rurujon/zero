@@ -1,3 +1,5 @@
+import ImgCreated from "./components/imgboard/Imgcreated";
+import ImgPostList from "./components/imgboard/ImgList";
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
@@ -22,7 +24,11 @@ export const routes = [
     // { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
 
 
+
+    { path: '/imgboard/created.action', element: <ImgCreated /> },
+    { path: '/imgboard/list.action', element: <ImgPostList /> },
     
+       
 
 
 ]
