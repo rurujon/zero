@@ -1,6 +1,7 @@
 package com.zd.back.imgboard.controller;
 
 import com.zd.back.imgboard.model.Img;
+import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
@@ -37,7 +38,7 @@ public class ImgBoardController {
     //application.properties 에 있는 file 경로
 
     private final int MAX_IMAGE_COUNT = 3;  // 최대 이미지 개수
-    private final long MAX_FILE_SIZE = 100 * 1024 * 1024; // 최대 파일 크기 (10MB --스마트폰 사진은 보통 5~15MB)
+    private final long MAX_FILE_SIZE = 100 * 1024 * 1024; // 최대 파일 크기 (10MB)
 
     @PostMapping("/created")
     @Transactional
@@ -113,7 +114,7 @@ public class ImgBoardController {
     // 3.파일 사이즈 검증
     private void validateFileSize(long fileSize) {
         if (fileSize > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("파일 크기는 최대 100MB까지 허용됩니다.");
+            throw new IllegalArgumentException("파일 크기는 최대 10MB까지 허용됩니다.");
         }
     }
 
@@ -135,7 +136,7 @@ public class ImgBoardController {
         } finally {
             if (inputStream != null) {
                 
-                    inputStream.close();  
+                    inputStream.close();  //닫아야함
               
             }
         }
@@ -154,5 +155,12 @@ public class ImgBoardController {
         
         return img;
     }
-    
+
+// list ==========================================
+@GetMapping("/list")
+public ResponseEntity<List<ImgBoard>> getImgPosts() {
+    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
+    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+}
+
 }

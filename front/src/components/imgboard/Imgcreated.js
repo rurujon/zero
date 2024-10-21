@@ -13,7 +13,8 @@ const ImgCreated = () => {
 
     const fileInputRefs = useRef([]);  //선택취소시 
 
-    const textReset = ()=>{
+
+    const handleTextReset = ()=>{
         setCate('')
         setTitle('')
         setContent('')
@@ -52,6 +53,10 @@ const ImgCreated = () => {
             fileInputRefs.current[index].value = '';
         }
     };
+
+
+   
+
 
     const handleSubmit = async (evt) => {
         
@@ -113,7 +118,7 @@ const ImgCreated = () => {
                     />
                 </div>
                 <div>
-                    <label>카테고리:</label>
+                    <label>인증목록:</label>
                     <input
                         type="text"
                         value={cate}
@@ -136,7 +141,7 @@ const ImgCreated = () => {
                         onChange={(evt) => setContent(evt.target.value)}
                     />
                 </div>
-                <button type='button' onClick={textReset}>다시작성</button>
+                <button type='button' onClick={handleTextReset}>다시작성</button>
 
             </div>    
                 <div>
@@ -165,9 +170,8 @@ const ImgCreated = () => {
                         </div>
                     ))}
                 </div>
-                <button type="submit">등록하기</button>
-                <button type=''>작성취소</button> 
-
+                <button type="submit" onClick={() => window.location.href = '/imgboard/list.action'}>등록하기</button>
+                <button type='button' onClick={() => window.location.href = '/imgboard/list.action'}>작성취소</button> 
         
             </form>
         </div>

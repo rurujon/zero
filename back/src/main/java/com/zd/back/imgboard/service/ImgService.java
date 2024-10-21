@@ -31,5 +31,5 @@ public class ImgService {
             imgMapper.insertImg(img);  // 각 이미지 정보를 DB에 저장
         }
     }
-    
+   
 }

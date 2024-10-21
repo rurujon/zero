@@ -14,4 +14,37 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
+<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
+    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
+    FROM ImgPost ip
+    LEFT JOIN (
+        SELECT imgPostId, imgId, saveFileName, filePath
+        FROM Img
+        WHERE imgId IN (
+            SELECT MIN(imgId) 
+            FROM Img 
+            GROUP BY imgPostId
+        )
+    ) i ON ip.imgPostId = i.imgPostId
+</select>
+
+
+<resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
+    <result property="imgPost.imgPostId" column="imgPostId" />
+    <result property="imgPost.memId" column="memId" />
+    <result property="imgPost.cate" column="cate" />
+    <result property="imgPost.title" column="title" />
+    <result property="imgPost.content" column="content" />
+    <result property="imgPost.created" column="created" />
+    <result property="imgPost.auth" column="auth" />
+    <result property="imgPost.authDate" column="authDate" />
+    <collection property="images" ofType="com.zd.back.imgboard.model.Img">
+        <result property="imgId" column="imgId" />
+        <result property="originalFileName" column="originalFileName" />
+        <result property="saveFileName" column="saveFileName" />
+        <result property="filePath" column="filePath" />
+        <result property="fileDate" column="fileDate" />
+    </collection>
+</resultMap>
+
 </mapper>
