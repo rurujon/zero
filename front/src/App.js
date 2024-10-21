@@ -26,22 +26,18 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       {/* <MainPageApp/> */}
-      <LoginApp/>
-      {/* <NewsList/> */}
+{/*       <LoginApp/>
+ */}      {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
-=======
+
       <MainPageApp/>
-=======
       {/* <MainPageApp/> */}
->>>>>>> e07d35bff631f7fbdc90379cce9adfee58bd7ee0
       {/* <LoginApp/> */}
-      <NewsList/>
+  {/*     <NewsList/> */}
       {/* <SmartMapApp/> */}
->>>>>>> cc371fe3c5ee7caf1fb7b739fa77429ea24ed855
-      {/* <ImgApp/> */}
+      <ImgApp/> 
       {/* <QuizModal/> */}
 
       {/* <Routes>
