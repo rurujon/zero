@@ -14,9 +14,9 @@ import org.jsoup.select.Elements;
 
 public class OrgCrawler {
 
-    public List<OrgList> PatagoniaCrawl(int totalPage) { 
+    public List<OrgData> PatagoniaCrawl() { 
         // Grantee는 location, name, description을 담을 DTO로 가정하고 작성합니다.
-        List<OrgList> granteeList = new ArrayList<>();  
+        List<OrgData> orgLists = new ArrayList<>();  
 
         try {
             String url = "https://www.patagonia.co.kr/actionworks/home";
@@ -35,10 +35,10 @@ public class OrgCrawler {
                 String link = "";
 
                 // DTO 객체 생성 (Grantee는 DTO로 가정)
-                OrgList orgList = new OrgList(location, name, description, link);
+                OrgData orgData = new OrgData(location, name, description, link);
 
                 // 리스트에 추가
-                granteeList.add(orgList);
+                orgLists.add(orgData);
             }
             
 
@@ -46,6 +46,6 @@ public class OrgCrawler {
             e.printStackTrace(); // 예외 처리
         }
 
-        return granteeList;  // 추출된 데이터를 반환
+        return orgLists;  // 추출된 데이터를 반환
     }
 }
