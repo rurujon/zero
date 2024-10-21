@@ -324,6 +324,29 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         <ValidationMessage message={errors.tel} />
                     </div>
                 </div>
+
+                {(isPhoneVerificationRequired || !isEditing) && (
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">인증번호</label>
+                        <div className="col-sm-10">
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={verificationCode}
+                                onChange={(e) => setVerificationCode(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleVerifyCode}
+                                className="btn btn-secondary btn-sm mt-2"
+                                disabled={isVerified}
+                            >
+                                인증하기
+                            </button>
+                        </div>
+                    </div>
+                )}
+
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">우편번호</label>
                     <div className="col-sm-10">
