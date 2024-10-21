@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [memId, setMemId] = useState(null);
     const [showLogoutMessage, setShowLogoutMessage] = useState(false);
+    const [isAutoLogout, setIsAutoLogout] = useState(false);
     const logoutTimerRef = useRef(null);
-    const isAutoLogout = useRef(false);
 
     const logout = useCallback((isAuto = false) => {
         setToken(null);
@@ -20,8 +20,8 @@ export const AuthProvider = ({ children }) => {
         if (logoutTimerRef.current) {
             clearTimeout(logoutTimerRef.current);
         }
-        isAutoLogout.current = isAuto;
         setShowLogoutMessage(isAuto);
+        setIsAutoLogout(isAuto);
     }, []);
 
     const resetLogoutTimer = useCallback(() => {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
             clearTimeout(logoutTimerRef.current);
         }
         logoutTimerRef.current = setTimeout(() => {
-            logout(true);
+            logout(true);  // 자동 로그아웃임을 표시
         }, 60000); // 1분 = 60000ms
     }, [logout]);
 
@@ -47,6 +47,11 @@ export const AuthProvider = ({ children }) => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('memId');
             }
+        } else {
+            // 토큰이 없을 때는 타이머를 초기화하지 않음
+            if (logoutTimerRef.current) {
+                clearTimeout(logoutTimerRef.current);
+            }
         }
     }, [resetLogoutTimer]);
 
@@ -60,14 +65,23 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
             resetLogoutTimer();
             setShowLogoutMessage(false);
-            isAutoLogout.current = false;
+            setIsAutoLogout(false);
         } catch (error) {
             console.error('Failed to store token:', error);
         }
     }, [resetLogoutTimer]);
 
     return (
-        <AuthContext.Provider value={{ token, memId, login, logout, resetLogoutTimer, showLogoutMessage, setShowLogoutMessage }}>
+        <AuthContext.Provider value={{
+            token,
+            memId,
+            login,
+            logout,
+            resetLogoutTimer,
+            showLogoutMessage,
+            setShowLogoutMessage,
+            isAutoLogout
+        }}>
             {children}
         </AuthContext.Provider>
     );
