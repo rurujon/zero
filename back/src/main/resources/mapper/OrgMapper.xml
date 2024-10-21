@@ -9,11 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT NVL(MAX(Org_id), 0) FROM organization
     </select>
 
-    <select id="selectAll" resultType="com.zd.back.organization.OrgList">
+    <select id="selectAll" resultType="com.zd.back.organization.OrgData">
         Select * from organization
     </select>
 
-    <insert id="insertOrg" parameterType="com.zd.back.organization.OrgList">
+    <insert id="insertOrg" parameterType="com.zd.back.organization.OrgData">
         INSERT INTO organization (Org_id, location, name, description, link)
         Values (#{Org_id}, #{location}, #{name}, #{description}, #{link})
     </insert>
