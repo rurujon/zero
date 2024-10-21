@@ -32,8 +32,8 @@ function AppContent() {
  */}      {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
 
-      <MainPageApp/>
-      {/* <MainPageApp/> */}
+{/*       <MainPageApp/>
+ */}      {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
   {/*     <NewsList/> */}
       {/* <SmartMapApp/> */}

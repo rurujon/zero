@@ -38,7 +38,7 @@ public class ImgBoardController {
     //application.properties 에 있는 file 경로
 
     private final int MAX_IMAGE_COUNT = 3;  // 최대 이미지 개수
-    private final long MAX_FILE_SIZE = 100 * 1024 * 1024; // 최대 파일 크기 (10MB)
+    private final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 최대 파일 크기 (10MB)
 
     @PostMapping("/created")
     @Transactional

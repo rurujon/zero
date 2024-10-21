@@ -74,7 +74,7 @@ const ImgCreated = () => {
 
         for (let img of nonEmptyImages) {
             if (img.size > 1 * 1024 * 1024) {
-                alert("인증 이미지 파일 크기는 최대 1MB까지 허용됩니다.");
+                alert("인증 이미지 파일 크기는 최대 10MB까지 허용됩니다.");
                 return;
             }
         }
@@ -118,7 +118,7 @@ const ImgCreated = () => {
                     />
                 </div>
                 <div>
-                    <label>인증목록:</label>
+                    <label>인증 유형:</label>
                     <input
                         type="text"
                         value={cate}
