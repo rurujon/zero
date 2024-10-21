@@ -8,8 +8,9 @@ import SideBar from './components/headfootside/SideBar';
 import LoginApp from './components/login/LoginApp';
 import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
-import ImgApp from './components/imgboard/ImgApp';
-import QuizModal from './components/dailyQuiz/QuizModal'
+import { AuthProvider } from './components/login/context/AuthContext';
+import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
+import AutoLogout from './components/login/AutoLogout';
 
 
 function AppContent() {
@@ -23,18 +24,32 @@ function AppContent() {
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header />
 
-      {location.pathname !== '/' && <SideBar />} {/* 사이드바 조건부 렌더링 */}
+      {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
+<<<<<<< HEAD
       {/* <MainPageApp/> */}
       <LoginApp/>
       {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
+=======
+      <MainPageApp/>
+      {/* <LoginApp/> */}
+      {/* <NewsList/> */}
+      {/* <SmartMapApp/> */}
+>>>>>>> cc371fe3c5ee7caf1fb7b739fa77429ea24ed855
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
+
+      {/* <Routes>
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes> */}
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
       <Footer />
+      <AutoLogout />
 
 
     </div>
@@ -45,10 +60,13 @@ function AppContent() {
 //App.js의 구조를 살짝 변경했습니다. 프론트 확인은 하던대로 위쪽에서 진행하시면 됩니다.
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-
+    <AuthProvider>
+      <AxiosInterceptor>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </AxiosInterceptor>
+    </AuthProvider>
   );
 }
 

@@ -72,9 +72,10 @@ function Header() {
             <Link to="/zero-news">제로소식</Link>
             {activeMenu === 'zero-news' && (
               <ul style={styles.subMenu}>
-                <li><Link to="/sub1">서울시</Link></li>
-                <li><Link to="/sub2">기업</Link></li>
-                <li><Link to="/sub2">환경단체</Link></li>
+                <li><Link to="/seoulNews/eco">에코</Link></li>
+                <li><Link to="/seoulNews/env">환경</Link></li>
+                <li><Link to="/seoulNews/air">기상</Link></li>
+                <li><Link to="/seoulNews/green">그린</Link></li>
               </ul>
             )}
           </li>

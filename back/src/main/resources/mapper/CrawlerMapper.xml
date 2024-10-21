@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.back.seoulcrawler.mapper.CrawlerMapper">
+
+    <insert id="insertSeoulNews" parameterType="com.zd.back.seoulcrawler.model.SeoulNews">
+        insert into seoulNews (title, link, content, publishedDate, seoulNewsGroup) values (#{title}, #{link}, #{content}, #{publishedDate}, #{seoulNewsGroup})
+    
+    </insert>
+
+    <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews WHERE title = #{title}
+    </select>
+
+    <select id="selectSeoulNewsEnv" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews where seoulNewsGroup = 'env' order by publishedDate desc
+    </select>
+
+    <select id="selectSeoulNewsEco" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews where seoulNewsGroup = 'eco' order by publishedDate desc
+    </select>
+
+    <select id="selectSeoulNewsAir" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews where seoulNewsGroup = 'air' order by publishedDate desc
+    </select>
+
+    <select id="selectSeoulNewsGreen" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews where seoulNewsGroup = 'green' order by publishedDate desc
+    </select>
+
+    <select id="selectSeoulNewsMini" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        select * from (SELECT * FROM seoulNews ORDER BY publishedDate DESC) where rownum &lt;=10
+    </select>
+
+
+</mapper>

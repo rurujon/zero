@@ -19,23 +19,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * MiniBoardConroller
  */
+
 @RestController
 @RequestMapping("/api/miniboard")
 public class MiniBoardConroller {
 
     @Autowired
     private MiniBoardService miniBoardService;
-
+   
     @GetMapping("/miniNotice")
     public List<MiniBoard> getMiniNotice() throws Exception{
         return miniBoardService.getNotices();
     }
-    
-    // @GetMapping("/miniNews")
-    // public List<MiniBoard> getMiniNews() throws Exception{
-    //     return miniBoardService.getNews();
-    // }
-    
     
 
     
