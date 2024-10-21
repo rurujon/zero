@@ -10,8 +10,9 @@ export const AuthProvider = ({ children }) => {
     const [memId, setMemId] = useState(null);
     const [showLogoutMessage, setShowLogoutMessage] = useState(false);
     const logoutTimerRef = useRef(null);
+    const isAutoLogout = useRef(false);
 
-    const logout = useCallback(() => {
+    const logout = useCallback((isAuto = false) => {
         setToken(null);
         setMemId(null);
         localStorage.removeItem('token');
@@ -20,7 +21,8 @@ export const AuthProvider = ({ children }) => {
         if (logoutTimerRef.current) {
             clearTimeout(logoutTimerRef.current);
         }
-        setShowLogoutMessage(true);
+        isAutoLogout.current = isAuto;
+        setShowLogoutMessage(isAuto);
     }, []);
 
     const resetLogoutTimer = useCallback(() => {
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
             clearTimeout(logoutTimerRef.current);
         }
         logoutTimerRef.current = setTimeout(() => {
-            logout();
+            logout(true);
         }, 60000); // 1분 = 60000ms
     }, [logout]);
 
@@ -59,6 +61,7 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
             resetLogoutTimer();
             setShowLogoutMessage(false);
+            isAutoLogout.current = false;
         } catch (error) {
             console.error('Failed to store token:', error);
         }
