@@ -26,11 +26,10 @@ function AppContent() {
       {location.pathname !== '/' && <SideBar />} {/* 사이드바 조건부 렌더링 */}
 
       {/* <MainPageApp/> */}
-      {/* <LoginApp/> */}
-      {/*       <NewsList/>
+      <LoginApp/>
+{/*       <NewsList/>
  */}      {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
-      <QuizModal />
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
