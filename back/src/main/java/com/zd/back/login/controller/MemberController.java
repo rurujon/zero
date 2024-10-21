@@ -81,36 +81,39 @@ public class MemberController {
     }
 
     @PostMapping("/update/{memId}")
-    public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
-        if (bindingResult.hasErrors()) {
-            String errors = bindingResult.getAllErrors().stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
-            return ResponseEntity.badRequest().body(errors);
-        }
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("인증이 필요합니다.");
-        }
-        String token = authHeader.substring(7);
-        if (!jwtUtil.validateToken(token)) {
-            return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
-        }
-        String loggedInMemId = jwtUtil.extractMemId(token);
-        if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
-            return ResponseEntity.status(403).body("권한이 없습니다.");
-        }
-
-        Member existingMember = memberService.getMemberById(memId);
-        if (existingMember == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (member.getPwd() == null || member.getPwd().isEmpty()) {
-            member.setPwd(existingMember.getPwd());
-        }
-        memberService.updateMember(member);
-        return ResponseEntity.ok("회원정보 수정 성공");
+public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
+    if (bindingResult.hasErrors()) {
+        String errors = bindingResult.getAllErrors().stream()
+            .map(error -> error.getDefaultMessage())
+            .collect(Collectors.joining(", "));
+        return ResponseEntity.badRequest().body(errors);
     }
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        return ResponseEntity.status(401).body("인증이 필요합니다.");
+    }
+    String token = authHeader.substring(7);
+    if (!jwtUtil.validateToken(token)) {
+        return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
+    }
+    String loggedInMemId = jwtUtil.extractMemId(token);
+    if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
+        return ResponseEntity.status(403).body("권한이 없습니다.");
+    }
+
+    Member existingMember = memberService.getMemberById(memId);
+    if (existingMember == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    // 비밀번호 처리 로직
+    if (member.getPwd() == null || member.getPwd().isEmpty()) {
+        // 비밀번호가 제공되지 않은 경우, null로 설정하여 서비스에서 처리하도록 함
+        member.setPwd(null);
+    }
+
+    memberService.updateMember(member);
+    return ResponseEntity.ok("회원정보 수정 성공");
+}
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {

@@ -38,12 +38,11 @@ public class MemberService {
         Member existingMember = memberMapper.selectMemberById(member.getMemId());
         if (existingMember != null) {
             if (member.getPwd() != null && !member.getPwd().isEmpty()) {
-                // 새 비밀번호가 제공된 경우에만 암호화
+                // 새 비밀번호가 제공되고 비어있지 않은 경우에만 암호화
                 String encryptedPassword = passwordEncoder.encode(member.getPwd());
-                System.out.println("암호화된 새 비밀번호: " + encryptedPassword);
                 member.setPwd(encryptedPassword);
             } else {
-                // 비밀번호가 제공되지 않은 경우 기존 비밀번호 유지
+                // 비밀번호가 제공되지 않거나 빈 문자열인 경우 기존 비밀번호 유지
                 member.setPwd(existingMember.getPwd());
             }
             memberMapper.updateMember(member);
