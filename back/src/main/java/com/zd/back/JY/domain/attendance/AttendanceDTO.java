@@ -9,4 +9,8 @@ public class AttendanceDTO {
     private String attDate;
     private String memId;
 
+    public AttendanceDTO() {
+        this.attDate="00/00/00";
+    }
+
 }
