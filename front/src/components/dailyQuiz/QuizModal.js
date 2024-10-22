@@ -27,7 +27,7 @@ const QuizModal = () => {
 
         })
         .then(response => {
-            if(response.data.quiz==="quiz"){
+            if(response.data.uppoint==="1"){
                 setIsOpen(true)
             }
         })
