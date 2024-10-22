@@ -15,7 +15,7 @@ export const routes = [
     
     { path:'/', element:<MainPageApp/>},    //메인페이지
 
-    // { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
+    { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
 
     // { path:'/seoulNewsEnv', element:<SeoulNewsEnv/>},   //서울env 뉴스리스트
     // { path:'/seoulNewsEco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
