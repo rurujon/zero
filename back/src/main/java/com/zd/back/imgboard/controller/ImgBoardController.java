@@ -163,6 +163,10 @@ public class ImgBoardController {
 /* @GetMapping("/list")
 public ResponseEntity<List<ImgBoard>> getImgPosts() {
     List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
+
+
+
+    
     return new ResponseEntity<>(imgBoards, HttpStatus.OK);
 }
  */
