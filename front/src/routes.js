@@ -1,6 +1,7 @@
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
+import OrgApp from "./components/org/OrgApp";
 
 
 
@@ -12,7 +13,7 @@ import NewsList from "./components/naverapi/NewsList";
 export const routes = [
 
     
-    // { path:'/', element:<MainPageApp/>},    //메인페이지
+    { path:'/', element:<MainPageApp/>},    //메인페이지
 
     // { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
 
@@ -22,7 +23,12 @@ export const routes = [
     // { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
 
 
+    { path:'/orgList', element:<OrgApp/>},   //봉사단체 리스트
+
+
     
 
 
 ]
+
+export default routes
