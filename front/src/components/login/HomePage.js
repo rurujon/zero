@@ -6,13 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
-import AutoLogout from './AutoLogout';
 
 const HomePage = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
 
-    const { token, logout, login, memId, showLogoutMessage, setShowLogoutMessage, isAutoLogout } = useContext(AuthContext);
+    const { token, logout, login, memId } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -78,15 +77,6 @@ const HomePage = () => {
 
     return (
         <div className="container mt-4">
-            <AutoLogout />
-            {isAutoLogout && showLogoutMessage && (
-                <div className="alert alert-warning" role="alert">
-                    사용이 없어 자동으로 로그아웃되었습니다. 다시 로그인하세요.
-                    <button type="button" className="close" onClick={() => setShowLogoutMessage(false)}>
-                        <span>&times;</span>
-                    </button>
-                </div>
-            )}
             {!isLoggedIn ? (
                 <div>
                     {showLogin && (

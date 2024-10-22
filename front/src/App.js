@@ -10,7 +10,6 @@ import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
-import AutoLogout from './components/login/AutoLogout';
 import ImgApp from './components/imgboard/ImgApp';
 
 function AppContent() {
@@ -26,12 +25,11 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
-
-      {/* <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes> */}
+      {/* <MainPageApp/> */}
+      <LoginApp/>
+      {/* <NewsList/> */}
+      {/* <SmartMapApp/> */}
+      {/* <ImgApp/> */}
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
