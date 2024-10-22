@@ -55,6 +55,9 @@ dependencies {
 	//2024-10-21 정윤재 추가 - 네이버 api db 안 정규화 표현식 제거용
 	implementation 'org.apache.commons:commons-text:1.9'
 
+	//2024-10-22 정윤재 추가 - rss 피딩 xml 리딩 관련
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+
 }
 
 tasks.named('test') {
