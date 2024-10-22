@@ -13,29 +13,36 @@ import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import ImgApp from './components/imgboard/ImgApp';
 import OrgApp from './components/org/OrgApp';
+import routes from './routes';
 
 function AppContent() {
 
   //React Router에서 경로를 가져오는 훅. 단, 이걸 사용하기 위해서는 정의되는 함수가 <BrowserRouter> 안에 있어야 한다고 합니다.
   //그래서 아래처럼 App()에서 <BrowserRouter></BrowserRouter>로 감싼 AppContent를 불러오도록 구조를 변경해야 합니다.
   const location = useLocation();
+  const isMainPage = location.pathname === '/'; // 메인 페이지인지 확인
 
   return (
     <div>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header />
 
-      {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
-
-      <NewsList/>
       {/* <OrgApp/> */}
+      {/* <NewsList/> */}
 
-
-      {/* <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes> */}
+      {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
+      <div className={isMainPage ? '' : 'main-layout'}>
+        {/* 메인페이지가 아닌 경우에만 사이드바 렌더링 */}
+        {!isMainPage && <SideBar />}
+        
+        <div className={isMainPage ? '' : 'content'}>
+          <Routes>
+            {routes.map((route) => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Routes>
+        </div>
+      </div>
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}

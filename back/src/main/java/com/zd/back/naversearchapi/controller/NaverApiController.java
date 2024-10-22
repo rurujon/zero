@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.zd.back.naversearchapi.NaverNewsCrawl;
 import com.zd.back.naversearchapi.ReadNaverJSON;
 import com.zd.back.naversearchapi.model.News;
 import com.zd.back.naversearchapi.service.SearchApiService;
