@@ -5,6 +5,7 @@ import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
+import com.zd.back.imgboard.util.MyPage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,8 @@ public class ImgBoardController {
 
     private final ImgPostService imgPostService;
     private final ImgService imgService;
+    private final MyPage myPage;
+
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -157,10 +160,15 @@ public class ImgBoardController {
     }
 
 // list ==========================================
-@GetMapping("/list")
+/* @GetMapping("/list")
 public ResponseEntity<List<ImgBoard>> getImgPosts() {
     List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
     return new ResponseEntity<>(imgBoards, HttpStatus.OK);
 }
+ */
+
+
+
+
 
 }
