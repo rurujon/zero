@@ -3,22 +3,21 @@ import axios from 'axios';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
-    const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const [page, setPage] = useState(1); // 페이지 상태 추가
+
     const pageSize = 12; // 한 페이지당 게시물 수
 
-  
     useEffect(() => {
-        axios.get(`/imgboard/list?page=${page}&size=${pageSize}`)
+        axios.get(`/imgboard/list?pageNum=${page}&numPerPage=${pageSize}`) // API 호출 수정
             .then(response => {
-                setImgPosts(response.data);
+                setImgPosts(response.data.contents); // 데이터 구조에 맞게 수정
                 console.log(response.data);
             })
             .catch(error => {
                 console.error('이미지를 찾을 수 없습니다.', error);
             });
-    }, []);
-   
+    }, [page]); // page가 바뀔 때마다 호출
+
     return (
         <div>
             <h2>인증게시판 리스트</h2>
@@ -37,7 +36,6 @@ function ImgList() {
                         backgroundColor: '#f0f0f0', 
                         width: '22%' // 4개가 가로로 보이도록 설정
                     }}>
-                        
                         {/* 이미지 목록 출력 */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
                             {board.images && board.images.length > 0 ? (
@@ -59,18 +57,19 @@ function ImgList() {
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
-    
+
                         <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
                             <p style={{ color: '#fff' }}>승인여부: {board.imgPost.auth}</p>
                         </div>
                         <p>글번호 : {board.imgPost.imgPostId}</p>
                         <p>목록: {board.imgPost.cate}</p>
                         <p>작성자: {board.imgPost.memId}</p>
-                        <p>제목: <a href='/imgboard/article.action'>{board.imgPost.title}</a> </p>
+                        <p>제목: <a href={`/imgboard/article/${board.imgPost.imgPostId}`}>{board.imgPost.title}</a></p>
                         <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
                     </div>
                 ))}
             </div>
+            {/* 페이지 변경 버튼 등 추가 가능 */}
         </div>
     );
 }

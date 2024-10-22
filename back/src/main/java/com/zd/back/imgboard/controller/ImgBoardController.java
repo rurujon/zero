@@ -5,7 +5,7 @@ import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
-import com.zd.back.imgboard.util.MyPage;
+import com.zd.back.imgboard.util.ImgPage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
@@ -152,13 +153,31 @@ public class ImgBoardController {
         return img;
     }
 
-    // list ==========================================
+// list ==========================================
     @GetMapping("/list")
-    public ResponseEntity<MyPage<ImgBoard>> getImgPosts(
+    public ResponseEntity<ImgPage<ImgBoard>> getImgPosts(
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "12") int numPerPage) {
-        MyPage<ImgBoard> page = imgPostService.getImgPostsWithPagination(pageNum, numPerPage);
-        return new ResponseEntity<>(page, HttpStatus.OK);
+
+        int start = (pageNum - 1) * numPerPage + 1; 
+        int end = start + numPerPage - 1; 
+
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards(start,end);
+        long totalElements = imgPostService.getTotalImgBoardCount();
+
+        //총 페이지 계산
+        int totalPages = (int) Math.ceil((double) totalElements / numPerPage);
+\
+
+
+
+        ImgPage<ImgBoard> imgPage = new ImgPage<>();
+        imgPage.setContents(imgBoards);
+        imgPage.setCurrentPage(pageNum);
+        imgPage.setTotalPages(totalPages);
+        imgPage.setTotalElements(totalElements);
+
+        return new ResponseEntity<>(imgPage, HttpStatus.OK);
     }
 
     @GetMapping("/article/{imgPostId}") 

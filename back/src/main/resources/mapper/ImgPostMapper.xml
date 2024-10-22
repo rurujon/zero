@@ -14,52 +14,53 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
-<!-- <select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap"> //페이징처리(-)
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-    FROM ImgPost ip
-    LEFT JOIN (
-        SELECT imgPostId, imgId, saveFileName, filePath
-        FROM Img
-        WHERE imgId IN (
-            SELECT MIN(imgId) 
-            FROM Img 
-            GROUP BY imgPostId
-        )
-    ) i ON ip.imgPostId = i.imgPostId
-        WHERE ip.imgPostId BETWEEN #{start} AND #{end}
-        ORDER BY ip.imgPostId DESC
-</select>
- -->
-
-<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath FROM ImgPost ip LEFT JOIN (SELECT imgPostId, imgId, 
-    saveFileName, filePath FROM Img WHERE imgId IN (SELECT MIN(imgId) FROM Img GROUP BY imgPostId)) 
-    i ON ip.imgPostId = i.imgPostId ORDER BY ip.imgPostId DESC
-</select>
-
-<select id="getImgPostById" parameterType="int" resultMap="ImgPostResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath FROM ImgPost ip 
-    LEFT JOIN Img i ON ip.imgPostId = i.imgPostId WHERE ip.imgPostId = #{imgPostId}
+<select id="selectImgBoardList" parameterType="map" resultType="com.zd.back.imgboard.model.ImgBoard">
+    SELECT *
+    FROM (
+        SELECT ip.*, i.imgId, i.saveFileName, i.filePath,
+               ROW_NUMBER() OVER (ORDER BY ip.imgPostId DESC) as rn
+        FROM ImgPost ip
+        LEFT JOIN (
+            SELECT imgPostId, imgId, saveFileName, filePath
+            FROM Img
+            WHERE imgId IN (
+                SELECT MIN(imgId)
+                FROM Img
+                GROUP BY imgPostId
+            )
+        ) i ON ip.imgPostId = i.imgPostId
+    )
+    WHERE rn BETWEEN #{start} AND #{end}
 </select>
 
 
 
-<resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
-    <result property="imgPost.imgPostId" column="imgPostId" />
-    <result property="imgPost.memId" column="memId" />
-    <result property="imgPost.cate" column="cate" />
-    <result property="imgPost.title" column="title" />
-    <result property="imgPost.content" column="content" />
-    <result property="imgPost.created" column="created" />
-    <result property="imgPost.auth" column="auth" />
-    <result property="imgPost.authDate" column="authDate" />
-    <collection property="images" ofType="com.zd.back.imgboard.model.Img">
-        <result property="imgId" column="imgId" />
-        <result property="originalFileName" column="originalFileName" />
-        <result property="saveFileName" column="saveFileName" />
-        <result property="filePath" column="filePath" />
-        <result property="fileDate" column="fileDate" />
-    </collection>
-</resultMap>
+    <select id="countAllImgBoards" resultType="long">
+        SELECT COUNT(*) FROM ImgPost
+    </select>
 
+    <select id="getImgPostById" parameterType="int" resultType="com.zd.back.imgboard.model.ImgPost">
+        SELECT ip.*, i.imgId, i.saveFileName, i.filePath 
+        FROM ImgPost ip 
+        LEFT JOIN Img i ON ip.imgPostId = i.imgPostId 
+        WHERE ip.imgPostId = #{imgPostId}
+    </select>
+
+    <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
+        <result property="imgPost.imgPostId" column="imgPostId" />
+        <result property="imgPost.memId" column="memId" />
+        <result property="imgPost.cate" column="cate" />
+        <result property="imgPost.title" column="title" />
+        <result property="imgPost.content" column="content" />
+        <result property="imgPost.created" column="created" />
+        <result property="imgPost.auth" column="auth" />
+        <result property="imgPost.authDate" column="authDate" />
+        <collection property="images" ofType="com.zd.back.imgboard.model.Img">
+            <result property="imgId" column="imgId" />
+            <result property="originalFileName" column="originalFileName" />
+            <result property="saveFileName" column="saveFileName" />
+            <result property="filePath" column="filePath" />
+            <result property="fileDate" column="fileDate" />
+        </collection>
+    </resultMap>
 </mapper>

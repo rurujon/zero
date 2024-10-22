@@ -13,10 +13,10 @@ public interface ImgPostMapper {
     int maxImgPostId();
 
     void insertImgPost(ImgPost imgPost);
-
-    //List<ImgBoard> getAllImgBoardWithFirstImage(int start, int end); --페이징 처리(-)
     
-    List<ImgBoard> getAllImgBoardWithFirstImage(); //페이장 처리전 
+    long countAllImgBoards();
+    
+    List<ImgBoard> selectImgBoardList(int start, int end);
     
     ImgPost getImgPostById(int imgPostId);
 
