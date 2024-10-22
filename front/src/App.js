@@ -28,8 +28,15 @@ function AppContent() {
       {/* <MainPageApp/> */}
       <LoginApp/>
       {/* <NewsList/> */}
-      {/* <SmartMapApp/> */}
+      {/* <SmartMapApp/>  */}
       {/* <ImgApp/> */}
+      {/* <QuizModal/> */}
+
+      {/* <Routes>
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes> */}
 
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
