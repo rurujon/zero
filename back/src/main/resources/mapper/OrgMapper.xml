@@ -10,8 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertOrg" parameterType="com.zd.back.organization.OrgData">
-        INSERT INTO organization (location, name, description, link)
-        Values (#{location}, #{name}, #{description}, #{link})
+        INSERT INTO organization (location, name, description, imgUrl, link)
+        Values (#{location}, #{name}, #{description}, #{imgUrl}, #{link})
     </insert>
 
     <select id="selectByName" parameterType="String" resultType="com.zd.back.organization.OrgData">
