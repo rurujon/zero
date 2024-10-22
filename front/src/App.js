@@ -11,7 +11,7 @@ import SmartMapApp from './components/smartmap/SmartMapApp';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import ImgApp from './components/imgboard/ImgApp';
-
+import QuizModal from './components/dailyQuiz/QuizModal';
 function AppContent() {
 
   //React Router에서 경로를 가져오는 훅. 단, 이걸 사용하기 위해서는 정의되는 함수가 <BrowserRouter> 안에 있어야 한다고 합니다.
@@ -37,8 +37,8 @@ function AppContent() {
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Routes> */}
-
-
+      <LoginApp/>
+      <QuizModal/>
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
  {/*      <Footer />
       <AutoLogout />
