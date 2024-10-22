@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ import com.zd.back.naversearchapi.ReadNaverJSON;
 import com.zd.back.naversearchapi.model.News;
 import com.zd.back.naversearchapi.service.SearchApiService;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +42,19 @@ public class NaverApiController {
     @PostMapping("/news/update")
     public ResponseEntity<Map<Integer,Map<String,String>>> getNaverNews() {
         try {
-            // 검색어 인코딩
-            //String query = URLEncoder.encode("환경", StandardCharsets.UTF_8.toString());
-            String query ="환경 보호";
+            // 검색어 설정
+            String mainKeyword = "환경 보호";
+            String additionalKeywords = "기후변화 OR 재활용 OR 친환경 or 제로웨이스트 or 리싸이클링 or 업싸이클링";
+            String excludeKeywords = "-정치 -연예 -스포츠";
+
+            // 검색 쿼리 조합
+            String query = mainKeyword + " (" + additionalKeywords + ") " + excludeKeywords;
+
+            // URL 인코딩
+            String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
 
             // API 요청 URL 설정
-            String apiURL = "https://openapi.naver.com/v1/search/news?query=" + query + "&display=50";
+            String apiURL = "https://openapi.naver.com/v1/search/news?query=" + encodedQuery + "&display=50&sort=date";
 
             // HTTP 헤더 설정
             HttpHeaders headers = new HttpHeaders();
@@ -75,7 +86,7 @@ public class NaverApiController {
             // 네이버 api 에서 가져오는 데이터는 기본적으로 최신순으로 정렬되어 제공되지만, 네트워크 지연이나 비동기 처리로 인해 순서가 미묘하게 바뀔 수 있습니다.
             //그래서 갱신을 할 때마다 순서가 미묘하게 바뀌더라고요
             //그래서 따로 정렬하는 과정이 필요합니다.
-            //서버에서 해도 되고 클라이언트에서 해도 되지만, 저는 서버에서 DB에 넣기 전에 정렬 과정을 거치도록 했습니다. 
+            //서버에서 해도 되고 클라이언트에서 해도 되지만, 저는 서버에서 DB에 넣기 전에 정렬 과정을 거치도록 했습니다.
             List<Map<String, String>> sortedNews = newsMap.values().stream()
                 .sorted((news1, news2) -> {
                     String date1 = news1.get("pubDate");
@@ -94,7 +105,7 @@ public class NaverApiController {
 
                 News news = new News();
                 news.setTitle(cleanedTitle);
- 
+
                 news.setLink(newsData.get("link"));
                 news.setDescription(cleanedDescription);
                 news.setPubDate(newsData.get("pubDate"));
@@ -127,6 +138,16 @@ public class NaverApiController {
         }
     }
 
+    @Scheduled(fixedRate = 600000) // 10분마다 실행
+    public void scheduleNewsUpdate() {
+        try {
+            getNaverNews();
+            System.out.println("뉴스 자동 갱신 완료: " + new Date());
+        } catch (Exception e) {
+            System.err.println("뉴스 자동 갱신 실패: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/news/search")
     public ResponseEntity<List<News>> searchNews(@RequestParam("keyword") String keyword) {
         List<News> searchResults = searchApiService.searchNews(keyword);
@@ -149,7 +170,7 @@ public class NaverApiController {
 
         return decodedText;
     }
-    
 
-    
+
+
 }

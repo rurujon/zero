@@ -1,19 +1,96 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
+const NewsContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+`;
+
+const NewsHeader = styled.h1`
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const NewsListContainer = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const NewsItem = styled.li`
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+`;
+
+const NewsLink = styled.a`
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    color: #3498db;
+  }
+`;
+
+const NewsDescription = styled.p`
+  color: #7f8c8d;
+  margin-top: 10px;
+  font-size: 0.9em;
+`;
+
+const NewsDate = styled.span`
+  color: #95a5a6;
+  font-size: 0.8em;
+  display: block;
+  margin-top: 5px;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const PageButton = styled.button`
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: ${props => props.active ? '#3498db' : '#f1f1f1'};
+  color: ${props => props.active ? 'white' : 'black'};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #3498db;
+    color: white;
+  }
+`;
 
 const NewsList = () => {
-  const [newsData, setNewsData] = useState(null);
+  const [newsData, setNewsData] = useState([]);
   const [error, setError] = useState(null);
-  const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태 추가
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 5;
 
-
-  // 버튼 클릭 시 뉴스 데이터를 가져오는 함수
   const fetchNewsData = () => {
     axios
-      .get("http://localhost:8080/api/naver/news") // Spring Boot API 호출
+      .get("/api/naver/news")
       .then((response) => {
-        setNewsData(response.data); // API 응답 데이터 저장
-        setError(null); // 에러 초기화
+        setNewsData(response.data);
+        setTotalPages(Math.ceil(response.data.length / itemsPerPage));
+        setError(null);
       })
       .catch((error) => {
         setError("뉴스 데이터를 가져오는 데 실패했습니다.");
@@ -21,66 +98,55 @@ const NewsList = () => {
       });
   };
 
-  //뉴스 갱신 함수
-  const updateNewsData = () => {
-    axios
-      .post("http://localhost:8080/api/naver/news/update") // DB 갱신
-      .then((response) => {
-        alert("갱신이 완료되었습니다."); // 갱신 완료 메시지
-        fetchNewsData();      // 갱신 후 DB에서 뉴스 다시 가져오기
-        setError(null); // 에러 초기화
-      })
-      .catch((error) => {
-        setError("뉴스 DB를 갱신하는 데 실패했습니다.");
-        console.error(error);
-      });
-  };
-
-  // 검색 시 뉴스 데이터를 가져오는 함수
-  const fetchSearchResults = () => {
-    axios
-      .get(`http://localhost:8080/api/naver/news/search?keyword=${searchKeyword}`) // 검색 API 호출
-      .then((response) => {
-        setNewsData(response.data); // 검색 결과 저장
-        setError(null); // 에러 초기화
-      })
-      .catch((error) => {
-        setError("검색 결과를 가져오는 데 실패했습니다.");
-        console.error(error);
-      });
-  };
-
-  // 처음 페이지 로드 시 DB에서 뉴스 데이터를 가져옴
   useEffect(() => {
     fetchNewsData();
+
+    const intervalId = setInterval(() => {
+      fetchNewsData();
+    }, 600000); // 10분마다 갱신
+
+    return () => clearInterval(intervalId);
   }, []);
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = newsData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <div>
-      <h1>네이버 뉴스</h1>
-      <input
-        type="text"
-        value={searchKeyword}
-        onChange={(e) => setSearchKeyword(e.target.value)} // 검색어 업데이트
-        placeholder="검색어 입력"
-      />
-      <button onClick={fetchSearchResults}>검색</button> {/* 검색 버튼 */}
-      <button onClick={updateNewsData}>뉴스 갱신</button> {/* 갱신 버튼 */}
+    <NewsContainer>
+      <NewsHeader>ECO NEWS</NewsHeader>
       {error && <p>{error}</p>}
-      {newsData ? (
-        <ul>
-          {newsData.map((news, index) => (
-            <li key={index}>
-              <a href={news.link} target="_blank" rel="noopener noreferrer">
-                {news.title}
-              </a>
-            </li>
-          ))}
-        </ul>
+      {newsData.length > 0 ? (
+        <>
+          <NewsListContainer>
+            {currentItems.map((news, index) => (
+              <NewsItem key={index}>
+                <NewsLink href={news.link} target="_blank" rel="noopener noreferrer">
+                  {news.title}
+                </NewsLink>
+                <NewsDescription>{news.description}</NewsDescription>
+                <NewsDate>{new Date(news.pubDate).toLocaleString()}</NewsDate>
+              </NewsItem>
+            ))}
+          </NewsListContainer>
+          <PaginationContainer>
+            {[...Array(totalPages).keys()].map(number => (
+              <PageButton
+                key={number + 1}
+                onClick={() => paginate(number + 1)}
+                active={currentPage === number + 1}
+              >
+                {number + 1}
+              </PageButton>
+            ))}
+          </PaginationContainer>
+        </>
       ) : (
         <p>뉴스 데이터를 불러오는 중...</p>
       )}
-    </div>
+    </NewsContainer>
   );
 };
 
