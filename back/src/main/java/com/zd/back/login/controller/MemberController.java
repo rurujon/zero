@@ -78,6 +78,7 @@ public class MemberController {
             if(attendanceService.checkToday(memId)){
                 pointService.upPoint(memId, 1);
                 response.put("uppoint", "1");
+                response.put("quiz","quiz");
             }
 
             return ResponseEntity.ok(response);

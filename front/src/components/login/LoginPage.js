@@ -21,7 +21,7 @@ const LoginPage = ({ onLogin }) => {
             .then(response => {
                 if (response.data.token) {
                     //10-21 조준영 추가
-                    if(response.data.uppoint=="1"){
+                    if(response.data.uppoint==="1"){
                         alert('+1p 적립!')
                     }
                     onLogin(response.data.token, memId);

@@ -5,12 +5,13 @@ import Quiz from './Quiz'
 import QuizX from './QuizX';
 import QuizO from './QuizO';
 import QuizResult from './QuizResult';
+import axios from 'axios';
 Modal.setAppElement('#root');
 
 
 const QuizModal = () => {
 
-    
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -21,14 +22,23 @@ const QuizModal = () => {
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
 
+    const openQuiz = () => {
+        axios.get('/member/login', null, {
 
+        })
+        .then(response => {
+            if(response.data.quiz==="quiz"){
+                setIsOpen(true)
+            }
+        })
+    }
     return (
         <>
-            <div>
+            {/* <div>
                 {answer} + {result}
-            </div>
+            </div> */}
 
-            <button onClick={()=> setIsOpen(true)}>모달 열기</button>
+            {/* <button onClick={()=> setIsOpen(true)}>모달 열기</button> */}
             <div className='bg'></div>
             
             <Modal 
