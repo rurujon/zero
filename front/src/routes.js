@@ -25,11 +25,12 @@ export const routes = [
     // { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
 
 
-
+    //ImgBoard
     { path: '/imgboard/created.action', element: <ImgCreated /> },
     { path: '/imgboard/list.action', element: <ImgList /> },
     { path: '/imgboard/article.action', element: <ImgArticle/> },
   
+
     
        
 

@@ -14,8 +14,10 @@ public interface ImgPostMapper {
 
     void insertImgPost(ImgPost imgPost);
 
-
-
-    List<ImgBoard> getAllImgBoardWithFirstImage();
+    //List<ImgBoard> getAllImgBoardWithFirstImage(int start, int end); --페이징 처리(-)
+    
+    List<ImgBoard> getAllImgBoardWithFirstImage(); //페이장 처리전 
+    
+    ImgPost getImgPostById(int imgPostId);
 
 }

@@ -25,10 +25,17 @@ public class ImgPostService {
     public void createImgPost(ImgPost imgPost) {
         imgPostMapper.insertImgPost(imgPost);
     }
+/* 
+    public List<ImgBoard> getAllImgBoardWithFirstImage(int start, int end) {  --페이징 처리전(-)
+        return imgPostMapper.getAllImgBoardWithFirstImage(start,end);
+    }
+     */
 
-    public List<ImgBoard> getAllImgBoardWithFirstImage() {
+     public List<ImgBoard> getAllImgBoardWithFirstImage() {  
         return imgPostMapper.getAllImgBoardWithFirstImage();
     }
-    
 
+    public ImgPost getImgPostById(int imgPostId) {
+        return imgPostMapper.getImgPostById(imgPostId);
+    }
 }

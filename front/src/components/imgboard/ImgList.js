@@ -3,9 +3,13 @@ import axios from 'axios';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+    const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const pageSize = 12; // 한 페이지당 게시물 수
+
   
     useEffect(() => {
-        axios.get('/imgboard/list')
+        axios.get(`/imgboard/list?page=${page}&size=${pageSize}`)
             .then(response => {
                 setImgPosts(response.data);
                 console.log(response.data);
@@ -47,7 +51,7 @@ function ImgList() {
                                             height: '200px', 
                                             margin: '5px', 
                                             display: 'block', 
-                                            verticalAlign: 'top' // vertical-align 조정
+                                            verticalAlign: 'top' 
                                         }}
                                     />
                                 ))
@@ -59,6 +63,7 @@ function ImgList() {
                         <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
                             <p style={{ color: '#fff' }}>승인여부: {board.imgPost.auth}</p>
                         </div>
+                        <p>글번호 : {board.imgPost.imgPostId}</p>
                         <p>목록: {board.imgPost.cate}</p>
                         <p>작성자: {board.imgPost.memId}</p>
                         <p>제목: <a href='/imgboard/article.action'>{board.imgPost.title}</a> </p>

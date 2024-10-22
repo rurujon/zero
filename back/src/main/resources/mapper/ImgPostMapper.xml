@@ -14,7 +14,7 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
-<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
+<!-- <select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap"> //페이징처리(-)
     SELECT ip.*, i.imgId, i.saveFileName, i.filePath
     FROM ImgPost ip
     LEFT JOIN (
@@ -26,8 +26,22 @@
             GROUP BY imgPostId
         )
     ) i ON ip.imgPostId = i.imgPostId
-     ORDER BY ip.imgPostId DESC
+        WHERE ip.imgPostId BETWEEN #{start} AND #{end}
+        ORDER BY ip.imgPostId DESC
 </select>
+ -->
+
+<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
+    SELECT ip.*, i.imgId, i.saveFileName, i.filePath FROM ImgPost ip LEFT JOIN (SELECT imgPostId, imgId, 
+    saveFileName, filePath FROM Img WHERE imgId IN (SELECT MIN(imgId) FROM Img GROUP BY imgPostId)) 
+    i ON ip.imgPostId = i.imgPostId ORDER BY ip.imgPostId DESC
+</select>
+
+<select id="getImgPostById" parameterType="int" resultMap="ImgPostResultMap">
+    SELECT ip.*, i.imgId, i.saveFileName, i.filePath FROM ImgPost ip 
+    LEFT JOIN Img i ON ip.imgPostId = i.imgPostId WHERE ip.imgPostId = #{imgPostId}
+</select>
+
 
 
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
