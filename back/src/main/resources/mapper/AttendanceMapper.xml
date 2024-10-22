@@ -17,4 +17,8 @@
         select * from attendance where attDate = to_char(sysdate, ('YY/MM/DD')) AND memId = #{memId}
     </select>
 
+    <insert id="regiAtt" parameterType="com.zd.back.JY.domain.attendance.AttendanceDTO">
+        insert into attendance (attId, attDate, memId) values(#{attId}, to_char(sysdate, 'YY/MM/DD'), #{memId})
+    </insert>
+
   </mapper>

@@ -12,4 +12,6 @@ public interface AttendanceMapper {
     public void insertAtt(Map<String, Object> map);
 
     public AttendanceDTO checkToday(String memId);
+
+    public void regiAtt(AttendanceDTO dto);
 }

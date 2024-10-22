@@ -11,5 +11,10 @@ public interface PointMapper {
     
     public void updatePoint(PointDTO dto);
 
-    public PointDTO findById(int pointid);
+    public PointDTO findById(String memId);
+
+    public PointDTO findByMemId(String memId);
+
+    public void upPoint(PointDTO dto);
+
 } 

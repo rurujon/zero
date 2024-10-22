@@ -38,12 +38,24 @@ public class AttendanceServiceImp implements AttendanceService{
 
         boolean flag = false;
 
-        if(mapper.checkToday(memId)!=null){
+        //null이라는건 오늘 출책을 안했다는것
+        if(mapper.checkToday(memId)==null){
             return flag = true;
         }
         
 
         return flag;
     }
+
+    //회원가입시 ATT데이터 생성 
+    public void regiAtt(String memId){
+
+        AttendanceDTO dto = new AttendanceDTO();
+
+        dto.setAttId(mapper.maxNum()+1);
+        dto.setMemId(memId);
+
+        mapper.regiAtt(dto);
+    } 
 
 }

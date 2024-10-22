@@ -1,5 +1,9 @@
 package com.zd.back.login.controller;
 
+import com.zd.back.JY.domain.attendance.AttendanceService;
+import com.zd.back.JY.domain.dailyQuiz.QuizService;
+import com.zd.back.JY.domain.point.PointDTO;
+import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
@@ -22,6 +26,16 @@ public class MemberController {
 
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
+    //10-21조준영 추가 pointService, quizService, attendanceService
+    @Autowired
+    private PointService pointService;
+
+    @Autowired
+    private QuizService quizService;
+
+    @Autowired
+    private AttendanceService attendanceService;
+
     @Autowired
     private MemberService memberService;
 
@@ -40,7 +54,13 @@ public class MemberController {
         if (!member.isTermsAccepted()) {
             return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
         }
+        
         memberService.registerMember(member);
+        //10-21 조준영 가입시 point등록기능 추가
+        pointService.insertData(member.getMemId());
+        //10-22 조준영 가입시 attendance등록 기능 추가
+        attendanceService.regiAtt(member.getMemId());
+
         return ResponseEntity.ok("회원가입 성공");
     }
 
@@ -52,6 +72,14 @@ public class MemberController {
             String token = jwtUtil.generateToken(memId);
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
+
+
+            //10-21조준영 추가
+            if(attendanceService.checkToday(memId)){
+                pointService.upPoint(memId, 1);
+                response.put("uppoint", "1");
+            }
+
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.badRequest().body("로그인 실패");
