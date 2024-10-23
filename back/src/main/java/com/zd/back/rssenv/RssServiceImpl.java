@@ -1,11 +1,15 @@
 package com.zd.back.rssenv;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -64,7 +68,7 @@ public class RssServiceImpl implements RssService{
                 RssItem rssItem = new RssItem();
 
                 String title = item.getElementsByTagName("title").item(0).getTextContent();
-                String link = "https://www.me.go.kr/" + item.getElementsByTagName("link").item(0).getTextContent();
+                String link = "https://www.me.go.kr" + item.getElementsByTagName("link").item(0).getTextContent();
                 String description = item.getElementsByTagName("description").item(0).getTextContent();
                 String author = item.getElementsByTagName("author").item(0).getTextContent();
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
@@ -74,6 +78,7 @@ public class RssServiceImpl implements RssService{
                 rssItem.setAuthor(author);
                 rssItem.setDescription(description);
                 rssItem.setPubDate(pubDate);
+
 
                 // 중복 확인
                 if (rssMapper.selectByTitle(rssItem.getTitle()) == null) {
@@ -87,6 +92,30 @@ public class RssServiceImpl implements RssService{
             e.printStackTrace();
         }
 
+    }
+
+    // 특정 URL에서 다운로드 링크 추출하는 메서드
+    public List<String> extractDownloadLinks(String url) throws IOException {
+        List<String> downloadLinks = new ArrayList<>();
+
+        // JSoup으로 페이지의 HTML을 가져옴
+        org.jsoup.nodes.Document doc = Jsoup.connect(url).get();
+
+        // "view_file" 클래스 안의 <a> 태그만 선택
+        Elements fileLinks = doc.select(".view_file ul li a[href]");
+
+        // 각 링크의 href 속성 값 가져오기
+        for (org.jsoup.nodes.Element link : fileLinks) {
+            // "바로보기" 링크를 무시 (title 속성이 "파일 새창으로 열기"인 것)
+            if (!link.hasAttr("title")) {
+                String fileUrl = link.attr("href");
+
+                String downloadUrl = "https://www.me.go.kr" + fileUrl;
+                downloadLinks.add(downloadUrl);
+            }
+        }
+
+        return downloadLinks;
     }
     
 }

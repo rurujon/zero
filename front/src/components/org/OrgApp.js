@@ -86,7 +86,6 @@ const OrgApp = () => {
                                     <p className='card_content-location'>Location: {org.location}</p>
                                 </div>
                                 <a href='' className='card-btn'>기부하기</a>
-                                <a href='' className='card-btn'>홈페이지</a>
                             </div>
                         </li>
                     ))}

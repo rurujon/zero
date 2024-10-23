@@ -2,6 +2,8 @@ import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
 import OrgApp from "./components/org/OrgApp";
+import MinEnvArticle from "./components/rss/MinEnvArticle";
+import RssData from "./components/rss/RssData";
 
 
 
@@ -24,6 +26,11 @@ export const routes = [
 
 
     { path:'/orgList', element:<OrgApp/>},   //봉사단체 리스트
+    { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
+    { path:'/minEnv/:id', element:<MinEnvArticle/>},   //환경부 Rss 배포 환경정책 리스트
+    
+
+    
 
 
     

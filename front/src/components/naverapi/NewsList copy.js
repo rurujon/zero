@@ -262,8 +262,9 @@ const NewsList = () => {
     fetchNewsData();
 
     // const intervalId = setInterval(() => {
+    //   updateNewsData();
     //   fetchNewsData();
-    // }, 600000); // 10분마다 갱신
+    // }, 60000); // 10분마다 갱신
 
     // return () => clearInterval(intervalId);
   }, []);

@@ -1,6 +1,6 @@
 .list {
 
-    background-color: #f2f2f2;
+    background-color: #ffffff;
 }
 
 .list_container {
@@ -58,13 +58,13 @@
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
-    height: calc(100% - 21rem);
+    height: calc(100% - 17rem);
     padding-top: 1.6rem;
     padding-bottom: 1.6rem;
     padding-left: 2rem;
     padding-right: 2rem;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #f2f2f2;
     border-bottom-left-radius: 0.6rem;
     border-bottom-right-radius: 0.6rem;
     box-sizing: border-box;
