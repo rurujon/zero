@@ -65,8 +65,8 @@ const PaginationContainer = styled.div`
 const PageButton = styled.button`
   margin: 0 5px;
   padding: 5px 10px;
-  background-color: ${props => props.active ? '#3498db' : '#f1f1f1'};
-  color: ${props => props.active ? 'white' : 'black'};
+  background-color: ${props => (props.$active ? '#3498db' : '#f1f1f1')};
+  color: ${props => (props.$active ? 'white' : 'black')};
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -295,7 +295,7 @@ const NewsList = () => {
         <PageButton
           key={i}
           onClick={() => paginate(i)}
-          active={currentPage === i}
+          $active={currentPage === i}
         >
           {i}
         </PageButton>
