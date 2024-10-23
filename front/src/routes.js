@@ -1,5 +1,5 @@
 import ImgArticle from "./components/imgboard/ImgArticle";
-import ImgCreated from "./components/imgboard/Imgcreated";
+import ImgCreated from "./components/imgboard/ImgCreated";
 import ImgList from "./components/imgboard/ImgList";
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";

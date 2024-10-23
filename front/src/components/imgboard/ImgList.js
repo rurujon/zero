@@ -1,20 +1,47 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Pagination from './Pagination'; 
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
-  
-    useEffect(() => {
-        axios.get('/imgboard/list')
+    const [pageResponse, setPageResponse] = useState({
+        pageNumList: [], // 페이지 번호 리스트
+        prev: false, // 이전 버튼 
+        next: false, // 다음 버튼 
+        prevPage: 0, // 이전 버튼 클릭 시 이동할 페이지 번호
+        nextPage: 0, // 다음 버튼 클릭 시 이동할 페이지 번호
+        current: 1, // 현재 페이지
+        totalPage: 0 // 총 페이지 수
+    });
+
+    const fetchImgPosts = (page = 1) => {
+        axios.get(`/imgboard/list?page=${page}`)
             .then(response => {
-                setImgPosts(response.data);
-                console.log(response.data);
+                setImgPosts(response.data.imgPosts);
+                setPageResponse({
+                    pageNumList: response.data.pageNumList,
+                    prev: response.data.prev,
+                    next: response.data.next,
+                    prevPage: response.data.prevPage,
+                    nextPage: response.data.nextPage,
+                    current: response.data.current,
+                    totalPage: response.data.totalPage
+                });
             })
             .catch(error => {
                 console.error('이미지를 찾을 수 없습니다.', error);
             });
+    };
+
+    useEffect(() => {
+        fetchImgPosts(); // 첫 페이지를 로드합니다.
     }, []);
-   
+
+    const handlePageChange = (page) => {
+        fetchImgPosts(page);
+    };
+
     return (
         <div>
             <h2>인증게시판 리스트</h2>
@@ -27,13 +54,12 @@ function ImgList() {
                 {imgPosts.map((board, index) => (
                     <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
                         border: '2px solid red', 
-                        margin: '15px', // 간격 조정
+                        margin: '15px', 
                         padding: '10px', 
                         borderRadius: '5px', 
                         backgroundColor: '#f0f0f0', 
-                        width: '22%' // 4개가 가로로 보이도록 설정
+                        width: '22%' 
                     }}>
-                        
                         {/* 이미지 목록 출력 */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
                             {board.images && board.images.length > 0 ? (
@@ -43,11 +69,12 @@ function ImgList() {
                                         src={`/images/${img.saveFileName}`}
                                         alt={img.saveFileName}
                                         style={{ 
-                                            width: '350px', 
-                                            height: '200px', 
+                                            width: '100%', 
+                                            maxWidth: '350px', 
+                                            height: 'auto', 
                                             margin: '5px', 
                                             display: 'block', 
-                                            verticalAlign: 'top' // vertical-align 조정
+                                            verticalAlign: 'top' 
                                         }}
                                     />
                                 ))
@@ -66,6 +93,9 @@ function ImgList() {
                     </div>
                 ))}
             </div>
+            
+            {/* Pagination 컴포넌트를 렌더링하고, 페이지 변경 핸들러를 전달합니다. */}
+            <Pagination pageResponse={pageResponse} onPageChange={handlePageChange} />
         </div>
     );
 }
