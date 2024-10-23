@@ -4,7 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zd.back.rssenv.RssMapper">
+    <insert id="insertRssItem" parameterType="com.zd.back.rssenv.RssItem">
+        INSERT INTO rssItems (title, description, link, author, pubdate)
+        VALUES (#{title}, #{description}, #{link}, #{author}, #{pubDate})
+    </insert>
 
+    <select id="selectByTitle" parameterType="String" resultType="com.zd.back.rssenv.RssItem">
+        SELECT * FROM rssItems WHERE title = #{title}
+    </select>
 
+    <select id="selectAll" resultType="com.zd.back.rssenv.RssItem">
+        SELECT * FROM rssItems
+    </select>
+
+    <select id="selectMini" resultType="com.zd.back.rssenv.RssItem">
+        select * from rssItems where rownum &lt;=10
+    </select>
 
 </mapper>

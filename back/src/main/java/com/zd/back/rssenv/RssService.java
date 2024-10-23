@@ -1,9 +1,14 @@
 package com.zd.back.rssenv;
 
+import java.util.List;
+
 /**
  * RssService
  */
 public interface RssService {
 
-    String rssFetch();
+    void rssFetch();
+    void insertRssItem(RssItem item);
+    List<RssItem> selectAll();
+    List<RssItem> selectMini();
 }

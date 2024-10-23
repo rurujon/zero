@@ -33,6 +33,12 @@ public class OrgController {
     public List<OrgData> getOrg() {
         return orgService.selectAll();
     }
+
+    @GetMapping("/globalList")
+    public List<OrgData> getGlobalOrg() {
+        return orgService.selectGlobalOrg();
+    }
+    
     
     
     

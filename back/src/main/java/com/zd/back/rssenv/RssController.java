@@ -1,5 +1,7 @@
 package com.zd.back.rssenv;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +11,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -18,11 +23,24 @@ public class RssController {
     @Autowired
     private RssService rssService;
 
-    @GetMapping("/env")
-    public String fetchRssEnv() {
-
-        return rssService.rssFetch();
+    @PostMapping("/env")
+    public void fetchRssEnv() {
+        //TODO: process POST request
+        
+        rssService.rssFetch();
     }
+
+    @GetMapping("/env/list")
+    public List<RssItem> getRssEnv() {
+        return rssService.selectAll();
+    }
+
+    @GetMapping("/env/mini")
+    public List<RssItem> getRssMini() {
+        return rssService.selectMini();
+    }
+    
+    
     
     
 }

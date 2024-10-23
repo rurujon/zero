@@ -5,11 +5,21 @@ import "./Card.css"
 
 const OrgApp = () => {
     const [orgList, setOrgList] = useState([]);
+    const [globalOrgList, setGlobalOrgList] = useState([]);
 
     const fetchOrgData = async () => {
         try {
             const response = await axios.get('/api/org/list');
             setOrgList(response.data);
+        } catch (error) {
+            console.error("Error fetching organization data:", error);
+        }
+    };
+
+    const fetchGlobalOrgData = async () => {
+        try {
+            const response = await axios.get('/api/org/globalList');
+            setGlobalOrgList(response.data);
         } catch (error) {
             console.error("Error fetching organization data:", error);
         }
@@ -28,40 +38,62 @@ const OrgApp = () => {
 
     useEffect(() => {
         fetchOrgData();
+        fetchGlobalOrgData();
     }, []);
 
-    const [showMore, setShowMore] = useState(false);
 
-    const displayedOrgs = showMore ? orgList : orgList.slice(0, 15);
 
     return (
-        <div className="card-board">
-            <ul className="card-list">
-                {displayedOrgs.map((org, index) => (
-                    <li key={index} className="card-item">
-                        <div className='card'>
-                            <div className="card-image-container">
-                                {org.imgUrl && (
-                                    <img src={org.imgUrl} alt={org.name} className="card-image" />
+
+        
+        <section className='list'>
+            <div className="list_container">
+
+                <h2 className='title'>국제 환경 보호 단체</h2>
+                <ul className="card">
+                    {globalOrgList.map((globalOrg, index) => (
+                        <li key={index} className="card_list">
+                            <div className="card-bg">
+                                {globalOrg.imgUrl && (
+                                    <img src={globalOrg.imgUrl} alt={globalOrg.name}/>
                                 )}
                             </div>
-                            <div className='card-container'>
-                                <h2>{org.name}</h2>
-                                <p>{org.description}</p>
-                                <p>Location: {org.location}</p>
-                                <button>기부하기</button>
-                                <button>홈페이지</button>
+                            <div className='card_container'>
+                                <div className='card_content'>
+                                    <h2 className='card_content-name'>{globalOrg.name}</h2>
+                                    <p className='card_content-description'>{globalOrg.description}</p>
+                                </div>
+                                <a href={globalOrg.link} className='card-btn'>홈페이지</a>
                             </div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            {orgList.length > 15 && (
-                <button onClick={() => setShowMore(!showMore)}>
-                    {showMore ? '접기' : '더보기'}
-                </button>
-            )}
-        </div>
+                        </li>
+                    ))}
+                </ul>
+
+                
+                <h2 className='title'>민간 환경 보호 단체</h2>
+                <ul className="card">
+                    {orgList.map((org, index) => (
+                        <li key={index} className="card_list">
+                            <div className="card-bg">
+                                {org.imgUrl && (
+                                    <img src={org.imgUrl} alt={org.name}/>
+                                )}
+                            </div>
+                            <div className='card_container'>
+                                <div className='card_content'>
+                                    <h2 className='card_content-name'>{org.name}</h2>
+                                    <p className='card_content-description'>{org.description}</p>
+                                    <p className='card_content-location'>Location: {org.location}</p>
+                                </div>
+                                <a href='' className='card-btn'>기부하기</a>
+                                <a href='' className='card-btn'>홈페이지</a>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                
+            </div>
+        </section>
     );
 };
 

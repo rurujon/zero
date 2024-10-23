@@ -9,6 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         Select * from organization
     </select>
 
+    <select id="selectGlobalOrg" resultType="com.zd.back.organization.OrgData">
+        Select * from globalorg
+    </select>
+
     <insert id="insertOrg" parameterType="com.zd.back.organization.OrgData">
         INSERT INTO organization (location, name, description, imgUrl, link)
         Values (#{location}, #{name}, #{description}, #{imgUrl}, #{link})

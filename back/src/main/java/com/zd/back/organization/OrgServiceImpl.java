@@ -24,6 +24,12 @@ public class OrgServiceImpl implements OrgService{
     }
 
     @Override
+    public List<OrgData> selectGlobalOrg() {
+        // TODO Auto-generated method stub
+        return orgMapper.selectGlobalOrg();
+    }
+
+    @Override
     public void crawling() {
         
         OrgCrawler crawler = new OrgCrawler();

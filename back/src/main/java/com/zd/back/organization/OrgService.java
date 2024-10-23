@@ -10,5 +10,5 @@ public interface OrgService {
     void insertOrg(OrgData orgData);
     List<OrgData> selectAll();
     void crawling();
-
+    List<OrgData> selectGlobalOrg();
 }

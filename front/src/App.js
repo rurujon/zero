@@ -14,6 +14,7 @@ import AutoLogout from './components/login/AutoLogout';
 import ImgApp from './components/imgboard/ImgApp';
 import OrgApp from './components/org/OrgApp';
 import routes from './routes';
+import RssData from './components/rss/RssData';
 
 function AppContent() {
 
@@ -29,9 +30,11 @@ function AppContent() {
 
       {/* <OrgApp/> */}
       {/* <NewsList/> */}
+      {/* <RssData/> */}
 
       {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
       <div className={isMainPage ? '' : 'main-layout'}>
+        
         {/* 메인페이지가 아닌 경우에만 사이드바 렌더링 */}
         {!isMainPage && <SideBar />}
         
