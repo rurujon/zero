@@ -20,32 +20,32 @@
         WHERE ${searchKey} LIKE '%' || #{searchValue} || '%'
     </select>
 
-    <select id="getImgBoardList" parameterType="map" resultMap="ImgBoardResultMap">
-        SELECT *
+ <select id="getImgBoardList" parameterType="map" resultMap="ImgBoardResultMap">
+    SELECT *
+    FROM (
+        SELECT rownum AS rnum, data.*
         FROM (
-            SELECT rownum AS rnum, data.*
-            FROM (
-                SELECT ip.*, 
-                       i.imgId AS thumbnailId, 
-                       i.saveFileName, 
-                       i.filePath
-                FROM ImgPost ip
-                LEFT JOIN (
-                    SELECT imgPostId, imgId, saveFileName, filePath
+            SELECT ip.*, 
+                   i.imgId AS thumbnailId, 
+                   i.saveFileName, 
+                   i.filePath
+            FROM ImgPost ip
+            LEFT JOIN (
+                SELECT imgPostId, imgId, saveFileName, filePath
+                FROM Img
+                WHERE (imgPostId, imgId) IN (
+                    SELECT imgPostId, MIN(imgId)
                     FROM Img
-                    WHERE (imgPostId, imgId) IN (
-                        SELECT imgPostId, MIN(imgId)
-                        FROM Img
-                        GROUP BY imgPostId
-                    )
-                ) i ON ip.imgPostId = i.imgPostId
-                WHERE ${searchKey} LIKE '%' || #{searchValue} || '%' 
-                ORDER BY ip.imgPostId DESC
-            ) data
-            WHERE rownum <= #{end}
-        )
-        WHERE rnum >= #{start}
-    </select>
+                    GROUP BY imgPostId
+                )
+            ) i ON ip.imgPostId = i.imgPostId
+            WHERE ${searchKey} LIKE '%' || #{searchValue} || '%' 
+            ORDER BY ip.imgPostId DESC
+        ) data
+        WHERE rownum <= #{end}
+    )
+    WHERE rnum >= #{start}
+</select>
 
 
 

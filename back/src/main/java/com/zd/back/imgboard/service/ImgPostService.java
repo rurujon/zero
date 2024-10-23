@@ -1,5 +1,6 @@
 package com.zd.back.imgboard.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,28 @@ public class ImgPostService {
         imgPostMapper.insertImgPost(imgPost);
     }
 
-    
-    public int getTotalCount(String searchKey, String searchValue) {
-        return imgPostMapper.getTotalCount(searchKey, searchValue); // 반환값 수정
-    }
 
-    public List<ImgBoard>  getImgBoardList(int start, int end, String searchKey, String searchValue) {
-        return imgPostMapper.getImgBoardList(start, end, searchKey, searchValue);
-    }
+
+public Map<String, Object> getImgBoardList(int page, int size, String searchKey, String searchValue) {
+    int start = (page - 1) * size + 1;
+    int end = page * size;
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("start", start);
+    params.put("end", end);
+    params.put("searchKey", searchKey);
+    params.put("searchValue", searchValue);
+
+    List<ImgBoard> imgBoardList = imgPostMapper.getImgBoardList(params);
+    int totalCount = imgPostMapper.getTotalCount(params);
+
+    Map<String, Object> result = new HashMap<>();
+    result.put("imgBoardList", imgBoardList);
+    result.put("totalCount", totalCount);
+    result.put("totalPages", (int) Math.ceil((double) totalCount / size));
+
+    return result;
+}
+
     
 }

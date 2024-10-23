@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -66,21 +67,13 @@ public class ImgBoardController {
 
 // list ==========================================
 @GetMapping("/list")
-public PageResponse<ImgBoard> list(
-    @RequestParam int pageNum,
-    @RequestParam(required = false) String searchKey,
-    @RequestParam(required = false) String searchValue) {
+public Map<String, Object> getImgBoardList(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "12") int size,
+        @RequestParam(required = false) String searchKey,
+        @RequestParam(required = false) String searchValue) {
     
-    int numPerPage = 12; //한페이지당 게시물 수
-    int start = (pageNum - 1) * numPerPage + 1;
-    int end = pageNum * numPerPage;
-
-    List<ImgBoard> lists = imgPostService.getImgBoardList(start, end, searchKey, searchValue);
-    int totalCount = imgPostService.getTotalCount(searchKey, searchValue);
-    int totalPage = (int) Math.ceil((double) totalCount / numPerPage);
-
-    return new PageResponse<>(lists, pageNum, totalPage, totalCount);
+    return imgPostService.getImgBoardList(page, size, searchKey, searchValue);
 }
-
 
 }
