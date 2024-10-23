@@ -14,21 +14,33 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
-<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-    FROM ImgPost ip
-    LEFT JOIN (
-        SELECT imgPostId, imgId, saveFileName, filePath
-        FROM Img
-        WHERE imgId IN (
-            SELECT MIN(imgId) 
-            FROM Img 
-            GROUP BY imgPostId
-        )
-    ) i ON ip.imgPostId = i.imgPostId
-     ORDER BY ip.imgPostId DESC
+<select id="selectImgPosts" parameterType="map" resultType="ImgPost">
+    SELECT * FROM (
+        SELECT 
+            ROWNUM AS rnum, a.* 
+        FROM (
+            SELECT * 
+            FROM img_posts
+            WHERE 
+                /* 검색 조건이 있을 때만 필터링 */
+                <if test="searchKey != null and searchValue != null">
+                    ${searchKey} LIKE '%' || #{searchValue} || '%'
+                </if>
+            ORDER BY created DESC
+        ) a
+        WHERE ROWNUM <= #{end}
+    )
+    WHERE rnum >= #{start}
 </select>
 
+<select id="countImgPosts" parameterType="map" resultType="int">
+    SELECT COUNT(*) 
+    FROM img_posts
+    WHERE 
+        <if test="searchKey != null and searchValue != null">
+            ${searchKey} LIKE '%' || #{searchValue} || '%'
+        </if>
+</select>
 
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
     <result property="imgPost.imgPostId" column="imgPostId" />

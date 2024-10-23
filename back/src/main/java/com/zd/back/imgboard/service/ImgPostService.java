@@ -1,6 +1,8 @@
 package com.zd.back.imgboard.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,13 @@ public class ImgPostService {
         imgPostMapper.insertImgPost(imgPost);
     }
 
-    public List<ImgBoard> getAllImgBoardWithFirstImage() {
-        return imgPostMapper.getAllImgBoardWithFirstImage();
-    }
-    
+    public Map<String, Object> getImgPosts(int start, int end, String searchKey, String searchValue) {
+        List<ImgPost> imgPosts = imgPostMapper.selectImgPosts(start, end, searchKey, searchValue);
+        int totalCount = imgPostMapper.countImgPosts(searchKey, searchValue);
 
+        Map<String, Object> result = new HashMap<>();
+        result.put("imgPosts", imgPosts);
+        result.put("totalCount", totalCount);
+        return result;
+    }
 }

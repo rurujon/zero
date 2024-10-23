@@ -17,10 +17,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,14 +69,14 @@ public class ImgBoardController {
 
 
 // list ==========================================
- @GetMapping("/list")
-public ResponseEntity<List<ImgBoard>> getImgPosts() {
-    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
-
-
-
+@GetMapping("/list.action")
+public ResponseEntity<Map<String, Object>> list(
+        @RequestParam int start, 
+        @RequestParam int end,
+        @RequestParam(required = false) String searchKey, 
+        @RequestParam(required = false) String searchValue) {
     
-    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    Map<String, Object> result = imgPostService.getImgPosts(start, end, searchKey, searchValue);
+    return ResponseEntity.ok(result);
 }
-
 }
