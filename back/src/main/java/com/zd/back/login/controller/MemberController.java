@@ -1,9 +1,6 @@
 package com.zd.back.login.controller;
 
 import com.zd.back.JY.domain.attendance.AttendanceService;
-import com.zd.back.JY.domain.dailyQuiz.QuizService;
-import com.zd.back.JY.domain.point.PointDTO;
-import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
@@ -12,8 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+
+
+
 import javax.validation.Valid;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,13 +28,6 @@ import org.slf4j.LoggerFactory;
 public class MemberController {
 
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
-    //10-21조준영 추가 pointService, quizService, attendanceService
-    @Autowired
-    private PointService pointService;
-
-    @Autowired
-    private QuizService quizService;
 
     @Autowired
     private AttendanceService attendanceService;
@@ -54,10 +50,10 @@ public class MemberController {
         if (!member.isTermsAccepted()) {
             return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
         }
-        
+
         memberService.registerMember(member);
         //10-21 조준영 가입시 point등록기능 추가
-        pointService.insertData(member.getMemId());
+        //pointService.insertData(member.getMemId());
         // //10-22 조준영 가입시 attendance등록 기능 추가
         // attendanceService.regiAtt(member.getMemId());
 
@@ -73,10 +69,9 @@ public class MemberController {
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
 
-            //10-21조준영 추가
-            if(attendanceService.checkToday(memId)){
-                pointService.upPoint(memId, 1);
-                attendanceService.insertAtt(memId);
+            // 로그인 성공 시 출석 체크 수행
+            if (attendanceService.checkToday(memId) == 0) {
+                attendanceService.insertAtt(memId); // 출석 기록 삽입
                 response.put("upPoint", "1");
             }
 
@@ -84,6 +79,8 @@ public class MemberController {
         }
         return ResponseEntity.badRequest().body("로그인 실패");
     }
+
+
 
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
@@ -214,5 +211,11 @@ public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @Reques
     public ResponseEntity<Boolean> checkDuplicateId(@RequestParam("memId") String memId) {
         boolean isDuplicate = memberService.isIdDuplicate(memId);
         return ResponseEntity.ok(isDuplicate);
+    }
+
+    @GetMapping("/attendance/dates")
+    public ResponseEntity<List<Date>> getAttendanceDates(@RequestParam String memId) {
+        List<Date> dates = attendanceService.getAttendanceDates(memId);
+        return ResponseEntity.ok(dates);
     }
 }

@@ -14,24 +14,20 @@ const LoginPage = ({ onLogin}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('/member/login', null, {
-            params: { memId, pwd }
-        })
+        axios.post('/member/login', null, { params: { memId, pwd } })
             .then(response => {
                 if (response.data.token) {
-                    //10-21 조준영 추가
-                    if(response.data.upPoint==="1"){
-                        
-                        alert('+1p 적립!')
-                    }
                     onLogin(response.data.token, memId);
+                    if (response.data.upPoint === "1") {
+                        alert("출석이 인정되었습니다! +1 포인트");
+                    }
                 } else {
-                    alert('로그인 실패');
+                    alert("로그인 실패");
                 }
             })
             .catch(error => {
                 console.error(error);
-                alert('로그인 중 오류가 발생했습니다.');
+                alert("로그인 중 오류가 발생했습니다.");
             });
     };
 

@@ -4,7 +4,7 @@ import RegisterPage from './RegisterPage';
 import FindIdModal from './FindIdModal';
 import FindPasswordModal from './FindPasswordModal';
 import { AuthContext } from './context/AuthContext';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import QuizModal from '../dailyQuiz/QuizModal';
 
 const HomePage = () => {
@@ -41,7 +41,7 @@ const HomePage = () => {
 
     return (
         <div className="container mt-4">
-            <QuizModal/>
+            <QuizModal />
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
@@ -54,26 +54,26 @@ const HomePage = () => {
                         ZERO TOGATHER 로그인
                     </button>
                     {showLogin && (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', // 약간의 반투명 배경 추가
-                zIndex: 1000
-            }}
-        >
-            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
-                <LoginPage onLogin={login} />
-                <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
-            </div>
-        </div>
-    )}
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                zIndex: 1000
+                            }}
+                        >
+                            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
+                                <LoginPage onLogin={login} />
+                                <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
+                            </div>
+                        </div>
+                    )}
                     <div>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
@@ -92,7 +92,7 @@ const HomePage = () => {
                 <div>
                     <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
-                    <button onClick={''} className="btn btn-info">My포인트조회</button>&nbsp;
+                    {/* 여기에 My포인트조회 버튼의 핸들러를 추가해야 합니다 */}
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
                 </div>
             )}

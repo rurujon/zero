@@ -25,7 +25,7 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
-      <MainPageApp/>
+      {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
       {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
@@ -38,7 +38,7 @@ function AppContent() {
         ))}
       </Routes> */}
       <LoginApp/>
-      <QuizModal/>
+      {/* <QuizModal/> */}
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
  {/*      <Footer />
       <AutoLogout />
