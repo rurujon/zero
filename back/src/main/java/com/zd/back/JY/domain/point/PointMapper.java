@@ -17,4 +17,6 @@ public interface PointMapper {
 
     public void upPoint(PointDTO dto);
 
+    public void updateGrade(PointDTO dto);
+
 } 

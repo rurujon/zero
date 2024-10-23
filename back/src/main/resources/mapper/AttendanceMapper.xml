@@ -9,11 +9,11 @@
         SELECT NVL(MAX(attId), 0) FROM attendance
     </select>
 
-    <insert id="insertAtt" parameterType="String">
+    <insert id="insertAtt" parameterType="map">
         insert into attendance (attId, attDate, memId) values(#{attId}, to_char(sysdate, 'YY/MM/DD'), #{memId})
     </insert>
   
-    <select id="checkToday" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
+    <select id="checkToday" parameterType="String" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
         select * from attendance where attDate = to_char(sysdate, ('YY/MM/DD')) AND memId = #{memId}
     </select>
 

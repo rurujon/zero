@@ -2,8 +2,6 @@ import React,{useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import './QuizModal.css';
 import Quiz from './Quiz'
-import QuizX from './QuizX';
-import QuizO from './QuizO';
 import QuizResult from './QuizResult';
 import axios from 'axios';
 Modal.setAppElement('#root');
@@ -11,7 +9,8 @@ Modal.setAppElement('#root');
 
 const QuizModal = () => {
 
-
+    const [memId, setMemId] = useState('');
+    const [pwd, setPwd] = useState('');
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -22,16 +21,21 @@ const QuizModal = () => {
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
 
-    const openQuiz = () => {
-        axios.get('/member/login', null, {
-
+    const modalOn = () => {
+        axios.post('/member/login', null, {
+            params: { memId, pwd }
         })
         .then(response => {
-            if(response.data.uppoint==="1"){
-                setIsOpen(true)
+            console.log(response.data + "왜 안나아오아와옹와ㅗㅇ");  // 서버 응답 확인
+            if (response.data.upPoint === "1") {
+                setIsOpen(true);
             }
         })
+        .catch(error => {
+            console.error("오류오류", error)
+        })
     }
+
     return (
         <>
             {/* <div>

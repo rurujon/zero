@@ -18,20 +18,14 @@ public class AttendanceServiceImp implements AttendanceService{
 
     //로그인시 사용자의 아이디를 입력받아서 오늘 출석여부에따라 출석 삽입
     public void insertAtt(String memId){
-
-
         if(checkToday(memId)){
-            
             Map<String, Object> map = new HashMap<>();
             
             map.put("memId", memId);
             map.put("attId", mapper.maxNum()+1);
             
-            
             mapper.insertAtt(map);
-
         }
-
     }
 
     public boolean checkToday(String memId){
@@ -43,7 +37,6 @@ public class AttendanceServiceImp implements AttendanceService{
             return flag = true;
         }
         
-
         return flag;
     }
 
@@ -57,5 +50,4 @@ public class AttendanceServiceImp implements AttendanceService{
 
         mapper.regiAtt(dto);
     } 
-
 }

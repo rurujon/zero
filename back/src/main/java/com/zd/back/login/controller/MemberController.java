@@ -58,8 +58,8 @@ public class MemberController {
         memberService.registerMember(member);
         //10-21 조준영 가입시 point등록기능 추가
         pointService.insertData(member.getMemId());
-        //10-22 조준영 가입시 attendance등록 기능 추가
-        attendanceService.regiAtt(member.getMemId());
+        // //10-22 조준영 가입시 attendance등록 기능 추가
+        // attendanceService.regiAtt(member.getMemId());
 
         return ResponseEntity.ok("회원가입 성공");
     }
@@ -73,11 +73,11 @@ public class MemberController {
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
 
-
             //10-21조준영 추가
             if(attendanceService.checkToday(memId)){
                 pointService.upPoint(memId, 1);
-                response.put("uppoint", "1");
+                attendanceService.insertAtt(memId);
+                response.put("upPoint", "1");
             }
 
             return ResponseEntity.ok(response);

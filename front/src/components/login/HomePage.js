@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
+import QuizModal from '../dailyQuiz/QuizModal';
 
 const HomePage = () => {
     const [showRegister, setShowRegister] = useState(false);
@@ -77,11 +78,12 @@ const HomePage = () => {
 
     return (
         <div className="container mt-4">
+            <QuizModal/>
             {!isLoggedIn ? (
                 <div>
                     {showLogin && (
                         <>
-                            <LoginPage onLogin={login} />
+                            <LoginPage onLogin={login}/>
                             <button
                                 onClick={handleShowRegister}
                                 className="btn btn-outline-secondary btn-sm mt-3"

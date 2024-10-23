@@ -4,7 +4,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = ({ onLogin}) => {
     const [memId, setMemId] = useState('');
     const [pwd, setPwd] = useState('');
     const [showFindIdModal, setShowFindIdModal] = useState(false);
@@ -21,7 +21,8 @@ const LoginPage = ({ onLogin }) => {
             .then(response => {
                 if (response.data.token) {
                     //10-21 조준영 추가
-                    if(response.data.uppoint==="1"){
+                    if(response.data.upPoint==="1"){
+                        
                         alert('+1p 적립!')
                     }
                     onLogin(response.data.token, memId);

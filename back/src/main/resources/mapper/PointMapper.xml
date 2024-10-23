@@ -31,4 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where memId=#{memId}
     </select>
 
+
+    <update id="updateGrade" parameterType="String">
+        update set grade = #{grade} where pointId=#{pointId}
+    </update>
 </mapper>

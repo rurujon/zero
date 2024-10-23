@@ -65,22 +65,7 @@ public class PointServiceImpl implements PointService {
             dto.setUsedPoint(dto.getUsedPoint()-updown);
         }
         
-        //maxPoint에 따른 grade 조정
-        if (dto.getMaxPoint() >= 600) {
-            dto.setGrade("LEVEL5");
-        } else if (dto.getMaxPoint() >= 500) {
-            dto.setGrade("LEVEL4");
-        } else if (dto.getMaxPoint() >= 400) {
-            dto.setGrade("LEVEL3");
-        } else if (dto.getMaxPoint() >= 300) {
-            dto.setGrade("LEVEL2");
-        } else if (dto.getMaxPoint() >= 200) {
-            dto.setGrade("LEVEL1");
-        } else if (dto.getMaxPoint() >= 100) {
-            dto.setGrade("LEVEL0");
-        } else {
-            dto.setGrade("LEVEL0");
-        }
+        
 
         pointMapper.updatePoint(dto);
 
@@ -103,4 +88,29 @@ public class PointServiceImpl implements PointService {
         pointMapper.updatePoint(dto);
     }
 
+    @Override
+    public void updateGrade(String memId){
+
+        PointDTO dto=findByMemId(memId);
+
+        //maxPoint에 따른 grade 조정
+        if (dto.getMaxPoint() >= 600) {
+            dto.setGrade("LEVEL5");
+        } else if (dto.getMaxPoint() >= 500) {
+            dto.setGrade("LEVEL4");
+        } else if (dto.getMaxPoint() >= 400) {
+            dto.setGrade("LEVEL3");
+        } else if (dto.getMaxPoint() >= 300) {
+            dto.setGrade("LEVEL2");
+        } else if (dto.getMaxPoint() >= 200) {
+            dto.setGrade("LEVEL1");
+        } else if (dto.getMaxPoint() >= 100) {
+            dto.setGrade("LEVEL0");
+        } else {
+            dto.setGrade("LEVEL0");
+        }
+
+        pointMapper.updatePoint(dto);
+       
+    }
 }

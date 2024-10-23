@@ -20,10 +20,12 @@ public interface PointService {
     @Transactional
     public void updatePoint(String memId, Map<String, Object> operMap) throws Exception;
 
-
     public PointDTO findByMemId(String memId);
     
     //로그인, 문제풀기 등의 포인트증가
+    @Transactional
     public void upPoint(String memId, int point);
     
+    @Transactional
+    public void updateGrade(String memId);
 }
