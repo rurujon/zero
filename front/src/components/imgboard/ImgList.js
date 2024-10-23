@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ImgList = () => {
+function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
-    const [pageResponse, setPageResponse] = useState({ currentPage: 1, totalPage: 1 });
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+    const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const [totalCount, setTotalCount] = useState(0); //총 데이터 수
 
-    const fetchData = async (pageNum = 1) => {
-        try {
-            const response = await axios.get(`/api/list?pageNum=${pageNum}`);
-            setImgPosts(response.data.content);
-            setPageResponse({
-                currentPage: response.data.currentPage,
-                totalPage: response.data.totalPage,
-            });
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-        }
-    };
+    const postsPerPage = 12; // 한 페이지당 게시물 수
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchImgPosts(currentPage);
+    }, [currentPage]);
+
+    const fetchImgPosts = (pageNum) => {
+        axios.get(`/imgboard/list.action?pageNum=${pageNum}&size=${postsPerPage}`)
+            .then(response => {
+                setImgPosts(response.data.content); // 실제 게시물 데이터 (페이지네이션에 따라)
+                setTotalPages(response.data.totalPages); // 총 페이지 수
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('이미지를 찾을 수 없습니다.', error);
+            });
+    };
 
     const handlePageChange = (pageNum) => {
-        fetchData(pageNum);
+        setCurrentPage(pageNum);
     };
 
     return (
@@ -35,60 +38,75 @@ const ImgList = () => {
                 </button>
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
-                {imgPosts.length > 0 ? imgPosts.map((board) => (
-                    <div key={board.imgPost.imgPostId} style={{
-                        border: '2px solid red',
-                        margin: '15px',
-                        padding: '10px',
-                        borderRadius: '5px',
-                        backgroundColor: '#f0f0f0',
-                        width: '22%'
+                {imgPosts.map((board, index) => (
+                    <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
+                        border: '2px solid red', 
+                        margin: '15px', 
+                        padding: '10px', 
+                        borderRadius: '5px', 
+                        backgroundColor: '#f0f0f0', 
+                        width: '22%' 
                     }}>
+                        {/* 이미지 목록 출력 */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
-                            {board.images.length > 0 ? (
-                                <img
-                                    src={`/images/${board.images[0].saveFileName}`} // 썸네일 이미지
-                                    alt="Thumbnail"
-                                    style={{
-                                        width: '100%',
-                                        maxWidth: '350px',
-                                        height: 'auto',
-                                        margin: '5px',
-                                        display: 'block',
-                                        verticalAlign: 'top'
-                                    }}
-                                />
+                            {board.images && board.images.length > 0 ? (
+                                board.images.map((img) => (
+                                    <img
+                                        key={img.imgId}
+                                        src={`/images/${img.saveFileName}`}
+                                        alt={img.saveFileName}
+                                        style={{ 
+                                            width: '350px', 
+                                            height: '200px', 
+                                            margin: '5px', 
+                                            display: 'block', 
+                                            verticalAlign: 'top'
+                                        }}
+                                    />
+                                ))
                             ) : (
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
+                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
+                            <p style={{ color: '#fff' }}>승인여부: {board.imgPost.auth}</p>
+                        </div>
                         <p>목록: {board.imgPost.cate}</p>
                         <p>작성자: {board.imgPost.memId}</p>
-                        <p>제목: <a href={`/imgboard/article.action?postId=${board.imgPost.imgPostId}`}>{board.imgPost.title}</a></p>
+                        <p>제목: <a href='/imgboard/article.action'>{board.imgPost.title}</a> </p>
                         <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
                     </div>
-                )) : (
-                    <p>게시물이 없습니다.</p>
-                )}
+                ))}
             </div>
+
             {/* 페이징 처리 */}
-            <Pagination pageResponse={pageResponse} onPageChange={handlePageChange} />
+            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <button 
+                    onClick={() => handlePageChange(currentPage - 1)} 
+                    disabled={currentPage === 1}
+                >
+                    ◀ 이전
+                </button>
+
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button 
+                        key={index + 1} 
+                        onClick={() => handlePageChange(index + 1)} 
+                        style={{ margin: '0 5px', fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+
+                <button 
+                    onClick={() => handlePageChange(currentPage + 1)} 
+                    disabled={currentPage === totalPages}
+                >
+                    다음 ▶
+                </button>
+            </div>
         </div>
     );
-};
-
-const Pagination = ({ pageResponse, onPageChange }) => {
-    const { currentPage, totalPage } = pageResponse;
-
-    return (
-        <div>
-            <button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>이전</button>
-            {Array.from({ length: totalPage }, (_, index) => (
-                <button key={index + 1} onClick={() => onPageChange(index + 1)}>{index + 1}</button>
-            ))}
-            <button disabled={currentPage === totalPage} onClick={() => onPageChange(currentPage + 1)}>다음</button>
-        </div>
-    );
-};
+}
 
 export default ImgList;

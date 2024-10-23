@@ -24,7 +24,8 @@ function AppContent() {
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header />
 
-      {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
+     {/*  {location.pathname !== '/' && <SideBar/>}  */}
+      {/* 사이드바 조건부 렌더링 */}
 
 
       {/* <MainPageApp/> */}

@@ -67,7 +67,7 @@ public class ImgBoardController {
 // list ==========================================
 @GetMapping("/list")
 public PageResponse<ImgBoard> list(
-    @RequestParam(defaultValue = "1") int pageNum,
+    @RequestParam int pageNum,
     @RequestParam(required = false) String searchKey,
     @RequestParam(required = false) String searchValue) {
     
