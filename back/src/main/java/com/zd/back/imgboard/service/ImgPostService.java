@@ -9,6 +9,7 @@ import com.zd.back.imgboard.mapper.ImgPostMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
+import com.zd.back.imgboard.model.PageResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,9 +27,13 @@ public class ImgPostService {
         imgPostMapper.insertImgPost(imgPost);
     }
 
-    public List<ImgBoard> getAllImgBoardWithFirstImage() {
-        return imgPostMapper.getAllImgBoardWithFirstImage();
+    
+    public int getTotalCount(String searchKey, String searchValue) {
+        return imgPostMapper.getTotalCount(searchKey, searchValue); // 반환값 수정
+    }
+
+    public List<ImgBoard>  getImgBoardList(int start, int end, String searchKey, String searchValue) {
+        return imgPostMapper.getImgBoardList(start, end, searchKey, searchValue);
     }
     
-
 }

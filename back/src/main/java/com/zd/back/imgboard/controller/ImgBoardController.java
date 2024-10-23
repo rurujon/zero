@@ -3,6 +3,7 @@ package com.zd.back.imgboard.controller;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
+import com.zd.back.imgboard.model.PageResponse;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgUploadService;
@@ -38,7 +39,7 @@ public class ImgBoardController {
 
     @PostMapping("/created")
     @Transactional
-    public ResponseEntity<String> createImgBoard(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
+    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
         try {
            
             int maxImgPostId = imgPostService.maxImgPostId() ;
@@ -64,15 +65,22 @@ public class ImgBoardController {
 
 
 // list ==========================================
- @GetMapping("/list")
-public ResponseEntity<List<ImgBoard>> getImgPosts() {
-    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
+@GetMapping("/list")
+public PageResponse<ImgBoard> list(
+    @RequestParam(defaultValue = "1") int pageNum,
+    @RequestParam(required = false) String searchKey,
+    @RequestParam(required = false) String searchValue) {
+    
+    int numPerPage = 12; //한페이지당 게시물 수
+    int start = (pageNum - 1) * numPerPage + 1;
+    int end = pageNum * numPerPage;
 
-    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    List<ImgBoard> lists = imgPostService.getImgBoardList(start, end, searchKey, searchValue);
+    int totalCount = imgPostService.getTotalCount(searchKey, searchValue);
+    int totalPage = (int) Math.ceil((double) totalCount / numPerPage);
+
+    return new PageResponse<>(lists, pageNum, totalPage, totalCount);
 }
- 
-
-
 
 
 }
