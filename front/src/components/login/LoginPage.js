@@ -64,7 +64,7 @@ const LoginPage = ({ onLogin }) => {
             <h2>로그인</h2><br />
             <form onSubmit={handleSubmit}>
                 <div className="dl-item">
-                    <dt>아이디</dt>
+                    <dt>아&nbsp;&nbsp;이&nbsp;&nbsp;디</dt>
                     <dd>
                         <input
                             type="text"

@@ -52,11 +52,26 @@ const HomePage = () => {
                         ZERO TOGATHER 로그인
                     </button>
                     {showLogin && (
-                        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'white', zIndex: 1000 }}>
-                            <LoginPage onLogin={login} />
-                            <button onClick={() => setShowLogin(false)} className="btn btn-secondary">닫기</button>
-                        </div>
-                    )}
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // 약간의 반투명 배경 추가
+                zIndex: 1000
+            }}
+        >
+            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
+                <LoginPage onLogin={login} />
+                <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
+            </div>
+        </div>
+    )}
                     <div>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
