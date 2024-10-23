@@ -12,6 +12,7 @@ import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import { routes } from './routes';
+import BbsApp from './components/tipboard/app/BbsApp';
 
 function AppContent() {
 
@@ -27,18 +28,14 @@ function AppContent() {
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
 
-      {/* <MainPageApp/> */}
-{/*       <LoginApp/>
- */}      {/* <NewsList/> */}
-      {/* <SmartMapApp/>  */}
 
-{/*       <MainPageApp/>
- */}      {/* <MainPageApp/> */}
+      {/* <MainPageApp/> */}
       {/* <LoginApp/> */}
-  {/*     <NewsList/> */}
+      {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
-{/*       <ImgApp/> 
- */}      {/* <QuizModal/> */}
+      {/* <ImgApp/> */}
+      {/* <QuizModal/> */}
+      <BbsApp/>
 
      <Routes>
         {routes.map((route) => (
