@@ -13,9 +13,13 @@ public interface ImgPostMapper {
     int maxImgPostId();
 
     void insertImgPost(ImgPost imgPost);
+    
+    int getTotalCount(String searchKey,  String searchValue);
+    
+    List<ImgBoard> getImgBoardList( int start, int end,
+   String searchKey, String searchValue);
 
 
 
-    List<ImgBoard> getAllImgBoardWithFirstImage();
 
 }

@@ -14,20 +14,40 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
-<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-    FROM ImgPost ip
-    LEFT JOIN (
-        SELECT imgPostId, imgId, saveFileName, filePath
-        FROM Img
-        WHERE imgId IN (
-            SELECT MIN(imgId) 
-            FROM Img 
-            GROUP BY imgPostId
-        )
-    ) i ON ip.imgPostId = i.imgPostId
-     ORDER BY ip.imgPostId DESC
+    <select id="getTotalCount" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ImgPost ip
+        WHERE ${searchKey} LIKE '%' || #{searchValue} || '%'
+    </select>
+
+ <select id="getImgBoardList" parameterType="map" resultMap="ImgBoardResultMap">
+    SELECT *
+    FROM (
+        SELECT rownum AS rnum, data.*
+        FROM (
+            SELECT ip.*, 
+                   i.imgId AS thumbnailId, 
+                   i.saveFileName, 
+                   i.filePath
+            FROM ImgPost ip
+            LEFT JOIN (
+                SELECT imgPostId, imgId, saveFileName, filePath
+                FROM Img
+                WHERE (imgPostId, imgId) IN (
+                    SELECT imgPostId, MIN(imgId)
+                    FROM Img
+                    GROUP BY imgPostId
+                )
+            ) i ON ip.imgPostId = i.imgPostId
+            WHERE ${searchKey} LIKE '%' || #{searchValue} || '%' 
+            ORDER BY ip.imgPostId DESC
+        ) data
+        WHERE rownum <= #{end}
+    )
+    WHERE rnum >= #{start}
 </select>
+
+
 
 
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
@@ -47,5 +67,6 @@
         <result property="fileDate" column="fileDate" />
     </collection>
 </resultMap>
+
 
 </mapper>
