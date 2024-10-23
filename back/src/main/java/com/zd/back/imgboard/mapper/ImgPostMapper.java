@@ -13,11 +13,9 @@ public interface ImgPostMapper {
     int maxImgPostId();
 
     void insertImgPost(ImgPost imgPost);
-    
-    long countAllImgBoards();
-    
-    List<ImgBoard> selectImgBoardList(int start, int end);
-    
-    ImgPost getImgPostById(int imgPostId);
+
+
+
+    List<ImgBoard> getAllImgBoardWithFirstImage();
 
 }

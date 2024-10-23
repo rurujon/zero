@@ -1,0 +1,16 @@
+.sdmpagination{
+    display: flex;
+    justify-content: center;
+    margin-left: 120px;
+}
+
+.sdmpagination .sdmpage-btn{
+    
+   
+    margin: 8px;
+    color: black;
+    height:28px;
+    width: 28px;
+    background-Color: pink;
+    font-weight:900;
+}

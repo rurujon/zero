@@ -9,7 +9,6 @@ import com.zd.back.imgboard.mapper.ImgPostMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
-import com.zd.back.imgboard.util.ImgPage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,21 +25,10 @@ public class ImgPostService {
     public void createImgPost(ImgPost imgPost) {
         imgPostMapper.insertImgPost(imgPost);
     }
+
+    public List<ImgBoard> getAllImgBoardWithFirstImage() {
+        return imgPostMapper.getAllImgBoardWithFirstImage();
+    }
     
-    public long getTotalImgBoardCount() {
-        return imgPostMapper.countAllImgBoards();
-    }
 
-    public List<ImgBoard> getImgBoards(int start, int end) {
-        return imgPostMapper.selectImgBoardList(start, end);
-    }
-
-    public ImgPage<ImgBoard> getImgBoardsWithPagination() {
-        return new ImgPage<>();
-    }
-
-
-    public ImgPost getImgPostById(int imgPostId) {
-        return imgPostMapper.getImgPostById(imgPostId);
-    }
 }
