@@ -4,6 +4,7 @@ import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login';
 import MainPageNews from './MainPageNews';
+import HomePage from '../login/HomePage';
 
 const Body = () => {
 
@@ -22,7 +23,7 @@ const Body = () => {
         {/* 첫 번째 층 */}
         <div style={styles.row}>
           <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNews/></div>
-          <div style={{ ...styles.box, flexGrow: 1 }}><Login/></div>
+          <div style={{ ...styles.box, flexGrow: 1 }}><HomePage/></div>
         </div>
         {/* 두 번째 층 */}
         <div style={styles.row}>

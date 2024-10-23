@@ -1,4 +1,3 @@
-// src/components/login/LoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -62,11 +61,11 @@ const LoginPage = ({ onLogin}) => {
     };
 
     return (
-        <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
+        <div className="container" style={{ marginBottom: '15px', margin:'15px'}}>
             <h2>로그인</h2><br />
             <form onSubmit={handleSubmit}>
                 <div className="dl-item">
-                    <dt>아이디</dt>
+                    <dt>아&nbsp;&nbsp;이&nbsp;&nbsp;디</dt>
                     <dd>
                         <input
                             type="text"
@@ -97,9 +96,9 @@ const LoginPage = ({ onLogin}) => {
                         className="btn btn-primary btn-sm"
                     >
                         로그인
-                    </button>&nbsp;
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>&nbsp;
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
+                    </button>
+                    {/* <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>&nbsp;
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button> */}
                 </div>
             </form>
 
