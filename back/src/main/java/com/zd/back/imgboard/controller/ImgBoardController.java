@@ -66,14 +66,14 @@ public class ImgBoardController {
 
 
 // list ==========================================
-@GetMapping("/list")
-public Map<String, Object> getImgBoardList(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "12") int size,
-        @RequestParam(required = false) String searchKey,
-        @RequestParam(required = false) String searchValue) {
+ @GetMapping("/list")
+public ResponseEntity<List<ImgBoard>> getImgPosts() {
+    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
+
+
+
     
-    return imgPostService.getImgBoardList(page, size, searchKey, searchValue);
+    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
 }
 
 }
