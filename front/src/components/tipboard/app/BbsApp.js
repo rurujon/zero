@@ -12,8 +12,6 @@ function BbsApp() {
         <HttpHeadersProvider>
           <Routes>
             <Route path="/" element={<Nav />} />
-            {/* <Route path="/register" element={<RegisterPage />} />
-            <Route path="/member-info" element={<MemberInfoPage />} /> */}
           </Routes>
         </HttpHeadersProvider>
       </AuthProvider>

@@ -13,6 +13,7 @@ import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import { routes } from './routes';
 import BbsApp from './components/tipboard/app/BbsApp';
+import HttpHeadersProvider from './components/tipboard/context/HttpHeadersProvider';
 
 function AppContent() {
 
@@ -31,12 +32,12 @@ function AppContent() {
 
 
       {/* <MainPageApp/> */}
-      {/* <LoginApp/> */}
+      <LoginApp/>
       {/* <NewsList/> */}
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
-      {/* <BbsApp/> */}
+      <BbsApp/>
 
      <Routes>
         {routes.map((route) => (
@@ -59,11 +60,13 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <AxiosInterceptor>
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </AxiosInterceptor>
+      <HttpHeadersProvider>
+        <AxiosInterceptor>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </AxiosInterceptor>
+      </HttpHeadersProvider>
     </AuthProvider>
   );
 }
