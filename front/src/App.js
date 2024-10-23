@@ -35,7 +35,7 @@ function AppContent() {
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
-      <BbsApp/>
+      {/* <BbsApp/> */}
 
      <Routes>
         {routes.map((route) => (

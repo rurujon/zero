@@ -18,8 +18,16 @@ function Nav() {
 							<Link className="nav-link" to="/"><i className="fas fa-home"></i>Home</Link>
 						</li>
 
+						<li className="nav-item">
+							<Link className="nav-link" to="/bbslist"><i className="fas fa-home"></i>글목록</Link>
+						</li>
+
+						<li className="nav-item">
+							<Link className="nav-link" to="/bbswrite"><i className="fas fa-home"></i>글쓰기</Link>
+						</li>
+
 						{/* 게시판 */}
-						<li className="nav-item dropdown">
+						{/* <li className="nav-item dropdown">
 
 							<div className="nav-link dropdown-toggle" id="navbarDropdown"
 								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -29,7 +37,7 @@ function Nav() {
 								<Link className="dropdown-item" to="/bbslist">글목록</Link><br/>
 								<Link className="dropdown-item" to="/bbswrite">글추가</Link>
 							</div>
-						</li>
+						</li> */}
 					</ul>
 					<ul className="navbar-nav ml-auto">
 

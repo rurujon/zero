@@ -36,12 +36,12 @@ export const routes = [
     { path: '/imgboard/article.action', element: <ImgArticle/> },
   
 
-    // //TipBoard
-    // { path: '/bbslist', element: <BbsList /> },
-    // { path: '/bbswrite', element: <BbsWrite /> },
-    // { path: '/bbsdetail/:seq', element: <BbsDetail /> },
-    // { path: '/bbsupdate', element: <BbsUpdate /> },
-    // { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }
+    //TipBoard
+    { path: '/bbslist', element: <BbsList /> },
+    { path: '/bbswrite', element: <BbsWrite /> },
+    { path: '/bbsdetail/:seq', element: <BbsDetail /> },
+    { path: '/bbsupdate', element: <BbsUpdate /> },
+    { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }
 
 
 
