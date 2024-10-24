@@ -2667,6 +2667,11 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@portone/browser-sdk@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.npmjs.org/@portone/browser-sdk/-/browser-sdk-0.0.10.tgz"
+  integrity sha512-AylNhel3iWZuq632Axfgg5CLTVgv5xhjxJb0Umfy4chi/PV0K2R5ry/9ywOrKTPdSWqo3KwKVZGgv4X46Gvz+g==
+
 "@react-aria/breadcrumbs@3.5.13":
   version "3.5.13"
   resolved "https://registry.npmjs.org/@react-aria/breadcrumbs/-/breadcrumbs-3.5.13.tgz"
