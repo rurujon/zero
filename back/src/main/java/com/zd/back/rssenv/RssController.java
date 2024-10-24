@@ -24,14 +24,15 @@ public class RssController {
     private RssService rssService;
 
     @PostMapping("/env")
-    public void fetchRssEnv() {
+    public void updateRssEnv() {
         //TODO: process POST request
         
-        rssService.rssFetch();
+        rssService.rssUpdate();
     }
 
     @GetMapping("/env/list")
     public List<RssItem> getRssEnv() {
+
         return rssService.selectAll();
     }
 
@@ -39,8 +40,11 @@ public class RssController {
     public List<RssItem> getRssMini() {
         return rssService.selectMini();
     }
-    
-    
-    
-    
+
+    @GetMapping("/env/article")
+    public RssItem getByRssId(@RequestParam int rssId) throws Exception{
+
+        return rssService.selectByRssId(rssId);
+    }
+
 }

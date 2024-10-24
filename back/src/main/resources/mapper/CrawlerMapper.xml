@@ -6,8 +6,7 @@
 <mapper namespace="com.zd.back.seoulcrawler.mapper.CrawlerMapper">
 
     <insert id="insertSeoulNews" parameterType="com.zd.back.seoulcrawler.model.SeoulNews">
-        insert into seoulNews (title, link, content, publishedDate, seoulNewsGroup) values (#{title}, #{link}, #{content}, #{publishedDate}, #{seoulNewsGroup})
-    
+        insert into seoulNews (seoulId, title, link, content, publishedDate, seoulNewsGroup) values (#{seoulId}, #{title}, #{link}, #{content}, #{publishedDate}, #{seoulNewsGroup})
     </insert>
 
     <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
@@ -32,6 +31,14 @@
 
     <select id="selectSeoulNewsMini" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
         select * from (SELECT * FROM seoulNews ORDER BY publishedDate DESC) where rownum &lt;=10
+    </select>
+
+    <select id="maxNum" resultType="int">
+        SELECT NVL(MAX(seoulId), 0) FROM seoulNews
+    </select>
+
+    <select id="selectBySeoulId" parameterType="int" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        select * from seoulNews where seoulId = #{seoulId}
     </select>
 
 

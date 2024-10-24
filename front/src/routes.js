@@ -4,6 +4,11 @@ import NewsList from "./components/naverapi/NewsList";
 import OrgApp from "./components/org/OrgApp";
 import MinEnvArticle from "./components/rss/MinEnvArticle";
 import RssData from "./components/rss/RssData";
+import SeoulNewsAir from "./components/seoulnews/SeoulNewsAir";
+import SeoulNewsArticle from "./components/seoulnews/SeoulNewsArticle";
+import SeoulNewsEco from "./components/seoulnews/SeoulNewsEco";
+import SeoulNewsEnv from "./components/seoulnews/SeoulNewsEnv";
+import SeoulNewsGreen from "./components/seoulnews/SeoulNewsGreen";
 
 
 
@@ -19,15 +24,16 @@ export const routes = [
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
 
-    // { path:'/seoulNewsEnv', element:<SeoulNewsEnv/>},   //서울env 뉴스리스트
-    // { path:'/seoulNewsEco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
-    // { path:'/seoulNewsAir', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
-    // { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
+    { path:'/seoulNewsEnv', element:<SeoulNewsEnv/>},   //서울env 뉴스리스트
+    { path:'/seoulNewsEco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
+    { path:'/seoulNewsAir', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
+    { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
+    { path:'/seoulNewsArticle/:seoulId', element:<SeoulNewsArticle/>},   //서울 뉴스 상세페이지
 
 
     { path:'/orgList', element:<OrgApp/>},   //봉사단체 리스트
     { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
-    { path:'/minEnv/:id', element:<MinEnvArticle/>},   //환경부 Rss 배포 환경정책 리스트
+    { path:'/minEnv/:rssId', element:<MinEnvArticle/>},   //환경부 Rss 상세 페이지
     
 
     

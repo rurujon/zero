@@ -20,4 +20,6 @@ public interface CrawlerMapper {
     List<SeoulNews> selectSeoulNewsEco();
     List<SeoulNews> selectSeoulNewsAir();
     List<SeoulNews> selectSeoulNewsGreen();
+    int maxNum();
+    SeoulNews selectBySeoulId(int seoulId);
 }

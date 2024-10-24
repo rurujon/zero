@@ -3,7 +3,9 @@ package com.zd.back.rssenv;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,9 +45,15 @@ public class RssServiceImpl implements RssService{
         return rssMapper.selectMini();
     }
 
+    @Override
+    public int maxRssId() {
+        // TODO Auto-generated method stub
+        return rssMapper.maxRssId();
+    }
+
 
     @Override
-    public void rssFetch() {
+    public void rssUpdate() {
         
         try {
 
@@ -73,6 +81,9 @@ public class RssServiceImpl implements RssService{
                 String author = item.getElementsByTagName("author").item(0).getTextContent();
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
 
+                int maxNum = rssMapper.maxRssId() + 1;
+                rssItem.setRssId(maxNum);
+                
                 rssItem.setTitle(title);
                 rssItem.setLink(link);
                 rssItem.setAuthor(author);
@@ -82,6 +93,7 @@ public class RssServiceImpl implements RssService{
 
                 // 중복 확인
                 if (rssMapper.selectByTitle(rssItem.getTitle()) == null) {
+                    
                     insertRssItem(rssItem);
                 } else {
                     System.out.println("중복된 데이터: " + rssItem.getTitle());
@@ -94,9 +106,21 @@ public class RssServiceImpl implements RssService{
 
     }
 
+    @Override
+    public RssItem selectByRssId(int rssId) throws Exception {
+        
+        RssItem articleData = rssMapper.selectByRssId(rssId);
+
+        List<Map<String, String>> downloadLinks = extractDownloadLinks(articleData.getLink());
+
+        articleData.setDownloadLinks(downloadLinks);
+
+        return articleData;
+    }
+
     // 특정 URL에서 다운로드 링크 추출하는 메서드
-    public List<String> extractDownloadLinks(String url) throws IOException {
-        List<String> downloadLinks = new ArrayList<>();
+    public List<Map<String, String>> extractDownloadLinks(String url) throws Exception {
+        List<Map<String, String>> downloadLinks = new ArrayList<>();
 
         // JSoup으로 페이지의 HTML을 가져옴
         org.jsoup.nodes.Document doc = Jsoup.connect(url).get();
@@ -109,9 +133,18 @@ public class RssServiceImpl implements RssService{
             // "바로보기" 링크를 무시 (title 속성이 "파일 새창으로 열기"인 것)
             if (!link.hasAttr("title")) {
                 String fileUrl = link.attr("href");
-
                 String downloadUrl = "https://www.me.go.kr" + fileUrl;
-                downloadLinks.add(downloadUrl);
+
+
+                 // 제목 추출
+                String title = link.text();
+
+                // 링크와 제목을 Map에 저장
+                Map<String, String> linkData = new HashMap<>();
+                linkData.put("url", downloadUrl);
+                linkData.put("title", title);
+
+                downloadLinks.add(linkData);
             }
         }
 

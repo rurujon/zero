@@ -89,7 +89,9 @@ public class CrawlerEnv {
                     String seoulNewsGroup = "env";
                     //서울시 소식은 기후환경, 친환경, 대기, 녹색에너지 등으로 그룹이 나눠져 있어서 그룹을 지정했습니다.
 
-                    SeoulNews seoulNews = new SeoulNews(title,link,content,publishedDate,seoulNewsGroup);
+                    int seoulId = 0;
+
+                    SeoulNews seoulNews = new SeoulNews(seoulId,title,link,content,publishedDate,seoulNewsGroup);
 
                     seoulNewsList.add(seoulNews);
 

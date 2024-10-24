@@ -7,8 +7,10 @@ import java.util.List;
  */
 public interface RssService {
 
-    void rssFetch();
+    void rssUpdate();
     void insertRssItem(RssItem item);
     List<RssItem> selectAll();
     List<RssItem> selectMini();
+    int maxRssId();
+    RssItem selectByRssId(int rssId) throws Exception;
 }

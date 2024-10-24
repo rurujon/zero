@@ -55,15 +55,15 @@ public class NaverApiController {
         }
     }
 
-    @Scheduled(fixedRate = 600000) // 10분마다 실행
-    public void scheduleNewsUpdate() {
-        try {
-            getNaverNews();
-            System.out.println("뉴스 자동 갱신 완료: " + new Date());
-        } catch (Exception e) {
-            System.err.println("뉴스 자동 갱신 실패: " + e.getMessage());
-        }
-    }
+    // @Scheduled(fixedRate = 600000) // 10분마다 실행
+    // public void scheduleNewsUpdate() {
+    //     try {
+    //         getNaverNews();
+    //         System.out.println("뉴스 자동 갱신 완료: " + new Date());
+    //     } catch (Exception e) {
+    //         System.err.println("뉴스 자동 갱신 실패: " + e.getMessage());
+    //     }
+    // }
 
     @GetMapping("/news/search")
     public ResponseEntity<List<News>> searchNews(@RequestParam("keyword") String keyword) {

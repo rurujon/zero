@@ -10,10 +10,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RssMapper {
 
-    void rssFetch();
+    void rssUpdate();
     void insertRssItem(RssItem rssItem);
     RssItem selectByTitle(String title);
     List<RssItem> selectAll();
     List<RssItem> selectMini();
-
+    int maxRssId();
+    RssItem selectByRssId(int rssId) throws Exception;
 }

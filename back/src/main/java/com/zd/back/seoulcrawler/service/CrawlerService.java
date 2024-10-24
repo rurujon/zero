@@ -1,6 +1,7 @@
 package com.zd.back.seoulcrawler.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zd.back.seoulcrawler.model.SeoulNews;
 
@@ -17,4 +18,6 @@ public interface CrawlerService {
     List<SeoulNews> selectSeoulNewsEco();
     List<SeoulNews> selectSeoulNewsAir();
     List<SeoulNews> selectSeoulNewsGreen();
+    int maxNum();
+    Map<String,Object> selectBySeoulId(int seoulId);
 }

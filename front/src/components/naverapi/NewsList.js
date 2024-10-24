@@ -235,6 +235,7 @@ const NewsList = () => {
     axios
       .get("/api/naver/news")
       .then((response) => {
+        console.log("Fetching RSS data...");
         setNewsData(response.data);
         setTotalPages(Math.ceil(response.data.length / itemsPerPage));
         setError(null);

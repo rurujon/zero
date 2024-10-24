@@ -1,6 +1,7 @@
 // src/components/NewsList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const SeoulNewsEco = () => {
   const [newsList, setNewsList] = useState([]);
@@ -46,7 +47,7 @@ const SeoulNewsEco = () => {
           <li key={news.title}>
             <h2>{news.title}</h2>
             <p>{news.content}</p>
-            <a href={news.link} target="_blank" rel="noopener noreferrer">Read more</a>
+            <Link to={`/seoulNewsArticle/${news.seoulId}`}>Read more</Link>
             <p>{news.publishedDate}</p>
           </li>
         ))}

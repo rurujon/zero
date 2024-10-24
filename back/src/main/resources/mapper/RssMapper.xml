@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.rssenv.RssMapper">
     <insert id="insertRssItem" parameterType="com.zd.back.rssenv.RssItem">
-        INSERT INTO rssItems (title, description, link, author, pubdate)
-        VALUES (#{title}, #{description}, #{link}, #{author}, #{pubDate})
+        INSERT INTO rssItems (rssId, title, description, link, author, pubdate)
+        VALUES (#{rssId}, #{title}, #{description}, #{link}, #{author}, #{pubDate})
     </insert>
 
     <select id="selectByTitle" parameterType="String" resultType="com.zd.back.rssenv.RssItem">
@@ -19,6 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectMini" resultType="com.zd.back.rssenv.RssItem">
         select * from rssItems where rownum &lt;=10
+    </select>
+
+    <select id="maxRssId" resultType="int">
+        SELECT NVL(MAX(rssId), 0) FROM rssItems
+    </select>
+
+    <select id="selectByRssId" parameterType="int" resultType="com.zd.back.rssenv.RssItem">
+        select * from rssItems where rssId = #{rssId}
     </select>
 
 </mapper>
