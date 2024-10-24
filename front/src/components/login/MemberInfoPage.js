@@ -4,7 +4,7 @@ import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import { AuthContext } from './context/AuthContext';
-import Calendar from './Calendar'
+import Calendar from './Calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const MemberInfoPage = () => {
@@ -20,32 +20,30 @@ const MemberInfoPage = () => {
         axios.get('/member/info')
             .then(response => {
                 setMember(response.data);
-                adjustWindowSize(window, response.data, isEditing, getAdditionalContent());
+                adjustWindowSize(window, response.data); // 창 크기 조절
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
-                // 401 에러 처리는 AxiosInterceptor에서 처리되므로 여기서는 별도 처리 불필요
             });
-    }, [isEditing]);
+    }, []);
 
     useEffect(() => {
         fetchMemberInfo();
     }, [fetchMemberInfo]);
 
-    const getAdditionalContent = () => {
-        return [
-            'editButton',
-            'deleteButton',
-            ...(showConfirmDialog ? ['confirmDialog'] : []),
-            ...(showDeleteDialog ? ['deleteDialog'] : [])
-        ];
-    };
+    const adjustWindowSize = (window, memberData) => {
+        // 회원정보와 달력의 가로 크기 합산
+        const baseWidth = 600; // 기본 회원정보 영역 넓이
+        const calendarWidth = 600; // 달력의 넓이
+        const dynamicWidth = baseWidth + calendarWidth;
 
-    useEffect(() => {
-        if (member) {
-            adjustWindowSize(window, member, isEditing, getAdditionalContent());
-        }
-    }, [isEditing, showConfirmDialog, showDeleteDialog, member]);
+        // 회원정보와 버튼의 세로 크기
+        const baseHeight = 400; // 기본 세로 높이
+        const additionalHeight = 50; // 추가 높이 (버튼 등)
+        const dynamicHeight = baseHeight + additionalHeight;
+
+        window.resizeTo(dynamicWidth, dynamicHeight);
+    };
 
     const handleDeleteRequest = () => {
         setShowConfirmDialog(true);
@@ -181,12 +179,16 @@ const MemberInfoPage = () => {
                         </div>
                     )}
                 </div>
-                <div className="col-md-6">
-                    <Calendar memId={member.memId} />
-                </div>
+
+                {/* 달력을 항상 오른쪽에 표시 */}
+                {!isEditing && (
+                  <div className="col-md-6">
+                      <Calendar memId={member.memId} />
+                  </div>
+                )}
             </div>
         </div>
     );
-    };
+};
 
-    export default MemberInfoPage;
+export default MemberInfoPage;

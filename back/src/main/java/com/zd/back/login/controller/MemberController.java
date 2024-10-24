@@ -212,10 +212,4 @@ public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @Reques
         boolean isDuplicate = memberService.isIdDuplicate(memId);
         return ResponseEntity.ok(isDuplicate);
     }
-
-    @GetMapping("/attendance/dates")
-    public ResponseEntity<List<Date>> getAttendanceDates(@RequestParam String memId) {
-        List<Date> dates = attendanceService.getAttendanceDates(memId);
-        return ResponseEntity.ok(dates);
-    }
 }

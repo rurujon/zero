@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Calendar.css';
 
@@ -8,7 +8,7 @@ const Calendar = ({ memId }) => {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await axios.get(`/attendance/dates`, {
+            const response = await axios.get(`/attendance/attendance/dates`, {
                 params: { memId }
             });
             console.log('출석 데이터:', response.data); // 응답 데이터 로그 출력
@@ -54,9 +54,12 @@ const Calendar = ({ memId }) => {
 
         for (let day = 1; day <= daysInMonth; day++) {
             const currentDate = new Date(date.getFullYear(), date.getMonth(), day);
-            const isAttended = attendanceData.some(att =>
-                att.getTime() === currentDate.getTime()
-            );
+            const isAttended = attendanceData.some(att => {
+                // 날짜만 비교하도록 수정
+                return att.getFullYear() === currentDate.getFullYear() &&
+                       att.getMonth() === currentDate.getMonth() &&
+                       att.getDate() === currentDate.getDate();
+            });
 
             days.push(
                 <td key={day} className={`day ${isAttended ? 'attended' : 'not-attended'}`}>

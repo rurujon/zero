@@ -11,7 +11,7 @@
 
     <insert id="insertAtt" parameterType="map">
     INSERT INTO attendance (attId, attDate, memId)
-    VALUES (attendance_seq.NEXTVAL, SYSDATE, #{memId})
+    VALUES (attendance_seq.NEXTVAL, TRUNC(SYSDATE), #{memId})
     </insert>
 
     <select id="checkToday" parameterType="String" resultType="int">
@@ -22,7 +22,7 @@
 
     <insert id="regiAtt" parameterType="com.zd.back.JY.domain.attendance.AttendanceDTO">
         INSERT INTO attendance (attId, attDate, memId)
-        VALUES (#{attId}, SYSDATE, #{memId})
+        VALUES (#{attId}, TRUNC(SYSDATE), #{memId})
     </insert>
 
     <select id="getMonthlyAttendance" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
@@ -32,7 +32,7 @@
     AND EXTRACT(MONTH FROM attDate) = #{month}
     </select>
 
-    <select id="getAttendanceDates" parameterType="String" resultType="java.util.Date">
+    <select id="getAttendanceDates" parameterType="string" resultType="java.util.Date">
     SELECT TRUNC(attDate) FROM attendance WHERE memId = #{memId}
     </select>
 

@@ -38,11 +38,11 @@
 }
 
 .calendar .attended {
-    background-color: #007bff;
+    background-color: #007bff; /* 출석한 날의 배경색 */
     color: white;
 }
 
 .calendar .not-attended {
-    background-color: #808080;
+    background-color: #ffffff; /* 출석하지 않은 날의 배경색 */
 }
 
