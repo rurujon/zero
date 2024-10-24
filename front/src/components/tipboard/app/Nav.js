@@ -19,11 +19,11 @@ function Nav() {
 						</li>
 
 						<li className="nav-item">
-							<Link className="nav-link" to="/bbslist"><i className="fas fa-home"></i>글목록</Link>
+							<Link className="nav-link" to="/bbs/list"><i className="fas fa-home"></i>글목록</Link>
 						</li>
 
 						<li className="nav-item">
-							<Link className="nav-link" to="/bbswrite"><i className="fas fa-home"></i>글쓰기</Link>
+							<Link className="nav-link" to="/bbs/write"><i className="fas fa-home"></i>글쓰기</Link>
 						</li>
 
 						{/* 게시판 */}
@@ -34,8 +34,8 @@ function Nav() {
 								aria-expanded="false">게시판</div>
 
 							<div className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<Link className="dropdown-item" to="/bbslist">글목록</Link><br/>
-								<Link className="dropdown-item" to="/bbswrite">글추가</Link>
+								<Link className="dropdown-item" to="/bbs/list">글목록</Link><br/>
+								<Link className="dropdown-item" to="/bbs/write">글추가</Link>
 							</div>
 						</li> */}
 					</ul>

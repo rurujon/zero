@@ -27,7 +27,7 @@ function BbsList() {
 	const getBbsList = async (choice, search, page) => {
 
 		//백엔드에 get 요청
-		await axios.get("http://localhost:3000/bbs", { params: { "choice": choice, "search": search, "page": page } })
+		await axios.get("http://localhost:8080/bbs", { params: { "choice": choice, "search": search, "page": page } })
 			.then((resp) => {
 				console.log("[BbsList.js] useEffect() success :D");
 				console.log(resp.data);
@@ -52,7 +52,7 @@ function BbsList() {
 	const search = () => {
 		console.log("[BbsList.js searchBtn()] choiceVal=" + choiceVal + ", searchVal=" + searchVal);
 
-		navigate("/bbslist");
+		navigate("/bbs/list");
 		getBbsList(choiceVal, searchVal, 1);
 	}
 
@@ -118,7 +118,7 @@ function BbsList() {
 				onChange={changePage} />
 				
 			<div className="my-5 d-flex justify-content-center">
-				<Link className="btn btn-outline-secondary" to="/bbswrite"><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
+				<Link className="btn btn-outline-secondary" to="/bbs/write"><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
 			</div>
 
 		</div>
@@ -144,7 +144,7 @@ function TableRow(props) {
 									<span className="underline bbs-title" >{bbs.title} </span> { /* 게시글 제목 */}
 								</Link>
 							</td>
-							<td>{bbs.id}</td>
+							<td>{bbs.memId}</td>
 						</>
 						:
 						// 삭제된 게시글
