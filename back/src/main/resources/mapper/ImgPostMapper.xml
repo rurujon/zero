@@ -14,7 +14,7 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
     </insert>
 
-<select id="getAllImgBoardWithFirstImage" resultMap="ImgBoardResultMap">
+<select id="getImgBoards" resultMap="ImgBoardResultMap">
     SELECT ip.*, i.imgId, i.saveFileName, i.filePath
     FROM ImgPost ip
     LEFT JOIN (
@@ -27,6 +27,12 @@
         )
     ) i ON ip.imgPostId = i.imgPostId
      ORDER BY ip.imgPostId DESC
+</select>
+
+<select id="getImgPostById" resultMap="ImgBoardResultMap">
+    SELECT * FROM ImgPost ip
+    LEFT JOIN Img i ON ip.imgPostId = i.imgPostId
+    WHERE ip.imgPostId = #{imgPostId}
 </select>
 
 

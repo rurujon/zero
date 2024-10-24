@@ -3,29 +3,26 @@ package com.zd.back.imgboard.controller;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
-import com.zd.back.imgboard.model.PageResponse;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgUploadService;
 
+import javafx.scene.control.Pagination;
 import lombok.RequiredArgsConstructor;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
 
 
 @RestController
@@ -37,10 +34,9 @@ public class ImgBoardController {
     private final ImgService imgService;
     private final ImgUploadService imgUploadService;
     //파일 업로드 위한 메소드는 ImgUploadService.java로 옮김 
-
     @PostMapping("/created")
     @Transactional
-    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
+    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception{
         try {
            
             int maxImgPostId = imgPostService.maxImgPostId() ;
@@ -63,17 +59,22 @@ public class ImgBoardController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<ImgBoard>> getImgBoards() {
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
 
-
-// list ==========================================
- @GetMapping("/list")
-public ResponseEntity<List<ImgBoard>> getImgPosts() {
-    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
-
-
-
+        
+        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    }
     
-    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
-}
+    @GetMapping("/article/{imgPostId}")
+    public ResponseEntity<ImgBoard> getImgPostById(@PathVariable int imgPostId) {
+        
+        ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+        if (imgBoard == null) {
+            return ResponseEntity.notFound().build(); // 게시물이 없을 경우 404 반환
+        }
+        return ResponseEntity.ok(imgBoard); // 게시물 반환
+    }
 
 }

@@ -14,6 +14,9 @@ public interface ImgPostMapper {
 
     void insertImgPost(ImgPost imgPost);
 
-    List<ImgBoard> getAllImgBoardWithFirstImage();
+    int getDataCount();
 
+    List<ImgBoard> getImgBoards();
+    
+    ImgBoard getImgPostById(int imgPostId);
 }

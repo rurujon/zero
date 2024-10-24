@@ -19,7 +19,7 @@ function ImgList() {
         <div>
             <h2>인증게시판 리스트</h2>
             <p>
-                <button type='button' onClick={() => window.location.href = '/imgboard/created.action'}>
+                <button type='button' onClick={() => window.location.href = '/imgboard/created'}>
                     인증 글쓰기
                 </button>
             </p>
@@ -61,7 +61,7 @@ function ImgList() {
                         </div>
                         <p>목록: {board.imgPost.cate}</p>
                         <p>작성자: {board.imgPost.memId}</p>
-                        <p>제목: <a href='/imgboard/article.action'>{board.imgPost.title}</a> </p>
+                        <p>제목: <a href={`/imgboard/article/${board.imgPost.imgPostId}`}>{board.imgPost.title}</a></p>
                         <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
                     </div>
                 ))}
