@@ -1,13 +1,10 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthProvider";
 import { HttpHeadersContext } from "../context/HttpHeadersProvider";
 
 function BbsWrite() {
-
-	const { auth, setAuth } = useContext(AuthContext)
-	const { headers, setHeaders } = useContext(HttpHeadersContext);
+	const { headers } = useContext(HttpHeadersContext);
 
 	const navigate = useNavigate();
 
@@ -23,35 +20,36 @@ function BbsWrite() {
 	}
 
 	/* [POST /bbs]: 게시글 작성 */
-	const createBbs = async() => {
-
+	const createBbs = async () => {
 		const req = {
-			id: localStorage.getItem("memId"), 
-			title: title, 
+			memId: localStorage.getItem("memId"),
+			title: title,
 			content: content
-		}
+		};
 
-		await axios.post("http://localhost:3000/bbs", req, {headers: headers})
-		.then((resp) => {
-			console.log("[BbsWrite.js] createBbs() success :D");
-			console.log(resp.data);
+		await axios.post("http://localhost:8080/bbs/write", req, { headers: headers })
+			.then((resp) => {
+				console.log("[BbsWrite.js] createBbs() success :D");
+				console.log(resp.data);
 
-			alert("새로운 게시글을 성공적으로 등록했습니다 :D");
-			navigate(`/bbsdetail/${resp.data.seq}`); // 새롭게 등록한 글 상세로 이동
-		})
-		.catch((err) => {
-			console.log("[BbsWrite.js] createBbs() error :<");
-			console.log(err);
-		});
+				alert("새로운 게시글을 성공적으로 등록했습니다 :D");
+				navigate(`/bbsdetail/${resp.data.seq}`); // 새롭게 등록한 글 상세로 이동
+			})
+			.catch((err) => {
+				console.log("[BbsWrite.js] createBbs() error :<");
+				console.log(err);
+			});
 	}
 
+	// 로그인 상태를 localStorage에서 확인
 	useEffect(() => {
-		if (!auth) {
-			alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");
-			navigate(-1); //이전 페이지로 이동
-		}
-	}, []);
+		const isLoggedIn = localStorage.getItem("memId"); // 로그인된 사용자 ID가 있으면 로그인 상태로 간주
 
+		if (!isLoggedIn) {
+			alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");
+			navigate("/login"); // 로그인 페이지로 이동
+		}
+	}, [navigate]);
 
 	return (
 		<div>
@@ -60,7 +58,7 @@ function BbsWrite() {
 					<tr>
 						<th className="table-primary">작성자</th>
 						<td>
-							<input type="text" className="form-control"  value={localStorage.getItem("memId")} size="50px" readOnly />
+							<input type="text" className="form-control" value={localStorage.getItem("memId")} size="50px" readOnly />
 						</td>
 					</tr>
 

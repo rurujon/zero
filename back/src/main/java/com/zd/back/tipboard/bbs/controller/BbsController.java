@@ -2,6 +2,7 @@ package com.zd.back.tipboard.bbs.controller;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +31,13 @@ public class BbsController {
 
 	private final BbsService service;
 
+	@Autowired
 	public BbsController(BbsService service) {
 		this.service = service;
 	}
 
 	/* [GET /bbs?choice={choice}&search={search}&page={page}] 게시글 목록 API */
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<BbsListResponse> getBbsList(@ModelAttribute BbsListRequest req){
 		System.out.println("BbsController getBbsList() " + new Date());
 
@@ -51,10 +53,16 @@ public class BbsController {
 	}
 
 	/* [POST] /bbs 게시글 작성 */
-	@PostMapping
+	@PostMapping("/write")
 	public ResponseEntity<CreateBbsResponse> createBbs(@RequestBody CreateBbsRequest req) {
 		System.out.println("BbsController createBbs " + new Date());
-
+	
+		// CreateBbsRequest의 필드 값 확인
+		System.out.println("memId: " + req.getMemId());
+		System.out.println("title: " + req.getTitle());
+		System.out.println("content: " + req.getContent());
+	
+		// 서비스 호출
 		return ResponseEntity.ok(service.createBbs(req));
 	}
 

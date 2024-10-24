@@ -8,7 +8,7 @@ function CommentWrite(props) {
 
 	const { headers, setHeaders } = useContext(HttpHeadersContext);
 
-	const id = localStorage.getItem("memId");
+	const memId = localStorage.getItem("memId");
 	const seq = props.seq;
 
 	const navigate = useNavigate();
@@ -22,12 +22,12 @@ function CommentWrite(props) {
 	const createComment = async() => {
 
 		const req = {
-			id: id,
+			memId: memId,
 			content: content,
 			bbsSeq: seq
 		}
 
-		await axios.post(`http://localhost:3000/comment`, req, { params: {"bbsSeq": seq}, headers: headers})
+		await axios.post(`http://localhost:8080/comment`, req, { params: {"bbsSeq": seq}, headers: headers})
 		.then((resp) => {
 			console.log("[CommentWrite.js] createComment() success :D");
 			console.log(resp.data);
@@ -54,7 +54,7 @@ function CommentWrite(props) {
 					</div>
 
 					<div className="col-7">
-						<span className="comment-id" >{id}</span>
+						<span className="comment-id" >{memId}</span>
 					</div>
 					<div className="col-2 my-1 d-flex justify-content-end">
 						<button className="btn btn-outline-secondary" onClick={createComment}><i className="fas fa-comment-dots"></i> 댓글 추가</button>

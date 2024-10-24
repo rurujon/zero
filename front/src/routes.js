@@ -38,8 +38,8 @@ export const routes = [
 
 
     //TipBoard
-    { path: '/bbslist', element: <BbsList /> },
-    { path: '/bbswrite', element: <BbsWrite /> },
+    { path: '/bbs/list', element: <BbsList /> },
+    { path: '/bbs/write', element: <BbsWrite /> },
     { path: '/bbsdetail/:seq', element: <BbsDetail /> },
     { path: '/bbsupdate', element: <BbsUpdate /> },
     { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }

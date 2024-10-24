@@ -31,6 +31,7 @@ const HomePage = () => {
 
     const handleLogout = () => {
         logout();
+        window.location.reload()
         alert('로그아웃되었습니다.');
     };
 

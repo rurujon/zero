@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CreateBbsRequest {
 
-    private String id;
+    private String memId;
     private String title;
     private String content;
 }

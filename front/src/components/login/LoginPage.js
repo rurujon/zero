@@ -21,6 +21,7 @@ const LoginPage = ({ onLogin }) => {
             .then(response => {
                 if (response.data.token) {
                     onLogin(response.data.token, memId);
+                    window.location.reload()
                 } else {
                     alert('로그인 실패');
                 }

@@ -27,7 +27,7 @@ function Comment(props) {
 			content: content
 		};
 
-		await axios.patch(`http://localhost:3000/comment/${comment.seq}`, req, {headers: headers})
+		await axios.patch(`http://localhost:8080/comment/${comment.seq}`, req, {headers: headers})
 		.then((resp) => {
 			
 			console.log("[Comment.js] updateComment() success :D");
@@ -51,7 +51,7 @@ function Comment(props) {
 
 	/* 댓글 삭제 */
 	const deleteComment = async () => {
-		await axios.delete(`http://localhost:3000/comment/${comment.seq}`)
+		await axios.delete(`http://localhost:8080/comment/${comment.seq}`)
 			.then((resp) => {
 				console.log("[BbsComment.js] deleteComment() success :D");
 				console.log(resp.data);
@@ -82,7 +82,7 @@ function Comment(props) {
 					</div>
 					<div className="col-5">
 						<div className="row">
-							<span className="comment-id">{comment.id}</span>
+							<span className="comment-id">{comment.memId}</span>
 						</div>
 						<div className="row">
 							<span>{comment.createdAt}</span>
@@ -92,7 +92,7 @@ function Comment(props) {
 					<div className="col-4 d-flex justify-content-end">
 					{
 						/* 자신이 작성한 댓글인 경우에만 수정 삭제 가능 */
-						(localStorage.getItem("memId") == comment.id) ?
+						(localStorage.getItem("memId") == comment.memId) ?
 							<>
 								<button className="btn btn-outline-secondary" onClick={updateToggle}><i className="fas fa-edit"></i> 수정</button> &nbsp; 
 								<button className="btn btn-outline-danger" onClick={deleteComment}><i className="fas fa-trash-alt"></i> 삭제</button>

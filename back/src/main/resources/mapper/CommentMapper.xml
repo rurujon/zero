@@ -9,11 +9,11 @@
 	<select id="getCommentPageList" parameterType="com.zd.back.tipboard.comment.dto.param.CommentListParam"
 					resultType="com.zd.back.tipboard.comment.domain.Comment">
 
-		SELECT seq, id, content, bbs_seq bbsSeq, created_at createdAt, del
+		SELECT seq, memId, content, bbsSeq, created, del
 		FROM (
-		    SELECT row_number() OVER(ORDER BY created_at DESC) AS rnum, seq, id, content, bbs_seq, created_at, del
-		    FROM comment
-				WHERE bbs_seq=#{bbsSeq}) a
+		    SELECT row_number() OVER(ORDER BY created DESC) AS rnum, seq, memId, content, bbsSeq, created, del
+		    FROM tipcomment
+				WHERE bbsSeq=#{bbsSeq}) a
 		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
 
 	</select>
@@ -21,21 +21,21 @@
 	<!-- 댓글 총 개수 조회 -->
 	<select id="getCommentCount" parameterType="Integer" resultType="Integer">
 
-		SELECT ifnull(count(*), 0)
-		FROM comment
-		WHERE bbs_seq=#{seq}
+		SELECT nvl(count(*), 0)
+		FROM tipcomment
+		WHERE bbsSeq=#{seq}
 	</select>
 
 	<!-- 댓글 추가 -->
 	<insert id="createComment" parameterType="com.zd.back.tipboard.comment.dto.param.CreateCommentParam"
 					useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO comment (id, content, bbs_seq, created_at, del)
-		VALUES (#{id}, #{content}, #{bbsSeq}, NOW(), 0)
+		INSERT INTO tipcomment (seq, memId, content, bbsSeq, created, del)
+		VALUES (tipcomment_seq.NEXTVAL, #{memId}, #{content}, #{bbsSeq}, sysdate, 0)
 	</insert>
 
 	<!-- 댓글 삭제 -->
 	<update id="deleteComment" parameterType="Integer">
-		UPDATE comment
+		UPDATE tipcomment
 		SET del = 1
 		WHERE seq = #{seq}
 	</update>
@@ -43,14 +43,14 @@
 	<!-- 댓글 조회 -->
 	<select id="getCommentBySeq" parameterType="Integer"
 					resultType="com.zd.back.tipboard.comment.domain.Comment">
-		SELECT seq, id, content, bbs_seq bbsSeq, created_at createdAt, del
-		FROM comment
+		SELECT seq, memId, content, bbsSeq, created, del
+		FROM tipcomment
 		WHERE seq=#{seq}
 	</select>
 
 	<!-- 댓글 수정 -->
 	<update id="updateComment" parameterType="com.zd.back.tipboard.comment.dto.param.UpdateCommentParam">
-		UPDATE comment
+		UPDATE tipcomment
 		SET content = #{content}
 		WHERE seq = #{seq}
 	</update>
