@@ -41,7 +41,6 @@ const HomePage = () => {
 
     return (
         <div className="container mt-4">
-            <QuizModal/>
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>

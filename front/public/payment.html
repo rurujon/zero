@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script 
+        src="https://cdn.iamport.kr/v1/iamport.js">
+    </script>
+    <!-- jQuery -->
+    <script 
+        type="text/javascript" 
+        src="https://code.jquery.com/jquery-1.12.4.min.js" >
+    </script>
+    <!-- iamport.payment.js -->
+    <script 
+        type="text/javascript" 
+        src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js">
+    </script>
+    <!-- iamport.payment.js -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/axios/dist/axios.min.js"
+    ></script>
+    <script>
+        function payment(){
+            IMP.init("store-8566d7eb-64ce-41ae-836a-0e9f233eea87");
+            IMP.request_pay({
+                PG:'html5_inicis',
+                pay_method:'card',
+                merchant_uid:'test'+new Date().getTime(),
+                name:'결제 테스트',
+                amount:100,
+                buyer_email:'idwnsdud1965@naver.com',
+                buyer_name:'조준영 결제 테스트',
+                buyer_tel:'010-8012-1965',
+                buyer_addr:'먼우금로83번길 12',
+                buyer_postcode:'123-456'
+            }, function(rsp){
+                if(rsp.success){
+                    //결제성공
+                    var msg = '결제가 완료되었습니다';
+                    alert(msg);
+                    location.href="/"
+                }else{
+                    //결제실패
+                    var msg = '결제가 실패하였습니다';
+                    msg += '에러내용:'+rsp.error_msg;
+                    alert(msg);
+                    location.href="/"
+                }
+            })
+        }
+
+        document.getElementById('payment').addEventListener('click', payment);
+    </script>
+</head>
+<body>
+    
+    <button id="payment">구매하기</button>
+    <!-- <script src="payment.js"></script> -->
+
+</body>
+</html>
