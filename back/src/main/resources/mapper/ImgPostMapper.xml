@@ -29,6 +29,12 @@
      ORDER BY ip.imgPostId DESC
 </select>
 
+<select id="getImgPostById" resultMap="ImgBoardResultMap">
+    SELECT * FROM ImgPost ip
+    LEFT JOIN Img i ON ip.imgPostId = i.imgPostId
+    WHERE ip.imgPostId = #{imgPostId}
+</select>
+
 
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
     <result property="imgPost.imgPostId" column="imgPostId" />

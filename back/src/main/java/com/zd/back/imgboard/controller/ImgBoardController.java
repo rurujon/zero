@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 
+
 @RestController
 @RequestMapping("/imgboard")
 @RequiredArgsConstructor  //의존성 주입 위함 
@@ -64,6 +65,16 @@ public class ImgBoardController {
 
         
         return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    }
+    
+    @GetMapping("/article/{imgPostId}")
+    public ResponseEntity<ImgBoard> getImgPostById(@PathVariable int imgPostId) {
+        
+        ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+        if (imgBoard == null) {
+            return ResponseEntity.notFound().build(); // 게시물이 없을 경우 404 반환
+        }
+        return ResponseEntity.ok(imgBoard); // 게시물 반환
     }
 
 }

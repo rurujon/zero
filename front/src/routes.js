@@ -31,10 +31,12 @@ export const routes = [
 
 
     //ImgBoard
-    { path: '/imgboard/created.action', element: <ImgCreated /> },
-    { path: '/imgboard/list.action', element: <ImgList /> },
-    { path: '/imgboard/article.action', element: <ImgArticle/> },
-  
+    { path: '/imgboard/created', element: <ImgCreated /> },
+    { path: '/imgboard/list', element: <ImgList /> },
+    { path: '/imgboard/article/:imgPostId', element: <ImgArticle/> }, 
+  /*   { path: '/imgboard/article', element: <ImgArticle/> }, */
+
+
 
     //TipBoard
     { path: '/bbslist', element: <BbsList /> },

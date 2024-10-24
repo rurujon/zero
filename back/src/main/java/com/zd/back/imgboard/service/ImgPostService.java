@@ -31,7 +31,9 @@ public class ImgPostService {
         return imgPostMapper.getImgBoards();
     }
 
-
+    public ImgBoard getImgPostById(int imgPostId) {
+        return imgPostMapper.getImgPostById(imgPostId); 
+    }
 
 
 

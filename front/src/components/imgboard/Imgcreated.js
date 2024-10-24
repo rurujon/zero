@@ -107,7 +107,7 @@ const ImgCreated = () => {
                 },
             });
             alert(response.data);
-            window.location.href = '/imgboard/list.action';
+            window.location.href = '/imgboard/list';
             
         } catch (error) {
             alert(`게시물 등록 중 오류가 발생했습니다 : ${error.message}`);

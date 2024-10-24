@@ -1,6 +1,5 @@
 package com.zd.back.imgboard.model;
 
-import lombok.Data;
 
 
 public class Pagination {
