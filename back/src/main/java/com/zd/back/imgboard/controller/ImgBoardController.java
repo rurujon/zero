@@ -3,32 +3,25 @@ package com.zd.back.imgboard.controller;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
-import com.zd.back.imgboard.model.PageResponse;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgUploadService;
 
+import javafx.scene.control.Pagination;
 import lombok.RequiredArgsConstructor;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 
 @RestController
@@ -40,10 +33,9 @@ public class ImgBoardController {
     private final ImgService imgService;
     private final ImgUploadService imgUploadService;
     //파일 업로드 위한 메소드는 ImgUploadService.java로 옮김 
-
     @PostMapping("/created")
     @Transactional
-    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
+    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception{
         try {
            
             int maxImgPostId = imgPostService.maxImgPostId() ;
@@ -66,17 +58,12 @@ public class ImgBoardController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<ImgBoard>> getImgBoards() {
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
 
+        
+        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    }
 
-// list ==========================================
-@GetMapping("/list.action")
-public ResponseEntity<Map<String, Object>> list(
-        @RequestParam int start, 
-        @RequestParam int end,
-        @RequestParam(required = false) String searchKey, 
-        @RequestParam(required = false) String searchValue) {
-    
-    Map<String, Object> result = imgPostService.getImgPosts(start, end, searchKey, searchValue);
-    return ResponseEntity.ok(result);
-}
 }

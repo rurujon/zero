@@ -5,8 +5,11 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ImgBoard { //두개의 dto 통합
+public class ImgBoard { 
 
+    //ImgPsot  + Img 
     private ImgPost imgPost;
     private List<Img> images; 
+ 
+
 }

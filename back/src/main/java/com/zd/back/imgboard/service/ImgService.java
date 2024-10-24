@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zd.back.imgboard.mapper.ImgMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
-import com.zd.back.imgboard.model.PageResponse;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,52 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
+import React from 'react';
+import './ImgArticle.css';
 
 const ImgArticle = () => {
-    const {imgPostId} = useParams(); // URL에서 imgPostId를 추출
-    const [imgPost, setImgPost] = useState(null);
 
-    useEffect(() => {
-        axios.get(`/imgboard/article/${imgPostId}`)
-            .then(response => {
-                setImgPost(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('게시물을 찾을 수 없습니다.', error);
-            });
-    }, [imgPostId]);
-
-    if (!imgPost) return <div>로딩 중...</div>;
-
+        const handleEdit = () => { //수정하기
+            console.log("수정하기 버튼 클릭됨");
+          /*   window.location.href = `/imgboard/updated/${memId}`;  */
+        };
+    
+        const handleToList = () => { //목록가기
+         
+            console.log("목록가기 버튼 클릭됨");
+            window.location.href = '/imgboard/list.action'; 
+        };
 
     return (
-        <div>
-            <h2>{imgPost.title}</h2>
-            <p>작성자: {imgPost.memId}</p>
-            <p>작성일: {new Date(imgPost.created).toLocaleDateString()}</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
-                {imgPost.images && imgPost.images.length > 0 ? (
-                    imgPost.images.map((img) => (
-                        <img
-                            key={img.imgId}
-                            src={`/images/${img.saveFileName}`}
-                            alt={img.saveFileName}
-                            style={{ width: '350px', height: '200px', margin: '5px' }}
-                        />
-                    ))
-                ) : (
-                    <p>등록된 이미지가 없습니다.</p>
-                )}
+        <div className="article-container">
+            <h2 className="article-title">제목: title</h2>
+
+            <div className="article-meta-container">
+                <p className="article-meta"><strong>승인여부:</strong> auth</p>
+                <hr className="divider" />
+                <p className="article-meta"><strong>사용자 ID:</strong> memId</p>
+                <hr className="divider" />
+                <p className="article-meta"><strong>인증 유형:</strong>cate</p>
+                <hr className="divider" />
+                <p className="article-meta"><strong>작성일:</strong>created</p>
             </div>
-            <div style={{ border: '1px solid #ccc', padding: '10px', marginTop: '10px' }}>
-                <h3>내용</h3>
-                <p>{imgPost.content}</p>
+
+            <div className="article-content">
+            <p>content</p>
+            
+            <div className="image-gallery">
+
+                        <img
+                            
+                            alt='게시물 이미지' 
+                            className="article-image"
+                        />
+
+            </div>
+            </div>
+
+            <div className="button-container">
+                <button className="action-button" onClick={handleEdit}>수정하기</button>
+                <button className="action-button" onClick={handleToList}>목록가기</button>
             </div>
         </div>
     );
-}
-
+};
 
 export default ImgArticle;
