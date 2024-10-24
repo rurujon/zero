@@ -2,6 +2,9 @@ package com.zd.back.tipboard.bbs.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 
 @Data // 자동으로 getter, setter, toString, equals, hashCode 생성
@@ -9,19 +12,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor // 모든 필드를 포함한 생성자 자동 생성
 public class Bbs {
 
-	private int seq;
+	private Integer seq;
 	private String memId;
 
-	private int ref;
-	private int step;
-	private int depth;
+	private Integer ref;
+	private Integer step;
+	private Integer depth;
 
 	private String title;
 	private String content;
-	private String created;
+	private Date created;
 
-	private int del;
-	private int count;
+	private Integer del;
+	private Integer count;
 
 	// id, title, content만 받는 생성자
 	public Bbs(String memId, String title, String content) {

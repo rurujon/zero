@@ -16,10 +16,10 @@
 					<if test="choice != null and choice != ''
 								and search != null and search != '' ">
 						<if test="choice == 'title'">
-							WHERE title LIKE concat('%', #{search}, '%')
+							WHERE title LIKE '%' || #{search} || '%'
 						</if>
 						<if test="choice == 'content'">
-							WHERE content LIKE concat('%', #{search}, '%')
+							WHERE content LIKE '%' || #{search} || '%'
 						</if>
 						<if test="choice == 'writer'">
 							WHERE memId=#{search}
@@ -31,16 +31,15 @@
 
 	<!-- 글 총 개수 조회 -->
 	<select id="getBbsCount" parameterType="com.zd.back.tipboard.bbs.dto.param.BbsCountParam" resultType="Integer">
-
-		SELECT nvl(count(*), 0)
+		SELECT NVL(count(*), 0)
 		FROM tipboard
 		<if test="choice != null and choice != ''
 		 			and search != null and search != '' ">
 			<if test="choice == 'title'">
-				WHERE title LIKE concat('%', #{search}, '%')
+				WHERE title LIKE '%' || #{search} || '%'
 			</if>
 			<if test="choice == 'content'">
-				WHERE content LIKE concat('%', #{search}, '%')
+				WHERE content LIKE '%' || #{search} || '%'
 			</if>
 			<if test="choice == 'writer'">
 				WHERE memId=#{search}
@@ -58,9 +57,13 @@
 
 	<!-- 게시글 조회수 레코드 생성 -->
 	<insert id="createBbsReadCountHistory" parameterType="com.zd.back.tipboard.bbs.dto.param.CreateReadCountParam">
-		INSERT INTO hitcount (bbsSeq, memId, latest) VALUES (#{bbsSeq}, #{readerId}, sysdate)
-		ON DUPLICATE KEY
-		UPDATE latest=sysdate;
+		MERGE INTO hitcount h
+		USING (SELECT #{bbsSeq} AS bbsSeq, #{readerId} AS memId FROM dual) src
+		ON (h.bbsSeq = src.bbsSeq AND h.memId = src.memId)
+		WHEN MATCHED THEN
+			UPDATE SET h.latest = SYSDATE
+		WHEN NOT MATCHED THEN
+			INSERT (bbsSeq, memId, latest) VALUES (src.bbsSeq, src.memId, SYSDATE);
 	</insert>
 
 	<!-- 게시글 조회수 수정 -->
@@ -74,7 +77,7 @@
 	<insert id="createBbs" parameterType="com.zd.back.tipboard.bbs.dto.param.CreateBbsParam"
 					useGeneratedKeys="true" keyProperty="seq">
 		INSERT into tipboard (seq, memId, ref, step, depth, title, content, created, del, count)
-		VALUES (tipboard_seq.NEXTVAL, #{memId}, (SELECT nvl(max(ref), 0)+1 from tipboard b), 0, 0, #{title}, #{content}, sysdate, 0, 0)
+		VALUES (tipboard_seq.NEXTVAL, #{memId}, (SELECT NVL(max(ref), 0)+1 FROM tipboard b), 0, 0, #{title}, #{content}, SYSDATE, 0, 0)
 	</insert>
 
 	<!-- 답글 작성 -->
@@ -98,20 +101,18 @@
 	<insert id="createBbsAnswer" parameterType="com.zd.back.tipboard.bbs.dto.param.CreateBbsAnswerParam"
 					useGeneratedKeys="true" keyProperty="seq">
 		INSERT INTO tipboard (seq, memId, ref, step, depth, title, content, created, del, count)
-		VALUES (tipcomment_seq.NEXTVAL, #{memId}, (SELECT ref FROM tipboard a WHERE seq=#{parentSeq}),
+		VALUES (tipboard_seq.NEXTVAL, #{memId}, (SELECT ref FROM tipboard a WHERE seq=#{parentSeq}),
 		        		(SELECT step FROM tipboard b WHERE seq=#{parentSeq}) + 1,
 		       			(SELECT depth FROM tipboard c WHERE seq=#{parentSeq}) + 1,
-		       			#{title}, #{content}, sysdate, 0, 0);
+		       			#{title}, #{content}, SYSDATE, 0, 0);
 	</insert>
 
 	<!-- 게시글 수정 -->
 	<!-- 수정 성공 시 1(수정한 레코드 개수) 을 반환, 실패 시 0 을 반환 -->
 	<update id="updateBbs" parameterType="com.zd.back.tipboard.bbs.dto.param.UpdateBbsParam">
-
 		UPDATE tipboard
 		SET content=#{content}, title=#{title}
 		WHERE seq=#{seq}
-
 	</update>
 
 	<update id="deleteBbs" parameterType="Integer">
@@ -121,5 +122,3 @@
 	</update>
 
 </mapper>
-
-

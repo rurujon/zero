@@ -27,7 +27,7 @@ function BbsList() {
 	const getBbsList = async (choice, search, page) => {
 
 		//백엔드에 get 요청
-		await axios.get("http://localhost:8080/bbs", { params: { "choice": choice, "search": search, "page": page } })
+		await axios.get("http://localhost:8080/bbs/list", { params: { "choice": choice, "search": search, "page": page } })
 			.then((resp) => {
 				console.log("[BbsList.js] useEffect() success :D");
 				console.log(resp.data);
