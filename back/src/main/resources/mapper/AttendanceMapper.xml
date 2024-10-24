@@ -3,22 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  <mapper namespace="com.zd.back.JY.domain.attendance.AttendanceMapper">
+<mapper namespace="com.zd.back.JY.domain.attendance.AttendanceMapper">
 
     <select id="maxNum" resultType="int">
         SELECT NVL(MAX(attId), 0) FROM attendance
     </select>
 
     <insert id="insertAtt" parameterType="map">
-        insert into attendance (attId, attDate, memId) values(#{attId}, to_char(sysdate, 'YY/MM/DD'), #{memId})
+    INSERT INTO attendance (attId, attDate, memId)
+    VALUES (attendance_seq.NEXTVAL, SYSDATE, #{memId})
     </insert>
-  
-    <select id="checkToday" parameterType="String" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
-        select * from attendance where attDate = to_char(sysdate, ('YY/MM/DD')) AND memId = #{memId}
+
+    <select id="checkToday" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM attendance
+    WHERE TRUNC(attDate) = TRUNC(SYSDATE)
+    AND memId = #{memId}
     </select>
 
     <insert id="regiAtt" parameterType="com.zd.back.JY.domain.attendance.AttendanceDTO">
-        insert into attendance (attId, attDate, memId) values(#{attId}, to_char(sysdate, 'YY/MM/DD'), #{memId})
+        INSERT INTO attendance (attId, attDate, memId)
+        VALUES (#{attId}, SYSDATE, #{memId})
     </insert>
 
-  </mapper>
+    <select id="getMonthlyAttendance" resultType="com.zd.back.JY.domain.attendance.AttendanceDTO">
+    SELECT * FROM attendance
+    WHERE memId = #{memId}
+    AND EXTRACT(YEAR FROM attDate) = #{year}
+    AND EXTRACT(MONTH FROM attDate) = #{month}
+    </select>
+
+    <select id="getAttendanceDates" parameterType="String" resultType="java.util.Date">
+    SELECT TRUNC(attDate) FROM attendance WHERE memId = #{memId}
+    </select>
+
+</mapper>

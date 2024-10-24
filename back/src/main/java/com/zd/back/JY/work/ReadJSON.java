@@ -19,7 +19,7 @@ import com.zd.back.JY.domain.dailyQuiz.QuizDTO;
 
 
 public class ReadJSON {
-    
+
     //JSON파일의 주소를 바당 파일을 읽어 JSON형식을 JSONArray형태로 반환
     public JSONArray jsonToArray(String fileUrl){
         //.json을 제외한 파일 URL입력
@@ -47,11 +47,11 @@ public class ReadJSON {
                     String question = (String)object.get("question");
                     String answer = (String)object.get("answer");
                     String explanation = (String)object.get("explanation");
-                    
+
                     System.out.println(i + question + answer + explanation);
 
                     String [] qae = {question, answer, explanation};
-    
+
                     map.put(id, qae);
                     /*
                      * [0] : question
@@ -76,10 +76,10 @@ public class ReadJSON {
         jsonObject.put("question", dto.getQuestion());
         jsonObject.put("answer", dto.getAnswer());
         jsonObject.put("explanation", dto.getExplanation());
-        
+
 
 
         return jsonObject;
     }
-    
+
 }
