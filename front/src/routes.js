@@ -24,10 +24,10 @@ export const routes = [
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
 
-    { path:'/seoulNewsEnv', element:<SeoulNewsEnv/>},   //서울env 뉴스리스트
-    { path:'/seoulNewsEco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
-    { path:'/seoulNewsAir', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
-    { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
+    { path:'/seoulNews/Env', element:<SeoulNewsEnv/>},   //서울env 뉴스리스트
+    { path:'/seoulNews/Eco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
+    { path:'/seoulNews/Air', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
+    { path:'/seoulNews/Green', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
     { path:'/seoulNewsArticle/:seoulId', element:<SeoulNewsArticle/>},   //서울 뉴스 상세페이지
 
 
