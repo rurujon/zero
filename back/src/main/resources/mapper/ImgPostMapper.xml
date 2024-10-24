@@ -35,7 +35,12 @@
     WHERE ip.imgPostId = #{imgPostId}
 </select>
 
+    <delete id="deleteImgPostById">
+        DELETE FROM ImgPost
+        WHERE imgPostId = #{imgPostId}
+    </delete>
 
+    
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">
     <result property="imgPost.imgPostId" column="imgPostId" />
     <result property="imgPost.memId" column="memId" />

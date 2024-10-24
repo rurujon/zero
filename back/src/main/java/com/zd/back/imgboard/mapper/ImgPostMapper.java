@@ -19,4 +19,7 @@ public interface ImgPostMapper {
     List<ImgBoard> getImgBoards();
     
     ImgBoard getImgPostById(int imgPostId);
+
+    void deleteImgPostById(int imgPostId);
+
 }

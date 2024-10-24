@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
-  
+
     useEffect(() => {
         axios.get('/imgboard/list')
             .then(response => {
@@ -27,14 +27,12 @@ function ImgList() {
                 {imgPosts.map((board, index) => (
                     <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
                         border: '2px solid red', 
-                        margin: '15px', // 간격 조정
+                        margin: '15px',
                         padding: '10px', 
                         borderRadius: '5px', 
                         backgroundColor: '#f0f0f0', 
-                        width: '22%' // 4개가 가로로 보이도록 설정
+                        width: '22%'
                     }}>
-                        
-                        {/* 이미지 목록 출력 */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
                             {board.images && board.images.length > 0 ? (
                                 board.images.map((img) => (
@@ -47,7 +45,7 @@ function ImgList() {
                                             height: '200px', 
                                             margin: '5px', 
                                             display: 'block', 
-                                            verticalAlign: 'top' // vertical-align 조정
+                                            verticalAlign: 'top'
                                         }}
                                     />
                                 ))
@@ -61,7 +59,12 @@ function ImgList() {
                         </div>
                         <p>목록: {board.imgPost.cate}</p>
                         <p>작성자: {board.imgPost.memId}</p>
-                        <p>제목: <a href={`/imgboard/article/${board.imgPost.imgPostId}`}>{board.imgPost.title}</a></p>
+                        <p>
+                            제목: 
+                            <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
+                                {board.imgPost.title}
+                            </a>
+                        </p>
                         <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
                     </div>
                 ))}

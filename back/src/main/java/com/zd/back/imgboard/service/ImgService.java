@@ -18,11 +18,17 @@ public class ImgService {
 
     public void saveImg(List<Img> imgList) {
         for (Img img : imgList) {
-            imgMapper.insertImg(img);  // 각 이미지 정보를 DB에 저장
+            imgMapper.saveImg(img);  // 각 이미지 정보를 DB에 저장
         }
     }
    
+    public List<Img> getImagesByPostId(int imgPostId) {
+        return imgMapper.getImagesByPostId(imgPostId); 
+    }
 
+    public void deleteImagesByPostId(int imgPostId) {
+        imgMapper.deleteImagesByPostId(imgPostId);
+    }
 
 
 

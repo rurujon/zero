@@ -33,8 +33,7 @@ export const routes = [
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated /> },
     { path: '/imgboard/list', element: <ImgList /> },
-    { path: '/imgboard/article/:imgPostId', element: <ImgArticle/> }, 
-  /*   { path: '/imgboard/article', element: <ImgArticle/> }, */
+   { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 위함
 
 
 

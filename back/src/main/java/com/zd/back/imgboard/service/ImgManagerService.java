@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zd.back.imgboard.model.Img;
 
 @Service
-public class ImgUploadService {
+public class ImgManagerService {
     
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -26,6 +26,9 @@ public class ImgUploadService {
     private final int MAX_IMAGE_COUNT = 3;  // 최대 이미지 개수
     private final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 최대 파일 크기 (10MB)
 
+
+
+  //Upload=========================================================
     public List<Img> uploadImages(MultipartFile[] images, int imgPostId) throws IOException {
         // 1.디렉토리 확인 및 생성
         createUploadDirectory();
@@ -53,7 +56,6 @@ public class ImgUploadService {
 
         return imgList;
     }
-    // 메소드 -----------------------------------------------------------
 
     // 1.디렉토리 확인 및 생성
     private void createUploadDirectory() {
@@ -120,6 +122,24 @@ public class ImgUploadService {
         img.setFilePath(Paths.get(uploadDir, saveFileName).toString());
         return img;
     }
+//==============================================================================
+
+        public void deleteImages( String fileName) {
+            try {
+                String filePath = uploadDir + File.separator + fileName;
+                File f = new File(filePath);
+
+                if (f.exists()) { // 파일이 있으면
+                    f.delete(); // 물리적 파일 삭제
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+
+
+
+
 
 
 
