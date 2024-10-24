@@ -18,9 +18,11 @@ const LoginPage = ({ onLogin}) => {
             .then(response => {
                 if (response.data.token) {
                     onLogin(response.data.token, memId);
+                    window.location.reload()
                     if (response.data.upPoint === "1") {
                         alert("출석이 인정되었습니다! +1 포인트");
                     }
+
                 } else {
                     alert("로그인 실패");
                 }
