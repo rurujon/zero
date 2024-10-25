@@ -107,8 +107,30 @@ public class ImgBoardController {
     @PostMapping("/updated")
     public ResponseEntity<String> getUpdatedArticle_Ok(@RequestParam int imgPostId,@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception {
         try{
-            imgPost.setImgPostId(imgPostId);
 
+
+            //원한는것 : 기존 파일은 삭제 안하고 , 대체된 옛 파일 삭제/하면서 새로운 파일 넣기 
+
+            // 1. imgPost 업데이트 
+            imgPost.setImgPostId(imgPostId);
+            imgPostService.updateImgPost(imgPost);
+
+            // 2. 기존 이미지 가져오기 
+            List<Img> exImgList = imgService.getImagesByPostId(imgPostId);
+
+            // 3. 기존 이미지 saveFileName 과 axios.post 로 보낸 데이터의 saveFileName(article통해서 가져옴) 일치 하면 삭제 안함 
+            //(즉 이미지 대체 안누름)
+            List<Img> newImgList = imgManagerService.uploadImages(images, imgPostId);
+
+
+
+//===============================================================================================            
+            //게시물 및 이미지 업데이트
+            imgPost.setImgPostId(imgPostId);
+            imgPostService.updateImgPost(imgPost);
+            List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
+            imgService.saveImg(imgList);
+            
             //기존 이미지 DB 삭제후 물리적 파일 삭제
             List<Img> existingImages = imgService.getImagesByPostId(imgPostId);
 
@@ -116,13 +138,8 @@ public class ImgBoardController {
 
                 imgManagerService.deleteImages(img.getSaveFileName());
             }
+
             imgService.deleteImagesByPostId(imgPostId);
-
-            //게시물 및 이미지 업데이트
-            imgPostService.updateImgPost(imgPost);
-            List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
-            imgService.saveImg(imgList);
-
         
             return new ResponseEntity<>("인증 게시물이 수정되었습니다.", HttpStatus.OK);
 
