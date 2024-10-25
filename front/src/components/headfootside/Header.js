@@ -65,7 +65,7 @@ function Header() {
             <nav>
               <ul>
                 <li><Link to="/loginMain">Login</Link></li>
-                <li><Link to="/about">메뉴2</Link></li>
+                <li><Link to="/about">MyPage</Link></li>
                 <li><Link to="/services">메뉴3</Link></li>
                 <li><Link to="/contact">메뉴4</Link></li>
               </ul>

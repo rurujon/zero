@@ -45,7 +45,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px', // 층 간 간격
-    padding: '0 15%', // 좌우 15% 여백
+    padding: '0 5%', // 좌우 15% 여백
     paddingTop: '20px',
   },
   row: {
