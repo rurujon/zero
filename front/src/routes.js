@@ -4,11 +4,7 @@ import ImgList from "./components/imgboard/ImgList";
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
-import BbsList from "./components/tipboard/bbs/BbsList";
-import BbsWrite from "./components/tipboard/bbs/BbsWrite";
-import BbsDetail from "./components/tipboard/bbs/BbsDetail";
-import BbsUpdate from "./components/tipboard/bbs/BbsUpdate";
-import BbsAnswer from "./components/tipboard/bbs/BbsAnswer";
+import BoardWrite from "./components/board/BoardWrite";
 
 
 
@@ -38,11 +34,11 @@ export const routes = [
 
 
     //TipBoard
-    { path: '/bbs/list', element: <BbsList /> },
-    { path: '/bbs/write', element: <BbsWrite /> },
-    { path: '/bbsdetail/:seq', element: <BbsDetail /> },
-    { path: '/bbsupdate', element: <BbsUpdate /> },
-    { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }
+    // { path: '/bbs/list', element: <BbsList /> },
+    { path: '/board/write', element: <BoardWrite /> },
+    // { path: '/bbsdetail/:seq', element: <BbsDetail /> },
+    // { path: '/bbsupdate', element: <BbsUpdate /> },
+    // { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }
 
 
 
