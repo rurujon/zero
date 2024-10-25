@@ -30,18 +30,30 @@ const ImgArticle = () => {
         fetchArticle(); // API 호출
     }, [imgPostId]);
 
+    const getCateLabel = (cate) => {
+        switch (cate) {
+            case 'tum':
+                return '텀블러 이용';
+            case 'buy':
+                return '물품 구매';
+            case 'group':
+                return '단체활동 참여';
+            default:
+                return '알 수 없음';
+        }
+    };
 
     const handleDelete = async () => {
         try {
-            // DELETE 요청을 보냅니다.
             const response = await axios.delete(`/imgboard/deleted`, {
                 params: { imgPostId }
             });
             alert(response.data); // 서버에서 반환한 메시지 표시
             navigate('/imgboard/list'); // 삭제 후 목록으로 리다이렉트
+
         } catch (error) {
             console.error('게시물을 삭제하는 데 오류가 발생했습니다.', error);
-    
+
             const errorMessage = error.response && error.response.data 
                 ? error.response.data 
                 : '알 수 없는 오류가 발생했습니다.';
@@ -68,7 +80,7 @@ const ImgArticle = () => {
                 <hr className="divider" />
                 <p className="article-meta"><strong>사용자 ID:</strong> {article.imgPost.memId}</p>
                 <hr className="divider" />
-                <p className="article-meta"><strong>인증 유형:</strong> {article.imgPost.cate}</p>
+                <p className="article-meta"><strong>인증 유형:</strong> {getCateLabel(article.imgPost.cate)}</p>
                 <hr className="divider" />
                 <p className="article-meta"><strong>작성일:</strong> {new Date(article.imgPost.created).toLocaleDateString()}</p>
             </div>

@@ -34,6 +34,10 @@ public class ImgPostService {
     public ImgBoard getImgPostById(int imgPostId) {
         return imgPostMapper.getImgPostById(imgPostId); 
     }
+
+
+
+
     public void deleteImgPostById(int imgPostId) {
         imgPostMapper.deleteImgPostById(imgPostId);
     }

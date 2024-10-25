@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 
+
 @RestController
 @RequestMapping("/imgboard")
 @RequiredArgsConstructor  //의존성 주입 위함 
@@ -84,7 +85,54 @@ public class ImgBoardController {
     }
 
 
-    //updated 코딩 (-)
+    @GetMapping("/updated")
+    public ResponseEntity<ImgBoard> getUpdatedArticle(@RequestParam int imgPostId) {
+
+        try {
+            ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+            if (imgBoard == null) {
+                return ResponseEntity.notFound().build(); // 게시물이 없을 경우 404 반환
+            }
+    
+            return ResponseEntity.ok(imgBoard); 
+
+        } catch (Exception e) {
+               
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(null); // 오류 발생 시 null 반환
+        }
+    }
+    
+    @PostMapping("/updated")
+    public ResponseEntity<String> getUpdatedArticle_Ok(@RequestParam int imgPostId,@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception {
+        try{
+            imgPost.setImgPostId(imgPostId);
+
+            //기존 이미지 DB 삭제후 물리적 파일 삭제
+            List<Img> existingImages = imgService.getImagesByPostId(imgPostId);
+
+            for (Img img : existingImages) {
+
+                imgManagerService.deleteImages(img.getSaveFileName());
+            }
+            imgService.deleteImagesByPostId(imgPostId);
+
+            //게시물 및 이미지 업데이트
+            imgPostService.updateImgPost(imgPost);
+            List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
+            imgService.saveImg(imgList);
+
+        
+            return new ResponseEntity<>("인증 게시물이 수정되었습니다.", HttpStatus.OK);
+
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IOException e) {
+            return new ResponseEntity<>("파일 저장 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     @DeleteMapping("/deleted")
     public String deleteArticle(@RequestParam int imgPostId) {
@@ -92,7 +140,7 @@ public class ImgBoardController {
 
             List<Img> images = imgService.getImagesByPostId(imgPostId); 
 
-            //DB삭제 
+            //DB삭제 - 데이터 무결성 위해서 DB삭제 후 물리적 파일 삭제 해야함
             imgService.deleteImagesByPostId(imgPostId); // 먼저 이미지를 삭제
             
             // 물리적 파일 삭제
