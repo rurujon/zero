@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="saveStore" parameterType="com.zd.back.seoulsmartmap.ThemaData">
-        INSERT INTO smartMap (smartMapId, name, coordx, coordy, telno, themename, guname, addrnew, addrold, openinghours, imgUrl)
-        VALUES (#{smartMapId}, #{name}, #{coordX}, #{coordY}, #{telNo}, #{themeName}, #{guName}, #{addrNew}, #{addrOld}, #{openingHours}, #{imgUrl})
+        INSERT INTO smartMap (smartMapId, name, coordx, coordy, telno, themename, guname, addrnew, addrold, openinghours, imgUrl, sales, link, instaUrl)
+        VALUES (#{smartMapId}, #{name}, #{coordX}, #{coordY}, #{telNo}, #{themeName}, #{guName}, #{addrNew}, #{addrOld}, #{openingHours}, #{imgUrl}, #{sales}, #{link}, #{instaUrl})
     </insert>
 
     <select id="allStore" resultType="com.zd.back.seoulsmartmap.ThemaData">

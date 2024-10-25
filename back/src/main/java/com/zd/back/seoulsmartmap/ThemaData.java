@@ -16,5 +16,9 @@ public class ThemaData {
     private String addrOld;
     private String openingHours;
     private String imgUrl;
+
+    private String sales;
+    private String link;
+    private String instaUrl;
     
 }

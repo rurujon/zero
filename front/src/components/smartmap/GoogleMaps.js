@@ -173,6 +173,9 @@ const GoogleMaps = () => {
                 <p>전화번호: {selectedStore.telNo}</p>
                 <p>주소: {selectedStore.addrNew}</p>
                 <p>운영시간: {selectedStore.openingHours}</p>
+                <p>판매물품: {selectedStore.sales}</p>
+                <p>홈페이지: {selectedStore.link}</p>
+                <p>인스타: {selectedStore.instaUrl}</p>
               </div>
             </InfoWindow>
           )}

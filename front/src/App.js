@@ -32,7 +32,6 @@ function AppContent() {
     <div className='container'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header className='header'/>
-
         <GoogleMaps/>
         
 

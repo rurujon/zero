@@ -30,7 +30,7 @@ public class SmartMapServiceImpl implements SmartMapService{
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String responseData = response.getBody();
-            List<ThemaData> themaDatas = extractStores(responseData);  // 필요한 데이터 추출
+            List<ThemaData> themaDatas = extractStores(responseData, themaApiKey);  // 필요한 데이터 추출
             
             // 반복문을 사용해 하나씩 DB에 저장
             for (ThemaData store : themaDatas) {
@@ -47,7 +47,7 @@ public class SmartMapServiceImpl implements SmartMapService{
     }
 
     // JSON에서 필요한 데이터만 추출하는 메서드
-    private List<ThemaData> extractStores(String responseData) {
+    private List<ThemaData> extractStores(String responseData, String themaApiKey) {
         List<ThemaData> stores = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -74,9 +74,27 @@ public class SmartMapServiceImpl implements SmartMapService{
                 } else {
                     store.setImgUrl(""); // 혹은 store.setImgUrl("");
                 }
-                
-                int maxNum = 0;
-                
+
+                String contId = storeNode.path("COT_CONTS_ID").asText();
+
+                // 추가 API 호출하여 세 개의 값을 추출
+                String detailApiUrl = "https://map.seoul.go.kr/openapi/v5/" + themaApiKey + "/public/themes/contents/detail?theme_id=11103395&conts_id=" + contId;
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<String> detailResponse = restTemplate.getForEntity(detailApiUrl, String.class);
+
+                if (detailResponse.getStatusCode().is2xxSuccessful()) {
+                    String detailResponseData = detailResponse.getBody();
+                    JsonNode detailRoot = objectMapper.readTree(detailResponseData);
+                    JsonNode detailBody = detailRoot.path("body");
+
+                    if (detailBody.size() > 0) {
+                        JsonNode detailNode = detailBody.get(0);
+                        store.setSales(detailNode.path("COT_VALUE_04").asText());
+                        store.setInstaUrl(detailNode.path("COT_VALUE_05").asText());
+                        store.setLink(detailNode.path("COT_EXTRA_DATA_02").asText());
+                    }
+                }
+                                
                 stores.add(store);
             }
 
