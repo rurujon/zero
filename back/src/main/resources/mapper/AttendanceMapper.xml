@@ -11,7 +11,7 @@
 
     <insert id="insertAtt" parameterType="map">
     INSERT INTO attendance (attId, attDate, memId)
-    VALUES (attendance_seq.NEXTVAL, TRUNC(SYSDATE), #{memId})
+    VALUES (attendance_seq.NEXTVAL, SYSTIMESTAMP, #{memId})
     </insert>
 
     <select id="checkToday" parameterType="String" resultType="int">

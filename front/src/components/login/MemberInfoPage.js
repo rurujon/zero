@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { adjustWindowSize } from './utils/Sizing';
 import { AuthContext } from './context/AuthContext';
 import Calendar from './Calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -20,7 +19,7 @@ const MemberInfoPage = () => {
         axios.get('/member/info')
             .then(response => {
                 setMember(response.data);
-                adjustWindowSize(window, response.data); // 창 크기 조절
+                adjustWindowSize(response.data); // 창 크기 조절
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
@@ -31,7 +30,7 @@ const MemberInfoPage = () => {
         fetchMemberInfo();
     }, [fetchMemberInfo]);
 
-    const adjustWindowSize = (window, memberData) => {
+    const adjustWindowSize = (memberData) => {
         // 회원정보와 달력의 가로 크기 합산
         const baseWidth = 600; // 기본 회원정보 영역 넓이
         const calendarWidth = 600; // 달력의 넓이
@@ -39,7 +38,7 @@ const MemberInfoPage = () => {
 
         // 회원정보와 버튼의 세로 크기
         const baseHeight = 400; // 기본 세로 높이
-        const additionalHeight = 50; // 추가 높이 (버튼 등)
+        const additionalHeight = showDeleteDialog ? 100 : 50; // 추가 높이 (버튼 등)
         const dynamicHeight = baseHeight + additionalHeight;
 
         window.resizeTo(dynamicWidth, dynamicHeight);
@@ -52,6 +51,7 @@ const MemberInfoPage = () => {
     const handleConfirmDelete = () => {
         setShowConfirmDialog(false);
         setShowDeleteDialog(true);
+        adjustWindowSize(); // 메시지 창에 따라 크기 조절
     };
 
     const handleCancelDelete = () => {

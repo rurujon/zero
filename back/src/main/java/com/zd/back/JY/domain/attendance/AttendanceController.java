@@ -28,7 +28,7 @@ public class AttendanceController {
         return ResponseEntity.ok(attendance);
     }
 
-    @GetMapping("attendance/dates")
+    @GetMapping("dates")
     public ResponseEntity<List<Date>> getAttendanceDates(@RequestParam String memId) {
         List<Date> attendanceDates = attendanceService.getAttendanceDates(memId);
         return ResponseEntity.ok(attendanceDates);
