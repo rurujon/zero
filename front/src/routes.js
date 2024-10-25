@@ -1,3 +1,4 @@
+
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
@@ -9,6 +10,7 @@ import SeoulNewsArticle from "./components/seoulnews/SeoulNewsArticle";
 import SeoulNewsEco from "./components/seoulnews/SeoulNewsEco";
 import SeoulNewsEnv from "./components/seoulnews/SeoulNewsEnv";
 import SeoulNewsGreen from "./components/seoulnews/SeoulNewsGreen";
+import GoogleMaps from "./components/smartmap/GoogleMaps";
 
 
 
@@ -35,7 +37,7 @@ export const routes = [
     { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
     { path:'/minEnv/:rssId', element:<MinEnvArticle/>},   //환경부 Rss 상세 페이지
     
-
+    { path:'/googleMap', element:<GoogleMaps/>},   //봉사단체 리스트
     
 
 

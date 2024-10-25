@@ -1,0 +1,40 @@
+.google-maps-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .map-area {
+    flex: 1; /* 맵이 가능한 공간을 차지하게 함 */
+  }
+  
+  .store-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 카드들을 고르게 배치 */
+    padding: 10px;
+  }
+  
+  .store-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px; /* 카드의 너비 설정 */
+    cursor: pointer; /* 클릭 가능하다는 느낌을 주기 위함 */
+  }
+  
+  .store-card:hover {
+    background-color: #f0f0f0; /* 호버 시 배경색 변경 */
+  }
+  
+  .home-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1;
+  }

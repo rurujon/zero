@@ -42,8 +42,8 @@ function Header() {
       case 'zero-consumer':
         return (
           <>
-            <Link to="/sub1">하위 메뉴 1</Link>
-            <Link to="/sub2">하위 메뉴 2</Link>
+            <Link to="/sub1">추천 상점</Link>
+            <Link to="/googleMap">전체 상점</Link>
           </>
         );
       default:

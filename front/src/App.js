@@ -32,7 +32,6 @@ function AppContent() {
     <div className='container'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
       <Header className='header'/>
-        <GoogleMaps/>
         
 
         {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
