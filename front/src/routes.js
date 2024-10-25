@@ -5,6 +5,7 @@ import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
 import BoardWrite from "./components/board/BoardWrite";
+import BoardList from "./components/board/BoardList";
 
 
 
@@ -34,7 +35,7 @@ export const routes = [
 
 
     //TipBoard
-    // { path: '/bbs/list', element: <BbsList /> },
+    { path: '/board/list', element: <BoardList /> },
     { path: '/board/write', element: <BoardWrite /> },
     // { path: '/bbsdetail/:seq', element: <BbsDetail /> },
     // { path: '/bbsupdate', element: <BbsUpdate /> },

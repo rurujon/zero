@@ -10,4 +10,45 @@
 		VALUES (tip_boardno.NEXTVAL, #{memId}, #{title}, #{content}, #{category}, 0, 0)
 	</insert>
 
+	<!-- 글 목록 조회 -->
+	<select id="getBbsSearchPageList" parameterType="com.zd.back.board.model.param.BoardParam" resultType="com.zd.back.board.model.Board">
+		SELECT boardno, memId, title, content, category, hitcount, del
+		FROM
+					(SELECT row_number() OVER(ORDER BY boardno DESC) AS rnum,
+					boardno, memId, title, content, category, hitcount, del
+					FROM tipboard
+					<if test="choice != null and choice != ''
+								and search != null and search != '' ">
+						<if test="choice == 'title'">
+							WHERE title LIKE '%' || #{search} || '%'
+						</if>
+						<if test="choice == 'content'">
+							WHERE content LIKE '%' || #{search} || '%'
+						</if>
+						<if test="choice == 'writer'">
+							WHERE memId=#{search}
+						</if>
+					</if>
+					ORDER BY boardno DESC) a
+		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
+	</select>
+
+	<!-- 글 총 개수 조회 -->
+	<select id="getBbsCount" parameterType="com.zd.back.board.model.param.BoardParam" resultType="int">
+		SELECT NVL(count(*), 0)
+		FROM tipboard
+		<if test="choice != null and choice != ''
+		 			and search != null and search != '' ">
+			<if test="choice == 'title'">
+				WHERE title LIKE '%' || #{search} || '%'
+			</if>
+			<if test="choice == 'content'">
+				WHERE content LIKE '%' || #{search} || '%'
+			</if>
+			<if test="choice == 'writer'">
+				WHERE memId=#{search}
+			</if>
+		</if>
+	</select>
+
 </mapper>
