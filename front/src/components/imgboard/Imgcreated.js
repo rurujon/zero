@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -5,13 +6,15 @@ import { useLocation } from 'react-router-dom';
 const ImgCreated = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const imgPostId = queryParams.get('imgPostId'); //updated시 받는 imgPostId
+    const imgPostId = queryParams.get('imgPostId'); // updated 시 받는 imgPostId
     const updatedMode = Boolean(imgPostId); // imgPostId가 있으면 updatedMode
 
     const [memId, setMemId] = useState('testuser');
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [existingImages, setExistingImages] = useState([]); // 기존 이미지 상태 위함
+
     const [images, setImages] = useState(Array(3).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(3).fill(null));
     const [loading, setLoading] = useState(updatedMode);
@@ -25,27 +28,31 @@ const ImgCreated = () => {
             const fetchArticle = async () => {
                 try {
                     const response = await axios.get('/imgboard/updated', {
-                        params: { imgPostId }
+                        params: { imgPostId } // imgPostId를 쿼리 파라미터로 전송
                     });
-                    const { title, content, cate, images: existingImages } = response.data.imgPost;
-                    
-                    setTitle(title);
-                    setContent(content);
-                    setCate(cate);
+                    const { imgPost, images: fetchedImages } = response.data; // imgPost와 images 추출
+                    const { memId, title, content, cate } = imgPost;
 
-                    // 기존 이미지 설정
-                    const newPreviews = existingImages.map(img => `/images/${img.saveFileName}`);
+                    setMemId(memId);
+                    setTitle(title); // 기존 제목 설정
+                    setContent(content); // 기존 내용 설정
+                    setCate(cate); // 기존 카테고리 설정
+
+                    // 기존 이미지 미리보기 설정
+                    const newPreviews = fetchedImages.map(img => `/images/${img.saveFileName}`);
                     setImagePreviews(newPreviews);
-                    setLoading(false);
+                    setExistingImages(fetchedImages); // 기존 이미지 상태 저장
+                    setLoading(false); // 데이터 로딩 완료
                 } catch (error) {
                     alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
-                    setLoading(false);
+                    setLoading(false); // 데이터 로딩 완료
                 }
             };
 
-            fetchArticle();
+            fetchArticle(); // 수정 모드일 때 기존 게시물 데이터 fetch
         }
     }, [imgPostId, updatedMode]);
+
 
     const handleTextReset = () => {
         setCate('');
@@ -85,55 +92,84 @@ const ImgCreated = () => {
         }
     };
 
-    const handleSubmit = async (evt) => {
+    // 등록(INSERT) 처리
+    const handleInsertSubmit = async (evt) => {
         evt.preventDefault();
         const nonEmptyImages = images.filter(img => img !== null);
 
-        // 유효성 검사 ----------------------------------------------------------
+        if (validateForm(nonEmptyImages)) {
+            const formData = new FormData();
+            formData.append('memId', memId);
+            formData.append('cate', cate);
+            formData.append('title', title);
+            formData.append('content', content);
+
+            for (let img of nonEmptyImages) {
+                formData.append('images', img);
+            }
+
+            try {
+                const response = await axios.post('/imgboard/created', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                alert(response.data);
+                window.location.href = '/imgboard/list';
+            } catch (error) {
+                alert('게시물 등록 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+    };
+
+    // 수정(UPDATE) 처리
+    const handleUpdateSubmit = async (evt) => {
+        evt.preventDefault();
+        const nonEmptyImages = images.filter(img => img !== null);
+
+        if (validateForm(nonEmptyImages)) {
+            const formData = new FormData();
+            formData.append('memId', memId);
+            formData.append('cate', cate);
+            formData.append('title', title);
+            formData.append('content', content);
+
+            for (let img of nonEmptyImages) {
+                formData.append('images', img);
+            }
+
+            try {
+                const response = await axios.post('/imgboard/updated', formData, {
+                    params: { imgPostId }, // imgPostId를 쿼리 파라미터로 전달
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                alert(response.data);
+                window.location.href = '/imgboard/list';
+            } catch (error) {
+                alert('게시물 수정 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+    };
+
+    // 유효성 검사 함수
+    const validateForm = (nonEmptyImages) => {
         if (cate === "") {
             alert("인증 유형을 선택하세요.");
-            return;
+            return false;
         }
         if (!title) {
             alert("제목을 필수로 입력해야합니다.");
             titleRef.current.focus();
-            return; 
+            return false;
         }
         if (!content) {
             alert("내용을 필수로 입력해야합니다.");
             contentRef.current.focus();
-            return; 
+            return false;
         }
         if (nonEmptyImages.length === 0) {
             alert("인증 이미지파일을 최소 1개 이상 업로드해야 합니다.");
-            return;
+            return false;
         }
-
-        const formData = new FormData();
-        formData.append('memId', memId);
-        formData.append('cate', cate);
-        formData.append('title', title);
-        formData.append('content', content);
-
-        for (let img of nonEmptyImages) {
-            formData.append('images', img);
-        }
-
-        try {
-            const response = updatedMode
-                ? await axios.put(`/imgboard/updated`, formData, {
-                    params: { imgPostId },
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                })
-                : await axios.post('/imgboard/created', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
-
-            alert(response.data);
-            window.location.href = '/imgboard/list';
-        } catch (error) {
-            alert(`게시물 ${updatedMode ? '수정' : '등록'} 중 오류가 발생했습니다 : ${error.message}`);
-        }
+        return true;
     };
 
     if (loading) {
@@ -143,7 +179,7 @@ const ImgCreated = () => {
     return (
         <div>
             <h1>{updatedMode ? '이미지 게시물 수정' : '이미지 게시물 등록'}</h1>
-            <form onSubmit={handleSubmit} method='post'>
+            <form onSubmit={updatedMode ? handleUpdateSubmit : handleInsertSubmit} method='post'>
                 <div>
                     <label>사용자 ID:</label>
                     <input type="text" value={memId} readOnly />
@@ -167,6 +203,13 @@ const ImgCreated = () => {
                 </div>
                 <button type='button' onClick={handleTextReset}>다시작성</button>
                 
+                {/*  여기에 updatedMode 일때 기존 파일 이미지 나오고 이미지 삭제 버튼 클릭시 파일 선택하는 input 나오게 코딩 해야함  */}
+                
+        
+                
+                
+                
+                { !updatedMode &&
                 <div>
                     <label>이미지 선택:</label>
                     {images.map((image, index) => (
@@ -188,8 +231,9 @@ const ImgCreated = () => {
                                 </div>
                             )}
                         </div>
+                        
                     ))}
-                </div>
+                </div> }
                 <button type="submit">{updatedMode ? '수정하기' : '등록하기'}</button>
                 <button type='button' onClick={() => window.location.href = '/imgboard/list'}>작성취소</button>
             </form>

@@ -35,6 +35,9 @@ public class ImgPostService {
         return imgPostMapper.getImgPostById(imgPostId); 
     }
 
+    public void updateImgPost(ImgPost imgPost){
+        imgPostMapper.updateImgPost(imgPost);
+    }
 
 
 

@@ -91,9 +91,10 @@ public class ImgBoardController {
         try {
             ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
             if (imgBoard == null) {
-                return ResponseEntity.notFound().build(); // 게시물이 없을 경우 404 반환
+                return ResponseEntity.notFound().build();
+
             }
-    
+
             return ResponseEntity.ok(imgBoard); 
 
         } catch (Exception e) {
