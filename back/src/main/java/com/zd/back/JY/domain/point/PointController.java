@@ -1,6 +1,7 @@
 package com.zd.back.JY.domain.point;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,10 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
-
 
 @Controller
 @RequestMapping("/api/point")
@@ -43,11 +40,13 @@ public class PointController {
         PointDTO pointInfo = pointService.findByMemId(memId);
         if (pointInfo != null) {
             return ResponseEntity.ok(pointInfo);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+        } else {
+            return ResponseEntity.notFound().build();
         }
+    }
 
+    // 기존 코드 주석 처리
+    /*
     @PostMapping("/result.action")
     public ModelAndView result_ok(PointDTO dto, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
@@ -145,6 +144,22 @@ public class PointController {
 
         return mav;
     }
+    */
 
+    @GetMapping("/history/{memId}")
+    public ResponseEntity<List<PointHistoryDTO>> getPointHistory(@PathVariable String memId) {
+        List<PointHistoryDTO> history = pointService.getPointHistory(memId);
+        return ResponseEntity.ok(history);
+    }
 
+    @PostMapping("/update")
+    public ResponseEntity<?> updatePoint(@RequestBody Map<String, Object> request) {
+        try {
+            String memId = (String) request.get("memId");
+            pointService.updatePoint(memId, request);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

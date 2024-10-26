@@ -31,7 +31,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [serverError, setServerError] = useState('');
 
     useEffect(() => {
-        setTermsContent(`이용약관\n\n1. 이용자는 ...\n2. 서비스 제공 ...\n3. ...\n내용은 추후 수정`);
+        setTermsContent(`이용약관\n\n1. 이용자는...\n2. 서비스 제공...\n3....\n내용은 추후 수정`);
 
         if (initialData) {
             setMember(prevState => ({
@@ -46,8 +46,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         axios.get('/api/terms')
-        .then(response => setTermsContent(response.data))
-        .catch(error => console.error('이용약관 불러오기 오류:', error));
+            .then(response => setTermsContent(response.data))
+            .catch(error => console.error('이용약관 불러오기 오류:', error));
     }, [initialData]);
 
     const checkDuplicateId = () => {
@@ -122,7 +122,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         if (isEditing && name === 'pwd' && value.trim() === '') {
-            setErrors(prev => ({ ...prev, pwd: undefined }));
+            setErrors(prev => ({...prev, pwd: undefined }));
         } else {
             const errorMessage = validateField(name, value);
             setErrors(prev => ({
@@ -132,16 +132,16 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
             if (!isEditing && (name === 'pwd' || name === 'pwdConfirm')) {
                 if (name === 'pwd' && member.pwdConfirm && value !== member.pwdConfirm) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else if (name === 'pwdConfirm' && value !== member.pwd) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else {
-                    setErrors(prev => ({ ...prev, pwdConfirm: undefined }));
+                    setErrors(prev => ({...prev, pwdConfirm: undefined }));
                 }
             }
         }
 
-        adjustWindowSize(window, { ...member, [name]: type === 'checkbox' ? checked : value }, true, []);
+        adjustWindowSize(window, {...member, [name]: type === 'checkbox' ? checked : value }, true, []);
     };
 
     const handleSubmit = async (e) => {
@@ -209,7 +209,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     post: data.zonecode,
                     addr1: data.address
                 }));
-                adjustWindowSize(window, { ...member, post: data.zonecode, addr1: data.address }, true, []);
+                adjustWindowSize(window, {...member, post: data.zonecode, addr1: data.address }, true, []);
             }
         }).open();
     };
@@ -254,7 +254,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         {isChecked && (
                         <div>
                             {isDuplicate ? (
-                                <span style={{ color: 'red' }}>이미 사용 중인 아이디입니다.</span>
+                                <span style={{ color:'red' }}>이미 사용 중인 아이디입니다.</span>
                             ) : (
                                 <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
                             )}
@@ -327,7 +327,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         {(isPhoneVerificationRequired || !isEditing) && (
                             <button type="button" onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">인증번호 발송</button>
                         )}
-                                                <ValidationMessage message={errors.tel} />
+                        <ValidationMessage message={errors.tel} />
                     </div>
                 </div>
 
@@ -387,7 +387,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                             style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
                         />
 
-
                 <div className="form-check mb-3">
                     <input className="form-check-input" type="checkbox" name="termsAccepted" checked={member.termsAccepted} onChange={handleInputChange} />
                     <label className="form-check-label" htmlFor="termsAccepted">
@@ -406,6 +405,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             </form>
         </div>
     );
+
 };
 
 export default MemberForm;

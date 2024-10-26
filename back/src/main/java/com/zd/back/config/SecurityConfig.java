@@ -32,6 +32,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+            .cors().and().csrf().disable()
+            .headers().frameOptions().disable()
+            .and()
+            .authorizeRequests()
+                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**").permitAll()
+                .antMatchers("/attendance/**", "/api/point/**").authenticated()
+                .anyRequest().permitAll()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
+
+        return http.build();
+    }
+
+        /*http
         .cors().and().csrf().disable().headers().frameOptions().disable()
         .and()
         .authorizeRequests()
@@ -69,16 +85,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-     @Bean
+
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }

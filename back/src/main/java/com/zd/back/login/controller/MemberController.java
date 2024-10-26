@@ -26,13 +26,7 @@ public class MemberController {
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
-    private AttendanceService attendanceService;
-
-    @Autowired
     private MemberService memberService;
-
-    @Autowired
-    private PointService pointService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -41,8 +35,8 @@ public class MemberController {
     public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream()
-            .map(error -> error.getDefaultMessage())
-            .collect(Collectors.joining(", "));
+               .map(error -> error.getDefaultMessage())
+               .collect(Collectors.joining(", "));
             return ResponseEntity.badRequest().body(errors);
         }
 
@@ -52,40 +46,36 @@ public class MemberController {
 
         try {
             memberService.registerMember(member);
-            attendanceService.regiAtt(member.getMemId());
-            pointService.upPoint(member.getMemId(), 1); // 출석체크에 대한 1점 추가
             return ResponseEntity.ok("회원가입 성공");
-            } catch (Exception e) {
-                logger.error("회원가입 중 오류 발생", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다: " + e.getMessage());
-            }
+        } catch (Exception e) {
+            logger.error("회원가입 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 문제가 발생했습니다: " + e.getMessage());
         }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
         try {
-            boolean isValid = memberService.validateLogin(memId, pwd);
+            Map<String, Object> result = memberService.validateLoginAndPerformActions(memId, pwd);
+            boolean isValid = (boolean) result.get("isValid");
 
             if (isValid) {
                 String token = jwtUtil.generateToken(memId);
                 Map<String, String> response = new HashMap<>();
                 response.put("token", token);
 
-                if (attendanceService.checkToday(memId) == 0) {
-                    attendanceService.insertAtt(memId);
-                    pointService.addAttendancePoint(memId); // 새로운 메서드 호출
+                if ((boolean) result.get("isFirstLoginToday")) {
                     response.put("upPoint", "1");
                 }
 
                 return ResponseEntity.ok(response);
             }
-            return ResponseEntity.badRequest().body("로그인 실패");
-            } catch (Exception e) {
-                logger.error("로그인 중 오류 발생", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다.");
-            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
+        } catch (Exception e) {
+            logger.error("로그인 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다: " + e.getMessage());
         }
-
+    }
 
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
@@ -114,8 +104,8 @@ public class MemberController {
     public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
+              .map(error -> error.getDefaultMessage())
+              .collect(Collectors.joining(", "));
             return ResponseEntity.badRequest().body(errors);
         }
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -179,13 +169,13 @@ public class MemberController {
                 Map<String, String> response = new HashMap<>();
                 response.put("memId", memId);
                 return ResponseEntity.ok(response);
-                } else {
-                    return ResponseEntity.notFound().build();
-                }
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 찾기 중 오류가 발생했습니다.");
+            } else {
+                return ResponseEntity.notFound().build();
             }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 찾기 중 오류가 발생했습니다.");
         }
+    }
 
     @PostMapping("/find-password")
     public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
