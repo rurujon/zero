@@ -37,6 +37,8 @@ public class BoardController {
     public ResponseEntity<?> writeBoard(@RequestBody Board board) throws Exception {
 
         boardService.writeBoard(board);
+        // System.out.println("Generated boardno: " + board.getBoardno());
+
         Map<String, Object> map = new HashMap<>();
         map.put("boardno", board.getBoardno());
         map.put("message", "글이 등록되었습니다.");

@@ -12,7 +12,7 @@ function BbsDetail() {
 
 	const getBbsDetail = async () => {
 		await axios.get(`http://localhost:8080/board/${boardno}`, {
-			params: { readerId: localStorage.getItem("memId") || "" } // 로컬 스토리지에서 readerId 가져오기
+			params: { readerId: localStorage.getItem("readerId") || "" } // 로컬 스토리지에서 readerId 가져오기
 		})
 		.then((resp) => {
 			console.log("[BbsDetail.js] getBbsDetail() success :D");
@@ -48,13 +48,13 @@ function BbsDetail() {
 
 	const updateBoard = {
 		boardno: board.boardno,
-		memId: board.memId,
+		readerId: board.memId,
 		title: board.title,
 		content: board.content
 	}
 
 	const parentBbs = {
-		memId: board.memId,
+		readerId: board.memId,
 		title: board.title
 	}
 
@@ -67,7 +67,7 @@ function BbsDetail() {
 
 				{
 					/* 자신이 작성한 게시글인 경우에만 수정 삭제 가능 */
-					(localStorage.getItem("memId") === board.memId) ? (
+					(localStorage.getItem("readerId") === board.memId) ? (
 						<>
 							<Link className="btn btn-outline-secondary" to="/bbsupdate" state={{ board: updateBoard }}>
 								<i className="fas fa-edit"></i> 수정
