@@ -13,7 +13,12 @@ import com.zd.back.board.model.param.BoardParam;
 public interface BoardMapper {
 
     void insertBoard(Board board);
+
     List<Board> getBbsSearchPageList(BoardParam param);
 	int getBbsCount(BoardParam param);
+
+    Board getBoard(int boardno);
+	int createBbsReadCountHistory(BoardParam param);
+	int increaseBbsReadCount(int boardno);
 
 }

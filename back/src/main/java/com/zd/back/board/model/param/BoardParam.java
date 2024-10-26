@@ -42,7 +42,7 @@ public class BoardParam {
         this.choice = req.getChoice();
         this.search = req.getSearch();
         this.page = page;
-        setPageParam(page, 10); // 예시로 itemCount를 10으로 설정
+        setBoardParam(page, 10); // 예시로 itemCount를 10으로 설정
     }
 
     // 생성자: CreateBbsAnswerParam (답글 작성에 필요한 생성자)
@@ -74,7 +74,7 @@ public class BoardParam {
     }
 
     // 페이지 설정 메서드
-    public void setPageParam(int page, int itemCount) {
+    public void setBoardParam(int page, int itemCount) {
         page -= 1;
         this.pageStart = page * itemCount + 1;
         this.pageEnd = (page + 1) * itemCount;

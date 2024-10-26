@@ -6,10 +6,10 @@ import Pagination from "react-js-pagination";
 // import '../../css/bbslist.css';
 // import '../../css/page.css';
 
-function BoardList() {
+function BbsList() {
 
 	//서버에서 가져온 게시글 목록 저장
-	const [BoardList, setBoardList] = useState([]);
+	const [bbsList, setBbsList] = useState([]);
 
 	// 검색용 Hook (옵션, 검색어 저장)
 	const [choiceVal, setChoiceVal] = useState("");
@@ -24,42 +24,42 @@ function BoardList() {
 
 
 	/* [GET /bbs]: 게시글 목록 */
-	const getBoardList = async (choice, search, page) => {
+	const getBbsList = async (choice, search, page) => {
 
 		//백엔드에 get 요청
 		await axios.get("http://localhost:8080/board/list", { params: { "choice": choice, "search": search, "page": page } })
 			.then((resp) => {
-				console.log("[BoardList.js] useEffect() success :D");
+				console.log("[BbsList.js] useEffect() success :D");
 				console.log(resp.data);
 
-				setBoardList(resp.data.BoardList);
+				setBbsList(resp.data.bbsList);
 				setTotalCnt(resp.data.pageCnt);
 			})
 			.catch((err) => {
-				console.log("[BoardList.js] useEffect() error :<");
+				console.log("[BbsList.js] useEffect() error :<");
 				console.log(err);
 
 			});
 	}
 
 	useEffect(() => {
-		getBoardList("", "", 1); //초기페이지 1로 설정
+		getBbsList("", "", 1); //초기페이지 1로 설정
 	}, []);
 
 
 	const changeChoice = (event) => { setChoiceVal(event.target.value); }
 	const changeSearch = (event) => { setSearchVal(event.target.value); }
 	const search = () => {
-		console.log("[BoardList.js searchBtn()] choiceVal=" + choiceVal + ", searchVal=" + searchVal);
+		console.log("[BbsList.js searchBtn()] choiceVal=" + choiceVal + ", searchVal=" + searchVal);
 
 		navigate("/board/list");
-		getBoardList(choiceVal, searchVal, 1);
+		getBbsList(choiceVal, searchVal, 1);
 	}
 
 	//페이지 변경시 호출되는 함수
 	const changePage = (page) => {
 		setPage(page);
-		getBoardList(choiceVal, searchVal, page); //해당 페이지의 게시글 목록을 다시 가져옴
+		getBbsList(choiceVal, searchVal, page); //해당 페이지의 게시글 목록을 다시 가져옴
 	}
 
 	return (
@@ -99,7 +99,7 @@ function BoardList() {
 
 				<tbody>
 					{
-						BoardList.map(function (board, idx) {
+						bbsList.map(function (board, idx) {
 							return (
 								<TableRow obj={board} key={idx} cnt={idx + 1} /> //사용자에게 보여줄 글번호여서 인덱스 +1
 							)
@@ -138,9 +138,9 @@ function TableRow(props) {
 						// 삭제되지 않은 게시글
 						<>
 							<td >
-								{/* <Arrow depth={board.depth}></Arrow> &nbsp; { /* 답글 화살표 */} */}
+								{/* <Arrow depth={board.depth}></Arrow> &nbsp; 답글 화살표 */}
 
-								<Link to={{ pathname: `/bbsdetail/${board.boardno}` }}> { /* 게시글 상세 링크 */}
+								<Link to={{ pathname: `/board/${board.boardno}` }}> { /* 게시글 상세 링크 */}
 									<span className="underline bbs-title" >{board.title} </span> { /* 게시글 제목 */}
 								</Link>
 							</td>
@@ -150,7 +150,7 @@ function TableRow(props) {
 						// 삭제된 게시글
 						<>
 							<td>
-								{/* <Arrow depth={board.depth}></Arrow> &nbsp; { /* 답글 화살표 */} */}
+								{/* <Arrow depth={board.depth}></Arrow> &nbsp; 답글 화살표 */}
 
 								<span className="del-span">⚠️ 이 글은 작성자에 의해 삭제됐습니다.</span>
 							</td>
@@ -184,4 +184,4 @@ function TableRow(props) {
 // 	 );
 // }
 
-export default BoardList;
+export default BbsList;

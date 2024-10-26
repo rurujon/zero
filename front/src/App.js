@@ -13,7 +13,7 @@ import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import { routes } from './routes';
 import HttpHeadersProvider from './components/context/HttpHeadersProvider';
-import BoardWrite from './components/board/BoardWrite';
+import BbsWrite from './components/board/BbsWrite';
 
 function AppContent() {
 
@@ -37,7 +37,7 @@ function AppContent() {
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
-      {/* <BoardWrite/> */}
+      {/* <BbsWrite/> */}
 
      <Routes>
         {routes.map((route) => (

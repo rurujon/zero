@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { HttpHeadersContext } from "../context/HttpHeadersProvider";
 
-function BoardWrite() {
+function BbsWrite() {
 	const { headers } = useContext(HttpHeadersContext);
 
 	const navigate = useNavigate();
@@ -36,14 +36,14 @@ function BoardWrite() {
 
 		await axios.post("http://localhost:8080/board/write", req, { headers: headers })
 			.then((resp) => {
-				console.log("[BoardWrite.js] insertBoard() success :D");
+				console.log("[BbsWrite.js] insertBoard() success :D");
 				console.log(resp.data);
 
 				alert("새로운 게시글을 성공적으로 등록했습니다 :D");
-				navigate(`/bbsdetail/${resp.data.seq}`); // 새롭게 등록한 글 상세로 이동
+				navigate(`/board/${resp.data.boardno}`); // 새롭게 등록한 글 상세로 이동
 			})
 			.catch((err) => {
-				console.log("[BoardWrite.js] insertBoard() error :<");
+				console.log("[BbsWrite.js] insertBoard() error :<");
 				console.log(err);
 			});
 	}
@@ -108,4 +108,4 @@ function BoardWrite() {
 	);
 }
 
-export default BoardWrite;
+export default BbsWrite;
