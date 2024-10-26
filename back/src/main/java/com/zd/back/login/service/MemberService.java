@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class MemberService {
 
     @Autowired

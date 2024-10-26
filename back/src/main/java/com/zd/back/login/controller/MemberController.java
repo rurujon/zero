@@ -38,53 +38,54 @@ public class MemberController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-        String errors = bindingResult.getAllErrors().stream()
+    public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String errors = bindingResult.getAllErrors().stream()
             .map(error -> error.getDefaultMessage())
             .collect(Collectors.joining(", "));
-        return ResponseEntity.badRequest().body(errors);
-    }
-
-    if (!member.isTermsAccepted()) {
-        return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
-    }
-
-    try {
-        memberService.registerMember(member);
-        attendanceService.regiAtt(member.getMemId());
-        pointService.upPoint(member.getMemId(), 1); // 출석체크에 대한 1점 추가
-        return ResponseEntity.ok("회원가입 성공");
-    } catch (Exception e) {
-        logger.error("회원가입 중 오류 발생", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다: " + e.getMessage());
-    }
-}
-
-@PostMapping("/login")
-public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
-    try {
-        boolean isValid = memberService.validateLogin(memId, pwd);
-
-        if (isValid) {
-            String token = jwtUtil.generateToken(memId);
-            Map<String, String> response = new HashMap<>();
-            response.put("token", token);
-
-            if (attendanceService.checkToday(memId) == 0) {
-                attendanceService.insertAtt(memId);
-                pointService.addAttendancePoint(memId); // 새로운 메서드 호출
-                response.put("upPoint", "1");
-            }
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.badRequest().body(errors);
         }
-        return ResponseEntity.badRequest().body("로그인 실패");
-    } catch (Exception e) {
-        logger.error("로그인 중 오류 발생", e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다.");
-    }
-}
+
+        if (!member.isTermsAccepted()) {
+            return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
+        }
+
+        try {
+            memberService.registerMember(member);
+            attendanceService.regiAtt(member.getMemId());
+            pointService.upPoint(member.getMemId(), 1); // 출석체크에 대한 1점 추가
+            return ResponseEntity.ok("회원가입 성공");
+            } catch (Exception e) {
+                logger.error("회원가입 중 오류 발생", e);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다: " + e.getMessage());
+            }
+        }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
+        try {
+            boolean isValid = memberService.validateLogin(memId, pwd);
+
+            if (isValid) {
+                String token = jwtUtil.generateToken(memId);
+                Map<String, String> response = new HashMap<>();
+                response.put("token", token);
+
+                if (attendanceService.checkToday(memId) == 0) {
+                    attendanceService.insertAtt(memId);
+                    pointService.addAttendancePoint(memId); // 새로운 메서드 호출
+                    response.put("upPoint", "1");
+                }
+
+                return ResponseEntity.ok(response);
+            }
+            return ResponseEntity.badRequest().body("로그인 실패");
+            } catch (Exception e) {
+                logger.error("로그인 중 오류 발생", e);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다.");
+            }
+        }
+
 
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
@@ -172,14 +173,19 @@ public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String 
     @PostMapping("/find-id")
     public ResponseEntity<?> findId(@RequestBody Map<String, String> payload) {
         String email = payload.get("email");
-        String memId = memberService.findIdByEmail(email);
-        if (memId != null) {
-            Map<String, String> response = new HashMap<>();
-            response.put("memId", memId);
-            return ResponseEntity.ok(response);
+        try {
+            String memId = memberService.findIdByEmail(email);
+            if (memId != null && !memId.isEmpty()) {
+                Map<String, String> response = new HashMap<>();
+                response.put("memId", memId);
+                return ResponseEntity.ok(response);
+                } else {
+                    return ResponseEntity.notFound().build();
+                }
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 찾기 중 오류가 발생했습니다.");
+            }
         }
-        return ResponseEntity.notFound().build();
-    }
 
     @PostMapping("/find-password")
     public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
