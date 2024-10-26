@@ -6,19 +6,23 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
 
 
 @Controller
+@RequestMapping("/api/point")
 public class PointController {
 
     @Resource
@@ -33,7 +37,16 @@ public class PointController {
 
         return mav;
     }
-    
+
+    @GetMapping("/info/{memId}")
+    public ResponseEntity<PointDTO> getPointInfo(@PathVariable String memId) {
+        PointDTO pointInfo = pointService.findByMemId(memId);
+        if (pointInfo != null) {
+            return ResponseEntity.ok(pointInfo);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
 
     @PostMapping("/result.action")
     public ModelAndView result_ok(PointDTO dto, HttpServletRequest request) throws Exception {
@@ -59,7 +72,7 @@ public class PointController {
 
         return mav;
     }
-      
+
     @PostMapping("/manage.action")
     public ModelAndView upDown(HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
@@ -83,7 +96,7 @@ public class PointController {
 
         return mav;
     }
-    
+
     @GetMapping("/signup.action")
     public ModelAndView signPoint() {
 
@@ -105,7 +118,7 @@ public class PointController {
 
         return mav;
     }
-    
+
     @GetMapping("/find.action")
     public ModelAndView getMethodName() {
         ModelAndView mav = new ModelAndView();
@@ -114,7 +127,7 @@ public class PointController {
 
         return mav;
     }
-    
+
     @PostMapping("/find_ok")
     public ModelAndView postMethodName(HttpServletRequest request) {
 
@@ -132,6 +145,6 @@ public class PointController {
 
         return mav;
     }
-    
+
 
 }

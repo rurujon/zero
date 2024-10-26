@@ -11,28 +11,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <insert id="insertData" parameterType="com.zd.back.JY.domain.point.PointDTO">
-        insert into Point
-        (pointId, memId) values (#{pointId}, #{memId})
+    INSERT INTO point (pointId, maxPoint, usedPoint, memId, grade)
+    VALUES (#{pointId}, #{maxPoint}, #{usedPoint}, #{memId}, #{grade})
     </insert>
 
-    <select id="findById" parameterType="String" resultType="com.zd.back.JY.domain.point.PointDTO">
-        select pointId, usedPoint,maxPoint, memId, grade from Point
-        where memId=#{memId}
-    </select>
-
     <update id="updatePoint" parameterType="com.zd.back.JY.domain.point.PointDTO">
-        update Point
-        set usedPoint = #{usedPoint}, maxPoint = #{maxPoint}, grade = #{grade}
-        where pointId = #{pointId}
+    UPDATE point
+    SET usedPoint = #{usedPoint}, maxPoint = #{maxPoint}, grade = #{grade}
+    WHERE pointId = #{pointId}
     </update>
+
+    <select id="findById" parameterType="String" resultType="com.zd.back.JY.domain.point.PointDTO">
+    SELECT pointId, usedPoint, maxPoint, memId, grade
+    FROM point
+    WHERE memId = #{memId}
+    </select>
 
     <select id="findByMemId" parameterType="String" resultType="com.zd.back.JY.domain.point.PointDTO">
-        select pointId, usedPoint,maxPoint, memId, grade from Point
-        where memId=#{memId}
+    SELECT pointId, usedPoint, maxPoint, memId, grade
+    FROM point
+    WHERE memId = #{memId}
     </select>
 
-
-    <update id="updateGrade" parameterType="String">
-        update set grade = #{grade} where pointId=#{pointId}
-    </update>
 </mapper>

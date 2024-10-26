@@ -14,7 +14,7 @@ const MemberInfoPage = () => {
     const [deleteConfirmation, setDeleteConfirmation] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
-    const { token, logout } = useContext(AuthContext);
+    const { token,logout } = useContext(AuthContext);
 
     const fetchMemberInfo = useCallback(() => {
         axios.get('/member/info')
@@ -71,6 +71,7 @@ const MemberInfoPage = () => {
                     alert('회원 탈퇴가 완료되었습니다.');
                     logout();
                     window.close();
+                    window.opener.location.reload(); // 메인 페이지 새로고침
                 })
                 .catch(error => {
                     console.error('회원 탈퇴 실패:', error);

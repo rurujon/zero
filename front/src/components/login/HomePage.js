@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext,useCallback } from 'react';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import FindIdModal from './FindIdModal';
 import FindPasswordModal from './FindPasswordModal';
+import PointInfoModal from './PointInfoModal';
 import { AuthContext } from './context/AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import QuizModal from '../dailyQuiz/QuizModal';
@@ -12,9 +13,15 @@ const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showFindIdModal, setShowFindIdModal] = useState(false);
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
+    const [showPointInfoModal, setShowPointInfoModal] = useState(false);
 
     const { token, logout, login, memId } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogout = useCallback(() => {
+        logout();
+        setIsLoggedIn(false);
+    }, [logout]);
 
     useEffect(() => {
         if (token) {
@@ -23,22 +30,21 @@ const HomePage = () => {
                 setIsLoggedIn(true);
             } catch (e) {
                 console.error('Token decoding failed:', e);
-                logout();
+                handleLogout();
             }
         } else {
             setIsLoggedIn(false);
         }
-    }, [token, logout]);
-
-    const handleLogout = () => {
-        logout();
-        window.location.reload()
-        alert('로그아웃되었습니다.');
-    };
+    }, [token, handleLogout]);
 
     const handleMemberInfo = () => {
         window.open('/member-info', 'MemberInfo', 'width=600,height=400,resizable=yes');
     };
+
+    const handlePointInfo = () => {
+        setShowPointInfoModal(true);
+    };
+
 
     return (
         <div className="container mt-4">
@@ -93,8 +99,15 @@ const HomePage = () => {
                 <div>
                     <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
-                    {/* 여기에 My포인트조회 버튼의 핸들러를 추가해야 합니다 */}
+                    <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
+                    {showPointInfoModal && (
+                        <PointInfoModal
+                            show={showPointInfoModal}
+                            onHide={() => setShowPointInfoModal(false)}
+                            memId={memId}
+                        />
+                    )}
                 </div>
             )}
         </div>

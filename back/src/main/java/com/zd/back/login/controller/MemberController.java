@@ -1,22 +1,18 @@
 package com.zd.back.login.controller;
 
 import com.zd.back.JY.domain.attendance.AttendanceService;
+import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-
-
-
 import javax.validation.Valid;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,32 +32,38 @@ public class MemberController {
     private MemberService memberService;
 
     @Autowired
+    private PointService pointService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String errors = bindingResult.getAllErrors().stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-        if (!member.isTermsAccepted()) {
-            return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
-        }
-
-        memberService.registerMember(member);
-        //10-21 조준영 가입시 point등록기능 추가
-        //pointService.insertData(member.getMemId());
-        // //10-22 조준영 가입시 attendance등록 기능 추가
-        attendanceService.regiAtt(member.getMemId());
-
-        return ResponseEntity.ok("회원가입 성공");
+public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+        String errors = bindingResult.getAllErrors().stream()
+            .map(error -> error.getDefaultMessage())
+            .collect(Collectors.joining(", "));
+        return ResponseEntity.badRequest().body(errors);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
+    if (!member.isTermsAccepted()) {
+        return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
+    }
+
+    try {
+        memberService.registerMember(member);
+        attendanceService.regiAtt(member.getMemId());
+        pointService.upPoint(member.getMemId(), 1); // 출석체크에 대한 1점 추가
+        return ResponseEntity.ok("회원가입 성공");
+    } catch (Exception e) {
+        logger.error("회원가입 중 오류 발생", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 오류가 발생했습니다: " + e.getMessage());
+    }
+}
+
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
+    try {
         boolean isValid = memberService.validateLogin(memId, pwd);
 
         if (isValid) {
@@ -69,18 +71,20 @@ public class MemberController {
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
 
-            // 로그인 성공 시 출석 체크 수행
             if (attendanceService.checkToday(memId) == 0) {
-                attendanceService.insertAtt(memId); // 출석 기록 삽입
+                attendanceService.insertAtt(memId);
+                pointService.addAttendancePoint(memId); // 새로운 메서드 호출
                 response.put("upPoint", "1");
             }
 
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.badRequest().body("로그인 실패");
+    } catch (Exception e) {
+        logger.error("로그인 중 오류 발생", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다.");
     }
-
-
+}
 
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {
@@ -106,39 +110,37 @@ public class MemberController {
     }
 
     @PostMapping("/update/{memId}")
-public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
-    if (bindingResult.hasErrors()) {
-        String errors = bindingResult.getAllErrors().stream()
-            .map(error -> error.getDefaultMessage())
-            .collect(Collectors.joining(", "));
-        return ResponseEntity.badRequest().body(errors);
-    }
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        return ResponseEntity.status(401).body("인증이 필요합니다.");
-    }
-    String token = authHeader.substring(7);
-    if (!jwtUtil.validateToken(token)) {
-        return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
-    }
-    String loggedInMemId = jwtUtil.extractMemId(token);
-    if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
-        return ResponseEntity.status(403).body("권한이 없습니다.");
-    }
+    public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @RequestBody Member member, BindingResult bindingResult, @RequestHeader("Authorization") String authHeader) {
+        if (bindingResult.hasErrors()) {
+            String errors = bindingResult.getAllErrors().stream()
+                .map(error -> error.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+            return ResponseEntity.badRequest().body(errors);
+        }
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("인증이 필요합니다.");
+        }
+        String token = authHeader.substring(7);
+        if (!jwtUtil.validateToken(token)) {
+            return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
+        }
+        String loggedInMemId = jwtUtil.extractMemId(token);
+        if (loggedInMemId == null || !loggedInMemId.equals(memId)) {
+            return ResponseEntity.status(403).body("권한이 없습니다.");
+        }
 
-    Member existingMember = memberService.getMemberById(memId);
-    if (existingMember == null) {
-        return ResponseEntity.notFound().build();
-    }
+        Member existingMember = memberService.getMemberById(memId);
+        if (existingMember == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-    // 비밀번호 처리 로직
-    if (member.getPwd() == null || member.getPwd().isEmpty()) {
-        // 비밀번호가 제공되지 않은 경우, null로 설정하여 서비스에서 처리하도록 함
-        member.setPwd(null);
-    }
+        if (member.getPwd() == null || member.getPwd().isEmpty()) {
+            member.setPwd(null);
+        }
 
-    memberService.updateMember(member);
-    return ResponseEntity.ok("회원정보 수정 성공");
-}
+        memberService.updateMember(member);
+        return ResponseEntity.ok("회원정보 수정 성공");
+    }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
@@ -148,7 +150,7 @@ public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @Reques
     @DeleteMapping("/{memId}")
     public ResponseEntity<String> deleteMember(@PathVariable String memId, @RequestHeader("Authorization") String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("인증이 필요합니다.");
+            return ResponseEntity.status(401).body("인증 토큰이 없습니다");
         }
         String token = authHeader.substring(7);
         if (!jwtUtil.validateToken(token)) {
@@ -158,8 +160,13 @@ public ResponseEntity<?> updateMember(@PathVariable String memId, @Valid @Reques
         if (!loggedInMemId.equals(memId)) {
             return ResponseEntity.status(403).body("권한이 없습니다.");
         }
-        memberService.deleteMember(memId);
-        return ResponseEntity.ok("회원 탈퇴 성공");
+        try {
+            memberService.deleteMember(memId);
+            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다");
+        } catch (Exception e) {
+            logger.error("회원 탈퇴 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 처리 중 오류가 발생했습니다.");
+        }
     }
 
     @PostMapping("/find-id")

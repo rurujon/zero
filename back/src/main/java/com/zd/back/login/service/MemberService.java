@@ -1,5 +1,6 @@
 package com.zd.back.login.service;
 
+import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -19,16 +21,30 @@ public class MemberService {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private PointService pointService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void registerMember(Member member) {
-        // 비밀번호를 BCrypt로 암호화
+    @Transactional
+public void registerMember(Member member) {
+    try {
+        // 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPwd());
-        System.out.println("암호화된 비밀번호: " + encryptedPassword); // 콘솔에 출력해 확인
         member.setPwd(encryptedPassword);
+
+        // 회원정보 저장
         memberMapper.insertMember(member);
 
+        // 초기 포인트 지급 및 데이터 삽입
+        pointService.insertData(member.getMemId());
+
+        System.out.println("회원가입 및 포인트 지급 완료: " + member.getMemId());
+    } catch (Exception e) {
+        System.err.println("회원가입 중 오류 발생: " + e.getMessage());
+        throw new RuntimeException("회원가입 처리 중 오류가 발생했습니다.", e);
     }
+}
 
     public Member getMemberById(String memId) {
         return memberMapper.selectMemberById(memId);
