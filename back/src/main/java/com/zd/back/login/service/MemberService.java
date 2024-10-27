@@ -44,7 +44,6 @@ public class MemberService {
 
             memberMapper.insertMember(member);
             pointService.insertData(member.getMemId());
-            attendanceService.regiAtt(member.getMemId());
 
             logger.info("회원가입 및 포인트 지급 완료: {}", member.getMemId());
         } catch (Exception e) {
@@ -54,33 +53,36 @@ public class MemberService {
     }
 
     @Transactional
-    public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("isValid", false);
-        result.put("isFirstLoginToday", false);
+public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
+    Map<String, Object> result = new HashMap<>();
+    result.put("isValid", false);
+    result.put("isFirstLoginToday", false);
 
-        Member member = memberMapper.selectMemberById(memId);
-        if (member == null || !passwordEncoder.matches(rawPassword, member.getPwd())) {
-            return result;
+    Member member = memberMapper.selectMemberById(memId);
+    if (member == null || !passwordEncoder.matches(rawPassword, member.getPwd())) {
+        return result;
+    }
+
+    result.put("isValid", true);
+
+    try {
+        // 출석 체크
+        if (attendanceService.checkToday(memId) == 0) {
+            attendanceService.insertAtt(memId); // 출석 체크
+
+            // 오늘 처음 로그인하는 경우에만 포인트 추가
+            pointService.addAttendancePoint(memId);
+            result.put("isFirstLoginToday", true);
+            logger.info("첫 로그인 시 출석 체크 및 포인트 추가 완료: {}", memId);
+        } else {
+            logger.info("오늘 이미 출석한 회원: {}", memId);
         }
+    } catch (Exception e) {
+        logger.error("출석 체크 또는 포인트 추가 중 오류 발생", e);
+    }
 
-        result.put("isValid", true);
-
-        try {
-            // 출석 체크
-            if (attendanceService.checkToday(memId) == 0) {
-                attendanceService.insertAtt(memId); // 출석 체크
-                pointService.addAttendancePoint(memId); // 포인트 추가
-                result.put("isFirstLoginToday", true);
-                logger.info("첫 로그인 시 출석 체크 및 포인트 추가 완료: {}", memId);
-                } else {
-                    logger.info("오늘 이미 출석한 회원: {}", memId);
-                 }
-            } catch (Exception e) {
-                logger.error("출석 체크 또는 포인트 추가 중 오류 발생", e);
-            }
-            return result;
-        }
+    return result;
+}
 
     public Member getMemberById(String memId) {
         return memberMapper.selectMemberById(memId);
