@@ -195,3 +195,375 @@
 2024-10-27 09:10:00.537 DEBUG 2972 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c90c252]
 2024-10-27 09:10:00.537 DEBUG 2972 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c90c252]
 2024-10-27 09:10:00.537 DEBUG 2972 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c90c252]
+2024-10-27 09:38:15.528  INFO 14000 --- [restartedMain] com.zd.back.BackApplication              : Starting BackApplication using Java 1.8.0_391 on DESKTOP-E3JOHJH with PID 14000 (C:\VSCode\zero\back\build\classes\java\main started by itwill in C:\VSCode\zero\back)
+2024-10-27 09:38:15.529 DEBUG 14000 --- [restartedMain] com.zd.back.BackApplication              : Running with Spring Boot v2.7.7, Spring v5.3.24
+2024-10-27 09:38:15.529  INFO 14000 --- [restartedMain] com.zd.back.BackApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-10-27 09:38:15.556  INFO 14000 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\itwill\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc8\21.5.0.0\eb13f0948ca8675f71d59b5e8a1129d4c6189e7a\ojdbc8-21.5.0.0.jar referenced one or more files that do not exist: file:/C:/Users/itwill/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc8/21.5.0.0/eb13f0948ca8675f71d59b5e8a1129d4c6189e7a/oraclepki.jar
+2024-10-27 09:38:15.556  INFO 14000 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-10-27 09:38:15.556  INFO 14000 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-10-27 09:38:16.003 DEBUG 14000 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Searching for mappers annotated with @Mapper
+2024-10-27 09:38:16.003 DEBUG 14000 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Using auto-configuration base package 'com.zd.back'
+2024-10-27 09:38:16.036  INFO 14000 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-27 09:38:16.054  INFO 14000 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\JY\domain\attendance\AttendanceMapper.class]
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\JY\domain\dailyQuiz\QuizMapper.class]
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\JY\domain\point\PointHistoryMapper.class]
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\JY\domain\point\PointMapper.class]
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\imgboard\mapper\ImgMapper.class]
+2024-10-27 09:38:16.148 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\imgboard\mapper\ImgPostMapper.class]
+2024-10-27 09:38:16.149 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\login\mapper\MemberMapper.class]
+2024-10-27 09:38:16.149 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\mainminiboard\mapper\MiniBoardMapper.class]
+2024-10-27 09:38:16.149 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\naversearchapi\mapper\SearchApiMapper.class]
+2024-10-27 09:38:16.149 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Identified candidate component class: file [C:\VSCode\zero\back\build\classes\java\main\com\zd\back\seoulcrawler\mapper\CrawlerMapper.class]
+2024-10-27 09:38:16.149 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'attendanceMapper' and 'com.zd.back.JY.domain.attendance.AttendanceMapper' mapperInterface
+2024-10-27 09:38:16.150 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'quizMapper' and 'com.zd.back.JY.domain.dailyQuiz.QuizMapper' mapperInterface
+2024-10-27 09:38:16.151 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'pointHistoryMapper' and 'com.zd.back.JY.domain.point.PointHistoryMapper' mapperInterface
+2024-10-27 09:38:16.151 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'pointMapper' and 'com.zd.back.JY.domain.point.PointMapper' mapperInterface
+2024-10-27 09:38:16.152 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'imgMapper' and 'com.zd.back.imgboard.mapper.ImgMapper' mapperInterface
+2024-10-27 09:38:16.152 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'imgPostMapper' and 'com.zd.back.imgboard.mapper.ImgPostMapper' mapperInterface
+2024-10-27 09:38:16.153 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'memberMapper' and 'com.zd.back.login.mapper.MemberMapper' mapperInterface
+2024-10-27 09:38:16.154 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'miniBoardMapper' and 'com.zd.back.mainminiboard.mapper.MiniBoardMapper' mapperInterface
+2024-10-27 09:38:16.154 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'searchApiMapper' and 'com.zd.back.naversearchapi.mapper.SearchApiMapper' mapperInterface
+2024-10-27 09:38:16.154 DEBUG 14000 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Creating MapperFactoryBean with name 'crawlerMapper' and 'com.zd.back.seoulcrawler.mapper.CrawlerMapper' mapperInterface
+2024-10-27 09:38:16.604  INFO 14000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-10-27 09:38:16.610  INFO 14000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-27 09:38:16.610  INFO 14000 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
+2024-10-27 09:38:16.661  INFO 14000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-27 09:38:16.661  INFO 14000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1104 ms
+2024-10-27 09:38:16.879 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\AttendanceMapper.xml]'
+2024-10-27 09:38:16.885 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\CrawlerMapper.xml]'
+2024-10-27 09:38:16.888 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\ImgMapper.xml]'
+2024-10-27 09:38:16.895 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\ImgPostMapper.xml]'
+2024-10-27 09:38:16.900 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\MemberMapper.xml]'
+2024-10-27 09:38:16.903 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\MiniBoardMapper.xml]'
+2024-10-27 09:38:16.906 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\OrgMapper.xml]'
+2024-10-27 09:38:16.909 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\PointHistoryMapper.xml]'
+2024-10-27 09:38:16.913 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\PointMapper.xml]'
+2024-10-27 09:38:16.915 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\QuizMapper.xml]'
+2024-10-27 09:38:16.919 DEBUG 14000 --- [restartedMain] o.mybatis.spring.SqlSessionFactoryBean   : Parsed mapper file: 'file [C:\VSCode\zero\back\build\resources\main\mapper\SearchApiMapper.xml]'
+2024-10-27 09:38:16.970 DEBUG 14000 --- [restartedMain] com.zd.back.login.security.JwtFilter     : Filter 'jwtFilter' configured for use
+2024-10-27 09:38:17.011  INFO 14000 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-27 09:38:17.039  INFO 14000 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2024-10-27 09:38:17.136  INFO 14000 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-10-27 09:38:17.213  INFO 14000 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-27 09:38:17.530  INFO 14000 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-27 09:38:17.540  INFO 14000 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.Oracle12cDialect
+2024-10-27 09:38:18.048  INFO 14000 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-10-27 09:38:18.056  INFO 14000 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-27 09:38:18.272  INFO 14000 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7f5c30c3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@73946950, org.springframework.security.web.context.SecurityContextPersistenceFilter@6d348fdd, org.springframework.security.web.header.HeaderWriterFilter@4a51a73e, org.springframework.web.filter.CorsFilter@36618fe5, org.springframework.security.web.authentication.logout.LogoutFilter@11dcff02, com.zd.back.login.security.JwtFilter@67b7ccb0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f32f81c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ff155fd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6a7cb71a, org.springframework.security.web.session.SessionManagementFilter@166dbbfc, org.springframework.security.web.access.ExceptionTranslationFilter@5139667d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1e74a7cb]
+2024-10-27 09:38:18.322  WARN 14000 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-27 09:38:18.501 DEBUG 14000 --- [restartedMain] o.m.s.b.a.MybatisAutoConfiguration       : Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.
+2024-10-27 09:38:18.674  INFO 14000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-10-27 09:38:18.697  INFO 14000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-10-27 09:38:18.705  INFO 14000 --- [restartedMain] com.zd.back.BackApplication              : Started BackApplication in 3.467 seconds (JVM running for 3.825)
+2024-10-27 09:38:21.587  INFO 14000 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-27 09:38:21.588  INFO 14000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-27 09:38:21.589  INFO 14000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-27 09:38:22.031  WARN 14000 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingRequestHeaderException: Required request header 'Authorization' for method parameter type String is not present]
+2024-10-27 09:38:22.095 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.098 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@451b4a69] was not registered for synchronization because synchronization is not active
+2024-10-27 09:38:22.106 DEBUG 14000 --- [http-nio-8080-exec-3] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1317338373 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:38:22.108 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:38:22.113 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.121 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:38:22.121 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@451b4a69]
+2024-10-27 09:38:22.133 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.134 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55858c6e] was not registered for synchronization because synchronization is not active
+2024-10-27 09:38:22.134 DEBUG 14000 --- [http-nio-8080-exec-3] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@480753311 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:38:22.134 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:38:22.134 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.136 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:38:22.136 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55858c6e]
+2024-10-27 09:38:22.169 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.170 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1635eef0] was not registered for synchronization because synchronization is not active
+2024-10-27 09:38:22.170 DEBUG 14000 --- [http-nio-8080-exec-4] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@418513478 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:38:22.170 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:38:22.170 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.171 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:38:22.172 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1635eef0]
+2024-10-27 09:38:22.184 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.184 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24d8ae73]
+2024-10-27 09:38:22.185 DEBUG 14000 --- [http-nio-8080-exec-4] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@958982483 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:38:22.185 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:38:22.185 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.190 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 1
+2024-10-27 09:38:22.190 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24d8ae73]
+2024-10-27 09:38:22.190 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24d8ae73]
+2024-10-27 09:38:22.190 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24d8ae73]
+2024-10-27 09:38:22.190 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24d8ae73]
+2024-10-27 09:38:22.511 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.512 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@76d3a591] was not registered for synchronization because synchronization is not active
+2024-10-27 09:38:22.512 DEBUG 14000 --- [http-nio-8080-exec-5] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@2014594363 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:38:22.512 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:38:22.512 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.512 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:38:22.513 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@76d3a591]
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31205753]
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@922214989 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:38:22.514 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 1
+2024-10-27 09:38:22.515 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31205753]
+2024-10-27 09:38:22.515 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31205753]
+2024-10-27 09:38:22.515 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31205753]
+2024-10-27 09:38:22.515 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31205753]
+2024-10-27 09:41:09.753 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:09.754 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1fd01385] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:09.755 DEBUG 14000 --- [http-nio-8080-exec-7] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@320199690 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:09.755 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:09.755 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.756 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:09.756 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1fd01385]
+2024-10-27 09:41:09.759 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:09.759 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.759 DEBUG 14000 --- [http-nio-8080-exec-7] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@317020049 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:09.759 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:09.759 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.760 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:09.760 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.830 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.830 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.checkToday  : ==>  Preparing: SELECT COUNT(*) FROM attendance WHERE TRUNC(attDate) = TRUNC(SYSDATE) AND memId = ?
+2024-10-27 09:41:09.830 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.checkToday  : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.832 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.checkToday  : <==      Total: 1
+2024-10-27 09:41:09.832 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.832 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.832 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.833 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.833 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.insertAtt   : ==>  Preparing: INSERT INTO attendance (attDate, memId) VALUES (SYSTIMESTAMP, ?)
+2024-10-27 09:41:09.833 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.insertAtt   : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.848 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.a.AttendanceMapper.insertAtt   : <==    Updates: 1
+2024-10-27 09:41:09.848 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.852 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.852 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : ==>  Preparing: SELECT pointId, usedPoint, maxPoint, memId, grade FROM point WHERE memId = ?
+2024-10-27 09:41:09.852 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.853 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : <==      Total: 1
+2024-10-27 09:41:09.853 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.853 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.853 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.updatePoint  : ==>  Preparing: UPDATE point SET usedPoint = ?, maxPoint = ?, grade = ? WHERE pointId = ?
+2024-10-27 09:41:09.855 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.updatePoint  : ==> Parameters: 52(Integer), 52(Integer), LEVEL1(String), 1(Integer)
+2024-10-27 09:41:09.858 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.updatePoint  : <==    Updates: 1
+2024-10-27 09:41:09.858 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.858 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.858 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : ==>  Preparing: SELECT pointId, usedPoint, maxPoint, memId, grade FROM point WHERE memId = ?
+2024-10-27 09:41:09.858 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : ==> Parameters: suzi(String)
+2024-10-27 09:41:09.859 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.point.PointMapper.findByMemId  : <==      Total: 1
+2024-10-27 09:41:09.859 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.859 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc] from current transaction
+2024-10-27 09:41:09.859 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.p.P.insertPointHistory         : ==>  Preparing: INSERT INTO point_history (history_id, mem_id, point_change, change_reason, change_date) VALUES (point_history_seq.NEXTVAL, ?, ?, ?, ?)
+2024-10-27 09:41:09.893 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.p.P.insertPointHistory         : ==> Parameters: suzi(String), 1(Integer), 출석 보너스(String), 2024-10-27T09:41:09.859(LocalDateTime)
+2024-10-27 09:41:09.895 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.J.d.p.P.insertPointHistory         : <==    Updates: 1
+2024-10-27 09:41:09.895 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.895  INFO 14000 --- [http-nio-8080-exec-7] com.zd.back.login.service.MemberService  : 첫 로그인 시 출석 체크 및 포인트 추가 완료: suzi
+2024-10-27 09:41:09.895 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.895 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:09.895 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@49fc1acc]
+2024-10-27 09:41:13.461 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.462 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@576f44b9] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:13.463 DEBUG 14000 --- [http-nio-8080-exec-8] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1570189257 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:13.463 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:13.463 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.464 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:13.464 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@576f44b9]
+2024-10-27 09:41:13.467 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.467 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ec71697]
+2024-10-27 09:41:13.467 DEBUG 14000 --- [http-nio-8080-exec-8] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1479722128 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:13.467 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.J.d.point.PointMapper.findByMemId  : ==>  Preparing: SELECT pointId, usedPoint, maxPoint, memId, grade FROM point WHERE memId = ?
+2024-10-27 09:41:13.467 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.J.d.point.PointMapper.findByMemId  : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.469 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.J.d.point.PointMapper.findByMemId  : <==      Total: 1
+2024-10-27 09:41:13.470 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ec71697]
+2024-10-27 09:41:13.470 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ec71697]
+2024-10-27 09:41:13.470 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ec71697]
+2024-10-27 09:41:13.470 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ec71697]
+2024-10-27 09:41:13.763 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.763 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6dc7323a] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:13.763 DEBUG 14000 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1660998130 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:13.764 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:13.764 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.764 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:13.766 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6dc7323a]
+2024-10-27 09:41:13.767 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.767 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1539ba10]
+2024-10-27 09:41:13.767 DEBUG 14000 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1504391405 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:13.767 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.J.d.p.P.getPointHistoryByMemId     : ==>  Preparing: SELECT * FROM point_history WHERE mem_id = ? ORDER BY change_date DESC
+2024-10-27 09:41:13.768 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.J.d.p.P.getPointHistoryByMemId     : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.772 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.J.d.p.P.getPointHistoryByMemId     : <==      Total: 1
+2024-10-27 09:41:13.772 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1539ba10]
+2024-10-27 09:41:13.772 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1539ba10]
+2024-10-27 09:41:13.772 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1539ba10]
+2024-10-27 09:41:13.772 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1539ba10]
+2024-10-27 09:41:13.781 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.781 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@378311a3] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:13.781 DEBUG 14000 --- [http-nio-8080-exec-10] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@867992459 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:13.781 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:13.781 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.782 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:13.783 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@378311a3]
+2024-10-27 09:41:13.784 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:13.784 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51433afa]
+2024-10-27 09:41:13.784 DEBUG 14000 --- [http-nio-8080-exec-10] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@620536924 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:13.784 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.point.PointMapper.findByMemId  : ==>  Preparing: SELECT pointId, usedPoint, maxPoint, memId, grade FROM point WHERE memId = ?
+2024-10-27 09:41:13.784 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.point.PointMapper.findByMemId  : ==> Parameters: suzi(String)
+2024-10-27 09:41:13.785 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.point.PointMapper.findByMemId  : <==      Total: 1
+2024-10-27 09:41:13.785 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51433afa]
+2024-10-27 09:41:13.785 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51433afa]
+2024-10-27 09:41:13.785 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51433afa]
+2024-10-27 09:41:13.785 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51433afa]
+2024-10-27 09:41:14.091 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:14.091 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a15ecab] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:14.091 DEBUG 14000 --- [http-nio-8080-exec-1] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@736318652 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:14.091 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:14.093 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:14.093 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:14.093 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a15ecab]
+2024-10-27 09:41:14.094 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:14.095 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@f7dad41]
+2024-10-27 09:41:14.095 DEBUG 14000 --- [http-nio-8080-exec-1] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1006470644 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:14.095 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.p.P.getPointHistoryByMemId     : ==>  Preparing: SELECT * FROM point_history WHERE mem_id = ? ORDER BY change_date DESC
+2024-10-27 09:41:14.095 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.p.P.getPointHistoryByMemId     : ==> Parameters: suzi(String)
+2024-10-27 09:41:14.096 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.p.P.getPointHistoryByMemId     : <==      Total: 1
+2024-10-27 09:41:14.096 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@f7dad41]
+2024-10-27 09:41:14.096 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@f7dad41]
+2024-10-27 09:41:14.096 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@f7dad41]
+2024-10-27 09:41:14.096 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@f7dad41]
+2024-10-27 09:41:18.347  WARN 14000 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingRequestHeaderException: Required request header 'Authorization' for method parameter type String is not present]
+2024-10-27 09:41:18.363 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.363 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@441da1b9] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:18.364 DEBUG 14000 --- [http-nio-8080-exec-3] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@2081926288 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:18.364 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:18.364 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.366 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:18.366 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@441da1b9]
+2024-10-27 09:41:18.368 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.369 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@19771575] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:18.369 DEBUG 14000 --- [http-nio-8080-exec-3] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1619271201 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:18.369 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:18.370 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.373 DEBUG 14000 --- [http-nio-8080-exec-3] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:18.374 DEBUG 14000 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@19771575]
+2024-10-27 09:41:18.510 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.510 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7cd40566] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:18.510 DEBUG 14000 --- [http-nio-8080-exec-4] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@2010320449 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:18.510 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:18.510 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.511 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:18.511 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7cd40566]
+2024-10-27 09:41:18.513 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.514 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71b65f17]
+2024-10-27 09:41:18.514 DEBUG 14000 --- [http-nio-8080-exec-4] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1311387530 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:18.514 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:41:18.514 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.515 DEBUG 14000 --- [http-nio-8080-exec-4] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 2
+2024-10-27 09:41:18.515 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71b65f17]
+2024-10-27 09:41:18.515 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71b65f17]
+2024-10-27 09:41:18.515 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71b65f17]
+2024-10-27 09:41:18.515 DEBUG 14000 --- [http-nio-8080-exec-4] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71b65f17]
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32925f7b] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@799597396 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:18.837 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32925f7b]
+2024-10-27 09:41:18.839 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:18.839 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31275f4e]
+2024-10-27 09:41:18.839 DEBUG 14000 --- [http-nio-8080-exec-5] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@753441069 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:18.839 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:41:18.839 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:41:18.840 DEBUG 14000 --- [http-nio-8080-exec-5] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 2
+2024-10-27 09:41:18.840 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31275f4e]
+2024-10-27 09:41:18.840 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31275f4e]
+2024-10-27 09:41:18.840 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31275f4e]
+2024-10-27 09:41:18.840 DEBUG 14000 --- [http-nio-8080-exec-5] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31275f4e]
+2024-10-27 09:41:21.776 DEBUG 14000 --- [http-nio-8080-exec-6] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:21.777 DEBUG 14000 --- [http-nio-8080-exec-6] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@328916cb] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:21.777 DEBUG 14000 --- [http-nio-8080-exec-6] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1941183728 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:21.779 DEBUG 14000 --- [http-nio-8080-exec-6] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:21.779 DEBUG 14000 --- [http-nio-8080-exec-6] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:21.780 DEBUG 14000 --- [http-nio-8080-exec-6] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:21.780 DEBUG 14000 --- [http-nio-8080-exec-6] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@328916cb]
+2024-10-27 09:41:22.102 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:22.102 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d91e564] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:22.102 DEBUG 14000 --- [http-nio-8080-exec-7] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@592893848 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:22.102 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:22.102 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:22.105 DEBUG 14000 --- [http-nio-8080-exec-7] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:22.105 DEBUG 14000 --- [http-nio-8080-exec-7] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d91e564]
+2024-10-27 09:41:24.363 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:24.364 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@788ceaee] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:24.365 DEBUG 14000 --- [http-nio-8080-exec-8] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@522995247 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:24.365 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:24.365 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:24.366 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:24.367 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@788ceaee]
+2024-10-27 09:41:24.440 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:24.440 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@608d45ca] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:24.440 DEBUG 14000 --- [http-nio-8080-exec-8] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1540215144 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:24.440 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:24.440 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:24.441 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:24.441 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@608d45ca]
+2024-10-27 09:41:24.441 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:24.441 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:24.441 DEBUG 14000 --- [http-nio-8080-exec-8] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@502016289 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:24.442 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:24.442 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:24.443 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:24.443 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:24.443 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5] from current transaction
+2024-10-27 09:41:24.443 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.updateMember      : ==>  Preparing: UPDATE member SET pwd = ?, memName = ?, email = ?, tel = ?, post = ?, addr1 = ?, addr2 = ? WHERE memId = ?
+2024-10-27 09:41:24.444 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.updateMember      : ==> Parameters: $2a$10$t8oNxFV.NHvV6zq87HWoN.Q8CQs3CgwL9AtFfaENGCSQeHT/XHPg.(String), 수지(String), peace4ev2ry1@gmail.com(String), 01093699948(String), 06234(String), 서울 강남구 테헤란로 124(String), 아이티윌(String), suzi(String)
+2024-10-27 09:41:24.445 DEBUG 14000 --- [http-nio-8080-exec-8] c.z.b.l.m.MemberMapper.updateMember      : <==    Updates: 1
+2024-10-27 09:41:24.445 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:24.446  INFO 14000 --- [http-nio-8080-exec-8] com.zd.back.login.service.MemberService  : 회원정보 수정 완료: suzi
+2024-10-27 09:41:24.446 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:24.446 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:24.446 DEBUG 14000 --- [http-nio-8080-exec-8] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@458179c5]
+2024-10-27 09:41:26.436 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:26.437 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1e311821] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:26.438 DEBUG 14000 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@2123157589 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:26.438 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:26.438 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:26.439 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:26.439 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1e311821]
+2024-10-27 09:41:26.441 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:26.441 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6dd0fdc7] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:26.441 DEBUG 14000 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@427853837 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:26.441 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:26.442 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:26.443 DEBUG 14000 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:26.443 DEBUG 14000 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6dd0fdc7]
+2024-10-27 09:41:26.742 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:26.742 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@73b3ad69] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:26.742 DEBUG 14000 --- [http-nio-8080-exec-10] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@668460224 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:26.742 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:26.742 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:26.743 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:26.743 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@73b3ad69]
+2024-10-27 09:41:26.744 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:26.744 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12675438]
+2024-10-27 09:41:26.745 DEBUG 14000 --- [http-nio-8080-exec-10] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1564687083 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:26.745 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:41:26.745 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:41:26.747 DEBUG 14000 --- [http-nio-8080-exec-10] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 2
+2024-10-27 09:41:26.747 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12675438]
+2024-10-27 09:41:26.747 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12675438]
+2024-10-27 09:41:26.747 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12675438]
+2024-10-27 09:41:26.747 DEBUG 14000 --- [http-nio-8080-exec-10] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12675438]
+2024-10-27 09:41:27.056 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:27.056 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3576922c] was not registered for synchronization because synchronization is not active
+2024-10-27 09:41:27.056 DEBUG 14000 --- [http-nio-8080-exec-1] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@56918703 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will not be managed by Spring
+2024-10-27 09:41:27.056 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT * FROM member WHERE memId = ?
+2024-10-27 09:41:27.056 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: suzi(String)
+2024-10-27 09:41:27.057 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-27 09:41:27.057 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3576922c]
+2024-10-27 09:41:27.058 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-27 09:41:27.058 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65cb40ac]
+2024-10-27 09:41:27.058 DEBUG 14000 --- [http-nio-8080-exec-1] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1739167440 wrapping oracle.jdbc.driver.T4CConnection@6f3e09f1] will be managed by Spring
+2024-10-27 09:41:27.058 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.a.A.getAttendanceDates         : ==>  Preparing: SELECT TRUNC(attDate) FROM attendance WHERE memId = ?
+2024-10-27 09:41:27.058 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.a.A.getAttendanceDates         : ==> Parameters: suzi(String)
+2024-10-27 09:41:27.059 DEBUG 14000 --- [http-nio-8080-exec-1] c.z.b.J.d.a.A.getAttendanceDates         : <==      Total: 2
+2024-10-27 09:41:27.059 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65cb40ac]
+2024-10-27 09:41:27.059 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65cb40ac]
+2024-10-27 09:41:27.059 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65cb40ac]
+2024-10-27 09:41:27.059 DEBUG 14000 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65cb40ac]
