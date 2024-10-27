@@ -14,10 +14,14 @@ public class Board {
 
     private int boardno;
     private String memId;
+    private int ref;
+	private int step;
+	private int depth;
     private String title;
     private String content;
     private String category;
     private int hitcount;
     private int del;
+    private Date created; 
     
 }

@@ -7,6 +7,8 @@ import NewsList from "./components/naverapi/NewsList";
 import BbsWrite from "./components/board/BbsWrite";
 import BbsList from "./components/board/BbsList";
 import BbsDetail from "./components/board/BbsDetail";
+import BbsUpdate from "./components/board/BbsUpdate";
+import BbsAnswer from "./components/board/BbsAnswer";
 
 
 
@@ -39,8 +41,8 @@ export const routes = [
     { path: '/board/list', element: <BbsList /> },
     { path: '/board/write', element: <BbsWrite /> },
     { path: '/board/:boardno', element: <BbsDetail /> },
-    // { path: '/bbsupdate', element: <BbsUpdate /> },
-    // { path: '/bbsanswer/:parentSeq', element: <BbsAnswer /> }
+    { path: '/board/update/:boardno', element: <BbsUpdate /> },
+    { path: '/board/answer/:parentno', element: <BbsAnswer /> }
 
 
 

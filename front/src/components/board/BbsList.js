@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 
-// import '../../css/bbslist.css';
-// import '../../css/page.css';
+import './bbs.css';
+import './page.css';
 
 function BbsList() {
 
@@ -56,6 +56,13 @@ function BbsList() {
 		getBbsList(choiceVal, searchVal, 1);
 	}
 
+	// Enter 키가 눌렸을 때 검색 함수 호출
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			search();
+		}
+	}
+
 	//페이지 변경시 호출되는 함수
 	const changePage = (page) => {
 		setPage(page);
@@ -79,7 +86,7 @@ function BbsList() {
 							</select>
 						</td>
 						<td>
-							<input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} />
+							<input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
 						</td>
 						<td>
 							<button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
@@ -92,8 +99,11 @@ function BbsList() {
 				<thead>
 					<tr>
 						<th className="col-1">번호</th>
-						<th className="col-8">제목</th>
-						<th className="col-3">작성자</th>
+						<th className="col-2">카테고리</th>
+						<th className="col-5">제목</th>
+						<th className="col-1">작성자</th>
+						<th className="col-1">조회수</th>
+                        <th className="col-2">작성일</th>
 					</tr>
 				</thead>
 
@@ -137,20 +147,24 @@ function TableRow(props) {
 						(board.del == 0) ?
 						// 삭제되지 않은 게시글
 						<>
+							<td>{board.category}</td>
 							<td >
-								{/* <Arrow depth={board.depth}></Arrow> &nbsp; 답글 화살표 */}
+								<Arrow depth={board.depth}></Arrow> &nbsp; {/* 답글 화살표 */}
 
-								<Link to={{ pathname: `/board/${board.boardno}` }}> { /* 게시글 상세 링크 */}
+								<Link to={{ pathname: `/board/${board.boardno}` }}> {/* 게시글 상세 링크 */}
 									<span className="underline bbs-title" >{board.title} </span> { /* 게시글 제목 */}
 								</Link>
 							</td>
 							<td>{board.memId}</td>
+							<td>{board.hitcount}</td>
+							<td>{new Date(board.created).toLocaleDateString()}</td>
 						</>
 						:
 						// 삭제된 게시글
 						<>
+							<td></td> {/* 카테고리 비워둠 */}
 							<td>
-								{/* <Arrow depth={board.depth}></Arrow> &nbsp; 답글 화살표 */}
+								<Arrow depth={board.depth}></Arrow> &nbsp; {/* 답글 화살표 */}
 
 								<span className="del-span">⚠️ 이 글은 작성자에 의해 삭제됐습니다.</span>
 							</td>
@@ -163,25 +177,25 @@ function TableRow(props) {
 	);
 }
 
-// const tap = "\u00A0\u00A0\u00A0\u00A0";
-// function Arrow( props ) { //게시글의 깊이를 표시하기 위한 컴포넌트
-// 	//깊이에 따라 답글의 화살표를 렌더링 (0이면 아무것도 반환X)
-// 	const depth = props.depth;
+const tap = "\u00A0\u00A0\u00A0\u00A0";
+function Arrow( props ) { //게시글의 깊이를 표시하기 위한 컴포넌트
+	//깊이에 따라 답글의 화살표를 렌더링 (0이면 아무것도 반환X)
+	const depth = props.depth;
 
-// 	if (depth === 0) {
-// 		return null;
-// 	}
+	if (depth === 0) {
+		return null;
+	}
 
-// 	const taps = [];
-// 	for(let i = 0; i < depth; i++) {
-// 		taps.push(tap);
-// 	}
+	const taps = [];
+	for(let i = 0; i < depth; i++) {
+		taps.push(tap);
+	}
 
-// 	return (
-// 		<>
-// 			{taps} <i className="fas fa-long-arrow-alt-right"></i>
-// 		</> 
-// 	 );
-// }
+	return (
+		<>
+			{taps} <i className="fas fa-long-arrow-alt-right"></i>
+		</> 
+	 );
+}
 
 export default BbsList;

@@ -21,4 +21,13 @@ public interface BoardMapper {
 	int createBbsReadCountHistory(BoardParam param);
 	int increaseBbsReadCount(int boardno);
 
+    int updateBoard(BoardParam param);
+
+    int deleteBoard(int boardno);
+
+    int updateBbsStep(int parentno);
+	int getBbsAnswerCount(int parentno);
+	void createBbsAnswer(BoardParam param);
+    String getCategoryByBoardno(int parentno); //답글생성시 카테고리값 지정
+
 }

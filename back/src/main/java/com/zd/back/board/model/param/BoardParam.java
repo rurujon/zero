@@ -21,6 +21,7 @@ public class BoardParam {
     private String memId;
     private String title;
     private String content;
+    private String category;
     
     // 검색 관련 필드
     private String choice;

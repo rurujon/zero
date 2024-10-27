@@ -12,7 +12,7 @@ function BbsDetail() {
 
 	const getBbsDetail = async () => {
 		await axios.get(`http://localhost:8080/board/${boardno}`, {
-			params: { readerId: localStorage.getItem("readerId") || "" } // 로컬 스토리지에서 readerId 가져오기
+			params: { readerId: localStorage.getItem("memId") || "" } // 로컬 스토리지에서 readerId 가져오기
 		})
 		.then((resp) => {
 			console.log("[BbsDetail.js] getBbsDetail() success :D");
@@ -27,7 +27,7 @@ function BbsDetail() {
 	}
 
 	const deleteBoard = async () => {
-		await axios.delete(`http://localhost:8080/board/${boardno}`)
+		await axios.get(`http://localhost:8080/board/delete/${boardno}`)
 		.then((resp) => {
 			console.log("[BbsDetail.js] deleteBoard() success :D");
 			console.log(resp.data);
@@ -42,34 +42,41 @@ function BbsDetail() {
 		});
 	}
 
+	// 날짜 변환 함수
+	const formatDate = (dateString) => {
+		if (!dateString) return ""; // dateString이 없을 경우 빈 문자열 반환
+		const date = new Date(dateString);
+		return date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 반환
+	};
+
 	useEffect(() => {
 		getBbsDetail();
 	}, []);
 
 	const updateBoard = {
 		boardno: board.boardno,
-		readerId: board.memId,
+		memId: board.memId,
 		title: board.title,
 		content: board.content
 	}
 
 	const parentBbs = {
-		readerId: board.memId,
+		memId: board.memId,
 		title: board.title
 	}
 
 	return (
 		<div>
 			<div className="my-3 d-flex justify-content-end">
-				<Link className="btn btn-outline-secondary" to={{ pathname: `/bbsanswer/${board.boardno}` }} state={{ parentBbs: parentBbs }}>
+				<Link className="btn btn-outline-secondary" to={{ pathname: `/board/answer/${board.boardno}` }} state={{ parentBbs: parentBbs }}>
 					<i className="fas fa-pen"></i> 답글쓰기
 				</Link> &nbsp;
 
 				{
 					/* 자신이 작성한 게시글인 경우에만 수정 삭제 가능 */
-					(localStorage.getItem("readerId") === board.memId) ? (
+					(localStorage.getItem("memId") === board.memId) ? (
 						<>
-							<Link className="btn btn-outline-secondary" to="/bbsupdate" state={{ board: updateBoard }}>
+							<Link className="btn btn-outline-secondary" to={{ pathname: `/board/update/${board.boardno}` }} state={{ board: updateBoard }}>
 								<i className="fas fa-edit"></i> 수정
 							</Link> &nbsp;
 							<button className="btn btn-outline-danger" onClick={deleteBoard}>
@@ -99,14 +106,14 @@ function BbsDetail() {
 					<tr>
 						<th>작성일</th>
 						<td>
-							<span>{board.created}</span>
+							<span>{formatDate(board.created)}</span> {/* 날짜 포맷 변환 함수 */}
 						</td>
 					</tr>
 
 					<tr>
 						<th>조회수</th>
 						<td>
-							<span>{board.hitCount}</span>
+							<span>{board.hitcount}</span>
 						</td>
 					</tr>
 

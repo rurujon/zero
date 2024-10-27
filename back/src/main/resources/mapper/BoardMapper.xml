@@ -9,16 +9,16 @@
 	    <selectKey keyProperty="boardno" resultType="int" order="BEFORE">
         SELECT tip_boardno.NEXTVAL FROM dual
     	</selectKey>
-		INSERT into tipboard (boardno, memId, title, content, category, hitcount, del)
-		VALUES (#{boardno}, #{memId}, #{title}, #{content}, #{category}, 0, 0)
+		INSERT into tipboard (boardno, memId, ref, step, depth, title, content, category, hitcount, del)
+		VALUES (#{boardno}, #{memId}, (SELECT NVL(MAX(ref), 0) + 1 FROM tipboard), 0, 0, #{title}, #{content}, #{category}, 0, 0)
 	</insert>
 
 	<!-- 글 목록 조회 -->
 	<select id="getBbsSearchPageList" parameterType="com.zd.back.board.model.param.BoardParam" resultType="com.zd.back.board.model.Board">
-		SELECT boardno, memId, title, content, category, hitcount, del
+		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
 		FROM
-					(SELECT row_number() OVER(ORDER BY boardno DESC) AS rnum,
-					boardno, memId, title, content, category, hitcount, del
+					(SELECT row_number() OVER(ORDER BY ref DESC, step ASC) AS rnum,
+					boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
 					FROM tipboard
 					<if test="choice != null and choice != ''
 								and search != null and search != '' ">
@@ -32,7 +32,7 @@
 							WHERE memId=#{search}
 						</if>
 					</if>
-					ORDER BY boardno DESC) a
+					ORDER BY ref DESC, step ASC) a
 		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
 	</select>
 
@@ -56,10 +56,10 @@
 
 	<!-- 특정 게시글 조회 -->
 	<select id="getBoard" parameterType="int" resultType="com.zd.back.board.model.Board">
-		SELECT boardno, memId, title, content, category, hitcount, del
+		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
 		FROM tipboard
 		WHERE boardno=#{boardno}
-		ORDER BY boardno DESC
+		ORDER BY ref DESC, step ASC
 	</select>
 
 	<!-- 게시글 조회수 레코드 생성 : 동일한 boardno, memId 조합의 레코드가 이미 존재하는 경우, 
@@ -79,5 +79,61 @@
 		SET hitcount = hitcount + 1
 		WHERE boardno = #{boardno}
 	</update>
+
+	<!-- 게시글 수정 -->
+	<!-- 수정 성공 시 1(수정한 레코드 개수) 을 반환, 실패 시 0 을 반환 -->
+	<update id="updateBoard" parameterType="com.zd.back.board.model.param.BoardParam">
+		UPDATE tipboard
+		SET content=#{content}, title=#{title}
+		WHERE boardno=#{boardno}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterType="int">
+		UPDATE tipboard
+		SET del = 1
+		WHERE boardno=#{boardno}
+	</update>
+
+
+	<!-- 답글 작성 -->
+	<!-- 부모 게시글 step 업데이트 -->
+	<update id="updateBbsStep" parameterType="int">
+		UPDATE tipboard
+		SET step = step + 1
+		WHERE ref = (SELECT ref FROM tipboard WHERE boardno = #{parentno})
+		AND step > (SELECT step FROM tipboard WHERE boardno = #{parentno})
+	</update>
+
+	<!-- 답글 category 부모 게시글의 category로 지정 -->
+	<select id="getCategoryByBoardno" parameterType="int" resultType="string">
+		SELECT category
+		FROM tipboard
+		WHERE boardno = #{parentno}
+	</select>
+
+	<!-- 부모 게시글 하위 답글 개수 조회 (step 업데이트 성공 여부 확인 휘함) -->
+	<select id="getBbsAnswerCount" parameterType="int" resultType="int">
+		WITH ParentData AS (
+			SELECT ref, step FROM tipboard WHERE boardno = #{parentno}
+		)
+		SELECT COUNT(*)
+		FROM tipboard
+		WHERE ref = (SELECT ref FROM ParentData)
+		AND step > (SELECT step FROM ParentData)
+	</select>
+
+	<!-- 새로운 답글 추가 -->
+	<insert id="createBbsAnswer" parameterType="com.zd.back.board.model.param.BoardParam">
+		<selectKey keyProperty="boardno" resultType="int" order="BEFORE">
+			SELECT tip_boardno.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO tipboard (boardno, memId, ref, step, depth, title, content, category, hitcount, del)
+		VALUES (#{boardno}, #{memId},
+			(SELECT ref FROM tipboard WHERE boardno = #{parentno}),
+			(SELECT step FROM tipboard WHERE boardno = #{parentno}) + 1,
+			(SELECT depth FROM tipboard WHERE boardno = #{parentno}) + 1,
+			#{title}, #{content}, #{category}, 0, 0)
+	</insert>
 
 </mapper>
