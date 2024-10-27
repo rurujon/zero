@@ -31,7 +31,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [serverError, setServerError] = useState('');
 
     useEffect(() => {
-        setTermsContent(`이용약관\n\n1. 이용자는...\n2. 서비스 제공...\n3....\n내용은 추후 수정`);
+        const defaultTerms =(`이용약관\n\n1. 이용자는...\n2. 서비스 제공...\n3....\n내용은 추후 수정`);
+        setTermsContent(defaultTerms);
 
         if (initialData) {
             setMember(prevState => ({
@@ -45,10 +46,19 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             adjustWindowSize(window, initialData, true, []);
         }
 
-        axios.get('/api/terms')
-            .then(response => setTermsContent(response.data))
-            .catch(error => console.error('이용약관 불러오기 오류:', error));
-    }, [initialData]);
+        // 이용약관 불러오기 시도
+    axios.get('/api/terms')
+    .then(response => {
+        if (response.data && typeof response.data === 'string') {
+            setTermsContent(response.data);
+        }
+    })
+    .catch(error => {
+        console.error('이용약관 불러오기 오류:', error);
+        // 오류 발생 시 기본 이용약관 사용
+        setTermsContent(defaultTerms);
+    });
+}, [initialData]);
 
     const checkDuplicateId = () => {
         if (!member.memId || member.memId.trim() === '') {
