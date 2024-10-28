@@ -32,7 +32,7 @@
     AND EXTRACT(MONTH FROM attDate) = #{month}
     </select>
 
-    <select id="getAttendanceDates" parameterType="string" resultType="java.util.Date">
+    <select id="getAttendanceDates" parameterType="String" resultType="java.util.Date">
     SELECT TRUNC(attDate) FROM attendance WHERE memId = #{memId}
     </select>
 

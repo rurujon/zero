@@ -4,61 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script 
-        src="https://cdn.iamport.kr/v1/iamport.js">
-    </script>
-    <!-- jQuery -->
-    <script 
-        type="text/javascript" 
-        src="https://code.jquery.com/jquery-1.12.4.min.js" >
-    </script>
-    <!-- iamport.payment.js -->
-    <script 
-        type="text/javascript" 
-        src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js">
-    </script>
-    <!-- iamport.payment.js -->
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/axios/dist/axios.min.js"
-    ></script>
+    <!-- SDK설치 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script defer type="text/javascript" src="js/payment.js"></script>
     <script>
-        function payment(){
-            IMP.init("store-8566d7eb-64ce-41ae-836a-0e9f233eea87");
-            IMP.request_pay({
-                PG:'html5_inicis',
-                pay_method:'card',
-                merchant_uid:'test'+new Date().getTime(),
-                name:'결제 테스트',
-                amount:100,
-                buyer_email:'idwnsdud1965@naver.com',
-                buyer_name:'조준영 결제 테스트',
-                buyer_tel:'010-8012-1965',
-                buyer_addr:'먼우금로83번길 12',
-                buyer_postcode:'123-456'
-            }, function(rsp){
-                if(rsp.success){
-                    //결제성공
-                    var msg = '결제가 완료되었습니다';
-                    alert(msg);
-                    location.href="/"
-                }else{
-                    //결제실패
-                    var msg = '결제가 실패하였습니다';
-                    msg += '에러내용:'+rsp.error_msg;
-                    alert(msg);
-                    location.href="/"
+        
+        function requestPay() {
+            IMP.init("imp51775781")
+            console.log("test")
+            IMP.request_pay(
+                
+            {
+                pg: "html5_inicis", // 결제 대행사 코드.상점ID(위에 채널추가 할 때 설정한거)
+                pay_method: "card", // 결제 방법
+                merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
+                name: "노르웨이 회전 의자", // 상품 이름
+                amount: 64900, // 상품 가격
+                // 여기서부터 필수는 아님
+                buyer_email: "gildong@gmail.com",
+                buyer_name: "홍길동",
+                buyer_tel: "010-4242-4242",
+                buyer_addr: "서울특별시 강남구 신사동",
+                buyer_postcode: "01181",
+            },
+            function (response) {
+                if(response.error_code!=null){
+                    return alert(`결제에 실패하였습니다. 에러내용:  ${response.error_msg}`)
                 }
-            })
+            },
+            );
         }
-
-        document.getElementById('payment').addEventListener('click', payment);
     </script>
 </head>
 <body>
     
-    <button id="payment">구매하기</button>
-    <!-- <script src="payment.js"></script> -->
+    <button onclick="requestPay()">결제하기3</button>
 
 </body>
 </html>

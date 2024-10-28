@@ -18,7 +18,7 @@ import com.zd.back.JY.domain.dailyQuiz.QuizDTO;
 
 
 
-public class ReadJSON {
+public class ReadJSON{
 
     //JSON파일의 주소를 바당 파일을 읽어 JSON형식을 JSONArray형태로 반환
     public JSONArray jsonToArray(String fileUrl){

@@ -27,6 +27,7 @@ const LoginPage = ({ onLogin}) => {
             })
             .catch(error => {
                 console.error(error);
+                alert(error);
                 alert("로그인 중 오류가 발생했습니다.");
             });
     };
