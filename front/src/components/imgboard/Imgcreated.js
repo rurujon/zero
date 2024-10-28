@@ -1,57 +1,64 @@
-// 문제 1 db에 이미지 updated  안됌 
-
-
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ImgCreated = () => {
+    const navigate = useNavigate(); // navigate 훅 추가
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const imgPostId = queryParams.get('imgPostId'); // updated 시 받는 imgPostId
     const updatedMode = Boolean(imgPostId); // imgPostId가 있으면 updatedMode
 
-    const [memId, setMemId] = useState('testuser');
+    const [memId, setMemId] = useState(localStorage.getItem('memId')); // localStorage에서 memId 가져오기
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState(Array(3).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(3).fill(null));
-    const [showInput, setShowInput] = useState(Array(3).fill(false)); // 입력 필드 표시 상태
-
-
     const [loading, setLoading] = useState(updatedMode);
 
     const fileInputRefs = useRef([]);
     const titleRef = useRef(null);
     const contentRef = useRef(null);
+    const [alertShown, setAlertShown] = useState(false); //  alert창 1번띄우기 위해
 
+    useEffect(() => {
+        // memId가 없으면 로그인 페이지로 이동
+        //alert 두번 뜸 (-)
+        if (!memId) {
+            if (!alertShown) {
+                setAlertShown(true);
+                alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");
+            }
+            navigate("/login");
+        }
+    }, [memId, navigate, alertShown]);
+   
     useEffect(() => {
         if (updatedMode) {
             const fetchArticle = async () => {
                 try {
                     const response = await axios.get('/imgboard/updated', {
-                        params: { imgPostId } // imgPostId를 쿼리 파라미터로 전송
+                        params: { imgPostId }
                     });
-                    const { imgPost, images: existingImages } = response.data; // imgPost와 images 추출
+                    const { imgPost, images: existingImages } = response.data;
                     const { memId, title, content, cate } = imgPost;
-                    
-                    setMemId(memId);
-                    setTitle(title); // 기존 제목 설정
-                    setContent(content); // 기존 내용 설정
-                    setCate(cate); // 기존 카테고리 설정
 
-                    // 기존 이미지 미리보기 설정
+                    setMemId(memId);
+                    setTitle(title);
+                    setContent(content);
+                    setCate(cate);
+
                     const newPreviews = existingImages.map(img => `/images/${img.saveFileName}`);
                     setImagePreviews(newPreviews);
-                    setLoading(false); // 데이터 로딩 완료
+                    setLoading(false);
                 } catch (error) {
                     alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
-                    setLoading(false); // 데이터 로딩 완료
+                    setLoading(false);
                 }
             };
 
-            fetchArticle(); // 수정 모드일 때 기존 게시물 데이터 fetch
+            fetchArticle();
         }
     }, [imgPostId, updatedMode]);
 
@@ -61,8 +68,7 @@ const ImgCreated = () => {
         setContent('');
     };
 
-    // 등록(INSERT) 처리 =============================================
-    const handleImageChange = (index, evt) => {
+    const handleImageChange = (index, evt) => { // created
         const file = evt.target.files[0];
         const newImages = [...images];
         const newPreviews = [...imagePreviews];
@@ -121,42 +127,24 @@ const ImgCreated = () => {
         }
     };
 
-    // 수정(UPDATE) 처리======================================
-    const handleExImageRemove = (index) => {
-        const newPreviews = [...imagePreviews];
-        newPreviews[index] = null;
-        setImagePreviews(newPreviews);
-    
-        setShowInput((prev) => {
-            const newShowInput = [...prev]; //이전 상태 배열을 복사
-            newShowInput[index] = true; // 해당 인덱스의 showInput을 true로 설정
-            return newShowInput;
-        });
-    
-        if (fileInputRefs.current[index]) {
-            fileInputRefs.current[index].value = '';
-        }
-    };
-
     const handleUpdateSubmit = async (evt) => {
         evt.preventDefault();
         const nonEmptyImages = images.filter(img => img !== null);
 
-        if (validateForm(nonEmptyImages)) {
+        // 기존 이미지 존재 확인
+        const existingImagesCount = imagePreviews.filter(preview => preview !== null).length;
+
+        if (validateForm(nonEmptyImages, existingImagesCount)) {
             const formData = new FormData();
             formData.append('memId', memId);
             formData.append('cate', cate);
             formData.append('title', title);
             formData.append('content', content);
 
-            for (let img of nonEmptyImages) {
-                formData.append('images', img);
-            }
-
+            // 이미지 파일을 포함하지 않고 업데이트 요청
             try {
                 const response = await axios.post('/imgboard/updated', formData, {
-                    params: { imgPostId }, // imgPostId를 쿼리 파라미터로 전달
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    params: { imgPostId }
                 });
                 alert(response.data);
                 window.location.href = '/imgboard/list';
@@ -166,8 +154,7 @@ const ImgCreated = () => {
         }
     };
 
-    // 유효성 검사 함수
-    const validateForm = (nonEmptyImages) => {
+    const validateForm = (nonEmptyImages, existingImagesCount) => {
         if (cate === "") {
             alert("인증 유형을 선택하세요.");
             return false;
@@ -182,8 +169,8 @@ const ImgCreated = () => {
             contentRef.current.focus();
             return false;
         }
-        if (nonEmptyImages.length === 0) {
-            alert("인증 이미지파일을 최소 1개 이상 업로드해야 합니다.");
+        if (!updatedMode && (nonEmptyImages.length === 0)) {
+            alert("이미지를 최소 1개 이상 업로드해야 합니다.");
             return false;
         }
         return true;
@@ -219,63 +206,50 @@ const ImgCreated = () => {
                     <textarea value={content} onChange={(evt) => setContent(evt.target.value)} ref={contentRef} />
                 </div>
                 <button type='button' onClick={handleTextReset}>다시작성</button>
-                
-                {/*  여기에 updatedMode 일때 기존 파일 이미지 나오고 이미지 삭제시 파일 선택하는 input 나오게 코딩 해  */}
-                
-                {updatedMode && 
-                 <div>
-                 <label>이미지 선택:</label>
-                 {images.map((image, index) => (
-                     <div key={index}>
-                         {imagePreviews[index] && (
-                             <div>
-                                 <img
-                                     src={imagePreviews[index]}
-                                     alt='기존이미지 미리보기'
-                                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                                 />
-                                 <button type="button" onClick={() => handleExImageRemove(index)}>기존파일 취소</button>
-                             </div>
-                         )}
-                          {showInput[index] && (
-                                    <input
-                                        type="file"
-                                        ref={el => fileInputRefs.current[index] = el}
-                                        onChange={(evt) => handleImageChange(index, evt)}
-                                        accept="image/*"
-                                    />
-                                )}
-                     </div>
-                     
-                     
-                 ))}
-             </div> }
 
-                { !updatedMode &&
-                <div>
-                    <label>이미지 선택:</label>
-                    {images.map((image, index) => (
-                        <div key={index}>
-                            <input
-                                type="file"
-                                ref={el => fileInputRefs.current[index] = el}
-                                onChange={(evt) => handleImageChange(index, evt)}
-                                accept="image/*"
-                            />
-                            {imagePreviews[index] && (
-                                <div>
+                {!updatedMode && ( // created
+                    <div>
+                        <label>이미지 선택:</label>
+                        {images.map((image, index) => (
+                            <div key={index}>
+                                <input
+                                    type="file"
+                                    ref={el => fileInputRefs.current[index] = el}
+                                    onChange={(evt) => handleImageChange(index, evt)}
+                                    accept="image/*"
+                                />
+                                {imagePreviews[index] && (
+                                    <div>
+                                        <img
+                                            src={imagePreviews[index]}
+                                            alt='선택이미지 미리보기'
+                                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                        />
+                                        <button type="button" onClick={() => handleImageRemove(index)}>파일 선택 취소</button>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {updatedMode && 
+                    <div>
+                        <label>이미지 선택:</label>
+                        {imagePreviews.map((preview, index) => (
+                            <div key={index}>
+                                {preview && (
                                     <img
-                                        src={imagePreviews[index]}
-                                        alt='선택이미지 미리보기'
+                                        src={preview}
+                                        alt='기존이미지 미리보기'
                                         style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                     />
-                                    <button type="button" onClick={() => handleImageRemove(index)}>파일 선택 취소</button>
-                                </div>
-                            )}
-                        </div>
-                        
-                    ))}
-                </div> }
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                }
+
                 <button type="submit">{updatedMode ? '수정하기' : '등록하기'}</button>
                 <button type='button' onClick={() => window.location.href = '/imgboard/list'}>작성취소</button>
             </form>
@@ -283,4 +257,4 @@ const ImgCreated = () => {
     );
 };
 
-export default ImgCreated; 
+export default ImgCreated;

@@ -1,6 +1,5 @@
 package com.zd.back.imgboard.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
@@ -9,23 +8,23 @@ import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 
-//ImgCreated1.js 과 매칭 
+//수정시 파일 업로드 부분 제외하고 text만 되도록 함 (-)
 
-/* 
+
 @RestController
 @RequestMapping("/imgboard")
 @RequiredArgsConstructor  //의존성 주입 위함 
 public class ImgBoardController {
+
 
     private final ImgPostService imgPostService;
     private final ImgService imgService;
@@ -43,7 +42,7 @@ public class ImgBoardController {
             imgPostService.createImgPost(imgPost);
 
             //imgManagerService 에서 받아서 list로 저장
-            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId);
+            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId+1);
 
             //이미지 정보 DB에 저장           
             imgService.saveImg(imgList);
@@ -104,34 +103,13 @@ public class ImgBoardController {
     
      @PostMapping("/updated")
     public ResponseEntity<String> getUpdatedArticle(@RequestParam int imgPostId,
-            @ModelAttribute ImgPost imgPost,
-        @RequestParam(value = "removedImages", required = false) String removedImagesJson,
-        @RequestParam(value = "images", required = false) MultipartFile[] images) 
-    {
+            @ModelAttribute ImgPost imgPost) {
         try {
 
             // 1.imgPost update
             imgPost.setImgPostId(imgPostId);
             imgPostService.updateImgPost(imgPost);
 
-            
-            if(removedImagesJson !=null || images.length>0){
-
-                // JSON 문자열을 List로 변환 (removedImages)
-                List<String> removedImages = new ObjectMapper().readValue(removedImagesJson, new TypeReference<List<String>>() {});
-
-
-                // 2. removedImages 삭제 -DB삭제 후 파일 삭제
-                for (String saveFileName : removedImages) {
-                    imgService.deleteBySaveFileName(saveFileName); //DB에 삭제
-                    imgManagerService.deleteImages(saveFileName); 
-                }
-              
-                // 3. 새로 업로드된 이미지 처리 및 저장
-                List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
-                imgService.saveImg(imgList);
-
-        }
             return ResponseEntity.ok("인증게시물이 수정되었습니다.");
 
         } catch (Exception e) {
@@ -167,4 +145,3 @@ public class ImgBoardController {
     }
 
 }    
-*/
