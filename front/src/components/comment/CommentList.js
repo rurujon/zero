@@ -6,7 +6,7 @@ import Comment from "./Comment.js"
 
 function CommentList(props) {
 
-	const commentno = props.commentno;
+	const boardno = props.boardno;
 
 	// Paging
 	const [page, setPage] = useState(1);
@@ -20,7 +20,7 @@ function CommentList(props) {
 	}
 
 	const getCommentList = async (page) => {
-		await axios.get(`http://localhost:8080/comment/list`, { params: { "boardno": commentno, "page": page } })
+		await axios.get(`http://localhost:8080/comment/list`, { params: { "boardno": boardno, "page": page } })
 			.then((resp) => {
 				console.log("[BbsComment.js] getCommentList() success :D");
 				console.log(resp.data);
@@ -46,6 +46,22 @@ function CommentList(props) {
 				<h5><i className="fas fa-paperclip"></i> 댓글 목록 </h5>
 			</div>
 
+            {
+            commentList.length === 0 ? (
+                <div className="my-5 d-flex justify-content-center">
+                    <span>등록된 댓글이 없습니다.</span>
+                </div>
+            ) : (
+                commentList.map(function (comment, idx) {
+                    return (
+                        <div className="my-5" key={idx}>
+                            <Comment obj={comment} key={idx} />
+                        </div>
+                    );
+                })
+            )
+        }
+
 			<Pagination
 				activePage={page}
 				itemsCountPerPage={5}
@@ -54,15 +70,7 @@ function CommentList(props) {
 				prevPageText={"‹"}
 				nextPageText={"›"}
 				onChange={changePage} />
-			{
-				commentList.map(function (comment, idx) {
-					return (
-						<div className="my-5" key={idx}>
-							<Comment obj={comment} key={idx} />
-						</div>
-					);
-				})
-			}
+
 
 		</>
 

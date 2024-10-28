@@ -79,7 +79,7 @@ function BbsList() {
 				<tbody>
 					<tr>
 						<td>
-							<select className="custom-select" value={choiceVal} onChange={changeChoice}>
+							<br/><select className="custom-select" value={choiceVal} onChange={changeChoice}>
 								<option>검색 옵션 선택</option>
 								<option value="title">제목</option>
 								<option value="content">내용</option>
@@ -87,10 +87,10 @@ function BbsList() {
 							</select>
 						</td>
 						<td>
-							<input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
+							<br/><input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
 						</td>
 						<td>
-							<button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
+							<br/><button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
 						</td>
 					</tr>
 				</tbody>
@@ -129,7 +129,7 @@ function BbsList() {
 				onChange={changePage} />
 				
 			<div className="my-5 d-flex justify-content-center">
-				<Link className="btn btn-outline-secondary" to="/board/write"><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
+				<Link className="btn btn-outline-secondary" to="/board/write"><i className="fas fa-pen"></i>글쓰기</Link>
 			</div>
 
 		</div>

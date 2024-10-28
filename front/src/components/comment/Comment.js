@@ -26,7 +26,10 @@ function Comment(props) {
 			content: content
 		};
 
-		await axios.post(`http://localhost:8080/comment/${comment.commentno}?boardno=${boardno}`, req, { headers })
+        console.log("comment:", comment);  // comment 객체 전체 출력
+        console.log("comment.boardno:", comment.boardno);
+        
+		await axios.post(`http://localhost:8080/comment/${comment.commentno}?boardno=${comment.boardno}`, req, { headers })
 			.then((resp) => {
 				console.log("[Comment.js] updateComment() success :D");
 				console.log(resp.data);
@@ -51,7 +54,7 @@ function Comment(props) {
 				console.log(resp.data);
 
 				if (resp.data.deletedRecordCount === 1) {
-					alert("답글을 성공적으로 삭제했습니다 :D");
+					alert("댓글을 성공적으로 삭제했습니다 :D");
 					navigate(0);
 				}
 			}).catch((err) => {
@@ -73,16 +76,16 @@ function Comment(props) {
 					<div className="col-1">
 						<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img" />
 					</div>
-					<div className="col-5">
+					<div className="col-2">
 						<div className="row">
 							<span className="comment-id">{comment.memId}</span>
 						</div>
 						<div className="row">
-							<span>{comment.created}</span>
+							<span>{new Date(comment.created).toISOString().slice(0, 16).replace('T', ' ')}</span>
 						</div>
 					</div>
 
-					<div className="col-4 d-flex justify-content-end">
+					<div className="col-3 d-flex justify-content-end">
 					{
 						/* 자신이 작성한 댓글인 경우에만 수정 삭제 가능 */
 						(memId === comment.memId) ?
@@ -101,7 +104,7 @@ function Comment(props) {
 						<>
 							{/* 하단 영역 (댓글 내용 + 댓글 내용 편집 창) */}
 							<div className="my-3 d-flex justify-content-center">
-								<textarea className="col-10" rows="5" value={content} onChange={changeContent}></textarea>
+								<textarea className="col-7" rows="3" value={content} onChange={changeContent}></textarea>
 							</div>
 							<div className="my-1 d-flex justify-content-center">
 								<button className="btn btn-dark" onClick={updateComment}><i className="fas fa-edit"></i> 수정 완료</button>
@@ -110,8 +113,8 @@ function Comment(props) {
 					:
 						<>
 							{/* 하단 영역 (댓글 내용) */}
-							<div className="my-3 d-flex justify-content-center">
-								<div className="col-10 comment">{content}</div>
+							<div className="my-4 d-flex justify-content-center">
+								<div className="col-4 comment">{content}</div>
 							</div>
 						</>
 				}

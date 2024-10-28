@@ -46,6 +46,7 @@ public class CommentService {
     @Transactional
     public UpdateCommentResponse updateComment(String memId, int commentno, UpdateCommentRequest req) {
         Comment comment = commentMapper.getCommentBySeq(commentno);
+        
         if (!comment.getMemId().equals(memId)) {
             System.out.println("작성자만 댓글을 수정할 수 있습니다.");
             return null;

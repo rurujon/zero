@@ -23,6 +23,11 @@ function CommentWrite(props) {
 
 	const createComment = async() => {
 
+		if (!content.trim()) {
+			alert("댓글 내용을 입력해 주세요.");
+			return;
+		}
+
 		const req = {
 			memId: memId,
 			content: content,

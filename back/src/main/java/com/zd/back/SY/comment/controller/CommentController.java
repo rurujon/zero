@@ -1,5 +1,6 @@
 package com.zd.back.SY.comment.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
     
+    @Autowired
     private final CommentService commentService;
 
     @PostMapping("/write")
@@ -44,9 +46,7 @@ public class CommentController {
     }
 
     @PostMapping("/{commentno}")
-    public ResponseEntity<UpdateCommentResponse> updateComment(@AuthenticationPrincipal UserDetails userDetails,
-                                                                @PathVariable int commentno,
-                                                                @RequestBody UpdateCommentRequest req) {
+    public ResponseEntity<UpdateCommentResponse> updateComment(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int commentno, @RequestBody UpdateCommentRequest req) {
 
         return ResponseEntity.ok(commentService.updateComment(userDetails.getUsername(), commentno, req));
     }
