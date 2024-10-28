@@ -11,6 +11,7 @@ const ImgArticle = () => {
     const imgPostId = queryParams.get('imgPostId'); // 쿼리 파라미터에서 imgPostId 가져오기
 
     const [article, setArticle] = useState(null);
+    const[auth,setAuth] = useState(0);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -76,6 +77,39 @@ const ImgArticle = () => {
     };
     
 
+    const handleAuth =()=>{
+
+        setAuth(1);
+
+        try{ //Controller에 postMapping추가 (-)
+            const response =  axios.post(`/imgboard/auth`, {
+                params: { imgPostId , auth}
+            });
+
+            alert(response.data);
+
+        }catch(error){
+            console.error('인증승인시 오류가 발생했습니다.', error);
+            const errorMessage = error.response && error.response.data 
+            ? error.response.data 
+            : '알 수 없는 오류가 발생했습니다.';
+
+            alert('인증승인에 실패했습니다: ' + errorMessage);
+
+        }
+
+
+
+
+
+
+
+    }
+
+
+
+
+
     if (loading) {
         return <p>로딩 중...</p>; // 로딩 중일 때 표시
     }
@@ -92,7 +126,7 @@ const ImgArticle = () => {
                 <p className="article-meta"><strong>승인여부:</strong> {article.imgPost.auth}</p>
                 {(memId === "suzi123")&&(
                     <>
-                    <button type='button'>인증승인</button>
+                    <button type='button' onClick={handleAuth}>인증승인</button>
                     </>
                 )}
                 <hr className="divider" />
