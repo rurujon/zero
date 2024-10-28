@@ -32,8 +32,9 @@ export const routes = [
 
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated /> },
+    { path: '/imgboard/updated', element: <ImgCreated /> }, // ImgCreated.js에서 Mode바꿔서 사용
     { path: '/imgboard/list', element: <ImgList /> },
-   { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 위함
+    { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 사용
 
 
 

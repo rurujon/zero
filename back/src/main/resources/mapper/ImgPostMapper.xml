@@ -10,30 +10,41 @@
     </select>
 
     <insert id="insertImgPost" parameterType="com.zd.back.imgboard.model.ImgPost">
-        INSERT INTO ImgPost (imgPostId, memId, cate, title, content, created, auth, authDate)
-        VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth}, SYSDATE)
+        INSERT INTO ImgPost (imgPostId, memId, cate, title, content, created, auth)
+        VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth})
     </insert>
 
-<select id="getImgBoards" resultMap="ImgBoardResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-    FROM ImgPost ip
-    LEFT JOIN (
-        SELECT imgPostId, imgId, saveFileName, filePath
-        FROM Img
-        WHERE imgId IN (
-            SELECT MIN(imgId) 
-            FROM Img 
-            GROUP BY imgPostId
-        )
-    ) i ON ip.imgPostId = i.imgPostId
-     ORDER BY ip.imgPostId DESC
-</select>
+    <select id="getImgBoards" resultMap="ImgBoardResultMap">
+        SELECT ip.*, i.imgId, i.saveFileName, i.filePath
+        FROM ImgPost ip
+        LEFT JOIN (
+            SELECT imgPostId, imgId, saveFileName, filePath
+            FROM Img
+            WHERE imgId IN (
+                SELECT MIN(imgId) 
+                FROM Img 
+                GROUP BY imgPostId
+            )
+        ) i ON ip.imgPostId = i.imgPostId
+        ORDER BY ip.imgPostId DESC
+    </select>
 
-<select id="getImgPostById" resultMap="ImgBoardResultMap">
-    SELECT * FROM ImgPost ip
-    LEFT JOIN Img i ON ip.imgPostId = i.imgPostId
-    WHERE ip.imgPostId = #{imgPostId}
-</select>
+    <select id="getImgPostById" resultMap="ImgBoardResultMap">
+        SELECT * FROM ImgPost ip
+        LEFT JOIN Img i ON ip.imgPostId = i.imgPostId
+        WHERE ip.imgPostId = #{imgPostId}
+    </select>
+
+<update id="updateImgPost" parameterType="com.zd.back.imgboard.model.ImgPost">
+    UPDATE ImgPost
+    SET 
+        title = #{title}, 
+        content = #{content}, 
+        cate = #{cate}, 
+        created = SYSDATE
+    WHERE imgPostId = #{imgPostId}
+</update>
+
 
     <delete id="deleteImgPostById">
         DELETE FROM ImgPost

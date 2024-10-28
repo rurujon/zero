@@ -6,10 +6,7 @@ import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgManagerService;
-
 import lombok.RequiredArgsConstructor;
-
-
 import java.io.IOException;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-
+//수정시 파일 업로드 부분 제외하고 text만 되도록 함 (-)
 
 
 @RestController
@@ -28,10 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor  //의존성 주입 위함 
 public class ImgBoardController {
 
+
     private final ImgPostService imgPostService;
     private final ImgService imgService;
     private final ImgManagerService imgManagerService;
-    //파일 업로드 위한 메소드는 ImgManagerService.java로 옮김 
+    //파일 업로드 위한 메소드는 ImgManagerService.java로 옮김  
 
 
     @PostMapping("/created")
@@ -44,7 +42,7 @@ public class ImgBoardController {
             imgPostService.createImgPost(imgPost);
 
             //imgManagerService 에서 받아서 list로 저장
-            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId);
+            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId+1);
 
             //이미지 정보 DB에 저장           
             imgService.saveImg(imgList);
@@ -84,23 +82,60 @@ public class ImgBoardController {
     }
 
 
-    //updated 코딩 (-)
+    @GetMapping("/updated")
+    public ResponseEntity<ImgBoard> getUpdatedArticle(@RequestParam int imgPostId) {
+
+        try {
+            ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+            if (imgBoard == null) {
+                return ResponseEntity.notFound().build();
+
+            }
+
+            return ResponseEntity.ok(imgBoard); 
+
+        } catch (Exception e) {
+               
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(null); // 오류 발생 시 null 반환
+        }
+    }
+    
+     @PostMapping("/updated")
+    public ResponseEntity<String> getUpdatedArticle(@RequestParam int imgPostId,
+            @ModelAttribute ImgPost imgPost) {
+        try {
+
+            // 1.imgPost update
+            imgPost.setImgPostId(imgPostId);
+            imgPostService.updateImgPost(imgPost);
+
+            return ResponseEntity.ok("인증게시물이 수정되었습니다.");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("게시물 수정 중 오류가 발생했습니다: " + e.getMessage());
+        }
+          
+    } 
+
 
     @DeleteMapping("/deleted")
     public String deleteArticle(@RequestParam int imgPostId) {
         try {
 
+            
             List<Img> images = imgService.getImagesByPostId(imgPostId); 
-
-            //DB삭제 
+        
+            //DB삭제 - 데이터 무결성 위해서 DB삭제 후 물리적 파일 삭제 해야함
             imgService.deleteImagesByPostId(imgPostId); // 먼저 이미지를 삭제
             
             // 물리적 파일 삭제
             for (Img img : images) {
                 imgManagerService.deleteImages(img.getSaveFileName()); 
             }
-                   
+        
             // 이후 게시물 삭제
+
             imgPostService.deleteImgPostById(imgPostId); 
 
             return "게시물이 삭제되었습니다.";
@@ -108,6 +143,5 @@ public class ImgBoardController {
             return "게시물 삭제에 실패했습니다: " + e.getMessage();
         }
     }
-    
 
-}
+}    

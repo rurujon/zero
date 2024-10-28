@@ -22,6 +22,10 @@
         WHERE imgPostId = #{imgPostId}
     </delete>
 
+    <delete id="deleteBySaveFileName">
+        DELETE FROM img
+        WHERE saveFileName = #{saveFileName}
+    </delete>
 
 
 </mapper>

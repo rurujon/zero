@@ -26,10 +26,13 @@ public class ImgService {
         return imgMapper.getImagesByPostId(imgPostId); 
     }
 
-    public void deleteImagesByPostId(int imgPostId) {
-        imgMapper.deleteImagesByPostId(imgPostId);
+    public void deleteBySaveFileName(String saveFileName) {
+        imgMapper.deleteBySaveFileName(saveFileName);
     }
 
+    public void deleteImagesByPostId(int imgPostId) {
+        imgMapper.deleteImagesByPostId(imgPostId);
+    }    
 
 
 }

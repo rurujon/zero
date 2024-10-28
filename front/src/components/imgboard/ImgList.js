@@ -15,6 +15,19 @@ function ImgList() {
             });
     }, []);
    
+    const getCateLabel = (cate) => {
+        switch (cate) {
+            case 'tum':
+                return '텀블러 이용';
+            case 'buy':
+                return '물품 구매';
+            case 'group':
+                return '단체활동 참여';
+            default:
+                return '알 수 없음';
+        }
+    };
+
     return (
         <div>
             <h2>인증게시판 리스트</h2>
@@ -55,9 +68,9 @@ function ImgList() {
                         </div>
     
                         <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
-                            <p style={{ color: '#fff' }}>승인여부: {board.imgPost.auth}</p>
+                            <p style={{ color: '#fff' }}>인증 승인: {board.imgPost.auth}</p>
                         </div>
-                        <p>목록: {board.imgPost.cate}</p>
+                        <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
                         <p>작성자: {board.imgPost.memId}</p>
                         <p>
                             제목: 
