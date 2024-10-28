@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -6,24 +6,32 @@
 <mapper namespace="com.zd.back.login.mapper.MemberMapper">
 
     <insert id="insertMember" parameterType="com.zd.back.login.model.Member">
-        INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2)
-        VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2})
+    INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, termsAccepted, privacyAccepted)
+    VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2},
+            DECODE(#{termsAccepted}, 'true', 1, 0),
+            DECODE(#{privacyAccepted}, 'true', 1, 0))
     </insert>
 
     <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
-        SELECT * FROM member WHERE memId = #{memId}
+    SELECT memId, pwd, memName, email, tel, post, addr1, addr2,
+           CASE WHEN termsAccepted = 1 THEN 'true' ELSE 'false' END as termsAccepted,
+           CASE WHEN privacyAccepted = 1 THEN 'true' ELSE 'false' END as privacyAccepted
+    FROM member
+    WHERE memId = #{memId}
     </select>
 
     <update id="updateMember" parameterType="com.zd.back.login.model.Member">
-        UPDATE member
-        SET pwd = #{pwd},
-            memName = #{memName},
-            email = #{email},
-            tel = #{tel},
-            post = #{post},
-            addr1 = #{addr1},
-            addr2 = #{addr2}
-        WHERE memId = #{memId}
+    UPDATE member
+    SET pwd = #{pwd},
+        memName = #{memName},
+        email = #{email},
+        tel = #{tel},
+        post = #{post},
+        addr1 = #{addr1},
+        addr2 = #{addr2},
+        termsAccepted = DECODE(#{termsAccepted}, 'true', 1, 0),
+        privacyAccepted = DECODE(#{privacyAccepted}, 'true', 1, 0)
+    WHERE memId = #{memId}
     </update>
 
     <delete id="deleteMember" parameterType="string">

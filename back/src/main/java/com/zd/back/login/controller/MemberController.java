@@ -1,28 +1,28 @@
 package com.zd.back.login.controller;
 
-import com.zd.back.JY.domain.attendance.AttendanceService;
-import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/member")
 public class MemberController {
-
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
@@ -35,21 +35,48 @@ public class MemberController {
     public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream()
-               .map(error -> error.getDefaultMessage())
-               .collect(Collectors.joining(", "));
-            return ResponseEntity.badRequest().body(errors);
-        }
+            .map(error -> error.getDefaultMessage())
+            .collect(Collectors.joining(", "));
 
-        if (!member.isTermsAccepted()) {
-            return ResponseEntity.badRequest().body("이용약관에 동의해야 합니다.");
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", errors);
+            return ResponseEntity.badRequest().body(errorResponse);
         }
 
         try {
             memberService.registerMember(member);
-            return ResponseEntity.ok("회원가입 성공");
-        } catch (Exception e) {
-            logger.error("회원가입 중 오류 발생", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 처리 중 문제가 발생했습니다: " + e.getMessage());
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "회원가입이 완료되었습니다.");
+            return ResponseEntity.ok(response);
+            } catch (Exception e) {
+                logger.error("회원가입 중 오류 발생", e);
+                Map<String, String> errorResponse = new HashMap<>();
+                errorResponse.put("error", "회원가입 처리 중 오류가 발생했습니다: " + e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            }
+        }
+
+    @GetMapping("/terms")
+    public ResponseEntity<String> getTerms() {
+        try {
+            ClassPathResource resource = new ClassPathResource("terms.txt");
+            byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            return ResponseEntity.ok(new String(bytes, StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            logger.error("이용약관 파일 읽기 오류", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이용약관을 불러올 수 없습니다.");
+        }
+    }
+
+    @GetMapping("/privacy")
+    public ResponseEntity<String> getPrivacyAgreement() {
+        try {
+            ClassPathResource resource = new ClassPathResource("agreement.txt");
+            byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            return ResponseEntity.ok(new String(bytes, StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            logger.error("개인정보 동의서 파일 읽기 오류", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("개인정보 동의서를 불러올 수 없습니다.");
         }
     }
 
@@ -70,10 +97,15 @@ public class MemberController {
 
                 return ResponseEntity.ok(response);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
+            // 로그인 실패 시
+            Map<String, String> failureResponse = new HashMap<>();
+            failureResponse.put("error", "로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
         } catch (Exception e) {
             logger.error("로그인 중 오류 발생", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 처리 중 오류가 발생했습니다: " + e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "로그인 처리 중 오류가 발생했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 

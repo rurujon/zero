@@ -1,9 +1,12 @@
+// MemberForm.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import ValidationMessage from './ValidationMessage';
 import { validateField } from './utils/validating';
+import { useNavigate } from 'react-router-dom';
 
 const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [member, setMember] = useState({
@@ -16,9 +19,11 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         post: '',
         addr1: '',
         addr2: '',
-        termsAccepted: false
+        termsAccepted: false,
+        privacyAccepted: false
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
@@ -27,38 +32,51 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [termsContent, setTermsContent] = useState('');
+    const [privacyContent, setPrivacyContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState('');
 
-    useEffect(() => {
-        const defaultTerms =(`이용약관\n\n1. 이용자는...\n2. 서비스 제공...\n3....\n내용은 추후 수정`);
-        setTermsContent(defaultTerms);
+    // 회원가입 핸드폰인증 일시정지
+    const SKIP_PHONE_VERIFICATION = process.env.REACT_APP_SKIP_PHONE_VERIFICATION === 'true';
 
+    useEffect(() => {
         if (initialData) {
             setMember(prevState => ({
                 ...prevState,
                 ...initialData,
                 pwd: '',
                 pwdConfirm: '',
-                termsAccepted: false
+                termsAccepted: false,
+                privacyAccepted: false
             }));
             setPhoneNumber(initialData.tel || '');
             adjustWindowSize(window, initialData, true, []);
         }
 
-        // 이용약관 불러오기 시도
-    axios.get('/api/terms')
-    .then(response => {
-        if (response.data && typeof response.data === 'string') {
-            setTermsContent(response.data);
-        }
-    })
-    .catch(error => {
-        console.error('이용약관 불러오기 오류:', error);
-        // 오류 발생 시 기본 이용약관 사용
-        setTermsContent(defaultTerms);
-    });
-}, [initialData]);
+        // 이용약관 불러오기
+        axios.get('/member/terms')
+        .then(response => {
+            if (response.data && typeof response.data === 'string') {
+                setTermsContent(response.data);
+            }
+        })
+        .catch(error => {
+            console.error('이용약관 불러오기 오류:', error);
+            setTermsContent('이용약관을 불러오는 중 오류가 발생했습니다.');
+        });
+
+        // 개인정보 처리방침 불러오기
+        axios.get('/member/privacy')
+        .then(response => {
+            if (response.data && typeof response.data === 'string') {
+                setPrivacyContent(response.data);
+            }
+        })
+        .catch(error => {
+            console.error('개인정보 처리방침 불러오기 오류:', error);
+            setPrivacyContent('개인정보 처리방침을 불러오는 중 오류가 발생했습니다.');
+        });
+    }, [initialData]);
 
     const checkDuplicateId = () => {
         if (!member.memId || member.memId.trim() === '') {
@@ -68,7 +86,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         axios.get('/member/check-id', { params: { memId: member.memId } })
             .then(response => {
-                setIsDuplicate(response.data);
+                setIsDuplicate(response.data.isDuplicate);
                 setIsChecked(true);
             })
             .catch(error => {
@@ -103,6 +121,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         if (!isEditing && !member.termsAccepted) {
             newErrors.termsAccepted = '이용약관에 동의해야 합니다.';
+        }
+
+        if (!isEditing && !member.privacyAccepted) {
+            newErrors.privacyAccepted = '개인정보 처리방침에 동의해야 합니다.';
         }
 
         setErrors(newErrors);
@@ -175,6 +197,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 alert('이미 사용 중인 아이디입니다.');
                 return;
             }
+            if (!member.termsAccepted || !member.privacyAccepted) {
+                alert('이용약관과 개인정보 처리방침에 모두 동의해야 합니다.');
+                return;
+            }
         }
 
         if (validateForm()) {
@@ -190,12 +216,20 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 };
 
                 const response = await axios.post(url, data, { withCredentials: true });
-                console.log(response);
-                alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');
-                onSubmit();
+
+                if (response.status === 200 && response.data) {
+                    alert(response.data);
+                    navigate('/member-info');
+                    onSubmit(member);
+
+                }
             } catch (error) {
                 console.error('Error:', error.response);
-                setServerError(error.response?.data || (isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.'));
+                if (error.response && error.response.data && error.response.data.error) {
+                    setServerError(error.response.data.error);
+                } else {
+                    setServerError(isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.');
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -386,26 +420,59 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 {!isEditing && (
-                <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
-                    <div className="col-sm-10">
-                        <textarea
-                            className="form-control"
-                            value={termsContent}
-                            readOnly
-                            rows="6"
-                            style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
-                        />
+                <>
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                className="form-control"
+                                value={termsContent}
+                                readOnly
+                                rows="6"
+                                style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+                            />
+                            <div className="form-check mb-3">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="termsAccepted"
+                                    checked={member.termsAccepted}
+                                    onChange={handleInputChange}
+                                />
+                                <label className="form-check-label" htmlFor="termsAccepted">
+                                    이용약관에 동의합니다.
+                                </label>
+                                {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="form-check mb-3">
-                    <input className="form-check-input" type="checkbox" name="termsAccepted" checked={member.termsAccepted} onChange={handleInputChange} />
-                    <label className="form-check-label" htmlFor="termsAccepted">
-                        이용약관에 동의합니다.
-                    </label>
-                    {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
-                </div>
-                </div>
-                </div>
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">개인정보 처리방침</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                className="form-control"
+                                value={privacyContent}
+                                readOnly
+                                rows="6"
+                                style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+                            />
+                            <div className="form-check mb-3">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="privacyAccepted"
+                                    checked={member.privacyAccepted}
+                                    onChange={handleInputChange}
+                                />
+                                <label className="form-check-label" htmlFor="privacyAccepted">
+                                    개인정보 처리방침에 동의합니다.
+                                </label>
+                                {errors.privacyAccepted && <ValidationMessage message={errors.privacyAccepted} />}
+                            </div>
+                        </div>
+                    </div>
+                </>
                 )}
 
                 <div className="mt-3">
