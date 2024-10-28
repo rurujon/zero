@@ -43,7 +43,7 @@ public class PointService {
             int maxNum = maxNum();
             dto.setPointId(maxNum + 1);
             dto.setMemId(memId);
-            dto.setGrade("LEVEL1");
+            dto.setGrade("level1");
             dto.setMaxPoint(50);
             dto.setUsedPoint(50);
             pointMapper.insertData(dto);
@@ -85,8 +85,21 @@ public class PointService {
                 throw new IllegalArgumentException("잘못된 연산자입니다.");
             }
 
+            if (dto.getUsedPoint() < 0 || dto.getMaxPoint() < 0) {
+                throw new IllegalArgumentException("포인트는 음수가 될 수 없습니다.");
+            }
+            if (dto.getUsedPoint() > dto.getMaxPoint()) {
+                throw new IllegalArgumentException("사용된 포인트가 최대포인트보다 많을 수 없습니다.");
+            }
+
             pointMapper.updatePoint(dto);
-            updateGrade(memId);
+            // 등급 업데이트를 위해 dto의 상태를 확인
+            String newGrade = calculateGrade(dto.getMaxPoint());
+            if (!dto.getGrade().equals(newGrade)) {
+                dto.setGrade(newGrade);
+                pointMapper.updatePoint(dto);
+                logger.info("등급 업데이트: {} -> {}", memId, newGrade);
+            }
 
             PointHistoryDTO historyDTO = new PointHistoryDTO();
             historyDTO.setMemId(memId);
@@ -124,12 +137,12 @@ public class PointService {
     }
 
     private String calculateGrade(int maxPoint) {
-        if (maxPoint >= 600) return "LEVEL6";
-        if (maxPoint >= 500) return "LEVEL5";
-        if (maxPoint >= 400) return "LEVEL4";
-        if (maxPoint >= 300) return "LEVEL3";
-        if (maxPoint >= 200) return "LEVEL2";
-        return "LEVEL1";
+        if (maxPoint >= 600) return "level6";
+        if (maxPoint >= 500) return "level5";
+        if (maxPoint >= 400) return "level4";
+        if (maxPoint >= 300) return "level3";
+        if (maxPoint >= 200) return "level2";
+        return "level1";
     }
 
     private int parseUpdown(Object updown) {
@@ -171,7 +184,7 @@ public class PointService {
             dto = new PointDTO();
             dto.setPointId(maxNum() + 1);
             dto.setMemId(memId);
-            dto.setGrade("LEVEL1");
+            dto.setGrade("level1");
             dto.setMaxPoint(1); // 초기 포인트 설정
             dto.setUsedPoint(1); // 초기 포인트 설정
             pointMapper.insertData(dto);
