@@ -3,56 +3,60 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.tipboard.comment.mapper.CommentMapper">
+<mapper namespace="com.zd.back.SY.comment.mapper.CommentMapper">
+
+	<!-- 댓글 추가 -->
+	<insert id="createComment" parameterType="com.zd.back.SY.comment.model.param.CommentParam">
+		<selectKey keyProperty="commentno" resultType="int" order="BEFORE">
+			SELECT tip_commentno.NEXTVAL FROM dual
+		</selectKey>
+			INSERT INTO tipcomment (commentno, memId, content, boardno, del)
+			VALUES (#{commentno}, #{memId}, #{content}, #{boardno}, 0)
+	</insert>
+
 
 	<!-- 댓글 조회 -->
-	<select id="getCommentPageList" parameterType="com.zd.back.tipboard.comment.dto.param.CommentListParam"
-					resultType="com.zd.back.tipboard.comment.domain.Comment">
-
-		SELECT seq, memId, content, bbsSeq, created, del
+	<select id="getCommentPageList" parameterType="com.zd.back.SY.comment.model.param.CommentListParam"
+			resultType="com.zd.back.SY.comment.model.Comment">
+		SELECT commentno, memId, content, boardno, del, created
 		FROM (
-		    SELECT row_number() OVER(ORDER BY created DESC) AS rnum, seq, memId, content, bbsSeq, created, del
-		    FROM tipcomment
-				WHERE bbsSeq=#{bbsSeq}) a
-		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
-
+			SELECT row_number() OVER(ORDER BY created DESC) AS rnum, commentno, memId, content, boardno, del, created
+			FROM tipcomment
+			WHERE boardno = #{boardno}
+		) a
+		WHERE rnum BETWEEN #{pageStart} AND #{pageEnd}
+			<!-- SELECT commentno, memId, content, boardno, del, created
+			FROM tipcomment
+			WHERE boardno = #{boardno} -->
 	</select>
 
 	<!-- 댓글 총 개수 조회 -->
-	<select id="getCommentCount" parameterType="Integer" resultType="Integer">
-
-		SELECT nvl(count(*), 0)
+	<select id="getCommentCount" parameterType="int" resultType="int">
+		SELECT NVL(count(*), 0)
 		FROM tipcomment
-		WHERE bbsSeq=#{seq}
+		WHERE boardno = #{boardno}
 	</select>
 
-	<!-- 댓글 추가 -->
-	<insert id="createComment" parameterType="com.zd.back.tipboard.comment.dto.param.CreateCommentParam"
-					useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO tipcomment (seq, memId, content, bbsSeq, created, del)
-		VALUES (tipcomment_seq.NEXTVAL, #{memId}, #{content}, #{bbsSeq}, sysdate, 0)
-	</insert>
-
-	<!-- 댓글 삭제 -->
-	<update id="deleteComment" parameterType="Integer">
-		UPDATE tipcomment
-		SET del = 1
-		WHERE seq = #{seq}
-	</update>
-
 	<!-- 댓글 조회 -->
-	<select id="getCommentBySeq" parameterType="Integer"
-					resultType="com.zd.back.tipboard.comment.domain.Comment">
-		SELECT seq, memId, content, bbsSeq, created, del
+	<select id="getCommentBySeq" parameterType="int"
+					resultType="com.zd.back.SY.comment.model.Comment">
+		SELECT commentno, memId, content, boardno, del, created
 		FROM tipcomment
-		WHERE seq=#{seq}
+		WHERE commentno=#{commentno}
 	</select>
 
 	<!-- 댓글 수정 -->
-	<update id="updateComment" parameterType="com.zd.back.tipboard.comment.dto.param.UpdateCommentParam">
+	<update id="updateComment" parameterType="com.zd.back.SY.comment.model.param.CommentParam">
 		UPDATE tipcomment
 		SET content = #{content}
-		WHERE seq = #{seq}
+		WHERE commentno = #{commentno}
+	</update>
+
+	<!-- 댓글 삭제 -->
+	<update id="deleteComment" parameterType="int">
+		UPDATE tipcomment
+		SET del = 1
+		WHERE commentno = #{commentno}
 	</update>
 
 </mapper>

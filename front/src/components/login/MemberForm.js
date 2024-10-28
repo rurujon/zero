@@ -30,9 +30,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
 
     useEffect(() => {
-
+        // 이용약관 내용을 직접 설정
         setTermsContent(`이용약관\n\n1. 이용자는 ...\n2. 서비스 제공 ...\n3. ...\n내용은 추후 수정`);
-
+    
         if (initialData) {
             setMember(prevState => ({
                 ...prevState,
@@ -44,11 +44,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             setPhoneNumber(initialData.tel || '');
             adjustWindowSize(window, initialData, true, []);
         }
-
-        axios.get('/api/terms')
-        .then(response => setTermsContent(response.data))  // 응답 데이터로 이용약관 내용을 설정
-        .catch(error => console.error('이용약관 불러오기 오류:', error));
-
     }, [initialData]);
 
     const checkDuplicateId = () => {

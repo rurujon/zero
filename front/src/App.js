@@ -12,8 +12,8 @@ import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import { routes } from './routes';
-import BbsApp from './components/tipboard/app/BbsApp';
-import HttpHeadersProvider from './components/tipboard/context/HttpHeadersProvider';
+import HttpHeadersProvider from './components/context/HttpHeadersProvider';
+import BbsWrite from './components/board/BbsWrite';
 
 function AppContent() {
 
@@ -37,7 +37,7 @@ function AppContent() {
       {/* <SmartMapApp/> */}
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
-      <BbsApp/>
+      {/* <BbsWrite/> */}
 
      <Routes>
         {routes.map((route) => (

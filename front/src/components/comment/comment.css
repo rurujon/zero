@@ -1,0 +1,13 @@
+.profile-img {
+    width: 50px; /* 프로필 이미지 크기 조정 */
+    height: auto; /* 비율 유지 */
+}
+
+.comment-id {
+    font-size: 20px; /* 글자 크기 조정 */
+}
+
+textarea {
+    font-size: 14px; /* 글자 크기 조정 */
+    resize: none; /* 크기 조절 기능 비활성화 */
+}
