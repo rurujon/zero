@@ -11,6 +11,8 @@ public interface ImgMapper {
     
     int maxImgId();
     void saveImg(Img img);
-    List<Img> getImagesByPostId(int imgPostId);    void deleteImagesByPostId(int imgPostId);
+    List<Img> getImagesByPostId(int imgPostId);   
+    void deleteImagesByPostId(int imgPostId);
+    void deleteBySaveFileName( String saveFileName);
 
 }

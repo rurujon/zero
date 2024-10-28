@@ -51,7 +51,10 @@ dependencies {
 
 	//2024-10-17 정우준 추가
 	implementation 'net.nurigo:sdk:4.2.7'
-
+	
+	//2024-10-26 문승은 추가
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
 }
 
 tasks.named('test') {

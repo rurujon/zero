@@ -1,29 +1,27 @@
 package com.zd.back.imgboard.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
 import com.zd.back.imgboard.service.ImgManagerService;
-
 import lombok.RequiredArgsConstructor;
-
-
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 
+//ImgCreated1.js 과 매칭 
 
-
-
-
+/* 
 @RestController
 @RequestMapping("/imgboard")
 @RequiredArgsConstructor  //의존성 주입 위함 
@@ -32,7 +30,7 @@ public class ImgBoardController {
     private final ImgPostService imgPostService;
     private final ImgService imgService;
     private final ImgManagerService imgManagerService;
-    //파일 업로드 위한 메소드는 ImgManagerService.java로 옮김 
+    //파일 업로드 위한 메소드는 ImgManagerService.java로 옮김  
 
 
     @PostMapping("/created")
@@ -104,60 +102,52 @@ public class ImgBoardController {
         }
     }
     
-    @PostMapping("/updated")
-    public ResponseEntity<String> getUpdatedArticle_Ok(@RequestParam int imgPostId,@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception {
-        try{
+     @PostMapping("/updated")
+    public ResponseEntity<String> getUpdatedArticle(@RequestParam int imgPostId,
+            @ModelAttribute ImgPost imgPost,
+        @RequestParam(value = "removedImages", required = false) String removedImagesJson,
+        @RequestParam(value = "images", required = false) MultipartFile[] images) 
+    {
+        try {
 
-
-            //원한는것 : 기존 파일은 삭제 안하고 , 대체된 옛 파일 삭제/하면서 새로운 파일 넣기 
-
-            // 1. imgPost 업데이트 
+            // 1.imgPost update
             imgPost.setImgPostId(imgPostId);
             imgPostService.updateImgPost(imgPost);
 
-            // 2. 기존 이미지 가져오기 
-            List<Img> exImgList = imgService.getImagesByPostId(imgPostId);
-
-            // 3. 기존 이미지 saveFileName 과 axios.post 로 보낸 데이터의 saveFileName(article통해서 가져옴) 일치 하면 삭제 안함 
-            //(즉 이미지 대체 안누름)
-            List<Img> newImgList = imgManagerService.uploadImages(images, imgPostId);
-
-
-
-//===============================================================================================            
-            //게시물 및 이미지 업데이트
-            imgPost.setImgPostId(imgPostId);
-            imgPostService.updateImgPost(imgPost);
-            List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
-            imgService.saveImg(imgList);
             
-            //기존 이미지 DB 삭제후 물리적 파일 삭제
-            List<Img> existingImages = imgService.getImagesByPostId(imgPostId);
+            if(removedImagesJson !=null || images.length>0){
 
-            for (Img img : existingImages) {
+                // JSON 문자열을 List로 변환 (removedImages)
+                List<String> removedImages = new ObjectMapper().readValue(removedImagesJson, new TypeReference<List<String>>() {});
 
-                imgManagerService.deleteImages(img.getSaveFileName());
-            }
 
-            imgService.deleteImagesByPostId(imgPostId);
-        
-            return new ResponseEntity<>("인증 게시물이 수정되었습니다.", HttpStatus.OK);
+                // 2. removedImages 삭제 -DB삭제 후 파일 삭제
+                for (String saveFileName : removedImages) {
+                    imgService.deleteBySaveFileName(saveFileName); //DB에 삭제
+                    imgManagerService.deleteImages(saveFileName); 
+                }
+              
+                // 3. 새로 업로드된 이미지 처리 및 저장
+                List<Img> imgList = imgManagerService.uploadImages(images, imgPostId);
+                imgService.saveImg(imgList);
 
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (IOException e) {
-            return new ResponseEntity<>("파일 저장 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+            return ResponseEntity.ok("인증게시물이 수정되었습니다.");
 
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("게시물 수정 중 오류가 발생했습니다: " + e.getMessage());
+        }
+          
+    } 
 
 
     @DeleteMapping("/deleted")
     public String deleteArticle(@RequestParam int imgPostId) {
         try {
 
+            
             List<Img> images = imgService.getImagesByPostId(imgPostId); 
-
+        
             //DB삭제 - 데이터 무결성 위해서 DB삭제 후 물리적 파일 삭제 해야함
             imgService.deleteImagesByPostId(imgPostId); // 먼저 이미지를 삭제
             
@@ -165,8 +155,9 @@ public class ImgBoardController {
             for (Img img : images) {
                 imgManagerService.deleteImages(img.getSaveFileName()); 
             }
-                   
+        
             // 이후 게시물 삭제
+
             imgPostService.deleteImgPostById(imgPostId); 
 
             return "게시물이 삭제되었습니다.";
@@ -174,6 +165,6 @@ public class ImgBoardController {
             return "게시물 삭제에 실패했습니다: " + e.getMessage();
         }
     }
-    
 
-}
+}    
+*/
