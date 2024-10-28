@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Paystep1 from "./Paystep1"
 import Paystep2 from "./Paystep2"
 import Paystep3 from "./Paystep3"
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes,useNavigate   } from "react-router-dom";
 const Pay = () => {
   //post, addr1,2, email, memname
     const [amount, setAmount] = useState("");
@@ -12,6 +12,10 @@ const Pay = () => {
     // const [name, setName] = useState(""); 
     // const [post, setPost] = useState(""); 
     // const [addr, setAddr] = useState(""); 
+    const navigate = useNavigate();
+    const toDonate = () => {
+      navigate('/donate');
+  };
 
     const amountChange = (event) => {
       setAmount(event.target.value); // 선택된 라디오 버튼의 값을 amount에 저장
@@ -74,7 +78,7 @@ const Pay = () => {
     } else if (step === 2) {
       return <Paystep2 setStep={setStep} memberInfo={memberInfo} setMemberInfo={setMemberInfo}/>;
     } else {
-      return <Paystep3 setStep={setStep}/>;
+      return <Paystep3 setStep={setStep} requestPay={requestPay}/>;
     }
   };
  
@@ -94,7 +98,7 @@ const Pay = () => {
           <dl>{memberInfo.tel}</dl>
         </ul>
       </div>
-      <button onClick={requestPay}>결제하기1</button>
+      <button onClick={toDonate}>후원하기</button>
     </div>
   );
 };
