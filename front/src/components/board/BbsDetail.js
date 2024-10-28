@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import CommentWrite from "../comment/CommentWrite";
+import CommentList from "../comment/CommentList";
 
 // import CommentWrite from "../comment/CommentWrite";
 // import CommentList from "../comment/CommentList";
@@ -120,7 +122,7 @@ function BbsDetail() {
 					<tr>
 						<th>내용</th>
 						<td>
-							<div>{board.content}</div>
+							<pre>{board.content}</pre>
 						</td>
 					</tr>
 				</tbody>
@@ -132,17 +134,17 @@ function BbsDetail() {
 				</Link>
 			</div><br/><br/>
 
-			{/* 댓글 작성 컴포넌트
+			{/* 댓글 작성 컴포넌트 */}
 			{
-				localStorage.getItem("id") ? // 로그인한 사용자만 댓글 작성 가능
-					<CommentWrite seq={seq}/>
+				localStorage.getItem("memId") ? // 로그인한 사용자만 댓글 작성 가능
+					<CommentWrite boardno={boardno}/>
 				:
 					null
 			}			
 
-			댓글 리스트 컴포넌트
-			<CommentList seq={seq}/>
-             */}
+			{/* 댓글 리스트 컴포넌트 */}
+			<CommentList boardno={boardno}/>
+            
 		</div>
 	);
 }

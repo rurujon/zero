@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
+import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
 import './bbs.css';
 import './page.css';
@@ -147,9 +148,9 @@ function TableRow(props) {
 						(board.del == 0) ?
 						// 삭제되지 않은 게시글
 						<>
-							<td>{board.category}</td>
+							<td>[{board.category}]</td>
 							<td >
-								<Arrow depth={board.depth}></Arrow> &nbsp; {/* 답글 화살표 */}
+								<Arrow depth={board.depth}></Arrow> {/* 답글 화살표 */}
 
 								<Link to={{ pathname: `/board/${board.boardno}` }}> {/* 게시글 상세 링크 */}
 									<span className="underline bbs-title" >{board.title} </span> { /* 게시글 제목 */}
@@ -193,7 +194,8 @@ function Arrow( props ) { //게시글의 깊이를 표시하기 위한 컴포넌
 
 	return (
 		<>
-			{taps} <i className="fas fa-long-arrow-alt-right"></i>
+			{/* {taps} <span className="arrow-right"></span> */}
+			{taps} <ArrowRightIcon  style={{ height: '15px', width: '15px', color: 'black' }} />
 		</> 
 	 );
 }
