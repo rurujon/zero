@@ -20,19 +20,17 @@ const ImgCreated = () => {
     const fileInputRefs = useRef([]);
     const titleRef = useRef(null);
     const contentRef = useRef(null);
-    const [alertShown, setAlertShown] = useState(false); //  alert창 1번띄우기 위해
+   
 
     useEffect(() => {
         // memId가 없으면 로그인 페이지로 이동
         //alert 두번 뜸 (-)
         if (!memId) {
-            if (!alertShown) {
-                setAlertShown(true);
-                alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");
-            }
+             
+            alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");       
             navigate("/login");
         }
-    }, [memId, navigate, alertShown]);
+    }, [memId, navigate]);
    
     useEffect(() => {
         if (updatedMode) {
@@ -41,8 +39,17 @@ const ImgCreated = () => {
                     const response = await axios.get('/imgboard/updated', {
                         params: { imgPostId }
                     });
+                    
                     const { imgPost, images: existingImages } = response.data;
-                    const { memId, title, content, cate } = imgPost;
+                    const { memId: postMemId, title, content, cate } = imgPost;
+
+                    //alert 두번 뜸 (-)
+                    if (postMemId !== memId && memId!=='suzi123') {
+                        alert("본인이 작성한 게시물만 수정할 수 있습니다.");
+                        navigate('/imgboard/list');
+
+                        return;
+                    }
 
                     setMemId(memId);
                     setTitle(title);
