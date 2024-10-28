@@ -14,7 +14,7 @@ function Comment(props) {
 	const [content, setContent] = useState(comment.content);
 
 	const memId = localStorage.getItem("memId");
-	const headers = { "Authorization": localStorage.getItem("token") };
+	const headers = { "memId": memId };
 
 	const changeContent = (event) => {
 		setContent(event.target.value);
@@ -25,9 +25,6 @@ function Comment(props) {
 		const req = {
 			content: content
 		};
-
-        console.log("comment:", comment);  // comment 객체 전체 출력
-        console.log("comment.boardno:", comment.boardno);
         
 		await axios.post(`http://localhost:8080/comment/${comment.commentno}?boardno=${comment.boardno}`, req, { headers })
 			.then((resp) => {
@@ -35,6 +32,7 @@ function Comment(props) {
 				console.log(resp.data);
 
 				alert("댓글을 성공적으로 수정했습니다 !");
+				setContent(resp.data.updatedContent);
 				navigate(0); // 새로고침
 			}).catch((err) => {
 				console.log("[Comment.js] updateComment() error :<");

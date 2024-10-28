@@ -36,6 +36,8 @@ public class BoardParam {
     public BoardParam(BbsListRequest req) {
         this.choice = req.getChoice();
         this.search = req.getSearch();
+        this.page = req.getPage();
+        this.category = req.getCategory(); 
     }
 
     // 생성자: BbsListParam (페이징 및 검색을 위한 생성자)

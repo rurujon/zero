@@ -16,23 +16,28 @@
 	<!-- 글 목록 조회 -->
 	<select id="getBbsSearchPageList" parameterType="com.zd.back.SY.board.model.param.BoardParam" resultType="com.zd.back.SY.board.model.Board">
 		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
-		FROM
-					(SELECT row_number() OVER(ORDER BY ref DESC, step ASC) AS rnum,
-					boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
-					FROM tipboard
-					<if test="choice != null and choice != ''
-								and search != null and search != '' ">
-						<if test="choice == 'title'">
-							WHERE title LIKE '%' || #{search} || '%'
-						</if>
-						<if test="choice == 'content'">
-							WHERE content LIKE '%' || #{search} || '%'
-						</if>
-						<if test="choice == 'writer'">
-							WHERE memId=#{search}
-						</if>
+		FROM (
+			SELECT row_number() OVER(ORDER BY ref DESC, step ASC) AS rnum,
+				boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
+			FROM tipboard
+			<where>
+				<if test="category != null and category != ''">
+					category = #{category}
+				</if>
+				<if test="choice != null and choice != '' and search != null and search != ''">
+					<if test="choice == 'title'">
+						AND title LIKE '%' || #{search} || '%'
 					</if>
-					ORDER BY ref DESC, step ASC) a
+					<if test="choice == 'content'">
+						AND content LIKE '%' || #{search} || '%'
+					</if>
+					<if test="choice == 'writer'">
+						AND memId = #{search}
+					</if>
+				</if>
+			</where>
+			ORDER BY ref DESC, step ASC
+		) a
 		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
 	</select>
 
@@ -40,18 +45,22 @@
 	<select id="getBbsCount" parameterType="com.zd.back.SY.board.model.param.BoardParam" resultType="int">
 		SELECT NVL(count(*), 0)
 		FROM tipboard
-		<if test="choice != null and choice != ''
-		 			and search != null and search != '' ">
-			<if test="choice == 'title'">
-				WHERE title LIKE '%' || #{search} || '%'
+		<where>
+			<if test="category != null and category != ''">
+				category = #{category}
 			</if>
-			<if test="choice == 'content'">
-				WHERE content LIKE '%' || #{search} || '%'
+			<if test="choice != null and choice != '' and search != null and search != ''">
+				<if test="choice == 'title'">
+					AND title LIKE '%' || #{search} || '%'
+				</if>
+				<if test="choice == 'content'">
+					AND content LIKE '%' || #{search} || '%'
+				</if>
+				<if test="choice == 'writer'">
+					AND memId = #{search}
+				</if>
 			</if>
-			<if test="choice == 'writer'">
-				WHERE memId=#{search}
-			</if>
-		</if>
+		</where>
 	</select>
 
 	<!-- 특정 게시글 조회 -->

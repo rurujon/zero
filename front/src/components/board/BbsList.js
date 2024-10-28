@@ -16,6 +16,8 @@ function BbsList() {
 	const [choiceVal, setChoiceVal] = useState("");
 	const [searchVal, setSearchVal] = useState("");
 
+	const [category, setCategory] = useState(""); 
+
 	// Paging (현재 페이지 번호, 전체 게시글 수)
 	const [page, setPage] = useState(1);
 	const [totalCnt, setTotalCnt] = useState(0);
@@ -28,7 +30,7 @@ function BbsList() {
 	const getBbsList = async (choice, search, page) => {
 
 		//백엔드에 get 요청
-		await axios.get("http://localhost:8080/board/list", { params: { "choice": choice, "search": search, "page": page } })
+		await axios.get("http://localhost:8080/board/list", { params: { "choice": choice, "search": search, "page": page, "category": category } })
 			.then((resp) => {
 				console.log("[BbsList.js] useEffect() success :D");
 				console.log(resp.data);
@@ -44,17 +46,25 @@ function BbsList() {
 	}
 
 	useEffect(() => {
-		getBbsList("", "", 1); //초기페이지 1로 설정
+		getBbsList("", "", 1, ""); //초기페이지 1로 설정
 	}, []);
 
 
 	const changeChoice = (event) => { setChoiceVal(event.target.value); }
 	const changeSearch = (event) => { setSearchVal(event.target.value); }
+
+	const changeCategory = (event) => {
+		const selectedCategory = event.target.value;
+		setCategory(selectedCategory);
+		setPage(1); // 카테고리 선택 시 페이지를 초기화
+		getBbsList("", "", 1, selectedCategory); // 선택한 카테고리로 게시글 조회
+	}
+
 	const search = () => {
 		console.log("[BbsList.js searchBtn()] choiceVal=" + choiceVal + ", searchVal=" + searchVal);
 
 		navigate("/board/list");
-		getBbsList(choiceVal, searchVal, 1);
+		getBbsList(choiceVal, searchVal, 1, category);
 	}
 
 	// Enter 키가 눌렸을 때 검색 함수 호출
@@ -77,9 +87,20 @@ function BbsList() {
 			{ /* 검색 */}
 			<table className="search">
 				<tbody>
+					
+			{ /* 카테고리 필터 */ }
+			<tr className="category-filter">
+				<td>
+				<select value={category} onChange={changeCategory} className="form-control">
+					<option value="">전체 카테고리</option>
+					<option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
+					<option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
+					<option value="업사이클링 아이디어">업사이클링 아이디어</option>
+				</select></td>
+			</tr>
 					<tr>
 						<td>
-							<br/><select className="custom-select" value={choiceVal} onChange={changeChoice}>
+							<select className="custom-select" value={choiceVal} onChange={changeChoice}>
 								<option>검색 옵션 선택</option>
 								<option value="title">제목</option>
 								<option value="content">내용</option>
@@ -87,14 +108,15 @@ function BbsList() {
 							</select>
 						</td>
 						<td>
-							<br/><input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
+							<input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
 						</td>
 						<td>
-							<br/><button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
+							<button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
 						</td>
 					</tr>
 				</tbody>
 			</table><br />
+
 
 			<table className="table table-hover">
 				<thead>

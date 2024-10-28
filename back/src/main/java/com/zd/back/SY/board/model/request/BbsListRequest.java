@@ -8,4 +8,5 @@ public class BbsListRequest {
     private String choice;
     private String search;
     private int page;
+    private String category;
 }

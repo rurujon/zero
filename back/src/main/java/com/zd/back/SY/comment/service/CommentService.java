@@ -43,6 +43,7 @@ public class CommentService {
         return new CommentResponse(commentList, pageCnt);
     }
 
+    /* 댓글 수정 */
     @Transactional
     public UpdateCommentResponse updateComment(String memId, int commentno, UpdateCommentRequest req) {
         Comment comment = commentMapper.getCommentBySeq(commentno);

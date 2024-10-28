@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,9 +47,9 @@ public class CommentController {
     }
 
     @PostMapping("/{commentno}")
-    public ResponseEntity<UpdateCommentResponse> updateComment(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int commentno, @RequestBody UpdateCommentRequest req) {
+    public ResponseEntity<UpdateCommentResponse> updateComment(@RequestHeader("memId") String memId, @PathVariable int commentno, @RequestBody UpdateCommentRequest req) {
 
-        return ResponseEntity.ok(commentService.updateComment(userDetails.getUsername(), commentno, req));
+        return ResponseEntity.ok(commentService.updateComment(memId, commentno, req));
     }
 
     @GetMapping("/{commentno}")
