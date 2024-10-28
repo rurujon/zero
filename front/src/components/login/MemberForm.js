@@ -36,9 +36,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState('');
 
-    // 회원가입 핸드폰인증 일시정지
-    const SKIP_PHONE_VERIFICATION = process.env.REACT_APP_SKIP_PHONE_VERIFICATION === 'true';
-
     useEffect(() => {
         if (initialData) {
             setMember(prevState => ({
@@ -205,7 +202,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         if (validateForm()) {
             setIsLoading(true);
-            setServerError('');
+            setServerError(null);
 
             try {
                 const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
@@ -217,12 +214,16 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
                 const response = await axios.post(url, data, { withCredentials: true });
 
-                if (response.status === 200 && response.data) {
-                    alert(response.data);
-                    navigate('/member-info');
-                    onSubmit(member);
-
-                }
+                if (response.status === 200) {
+                    const successMessage = isEditing ? '회원정보가 성공적으로 수정되었습니다.' : '회원가입이 성공적으로 완료되었습니다.';
+                    alert(successMessage);
+                    if (isEditing) {
+                      onSubmit(member);
+                    } else {
+                      // 회원가입 성공 시 로그인 페이지로 이동
+                      navigate('/login');
+                    }
+                  }
             } catch (error) {
                 console.error('Error:', error.response);
                 if (error.response && error.response.data && error.response.data.error) {

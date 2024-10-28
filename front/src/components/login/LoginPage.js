@@ -2,11 +2,13 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthContext } from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [memId, setMemId] = useState('');
     const [pwd, setPwd] = useState('');
     const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +19,7 @@ const LoginPage = () => {
                 if (response.data.upPoint === "1") {
                     alert("출석이 인정되었습니다! +1 포인트");
                 }
-                //window.location.reload();
+                navigate('/member-info'); // 로그인 성공 시 회원 정보 페이지로 이동
             } else {
                 alert("로그인 정보가 올바르지 않습니다.");
             }

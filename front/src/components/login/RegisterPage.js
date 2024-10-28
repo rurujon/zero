@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import MemberForm from './MemberForm';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 추가로 가져옵니다.
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
 
 const RegisterPage = ({ onRegisterCancel }) => {
     const [terms, setTerms] = useState('');
     const [privacy, setPrivacy] = useState('');
-    const navigate = useNavigate(); // useNavigate 훅을 사용하여 네비게이션 기능을 추가합니다.
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
         fetchTerms();
@@ -31,19 +33,27 @@ const RegisterPage = ({ onRegisterCancel }) => {
         }
     };
 
-    const handleRegisterSuccess = (memberData) => {
+    const handleRegisterSuccess = async (memberData) => {
         if (!memberData || typeof memberData !== 'object') {
-            alert('회원가입 처리 중 오류가 발생했습니다.');
+            alert('회원가입 중 오류가 발생했습니다.');
             return;
         }
 
-        if (!memberData.termsAccepted || !memberData.privacyAccepted) {
-            alert('이용약관과 개인정보 처리방침에 동의해야 합니다.');
-            return;
-        }
+        alert('회원가입이 성공적으로 완료되었습니다.');
 
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        try {
+            // 회원가입 성공 후 자동 로그인 시도
+            const response = await axios.post('/member/login', null, { params: { memId: memberData.memId, pwd: memberData.pwd } });
+            if (response.data.token) {
+                login(response.data.token, memberData.memId);
+                navigate('/member-info'); // 로그인된 회원의 페이지로 이동
+            } else {
+                navigate('/login'); // 자동 로그인 실패 시 로그인 페이지로 이동
+            }
+        } catch (error) {
+            console.error('자동 로그인 오류:', error);
+            navigate('/login'); // 오류 발생 시 로그인 페이지로 이동
+        }
     };
 
     const handleCancel = () => {
