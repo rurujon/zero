@@ -48,7 +48,7 @@ const HomePage = () => {
 
     return (
         <div className="container mt-4">
-            <QuizModal />
+            
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
@@ -101,6 +101,7 @@ const HomePage = () => {
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
+                    <QuizModal />
                     {showPointInfoModal && (
                         <PointInfoModal
                             show={showPointInfoModal}

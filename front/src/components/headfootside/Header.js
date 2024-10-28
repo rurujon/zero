@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import QuizModal from '../dailyQuiz/QuizModal';
 
 function Header() {
+
+  const [isQuizModalOpen, setIsQuizModalOpen] = useState(false); // 모달 상태 추가
+
   // 각 메뉴에 대한 하위 메뉴 표시 여부를 관리하는 상태 변수
   const [activeMenu, setActiveMenu] = useState(null);
 
@@ -14,7 +18,20 @@ function Header() {
   const handleMouseLeave = () => {
     setActiveMenu(null);
   };
+  const openQuizModal = () => {
+    setIsQuizModalOpen(true); // 모달 열기
+  };
 
+  const closeQuizModal = () => {
+    setIsQuizModalOpen(false); // 모달 닫기
+  };
+
+
+  const navItemStyle = (menu) => ({
+    backgroundColor: activeMenu === menu ? '#111' : 'transparent', // 마우스 오버 시 배경색
+    transition: 'background-color 0.3s ease', // 부드러운 전환 효과
+    cursor: 'pointer', // 커서 모양 변경
+  });
   return (
     <header style={styles.header}>
       {/* 로고와 첫 번째 메뉴바 */}
@@ -23,7 +40,14 @@ function Header() {
         <nav>
           <ul style={styles.navList}>
             <li style={styles.navItem}><Link to="/loginMain">Login</Link></li>
-            <li style={styles.navItem}><Link to="/about">메뉴2</Link></li>
+            <li 
+              style={navItemStyle('quiz')} // 스타일 적용
+              onClick={openQuizModal} 
+              onMouseEnter={() => handleMouseEnter('quiz')} // 마우스 오버 시 상태 변경
+              onMouseLeave={handleMouseLeave} // 마우스 벗어날 때 상태 초기화
+            >
+              오늘의 퀴즈
+            </li>
             <li style={styles.navItem}><Link to="/services">메뉴3</Link></li>
             <li style={styles.navItem}><Link to="/contact">메뉴4</Link></li>
           </ul>
@@ -107,6 +131,7 @@ function Header() {
           </li>
         </ul>
       </nav>
+      <QuizModal isOpen={isQuizModalOpen} setIsOpen={closeQuizModal} />
     </header>
   );
 }
@@ -168,6 +193,8 @@ const styles = {
     display: 'block',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
   },
+
+
 };
 
 export default Header;

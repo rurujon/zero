@@ -7,12 +7,11 @@ import axios from 'axios';
 Modal.setAppElement('#root');
 
 
-const QuizModal = () => {
+const QuizModal = ({isOpen, setIsOpen}) => {
 
     const [memId, setMemId] = useState('');
     const [pwd, setPwd] = useState('');
 
-    const [isOpen, setIsOpen] = useState(false);
 
     //사용자의 O,X
     const [result, setResult] = useState("ON");
@@ -26,9 +25,8 @@ const QuizModal = () => {
             params: { memId, pwd }
         })
         .then(response => {
-            console.log(response.data + "왜 안나아오아와옹와ㅗㅇ");  // 서버 응답 확인
             if (response.data.upPoint === "1") {
-                setIsOpen(true);
+                console.log("금일 최초 로그인")
             }
         })
         .catch(error => {
@@ -42,12 +40,12 @@ const QuizModal = () => {
                 {answer} + {result}
             </div> */}
 
-            {/* <button onClick={()=> setIsOpen(true)}>모달 열기</button> */}
+            <button onClick={()=> setIsOpen(true)}>모달 열기</button>
             <div className='bg'></div>
             
             <Modal 
                 isOpen={isOpen}
-                //onRequestClose = {() => setIsOpen(true)} 
+                onRequestClose={setIsOpen} // 모달 닫기 
                 contentLabel = "QOX"
                 className={result ==='ON' ? 'modal' : 'smallModal'}
             >

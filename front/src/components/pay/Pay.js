@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import Paystep1 from "./Paystep1"
 import Paystep2 from "./Paystep2"
 import Paystep3 from "./Paystep3"
+import SuccessPage from "./SuccessPage ";// 성공 페이지 컴포넌트
+import FailurePage from "./FailurePage"; // 실패 페이지 컴포넌트
 import {Route, Routes,useNavigate   } from "react-router-dom";
 const Pay = () => {
-  //post, addr1,2, email, memname
     const [amount, setAmount] = useState("");
     const [step, setStep] = useState(1); 
-    // const [email, setEmail] = useState("");
-    // const [tel, setTel] = useState("");
-    // const [name, setName] = useState(""); 
-    // const [post, setPost] = useState(""); 
-    // const [addr, setAddr] = useState(""); 
     const navigate = useNavigate();
+
     const toDonate = () => {
       navigate('/donate');
   };
@@ -48,8 +45,8 @@ const Pay = () => {
     
     IMP.request_pay(
       {
-        // pg: "html5_inicis", // 결제 대행사 코드
-        pg: "kakaopay", // 결제 대행사 코드
+        pg: "kakaopay.TC0ONETIME", // 결제 대행사 코드
+        // pg: "kakaopay", // 결제 대행사 코드
         pay_method: "card", // 결제 방법
         merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
         name:`후원금`, // 상품 이름
@@ -61,12 +58,12 @@ const Pay = () => {
         buyer_postcode: memberInfo.post, // 우편번호
       },
       function (response) {
-        if (response.error_code) {
-          alert(`결제에 실패하였습니다. 에러내용: ${response.error_msg}`);
-        } else if(response.success) {
-            alert("결제에 성공하였습니다.");
-        }else{
-          alert(`결제에 실패하였습니다. 에러내용: ${response.error_msg}`)
+        if (response.success) {
+          // 성공 페이지로 이동
+          navigate('/success', { state: { amount, memberInfo } });
+        } else {
+          // 실패 페이지로 이동
+          navigate('/failure', { state: { error: response.error_msg } });
         }
       }
     );
@@ -88,6 +85,8 @@ const Pay = () => {
       <div className="App">
         <Routes>
           <Route path="/donate" element={render()} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/failure" element={<FailurePage />} />
         </Routes>
       </div>
 

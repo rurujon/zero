@@ -26,12 +26,12 @@ function AppContent() {
 
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
-      {/* <MainPageApp/> */}
-      <LoginApp/>
+      <MainPageApp/>
+      {/* <LoginApp/> */}
       {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
       {/* <ImgApp/> */}
-      {/* <QuizModal/> */}
+      <QuizModal/>
       <Pay/>
       {/* <Routes>
         {routes.map((route) => (
