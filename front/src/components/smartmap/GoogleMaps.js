@@ -1,40 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
-
-const containerStyle = {
-  width: "100%",
-  height: "600px"
-};
-
-const buttonStyle = {
-  position: "absolute",
-  top: "50%",
-  right: "10px",
-  transform: "translateY(-50%)",
-  backgroundColor: "#fff",
-  border: "2px solid #007bff",
-  borderRadius: "5px",
-  padding: "5px",
-  cursor: "pointer",
-  zIndex: 1,
-  width: "40px",
-  height: "40px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const dropdownStyle = {
-  position: "absolute",
-  top: "10px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  backgroundColor: "white",
-  border: "1px solid #ccc",
-  borderRadius: "4px",
-  padding: "5px",
-  zIndex: 1,
-};
+import './GoogleMaps.css';
 
 const mapOptions = {
   styles: [
@@ -45,15 +11,53 @@ const mapOptions = {
   ],
 };
 
+// 구의 중심 좌표를 정의
+const guCenters = {
+  "강남구": { lat: 37.5172, lng: 127.0473 },
+  "강동구": { lat: 37.5304, lng: 127.1237 },
+  "강서구": { lat: 37.5502, lng: 126.8499 },
+  "관악구": { lat: 37.4783, lng: 126.9519 },
+  "광진구": { lat: 37.5386, lng: 127.0821 },
+  "구로구": { lat: 37.4959, lng: 126.8875 },
+  "금천구": { lat: 37.4540, lng: 126.8967 },
+  "노원구": { lat: 37.6551, lng: 127.0567 },
+  "도봉구": { lat: 37.6681, lng: 127.0344 },
+  "동대문구": { lat: 37.5746, lng: 127.0398 },
+  "동작구": { lat: 37.5110, lng: 126.9516 },
+  "마포구": { lat: 37.5471, lng: 126.9085 },
+  "서대문구": { lat: 37.5705, lng: 126.9361 },
+  "서초구": { lat: 37.4844, lng: 127.0325 },
+  "성동구": { lat: 37.5635, lng: 127.0369 },
+  "성북구": { lat: 37.6107, lng: 127.0172 },
+  "송파구": { lat: 37.5044, lng: 127.1067 },
+  "양천구": { lat: 37.5164, lng: 126.8668 },
+  "영등포구": { lat: 37.5267, lng: 126.9055 },
+  "용산구": { lat: 37.5326, lng: 126.9938 },
+  "은평구": { lat: 37.6040, lng: 126.9301 },
+  "종로구": { lat: 37.5724, lng: 126.9769 },
+  "중구": { lat: 37.5632, lng: 126.9970 },
+  "중랑구": { lat: 37.6010, lng: 127.0913 },
+};
+
+const guOptions = [
+  "전체", "강남구", "강동구", "강서구", "관악구", "광진구",
+  "구로구", "금천구", "노원구", "도봉구", "동대문구",
+  "동작구", "마포구", "서대문구", "서초구", "성동구",
+  "성북구", "송파구", "양천구", "영등포구", "용산구",
+  "은평구", "종로구", "중구", "중랑구"
+];
+
 const GoogleMaps = () => {
   const [stores, setStores] = useState([]);
   const [selectedStore, setSelectedStore] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [selectedGu, setSelectedGu] = useState('전체'); // 기본적으로 전체 선택
+  const [mapLoaded, setMapLoaded] = useState(false); // 맵 로딩 상태
+  const [visibleCount, setVisibleCount] = useState(9); // 보여줄 스토어 개수
+  
   const mapRef = useRef(null);
 
   useEffect(() => {
-    // 전체 상점 데이터를 가져오는 API 호출
     fetch('/api/smartMap/load')
       .then(response => response.json())
       .then(data => setStores(data))
@@ -73,12 +77,44 @@ const GoogleMaps = () => {
   }, []);
 
   const handleGuChange = (event) => {
+
+    const selectedValue = event.target.value; // 선택된 구의 값
+
     setSelectedGu(event.target.value);
+    setSelectedStore(null); // 구 변경 시 InfoWindow 닫기
+
+    // 구가 선택될 때 해당 구의 중심으로 맵 이동
+    if (selectedValue === "전체" && mapRef.current) {
+        mapRef.current.panTo({ lat: 37.5665, lng: 126.9780 }); // 서울 중심으로 이동
+    } else if (selectedValue in guCenters && mapRef.current) {
+        mapRef.current.panTo(guCenters[selectedValue]);
+    }
+    // 스토어 개수 초기화
+    setVisibleCount(9);
+
+  };
+
+  const buttonGuChange = (value) => {
+
+    setSelectedGu(value);
+    setSelectedStore(null); // 구 변경 시 InfoWindow 닫기
+
+    // 구가 선택될 때 해당 구의 중심으로 맵 이동
+    if (value === "전체" && mapRef.current) {
+        mapRef.current.panTo({ lat: 37.5665, lng: 126.9780 }); // 서울 중심으로 이동
+    } else if (value in guCenters && mapRef.current) {
+        mapRef.current.panTo(guCenters[value]);
+    }
+
+    // 스토어 개수 초기화
+    setVisibleCount(9);
   };
 
   const filteredStores = selectedGu === '전체'
     ? stores
     : stores.filter(store => store.guName === selectedGu);
+
+  const storesToDisplay = selectedStore ? [selectedStore] : filteredStores;
 
   const handleMarkerClick = (store) => {
     setSelectedStore(store);
@@ -90,109 +126,118 @@ const GoogleMaps = () => {
     }
   };
 
+  const handleLoad = (map) => {
+    mapRef.current = map; // 맵 인스턴스를 저장
+    setMapLoaded(true); // 맵이 로드되었음을 설정
+  };
+
+  const loadMoreStores = () => {
+    setVisibleCount(prevCount => prevCount + 9); // 9개씩 증가
+  };
+
+  
+
   return (
-    <div>
-        <div>
-            <LoadScript googleMapsApiKey="AIzaSyAXBLeEgcEIgMJkKLamUtOFbfsEqtvHgYA">
-            <div style={{ position: "relative" }}>
-                {/* 드롭다운 메뉴를 맵의 위쪽 중앙에 배치 */}
-                <select value={selectedGu} onChange={handleGuChange} style={dropdownStyle}>
-                    <option value="전체">전체</option>
-                    <option value="강남구">강남구</option>
-                    <option value="강동구">강동구</option>
-                    <option value="강서구">강서구</option>
-                    <option value="관악구">관악구</option>
-                    <option value="광진구">광진구</option>
-                    <option value="구로구">구로구</option>
-                    <option value="금천구">금천구</option>
-                    <option value="노원구">노원구</option>
-                    <option value="도봉구">도봉구</option>
-                    <option value="동대문구">동대문구</option>
-                    <option value="동작구">동작구</option>
-                    <option value="마포구">마포구</option>
-                    <option value="서대문구">서대문구</option>
-                    <option value="서초구">서초구</option>
-                    <option value="성동구">성동구</option>
-                    <option value="성북구">성북구</option>
-                    <option value="송파구">송파구</option>
-                    <option value="양천구">양천구</option>
-                    <option value="영등포구">영등포구</option>
-                    <option value="용산구">용산구</option>
-                    <option value="은평구">은평구</option>
-                    <option value="종로구">종로구</option>
-                    <option value="중구">중구</option>
-                    <option value="중랑구">중랑구</option>
-                </select>
-                
-                <GoogleMap
-                options={mapOptions}
-                mapContainerStyle={containerStyle}
-                center={currentLocation || { lat: 37.5665, lng: 126.9780 }}
-                zoom={12}
-                onLoad={map => mapRef.current = map}
-                >
-                {filteredStores.map((store, index) => {
-                    const lat = parseFloat(store.coordY);
-                    const lng = parseFloat(store.coordX);
-                    if (!isNaN(lat) && !isNaN(lng)) {
-                    return (
-                        <Marker
-                        key={index}
-                        position={{ lat, lng }}
-                        title={store.name}
-                        onClick={() => handleMarkerClick(store)}
-                        />
-                    );
-                    }
-                    return null;
-                })}
+    <div className="map-container">
+      <div className="map-item">
+        <LoadScript googleMapsApiKey="AIzaSyAXBLeEgcEIgMJkKLamUtOFbfsEqtvHgYA">
+          <select className="gu-dropdown" value={selectedGu} onChange={handleGuChange}>
+            {guOptions.map(gu => (
+              <option key={gu} value={gu}>{gu}</option>
+            ))}
+          </select>
 
-                {currentLocation && (
-                    <Marker
-                    position={currentLocation}
-                    title="현재 위치"
-                    icon={{
-                        path: window.google.maps.SymbolPath.CIRCLE,
-                        scale: 8,
-                        fillColor: "blue",
-                        fillOpacity: 1,
-                        strokeWeight: 2,
-                        strokeColor: "white"
-                    }}
-                    />
-                )}
-
-                {selectedStore && (
-                    <InfoWindow
-                    position={{
-                        lat: parseFloat(selectedStore.coordY),
-                        lng: parseFloat(selectedStore.coordX)
-                    }}
-                    onCloseClick={() => setSelectedStore(null)}
-                    >
-                    <div>
-                        <h2>{selectedStore.name}</h2>
-                        <p>전화번호: {selectedStore.telNo}</p>
-                        <p>주소: {selectedStore.addrNew}</p>
-                        <p>운영시간: {selectedStore.openingHours}</p>
-                        <p>판매물품: {selectedStore.sales}</p>
-                        <p>홈페이지: {selectedStore.link}</p>
-                        <p>인스타: {selectedStore.instaUrl}</p>
-                    </div>
-                    </InfoWindow>
-                )}
-
-                <button style={buttonStyle} onClick={handlePanToCurrentLocation}>
-                    홈
-                </button>
-                </GoogleMap>
-            </div>
-            </LoadScript>
-        </div>
-        <div>
-
+          <GoogleMap
+            options={mapOptions}
+            mapContainerStyle={{ width: '100%', height: '600px' }}
+            center={currentLocation || { lat: 37.5665, lng: 126.9780 }}
+            zoom={12}
+            onLoad={handleLoad}
+          >
             
-        </div>
+            {mapLoaded && storesToDisplay.map((store, index) => {
+              const lat = parseFloat(store.coordY);
+              const lng = parseFloat(store.coordX);
+              const isSelectedStore = selectedStore && store.name === selectedStore.name;
+
+              // 선택된 마커만 표시
+              if (!selectedStore || isSelectedStore) {
+                return (
+                  <Marker
+                    key={index}
+                    position={{ lat, lng }}
+                    title={store.name}
+                    onClick={() => handleMarkerClick(store)}
+                  >
+                    {selectedStore && isSelectedStore && (
+                      <InfoWindow onCloseClick={() => setSelectedStore(null)}>
+                        <div className="info-window">
+                          <h2>{selectedStore.name}</h2>
+                          <p>전화번호: {selectedStore.telNo}</p>
+                          <p>주소: {selectedStore.addrNew}</p>
+                          <p>운영시간: {selectedStore.openingHours}</p>
+                          <p>판매물품: {selectedStore.sales}</p>
+                          <p>홈페이지: {selectedStore.link}</p>
+                          <p>인스타: {selectedStore.instaUrl}</p>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </Marker>
+                );
+              }
+              return null;
+            })}
+
+            {currentLocation && mapLoaded && (
+              <Marker
+                position={currentLocation}
+                title="현재 위치"
+                icon={{
+                  path: window.google.maps.SymbolPath.CIRCLE,
+                  scale: 8,
+                  fillColor: "blue",
+                  fillOpacity: 1,
+                  strokeWeight: 2,
+                  strokeColor: "white"
+                }}
+              />
+            )}
+
+            <button className="current-location-button" onClick={handlePanToCurrentLocation}>
+              홈
+            </button>
+          </GoogleMap>
+        
+        
+          <div className="gu-list">
+            {guOptions.map((gu) => (
+              <button
+                  key={gu}
+                  onClick={() => buttonGuChange(gu)}
+                  className={`gu-button ${selectedGu === gu ? 'selected' : ''}`} // CSS 클래스 적용
+              >
+                  {gu}
+              </button>
+          ))}
+          </div>
+          <div className="store-list">
+            {filteredStores.slice(0, visibleCount).map((store, index) => (
+              <div key={index} className="store-card" onClick={() => handleMarkerClick(store)}>
+                <h3>{store.name}</h3>
+                <p>주소: {store.addrNew}</p>
+                <p>전화번호: {store.telNo}</p>
+              </div>
+            ))}
+          </div>
+          {filteredStores.length > visibleCount && (
+            <div className="load-more-container"> {/* 추가된 div */}
+              <button className="load-more-button" onClick={loadMoreStores}>
+                더보기
+              </button>
+            </div>
+          )}
+        </LoadScript>
+      </div>
     </div>
   );
 };

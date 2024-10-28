@@ -6,6 +6,7 @@ import "./Card.css"
 const OrgApp = () => {
     const [orgList, setOrgList] = useState([]);
     const [globalOrgList, setGlobalOrgList] = useState([]);
+    const [visibleCount, setVisibleCount] = useState(15); // 처음에 보이는 항목 수
 
     const fetchOrgData = async () => {
         try {
@@ -41,6 +42,10 @@ const OrgApp = () => {
         fetchGlobalOrgData();
     }, []);
 
+    const handleLoadMore = () => {
+        setVisibleCount((prevCount) => prevCount + 15); // 15개씩 추가
+    };
+
 
 
     return (
@@ -72,7 +77,7 @@ const OrgApp = () => {
                 
                 <h2 className='title'>민간 환경 보호 단체</h2>
                 <ul className="card">
-                    {orgList.map((org, index) => (
+                    {orgList.slice(0, visibleCount).map((org, index) => (
                         <li key={index} className="card_list">
                             <div className="card-bg">
                                 {org.imgUrl && (
@@ -89,7 +94,14 @@ const OrgApp = () => {
                             </div>
                         </li>
                     ))}
+                    {visibleCount < orgList.length && ( // 더보기 버튼을 조건부로 렌더링
+                    <button onClick={handleLoadMore} className='load-more-btn'>
+                        더보기
+                    </button>
+                )}
                 </ul>
+
+                
                 
             </div>
         </section>

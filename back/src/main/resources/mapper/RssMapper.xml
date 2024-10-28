@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectMini" resultType="com.zd.back.rssenv.RssItem">
-        select * from rssItems where rownum &lt;=10
+        select * from rssItems where rownum &lt;=6
     </select>
 
     <select id="maxRssId" resultType="int">

@@ -1,27 +1,18 @@
 import React from 'react';
 import './Body.css'; // 스타일 파일
-import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login';
 import MainPageNews from './MainPageNews';
+import MainPageNewsCopy from './MainPageNewsCopy';
+
 
 const Body = () => {
-
-    function BasicExample() {
-        return (
-            <ProgressBar>
-              <ProgressBar variant="success" now={35} key={1} />
-              <ProgressBar variant="warning" now={20} key={2} />
-              <ProgressBar variant="info" now={45} key={3} />
-            </ProgressBar>
-        );
-    }
 
     return (
       <div style={styles.container}>
         {/* 첫 번째 층 */}
         <div style={styles.row}>
-          <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNews/></div>
+          <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNewsCopy/></div>
           <div style={{ ...styles.box, flexGrow: 1 }}><Login/></div>
         </div>
         {/* 두 번째 층 */}
@@ -32,7 +23,7 @@ const Body = () => {
         </div>
         {/* 세 번째 층 */}
         <div style={styles.row}>
-          <div style={{ ...styles.box, flexGrow: 2 }}><BasicExample/></div>
+          <div style={{ ...styles.box, flexGrow: 2 }}></div>
           <div style={{ ...styles.box, flexGrow: 1 }}>Box 7</div>
         </div>
       </div>

@@ -25,8 +25,9 @@ function Header() {
       case 'eco-news':
         return (
           <>
-            <Link to="/sub1">네이버 뉴스 api</Link>
-            <Link to="/sub2">환경 관련 검색어</Link>
+            <Link to="/naverNewsList">네이버 뉴스 api</Link>
+            <Link to="/minEnv">환경부 정책</Link>
+            <Link to="/orgList">봉사단체</Link>
           </>
         );
       case 'zero-news':
@@ -39,11 +40,16 @@ function Header() {
           </>
         );
       case 'zero-activity':
+        return (
+          <>
+            <Link to="/sub">참여게시판</Link>
+          </>
+        );
       case 'zero-consumer':
         return (
           <>
-            <Link to="/sub1">추천 상점</Link>
             <Link to="/googleMap">전체 상점</Link>
+            <Link to="/sub1">추천 상품</Link>
           </>
         );
       default:
@@ -52,7 +58,7 @@ function Header() {
   };
 
   return (
-    <div>
+    <div className='header'>
       <div className="header-background header-background_one">
         <div className="header-content" onMouseLeave={handleMouseLeave}>
           <div className="top-nav">

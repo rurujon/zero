@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectSeoulNewsMini" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
-        select * from (SELECT * FROM seoulNews ORDER BY publishedDate DESC) where rownum &lt;=10
+        select * from (SELECT * FROM seoulNews ORDER BY publishedDate DESC) where rownum &lt;=6
     </select>
 
     <select id="maxNum" resultType="int">
