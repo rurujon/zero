@@ -92,4 +92,9 @@ public void insertAtt(String memId) throws Exception {
             throw new RuntimeException("출석 날짜 조회 중 오류 발생", e);
         }
     }
+
+    @Transactional
+    public void deleteAttendance(String memId) {
+        mapper.deleteByMemId(memId);
+    }
 }

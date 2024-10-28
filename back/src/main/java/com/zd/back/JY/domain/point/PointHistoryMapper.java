@@ -7,5 +7,5 @@ import java.util.List;
 public interface PointHistoryMapper {
     void insertPointHistory(PointHistoryDTO pointHistory);
     List<PointHistoryDTO> getPointHistoryByMemId(String memId);
-
+    void deleteByMemId(String memId);
 }

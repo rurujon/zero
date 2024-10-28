@@ -191,4 +191,15 @@ public class PointService {
     historyDTO.setChangeDate(LocalDateTime.now());
     pointHistoryMapper.insertPointHistory(historyDTO);
         }
+
+    @Transactional
+    public void deletePointHistory(String memId) {
+        pointHistoryMapper.deleteByMemId(memId);
     }
+
+    @Transactional
+    public void deletePoint(String memId) {
+        pointMapper.deleteByMemId(memId);
+    }
+
+}

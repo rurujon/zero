@@ -14,22 +14,26 @@ const MemberInfoPage = () => {
     const [deleteConfirmation, setDeleteConfirmation] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
-    const { token,logout } = useContext(AuthContext);
+    const { token, logout } = useContext(AuthContext);
 
     const fetchMemberInfo = useCallback(() => {
-        axios.get('/member/info')
+        axios.get('/member/info', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
             .then(response => {
                 setMember(response.data);
-                adjustWindowSize(window, response.data); // 창 크기 조절
+                adjustWindowSize(window, response.data);
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);
             });
-    }, []);
+    }, [token]);
 
     useEffect(() => {
-        fetchMemberInfo();
-    }, [fetchMemberInfo]);
+        if (token) {
+            fetchMemberInfo();
+        }
+    }, [fetchMemberInfo, token]);
 
     const adjustWindowSize = (window, memberData) => {
         // 회원정보와 달력의 가로 크기 합산
@@ -64,6 +68,11 @@ const MemberInfoPage = () => {
 
     const handleFinalDelete = () => {
         if (deleteConfirmation.toLowerCase() === '탈퇴') {
+            if (!token) {
+                console.error('인증 토큰이 없습니다.');
+                alert('로그인 상태를 확인해주세요.');
+                return;
+            }
             axios.delete(`/member/${member.memId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -71,7 +80,9 @@ const MemberInfoPage = () => {
                     alert('회원 탈퇴가 완료되었습니다.');
                     logout();
                     window.close();
-                    window.opener.location.reload(); // 메인 페이지 새로고침
+                    if (window.opener) {
+                        window.opener.location.reload();
+                    }
                 })
                 .catch(error => {
                     console.error('회원 탈퇴 실패:', error);

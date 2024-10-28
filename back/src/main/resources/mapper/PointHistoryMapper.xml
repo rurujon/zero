@@ -16,4 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY change_date DESC
     </select>
 
+    <delete id="deleteByMemId" parameterType="string">
+    DELETE FROM point_history WHERE mem_id = #{memId}
+    </delete>
+
 </mapper>

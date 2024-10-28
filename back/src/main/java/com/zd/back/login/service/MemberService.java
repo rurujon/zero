@@ -106,7 +106,18 @@ public Map<String, Object> validateLoginAndPerformActions(String memId, String r
     @Transactional
     public void deleteMember(String memId) {
         try {
+            // 1. 포인트 이력 삭제
+            pointService.deletePointHistory(memId);
+
+            // 2. 포인트 정보 삭제
+            pointService.deletePoint(memId);
+
+            // 3. 출석 정보 삭제
+            attendanceService.deleteAttendance(memId);
+
+            // 4. 회원 정보 삭제
             memberMapper.deleteMember(memId);
+
             logger.info("회원 탈퇴 완료: {}", memId);
         } catch (Exception e) {
             logger.error("회원 탈퇴 중 오류 발생: {}", e.getMessage(), e);

@@ -47,4 +47,8 @@
         AND TO_CHAR(attDate, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
     </select>
 
+    <delete id="deleteByMemId" parameterType="string">
+    DELETE FROM attendance WHERE memId = #{memId}
+    </delete>
+
 </mapper>
