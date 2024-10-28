@@ -12,12 +12,13 @@ import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import ImgApp from './components/imgboard/ImgApp';
 import QuizModal from './components/dailyQuiz/QuizModal';
+import Pay from './components/pay/Pay';
 function AppContent() {
 
   //React Router에서 경로를 가져오는 훅. 단, 이걸 사용하기 위해서는 정의되는 함수가 <BrowserRouter> 안에 있어야 한다고 합니다.
   //그래서 아래처럼 App()에서 <BrowserRouter></BrowserRouter>로 감싼 AppContent를 불러오도록 구조를 변경해야 합니다.
   const location = useLocation();
-
+  
   return (
     <div>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
@@ -26,18 +27,18 @@ function AppContent() {
       {location.pathname !== '/' && <SideBar/>} {/* 사이드바 조건부 렌더링 */}
 
       {/* <MainPageApp/> */}
-      {/* <LoginApp/> */}
+      <LoginApp/>
       {/* <NewsList/> */}
       {/* <SmartMapApp/>  */}
       {/* <ImgApp/> */}
       {/* <QuizModal/> */}
-
+      <Pay/>
       {/* <Routes>
         {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Routes> */}
-      <LoginApp/>
+      {/* <LoginApp/> */}
       {/* <QuizModal/> */}
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
  {/*      <Footer />
