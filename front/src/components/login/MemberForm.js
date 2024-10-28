@@ -16,7 +16,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         post: '',
         addr1: '',
         addr2: '',
-        termsAccepted: false // 이용약관 동의 필드
+        termsAccepted: false
     });
     const [errors, setErrors] = useState({});
 
@@ -27,11 +27,12 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [termsContent, setTermsContent] = useState('');
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [serverError, setServerError] = useState('');
 
     useEffect(() => {
-
-        setTermsContent(`이용약관\n\n1. 이용자는 ...\n2. 서비스 제공 ...\n3. ...\n내용은 추후 수정`);
+        const defaultTerms =(`이용약관\n\n1. 이용자는...\n2. 서비스 제공...\n3....\n내용은 추후 수정`);
+        setTermsContent(defaultTerms);
 
         if (initialData) {
             setMember(prevState => ({
@@ -45,11 +46,19 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             adjustWindowSize(window, initialData, true, []);
         }
 
-        axios.get('/api/terms')
-        .then(response => setTermsContent(response.data))  // 응답 데이터로 이용약관 내용을 설정
-        .catch(error => console.error('이용약관 불러오기 오류:', error));
-
-    }, [initialData]);
+        // 이용약관 불러오기 시도
+    axios.get('/api/terms')
+    .then(response => {
+        if (response.data && typeof response.data === 'string') {
+            setTermsContent(response.data);
+        }
+    })
+    .catch(error => {
+        console.error('이용약관 불러오기 오류:', error);
+        // 오류 발생 시 기본 이용약관 사용
+        setTermsContent(defaultTerms);
+    });
+}, [initialData]);
 
     const checkDuplicateId = () => {
         if (!member.memId || member.memId.trim() === '') {
@@ -105,7 +114,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         setMember(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value  // 체크박스일 경우 checked 상태 반영
+            [name]: type === 'checkbox' ? checked : value
         }));
 
         if (name === 'memId') {
@@ -123,7 +132,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         if (isEditing && name === 'pwd' && value.trim() === '') {
-            setErrors(prev => ({ ...prev, pwd: undefined }));
+            setErrors(prev => ({...prev, pwd: undefined }));
         } else {
             const errorMessage = validateField(name, value);
             setErrors(prev => ({
@@ -133,19 +142,19 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
             if (!isEditing && (name === 'pwd' || name === 'pwdConfirm')) {
                 if (name === 'pwd' && member.pwdConfirm && value !== member.pwdConfirm) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else if (name === 'pwdConfirm' && value !== member.pwd) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else {
-                    setErrors(prev => ({ ...prev, pwdConfirm: undefined }));
+                    setErrors(prev => ({...prev, pwdConfirm: undefined }));
                 }
             }
         }
 
-        adjustWindowSize(window, { ...member, [name]: type === 'checkbox' ? checked : value }, true, []);
+        adjustWindowSize(window, {...member, [name]: type === 'checkbox' ? checked : value }, true, []);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isEditing && !isVerified) {
             alert('휴대폰 인증을 완료해주세요.');
@@ -169,23 +178,27 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         if (validateForm()) {
-            const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
-            const data = {
-                ...member,
-                pwd: isEditing && !member.pwd ? undefined : member.pwd,
-                tel: isPhoneVerificationRequired ? phoneNumber : member.tel
-            };
+            setIsLoading(true);
+            setServerError('');
 
-            axios.post(url, data, { withCredentials: true })
-                .then(response => {
-                    console.log(response);
-                    alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');
-                    onSubmit();
-                })
-                .catch(error => {
-                    console.error('Error:', error.response);
-                    alert(error.response?.data || (isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.'));
-                });
+            try {
+                const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
+                const data = {
+                    ...member,
+                    pwd: isEditing && !member.pwd ? undefined : member.pwd,
+                    tel: isPhoneVerificationRequired ? phoneNumber : member.tel
+                };
+
+                const response = await axios.post(url, data, { withCredentials: true });
+                console.log(response);
+                alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');
+                onSubmit();
+            } catch (error) {
+                console.error('Error:', error.response);
+                setServerError(error.response?.data || (isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.'));
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -206,7 +219,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     post: data.zonecode,
                     addr1: data.address
                 }));
-                adjustWindowSize(window, { ...member, post: data.zonecode, addr1: data.address }, true, []);
+                adjustWindowSize(window, {...member, post: data.zonecode, addr1: data.address }, true, []);
             }
         }).open();
     };
@@ -240,6 +253,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
             <h2>{isEditing ? '회원정보 수정' : '회원가입'}</h2><br/>
             <form onSubmit={handleSubmit}>
+                {serverError && <div className="alert alert-danger">{serverError}</div>}
+                {isLoading && <div className="alert alert-info">처리 중입니다...</div>}
+
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">아이디</label>
                     <div className="col-sm-10">
@@ -248,7 +264,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         {isChecked && (
                         <div>
                             {isDuplicate ? (
-                                <span style={{ color: 'red' }}>이미 사용 중인 아이디입니다.</span>
+                                <span style={{ color:'red' }}>이미 사용 중인 아이디입니다.</span>
                             ) : (
                                 <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
                             )}
@@ -293,28 +309,28 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 <div className="row mb-3">
-            <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
-            <div className="col-sm-10">
-                <input
-                    type="tel"
-                    name="tel"
-                    className="form-control"
-                    value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
-                    placeholder={isEditing ? '(변경시에만 재인증)' : ''}
-                    onChange={(e) => {
-                        if (isEditing) {
-                            if (isPhoneVerificationRequired) {
-                                setPhoneNumber(e.target.value);
-                            } else {
-                                handleInputChange(e);
-                            }
-                        } else {
-                            setPhoneNumber(e.target.value);
-                            handleInputChange(e);
-                        }
-                    }}
-                    readOnly={isEditing && !isPhoneVerificationRequired}
-                />
+                    <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
+                    <div className="col-sm-10">
+                        <input
+                            type="tel"
+                            name="tel"
+                            className="form-control"
+                            value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
+                            placeholder={isEditing ? '(변경시에만 재인증)' : ''}
+                            onChange={(e) => {
+                                if (isEditing) {
+                                    if (isPhoneVerificationRequired) {
+                                        setPhoneNumber(e.target.value);
+                                    } else {
+                                        handleInputChange(e);
+                                    }
+                                } else {
+                                    setPhoneNumber(e.target.value);
+                                    handleInputChange(e);
+                                }
+                            }}
+                            readOnly={isEditing && !isPhoneVerificationRequired}
+                        />
                         {isEditing && !isPhoneVerificationRequired && (
                             <button type="button" onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">핸드폰 재인증</button>
                         )}
@@ -381,7 +397,6 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                             style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
                         />
 
-
                 <div className="form-check mb-3">
                     <input className="form-check-input" type="checkbox" name="termsAccepted" checked={member.termsAccepted} onChange={handleInputChange} />
                     <label className="form-check-label" htmlFor="termsAccepted">
@@ -400,6 +415,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             </form>
         </div>
     );
+
 };
 
 export default MemberForm;

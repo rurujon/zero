@@ -8,13 +8,20 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [memId, setMemId] = useState(null);
 
-    const logout = useCallback(() => {
+    const logout = () => {
+        localStorage.removeItem('token');
         setToken(null);
         setMemId(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('memId');
-        delete axios.defaults.headers.common['Authorization'];
-    }, []);
+        // 필요한 경우 다른 상태도 초기화
+      };
+
+    // const logout = useCallback(() => {
+    //     setToken(null);
+    //     setMemId(null);
+    //     localStorage.removeItem('token');
+    //     localStorage.removeItem('memId');
+    //     delete axios.defaults.headers.common['Authorization'];
+    // }, []);
 
     useEffect(() => {
         const savedToken = localStorage.getItem('token');

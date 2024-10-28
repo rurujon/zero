@@ -8,7 +8,7 @@ const Calendar = ({ memId }) => {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await axios.get(`/attendance/attendance/dates`, {
+            const response = await axios.get(`/attendance/dates`, {
                 params: { memId }
             });
             console.log('출석 데이터:', response.data); // 응답 데이터 로그 출력

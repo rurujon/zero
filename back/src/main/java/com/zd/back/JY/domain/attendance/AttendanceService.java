@@ -9,46 +9,87 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zd.back.JY.domain.point.PointService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class AttendanceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AttendanceService.class);
 
     @Autowired
     private AttendanceMapper mapper;
 
+    @Autowired
+    private PointService pointService;
+
+    @Transactional(readOnly = true)
     public int maxNum() {
         return mapper.maxNum();
     }
 
     @Transactional
-    public void insertAtt(String memId) {
-        if (checkToday(memId) == 0) { // 오늘 출석하지 않은 경우에만 삽입
+public void insertAtt(String memId) throws Exception {
+    if (checkToday(memId) == 0) {
+        try {
             Map<String, Object> map = new HashMap<>();
             map.put("memId", memId);
-            map.put("attId", mapper.maxNum() + 1);
-            mapper.insertAtt(map);
+            mapper.insertAtt(map); // 출석 기록 추가
+        } catch (Exception e) {
+            throw new Exception("출석 처리 중 오류 발생: " + e.getMessage(), e);
         }
+    } else {
+        logger.info("이미 오늘 출석한 회원: {}", memId);
+    }
+}
+
+    @Transactional(readOnly = true)
+    public int checkToday(String memId) {
+        return mapper.checkToday(memId);
     }
 
-    @Transactional
-    public int checkToday(String memId) {
-        return mapper.checkToday(memId); // 오늘 출석한 횟수 반환
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectAttList(String memId) {
+        return mapper.selectAttList(memId);
+    }
+
+    @Transactional(readOnly = true)
+    public int countMonthlyAttendance(String memId) {
+        return mapper.countMonthlyAttendance(memId);
     }
 
     @Transactional
     public void regiAtt(String memId) {
-        AttendanceDTO dto = new AttendanceDTO();
-        dto.setAttId(mapper.maxNum() + 1);
-        dto.setMemId(memId);
-        mapper.regiAtt(dto);
+        try {
+            AttendanceDTO dto = new AttendanceDTO();
+            dto.setAttId(mapper.maxNum() + 1);
+            dto.setMemId(memId);
+            mapper.regiAtt(dto);
+            logger.info("신규 회원 출석 등록 완료: {}", memId);
+        } catch (Exception e) {
+            logger.error("신규 회원 출석 등록 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("신규 회원 출석 등록 중 오류 발생", e);
+        }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<AttendanceDTO> getMonthlyAttendance(String memId, int year, int month) {
-        return mapper.getMonthlyAttendance(memId, year, month);
+        try {
+            return mapper.getMonthlyAttendance(memId, year, month);
+        } catch (Exception e) {
+            logger.error("월간 출석 조회 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("월간 출석 조회 중 오류 발생", e);
+        }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Date> getAttendanceDates(String memId) {
-        return mapper.getAttendanceDates(memId);
+        try {
+            return mapper.getAttendanceDates(memId);
+        } catch (Exception e) {
+            logger.error("출석 날짜 조회 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("출석 날짜 조회 중 오류 발생", e);
+        }
     }
 }

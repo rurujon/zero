@@ -10,7 +10,11 @@ const FindIdModal = ({ show, onHide }) => {
         e.preventDefault()
         axios.post('/member/find-id', { email })
             .then(response => {
-                setResult(`찾은 아이디: ${response.data}`)
+                if (response.data && response.data.memId) {
+                    setResult(`찾은 아이디: ${response.data.memId}`);
+                } else {
+                    setResult('아이디를 찾을 수 없습니다.');
+                }
             })
             .catch(error => {
                 console.error('아이디 찾기 실패:', error)
