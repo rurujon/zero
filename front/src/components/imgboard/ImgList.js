@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function ImgPostList() {
+function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
 
     useEffect(() => {
@@ -15,42 +15,75 @@ function ImgPostList() {
             });
     }, []);
    
+    const getCateLabel = (cate) => {
+        switch (cate) {
+            case 'tum':
+                return '텀블러 이용';
+            case 'buy':
+                return '물품 구매';
+            case 'group':
+                return '단체활동 참여';
+            default:
+                return '알 수 없음';
+        }
+    };
+
     return (
         <div>
-            <h2>Image Posts</h2>
-            <ul>
-                {imgPosts.map((board, index) => (  
-                    <li key={`${board.imgPost.imgPostId}_${index}`}>  {/* ImgPost의 ID 사용 */}
-                        <h3>{board.imgPost.imgPostId}</h3>
-                        <p>승인여부: {board.imgPost.auth}</p>
-                        <p>목록: {board.imgPost.cate}</p>
-
-                        {/* 이미지 목록 출력 */}
-                        {board.images && board.images.length > 0 ? (
-                            <div>
-                                {board.images.map((img, imgIndex) => (
+            <h2>인증게시판 리스트</h2>
+            <p>
+                <button type='button' onClick={() => window.location.href = '/imgboard/created'}>
+                    인증 글쓰기
+                </button>
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
+                {imgPosts.map((board, index) => (
+                    <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
+                        border: '2px solid red', 
+                        margin: '15px',
+                        padding: '10px', 
+                        borderRadius: '5px', 
+                        backgroundColor: '#f0f0f0', 
+                        width: '22%'
+                    }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
+                            {board.images && board.images.length > 0 ? (
+                                board.images.map((img) => (
                                     <img
-                                        key={img.imgId}  // 각 이미지의 ID를 키로 사용
-                                        src={`/images/${img.saveFileName}`} 
+                                        key={img.imgId}
+                                        src={`/images/${img.saveFileName}`}
                                         alt={img.saveFileName}
-                                        style={{ width: '100px', height: '100px', margin: '5px' }}
+                                        style={{ 
+                                            width: '350px', 
+                                            height: '200px', 
+                                            margin: '5px', 
+                                            display: 'block', 
+                                            verticalAlign: 'top'
+                                        }}
                                     />
-                                ))}
-                            </div>
-                        ) : (
-                            <p>등록된 이미지가 없습니다.</p> // 이미지가 없을 경우 메시지 표시
-                        )}
-
-                        <p>제목: {board.imgPost.title}</p>
-                        <p>작성일: {board.imgPost.created}</p>
-                    </li>
+                                ))
+                            ) : (
+                                <p>등록된 이미지가 없습니다.</p>
+                            )}
+                        </div>
+    
+                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
+                            <p style={{ color: '#fff' }}>인증 승인: {board.imgPost.auth}</p>
+                        </div>
+                        <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
+                        <p>작성자: {board.imgPost.memId}</p>
+                        <p>
+                            제목: 
+                            <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
+                                {board.imgPost.title}
+                            </a>
+                        </p>
+                        <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
+                    </div>
                 ))}
-            </ul>
-
-            <h2>여기용</h2>
-            <img src={'http://localhost:8080/images/0_6847493b-c09e-4493-bcd8-9bf470b3d52a_00.png'} />
+            </div>
         </div>
     );
 }
 
-export default ImgPostList;
+export default ImgList;

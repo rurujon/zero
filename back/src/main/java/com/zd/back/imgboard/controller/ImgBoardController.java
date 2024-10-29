@@ -1,23 +1,18 @@
 package com.zd.back.imgboard.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
-
+import com.zd.back.login.security.JwtUtil;
+import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,60 +20,34 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+//수정시 파일 업로드 부분 제외하고 text만 되도록 함 
+
+
 @RestController
 @RequestMapping("/imgboard")
 @RequiredArgsConstructor  //의존성 주입 위함 
 public class ImgBoardController {
 
+
     private final ImgPostService imgPostService;
     private final ImgService imgService;
+    private final ImgManagerService imgManagerService;
+    //파일 업로드 위한 메소드는 ImgManagerService.java로 옮김  
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
-    //application.properties 에 있는 file 경로
-
-    private final int MAX_IMAGE_COUNT = 3;  // 최대 이미지 개수
-    private final long MAX_FILE_SIZE = 100 * 1024 * 1024; // 최대 파일 크기 (10MB)
 
     @PostMapping("/created")
     @Transactional
-    public ResponseEntity<String> createImgBoard(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) {
+    public ResponseEntity<String> created(@ModelAttribute ImgPost imgPost, @RequestParam("images") MultipartFile[] images) throws Exception{
         try {
            
             int maxImgPostId = imgPostService.maxImgPostId() ;
             imgPost.setImgPostId(maxImgPostId+1);
             imgPostService.createImgPost(imgPost);
 
-            // 1.디렉토리 확인 및 생성 
-            createUploadDirectory();
+            //imgManagerService 에서 받아서 list로 저장
+            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId);
 
-            // 이미지 리스트 저장
-            List<Img> imgList = new ArrayList<>();
-
-            // 2.파일 개수 검증 
-            validateImageCount(images.length);
-
-            for (MultipartFile imgFile : images) {
-
-               
-                if(imgFile.isEmpty()){
-                    return new ResponseEntity<>("최소 1개 이상의 이미지 파일이 필요합니다.", HttpStatus.BAD_REQUEST); //상태코드 400
-                }
-               // else if (!imgFile.isEmpty()) {
-
-                    // 3.파일 사이즈 검증
-                    validateFileSize(imgFile.getSize());
-
-                    //4.SaveFileName 지정 및  파일 저장
-                    String saveFileName = createUniqueFileName(maxImgPostId, imgFile.getOriginalFilename());
-                    saveImageFile(imgFile, saveFileName);
-
-                    // 5.Img 반환 받고 리스트에 추가
-                    imgList.add(createImgObject(imgFile, maxImgPostId, saveFileName));
-                //}
-            }
-
-            //  이미지 정보 DB에 저장           
+            //이미지 정보 DB에 저장           
             imgService.saveImg(imgList);
             return new ResponseEntity<>("인증 게시물이 등록되었습니다.", HttpStatus.CREATED);
 
@@ -91,76 +60,110 @@ public class ImgBoardController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<ImgBoard>> getImgBoards() {
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
 
+        
+        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    }
+    
+    @GetMapping("/article")  
+    public ResponseEntity<ImgBoard> getImgPostById(@RequestParam int imgPostId) {
+       try{
+            ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+            if (imgBoard == null) {
+                return ResponseEntity.notFound().build(); // 게시물이 없을 경우 404 반환
+            }
+            return ResponseEntity.ok(imgBoard); // 게시물 반환
 
-
-    // 메소드 -----------------------------------------------------------
-
-    // 1.디렉토리 확인 및 생성
-    private void createUploadDirectory() {
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs(); // 디렉토리 생성
-        }
+        } catch (Exception e) {
+       
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(null); // 오류 발생 시 null 반환
+        } 
     }
 
-    // 2.파일 개수 검증
-    private void validateImageCount(int count) {
-        if (count > MAX_IMAGE_COUNT) {
-            throw new IllegalArgumentException("이미지 파일은 최대 " + MAX_IMAGE_COUNT + "개까지 업로드할 수 있습니다.");
-        }
-    }
 
-    // 3.파일 사이즈 검증
-    private void validateFileSize(long fileSize) {
-        if (fileSize > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("파일 크기는 최대 10MB까지 허용됩니다.");
-        }
-    }
-
-     //4. SaveFileName 지정 및  파일 저장
-    private String createUniqueFileName(int postId, String originalFilename) {
-        return postId + "_" + UUID.randomUUID().toString() + "_" + originalFilename;
-    }
-
-    private void saveImageFile(MultipartFile imgFile, String saveFileName) throws IOException {
-
-        Path savePath = Paths.get(uploadDir, saveFileName);
-
-        InputStream inputStream = null; 
+    @GetMapping("/updated")
+    public ResponseEntity<ImgBoard> getUpdatedArticle(@RequestParam int imgPostId) {
 
         try {
-            inputStream = imgFile.getInputStream(); 
-            Files.copy(inputStream, savePath);
+            ImgBoard imgBoard = imgPostService.getImgPostById(imgPostId);
+            if (imgBoard == null) {
+                return ResponseEntity.notFound().build();
 
-        } finally {
-            if (inputStream != null) {
-                
-                    inputStream.close();  //닫아야함
-              
             }
+
+            return ResponseEntity.ok(imgBoard); 
+
+        } catch (Exception e) {
+               
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body(null); // 오류 발생 시 null 반환
         }
     }
     
+     @PostMapping("/updated")
+    public ResponseEntity<String> getUpdatedArticle(@RequestParam int imgPostId,
+            @ModelAttribute ImgPost imgPost) {
+        try {
 
-    //5.Img  객체 생성 후 반환 - 리스트에 추가 
-    private Img createImgObject(MultipartFile imgFile, int imgPostId, String saveFileName) {
-        Img img = new Img();
+            // 1.imgPost update
+            imgPost.setImgPostId(imgPostId);
+            imgPostService.updateImgPost(imgPost);
 
-        //imgId 경우 sequence 로 설정 
-        img.setImgPostId(imgPostId+1);
-        img.setOriginalFileName(imgFile.getOriginalFilename());
-        img.setSaveFileName(saveFileName);
-        img.setFilePath(Paths.get(uploadDir, saveFileName).toString());
+            return ResponseEntity.ok("인증게시물이 수정되었습니다.");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("게시물 수정 중 오류가 발생했습니다: " + e.getMessage());
+        }
+          
+    } 
+
+
+    @DeleteMapping("/deleted")
+    public  ResponseEntity<String> deleteArticle(@RequestParam int imgPostId) {
+        try {
+
+            
+            List<Img> images = imgService.getImagesByPostId(imgPostId); 
         
-        return img;
+            //DB삭제 - 데이터 무결성 위해서 DB삭제 후 물리적 파일 삭제 해야함
+            imgService.deleteImagesByPostId(imgPostId); // 먼저 이미지를 삭제
+            
+            // 물리적 파일 삭제
+            for (Img img : images) {
+                imgManagerService.deleteImages(img.getSaveFileName()); 
+            }
+        
+            // 이후 게시물 삭제
+            imgPostService.deleteImgPostById(imgPostId); 
+
+            return ResponseEntity.ok("인증게시물이 삭제 되었습니다.");
+
+        } catch (Exception e) {
+
+            return ResponseEntity.status(500).body("게시물 삭제 중 오류가 발생했습니다: " + e.getMessage());       
+        
+        }
     }
 
-// list ==========================================
-@GetMapping("/list")
-public ResponseEntity<List<ImgBoard>> getImgPosts() {
-    List<ImgBoard> imgBoards = imgPostService.getAllImgBoardWithFirstImage();
-    return new ResponseEntity<>(imgBoards, HttpStatus.OK);
-}
 
-}
+    //memId:suzi123 
+    @PostMapping("/auth")
+    public ResponseEntity<String> getAuthorized(@RequestParam int imgPostId){
+
+        try{
+            imgPostService.updateAuth(imgPostId);
+            
+            return ResponseEntity.ok("게시물 인증이 승인되었습니다.");
+
+        }catch(Exception e){
+
+            return ResponseEntity.status(500).body("게시물 삭제 중 오류가 발생했습니다: " + e.getMessage()); 
+        }
+
+    }
+
+}    

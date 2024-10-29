@@ -10,7 +10,9 @@ import com.zd.back.imgboard.model.Img;
 public interface ImgMapper {
     
     int maxImgId();
-    void insertImg(Img img);
-    List<Img> getImgsByImgPostId(Long imgPostId);
+    void saveImg(Img img);
+    List<Img> getImagesByPostId(int imgPostId);   
+    void deleteImagesByPostId(int imgPostId);
+    void deleteBySaveFileName( String saveFileName);
 
 }

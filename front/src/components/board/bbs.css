@@ -1,0 +1,14 @@
+.underline:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.arrow-right {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 10px solid black;
+    margin-left: 5px;
+}

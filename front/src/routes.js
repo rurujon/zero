@@ -1,7 +1,15 @@
+import ImgArticle from "./components/imgboard/ImgArticle";
+import ImgCreated from "./components/imgboard/ImgCreated";
+import ImgList from "./components/imgboard/ImgList";
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
 import Pay from "./components/pay/Pay";
+import BbsWrite from "./components/board/BbsWrite";
+import BbsList from "./components/board/BbsList";
+import BbsDetail from "./components/board/BbsDetail";
+import BbsUpdate from "./components/board/BbsUpdate";
+import BbsAnswer from "./components/board/BbsAnswer";
 
 
 
@@ -24,7 +32,22 @@ export const routes = [
 
     // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
 
-    
+    //ImgBoard
+    { path: '/imgboard/created', element: <ImgCreated /> },
+    { path: '/imgboard/updated', element: <ImgCreated /> }, // ImgCreated.js에서 Mode바꿔서 사용
+    { path: '/imgboard/list', element: <ImgList /> },
+    { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 사용
+
+
+
+    //TipBoard
+    { path: '/board/list', element: <BbsList /> },
+    { path: '/board/write', element: <BbsWrite /> },
+    { path: '/board/:boardno', element: <BbsDetail /> },
+    { path: '/board/update/:boardno', element: <BbsUpdate /> },
+    { path: '/board/answer/:parentno', element: <BbsAnswer /> }
+
+
 
 
 ]

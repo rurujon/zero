@@ -28,6 +28,7 @@ const LoginPage = () => {
             alert("로그인 처리 중 문제가 발생했습니다.");
         }
     };
+  
 
     return (
         <div className="container" style={{ marginBottom: '15px', margin:'15px'}}>
