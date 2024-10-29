@@ -49,7 +49,7 @@ export const routes = [
     { path:'/googleMap', element:<GoogleMaps/>},   //봉사단체 리스트
     
 
-    // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
+    { path: '/donate', element: <Pay/> },   //결제(후원) 경로
 
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
