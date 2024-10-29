@@ -35,6 +35,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [privacyContent, setPrivacyContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState('');
+    const [isEmailDuplicate, setIsEmailDuplicate] = useState(false); // 이메일 중복 상태 추가
+    const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 중복 확인 여부
 
     useEffect(() => {
         if (initialData) {
@@ -88,6 +90,23 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             })
             .catch(error => {
                 console.error('아이디 중복 체크 오류:', error);
+            });
+    };
+
+    // 이메일 중복 확인 함수 추가
+    const checkDuplicateEmail = () => {
+        if (!member.email || member.email.trim() === '') {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
+
+        axios.get('/member/check-email', { params: { email: member.email } })
+            .then(response => {
+                setIsEmailDuplicate(response.data);
+                setIsEmailChecked(true);
+            })
+            .catch(error => {
+                console.error('이메일 중복 체크 오류:', error);
             });
     };
 
@@ -335,13 +354,24 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {/* 이메일 입력 필드 및 중복 확인 버튼 */}
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
-                    <div className="col-sm-10">
-                        <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
-                        <ValidationMessage message={errors.email} />
-                    </div>
-                </div>
+                   <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
+                   <div className="col-sm-10">
+                       <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
+                       {!isEditing && (<button type="button" onClick={checkDuplicateEmail} className="btn btn-primary btn-sm mt-2">중복 확인</button>)}
+                       {isEmailChecked && (
+                           <div>
+                               {isEmailDuplicate ? (
+                                   <span style={{ color:'red' }}>이미 사용 중인 이메일입니다.</span>
+                               ) : (
+                                   <span style={{ color: 'green' }}>사용 가능한 이메일입니다.</span>
+                               )}
+                           </div>
+                       )}
+                       <ValidationMessage message={errors.email} />
+                   </div>
+               </div>
 
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>

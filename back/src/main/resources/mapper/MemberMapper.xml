@@ -46,4 +46,8 @@
         SELECT COUNT(*) FROM member WHERE memId = #{memId}
     </select>
 
+    <select id="countByEmail" resultType="int" parameterType="String">
+        SELECT COUNT(*) FROM member WHERE email = #{email}
+    </select>
+
 </mapper>
