@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useContext,useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
 import FindIdModal from './FindIdModal';
 import FindPasswordModal from './FindPasswordModal';
 import PointInfoModal from './PointInfoModal';
 import { AuthContext } from './context/AuthContext';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import QuizModal from '../dailyQuiz/QuizModal';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-    const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showFindIdModal, setShowFindIdModal] = useState(false);
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
@@ -17,6 +16,7 @@ const HomePage = () => {
 
     const { token, logout, login, memId } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogout = useCallback(() => {
         logout();
@@ -45,10 +45,12 @@ const HomePage = () => {
         setShowPointInfoModal(true);
     };
 
+    const handleRegister = () => {
+        navigate('/register');
+    };
 
     return (
         <div className="container mt-4">
-            
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
@@ -84,14 +86,8 @@ const HomePage = () => {
                     <div>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
-                        <button type="button" className="btn btn-link" onClick={() => setShowRegister(true)}>회원가입</button>
+                        <button type="button" className="btn btn-link" onClick={handleRegister}>회원가입</button>
                     </div>
-                    {showRegister && (
-                        <RegisterPage
-                            onRegisterSuccess={() => setShowRegister(false)}
-                            onRegisterCancel={() => setShowRegister(false)}
-                        />
-                    )}
                     <FindIdModal show={showFindIdModal} onHide={() => setShowFindIdModal(false)} />
                     <FindPasswordModal show={showFindPasswordModal} onHide={() => setShowFindPasswordModal(false)} />
                 </div>

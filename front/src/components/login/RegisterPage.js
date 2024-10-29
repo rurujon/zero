@@ -4,7 +4,7 @@ import MemberForm from './MemberForm';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 
-const RegisterPage = ({ onRegisterCancel }) => {
+const RegisterPage = () => {
     const [terms, setTerms] = useState('');
     const [privacy, setPrivacy] = useState('');
     const navigate = useNavigate();
@@ -43,15 +43,15 @@ const RegisterPage = ({ onRegisterCancel }) => {
         navigate('/');
     };
 
-    const handleCancel = () => {
-        onRegisterCancel();
+    const handleRegisterCancel = () => {
+        navigate('/');
     };
 
     return (
-        <div>
+        <div className="container mt-4">
             <MemberForm
                 onSubmit={handleRegisterSuccess}
-                onCancel={handleCancel}
+                onCancel={handleRegisterCancel}
                 isEditing={false}
                 termsContent={terms}
                 privacyContent={privacy}
