@@ -28,7 +28,7 @@ const ImgCreated = () => {
         if (!memId) {
              
             alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");       
-            navigate("/login");
+            navigate("/");
         }
     }, [memId, navigate]);
    

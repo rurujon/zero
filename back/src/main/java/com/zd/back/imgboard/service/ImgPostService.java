@@ -39,10 +39,12 @@ public class ImgPostService {
         imgPostMapper.updateImgPost(imgPost);
     }
 
-
-
     public void deleteImgPostById(int imgPostId) {
         imgPostMapper.deleteImgPostById(imgPostId);
+    }
+
+    public void updateAuth(int imgPostId) {
+        imgPostMapper.updateAuth(imgPostId);
     }
 
 

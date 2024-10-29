@@ -116,10 +116,7 @@ public class ImgManagerService {
         Img img = new Img();
                 
         //imgId 경우 sequence 로 설정 
-        img.setImgPostId(imgPostId );
-
-        System.out.println(imgPostId);
-        
+        img.setImgPostId(imgPostId + 1);
         img.setOriginalFileName(imgFile.getOriginalFilename());
         img.setSaveFileName(saveFileName);
         img.setFilePath(Paths.get(uploadDir, saveFileName).toString());

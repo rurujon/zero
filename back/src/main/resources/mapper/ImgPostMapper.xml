@@ -35,21 +35,30 @@
         WHERE ip.imgPostId = #{imgPostId}
     </select>
 
-<update id="updateImgPost" parameterType="com.zd.back.imgboard.model.ImgPost">
-    UPDATE ImgPost
-    SET 
-        title = #{title}, 
-        content = #{content}, 
-        cate = #{cate}, 
-        created = SYSDATE
-    WHERE imgPostId = #{imgPostId}
-</update>
+    <update id="updateImgPost" parameterType="com.zd.back.imgboard.model.ImgPost">
+        UPDATE ImgPost
+        SET 
+            title = #{title}, 
+            content = #{content}, 
+            cate = #{cate}, 
+            created = SYSDATE
+        WHERE imgPostId = #{imgPostId}
+    </update>
 
 
     <delete id="deleteImgPostById">
         DELETE FROM ImgPost
         WHERE imgPostId = #{imgPostId}
     </delete>
+
+
+    <update id="updateAuth" parameterType="com.zd.back.imgboard.model.ImgPost">
+        UPDATE ImgPost
+        SET 
+           auth =1, 
+            authDate = SYSDATE
+        WHERE imgPostId = #{imgPostId}
+    </update>
 
     
 <resultMap id="ImgBoardResultMap" type="com.zd.back.imgboard.model.ImgBoard">

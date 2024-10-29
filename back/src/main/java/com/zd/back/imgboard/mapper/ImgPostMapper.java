@@ -23,4 +23,6 @@ public interface ImgPostMapper {
     void deleteImgPostById(int imgPostId);
 
     void updateImgPost(ImgPost imgPost);
+
+    void updateAuth (int imgPostId);
 }

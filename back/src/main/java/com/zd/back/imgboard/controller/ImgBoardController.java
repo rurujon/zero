@@ -1,15 +1,18 @@
 package com.zd.back.imgboard.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
+import com.zd.back.login.security.JwtUtil;
 import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-//수정시 파일 업로드 부분 제외하고 text만 되도록 함 (-)
+//수정시 파일 업로드 부분 제외하고 text만 되도록 함 
 
 
 @RestController
@@ -42,7 +45,7 @@ public class ImgBoardController {
             imgPostService.createImgPost(imgPost);
 
             //imgManagerService 에서 받아서 list로 저장
-            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId+1);
+            List<Img> imgList = imgManagerService.uploadImages(images, maxImgPostId);
 
             //이미지 정보 DB에 저장           
             imgService.saveImg(imgList);
@@ -120,7 +123,7 @@ public class ImgBoardController {
 
 
     @DeleteMapping("/deleted")
-    public String deleteArticle(@RequestParam int imgPostId) {
+    public  ResponseEntity<String> deleteArticle(@RequestParam int imgPostId) {
         try {
 
             
@@ -135,13 +138,32 @@ public class ImgBoardController {
             }
         
             // 이후 게시물 삭제
-
             imgPostService.deleteImgPostById(imgPostId); 
 
-            return "게시물이 삭제되었습니다.";
+            return ResponseEntity.ok("인증게시물이 삭제 되었습니다.");
+
         } catch (Exception e) {
-            return "게시물 삭제에 실패했습니다: " + e.getMessage();
+
+            return ResponseEntity.status(500).body("게시물 삭제 중 오류가 발생했습니다: " + e.getMessage());       
+        
         }
+    }
+
+
+    //memId:suzi123 
+    @PostMapping("/auth")
+    public ResponseEntity<String> getAuthorized(@RequestParam int imgPostId){
+
+        try{
+            imgPostService.updateAuth(imgPostId);
+            
+            return ResponseEntity.ok("게시물 인증이 승인되었습니다.");
+
+        }catch(Exception e){
+
+            return ResponseEntity.status(500).body("게시물 삭제 중 오류가 발생했습니다: " + e.getMessage()); 
+        }
+
     }
 
 }    

@@ -5,23 +5,23 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const ImgArticle = () => {
-    const [memId, setMemId] = useState(localStorage.getItem('memId'));
+    const memId = useState(localStorage.getItem('memId'));
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const imgPostId = queryParams.get('imgPostId'); // 쿼리 파라미터에서 imgPostId 가져오기
 
     const [article, setArticle] = useState(null);
-    const[auth,setAuth] = useState(0);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const navigate = useNavigate();   
 
     useEffect(() => {
-        //alert 두번 뜸 (-)
-        // 해당 아이디만 조회?(-)
+
+        //alert 두번 뜸 (-) // 해당 아이디만 조회?(-)
+
         if (!memId) {
-                     
+            
             alert("로그인 한 사용자만 게시글을 조회할 수 있습니다 !");       
-            navigate("/login");
+            navigate("/");
         }            
     
     }, [memId, navigate]);
@@ -77,45 +77,38 @@ const ImgArticle = () => {
     };
     
 
-    const handleAuth =()=>{
-
-        setAuth(1);
-
-        try{ //Controller에 postMapping추가 (-)
-            const response =  axios.post(`/imgboard/auth`, {
-                params: { imgPostId , auth}
+    const handleAuth = async () => {
+    
+        //  alert(imgPostId);
+    
+        try {
+            // POST 요청에서 params가 아닌 data로 imgPostId 전달
+            const response = await axios.post(`/imgboard/auth`, null, {
+                params: { imgPostId }
             });
 
             alert(response.data);
 
-        }catch(error){
-            console.error('인증승인시 오류가 발생했습니다.', error);
+            window.location.reload(); 
+
+        } catch (error) {
+            console.error('인증 승인 시 오류가 발생했습니다.', error);
+    
             const errorMessage = error.response && error.response.data 
-            ? error.response.data 
-            : '알 수 없는 오류가 발생했습니다.';
-
-            alert('인증승인에 실패했습니다: ' + errorMessage);
-
+                ? error.response.data 
+                : '알 수 없는 오류가 발생했습니다.';
+    
+            alert('인증 승인에 실패했습니다: ' + errorMessage);
         }
-
-
-
-
-
-
-
-    }
-
-
-
-
-
+    };
+    
     if (loading) {
         return <p>로딩 중...</p>; // 로딩 중일 때 표시
     }
 
     if (!article) {
-        return <p>게시물을 찾을 수 없습니다.</p>; // 게시물이 없을 때 표시
+        return <p>게시물을 찾을 수 없습니다.</p>; 
+        // 게시물이 없을 때 표시
     }
 
 
@@ -147,15 +140,13 @@ const ImgArticle = () => {
                 </div>
             </div>
             <div className="button-container">
-            {(memId === article.imgPost.memId || memId === "suzi123")  && ( 
+            {((memId === article.imgPost.memId && article.imgPost.auth === 0) || memId === "suzi123") && (
                     //본인의 게시물에만 수정, 삭제버튼 나옴
                     <>
                         <button className="action-button" onClick={() => window.location.href = `/imgboard/updated?imgPostId=${imgPostId}`}>
                             수정하기
                         </button>
-                        <button className="action-button" onClick={handleDelete}>
-                            삭제하기
-                        </button>
+                        <button className="action-button" onClick={handleDelete}>삭제하기</button>             
                     </>
                 )}
                 <button className="action-button" onClick={() => window.location.href = '/imgboard/list'}>
