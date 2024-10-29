@@ -33,6 +33,21 @@ public class MemberController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerMember(@Valid @RequestBody Member member, BindingResult bindingResult) {
+
+        // 아이디 중복 확인
+        if (memberService.isIdDuplicate(member.getMemId())) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "이미 사용 중인 아이디입니다.");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        // 이메일 중복 확인
+        if (memberService.isEmailDuplicate(member.getEmail())) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "이미 사용 중인 이메일 주소입니다.");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
         if (bindingResult.hasErrors()) {
             String errors = bindingResult.getAllErrors().stream()
             .map(error -> error.getDefaultMessage())
@@ -245,6 +260,12 @@ public class MemberController {
     @GetMapping("/check-id")
     public ResponseEntity<Boolean> checkDuplicateId(@RequestParam("memId") String memId) {
         boolean isDuplicate = memberService.isIdDuplicate(memId);
+        return ResponseEntity.ok(isDuplicate);
+    }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkDuplicateEmail(@RequestParam("email") String email) {
+        boolean isDuplicate = memberService.isEmailDuplicate(email);
         return ResponseEntity.ok(isDuplicate);
     }
 }

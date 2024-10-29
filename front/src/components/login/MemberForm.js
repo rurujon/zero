@@ -35,9 +35,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [privacyContent, setPrivacyContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState('');
-
-    // 회원가입 핸드폰인증 일시정지
-    const SKIP_PHONE_VERIFICATION = process.env.REACT_APP_SKIP_PHONE_VERIFICATION === 'true';
+    const [isEmailDuplicate, setIsEmailDuplicate] = useState(false); // 이메일 중복 상태 추가
+    const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 중복 확인 여부
 
     useEffect(() => {
         if (initialData) {
@@ -91,6 +90,23 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             })
             .catch(error => {
                 console.error('아이디 중복 체크 오류:', error);
+            });
+    };
+
+    // 이메일 중복 확인 함수 추가
+    const checkDuplicateEmail = () => {
+        if (!member.email || member.email.trim() === '') {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
+
+        axios.get('/member/check-email', { params: { email: member.email } })
+            .then(response => {
+                setIsEmailDuplicate(response.data);
+                setIsEmailChecked(true);
+            })
+            .catch(error => {
+                console.error('이메일 중복 체크 오류:', error);
             });
     };
 
@@ -205,7 +221,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         if (validateForm()) {
             setIsLoading(true);
-            setServerError('');
+            setServerError(null);
 
             try {
                 const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
@@ -217,11 +233,15 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
                 const response = await axios.post(url, data, { withCredentials: true });
 
-                if (response.status === 200 && response.data) {
-                    alert(response.data);
-                    navigate('/member-info');
-                    onSubmit(member);
-
+                if (response.status === 200) {
+                    const successMessage = isEditing ? '회원정보가 성공적으로 수정되었습니다.' : '회원가입이 성공적으로 완료되었습니다.';
+                    alert(successMessage);
+                    if (isEditing) {
+                        onSubmit(member);
+                    } else {
+                        // 회원가입 성공 시 로그인 페이지로 이동
+                        navigate('/login');
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error.response);
@@ -334,13 +354,24 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {/* 이메일 입력 필드 및 중복 확인 버튼 */}
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
-                    <div className="col-sm-10">
-                        <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
-                        <ValidationMessage message={errors.email} />
-                    </div>
-                </div>
+                   <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
+                   <div className="col-sm-10">
+                       <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
+                       {!isEditing && (<button type="button" onClick={checkDuplicateEmail} className="btn btn-primary btn-sm mt-2">중복 확인</button>)}
+                       {isEmailChecked && (
+                           <div>
+                               {isEmailDuplicate ? (
+                                   <span style={{ color:'red' }}>이미 사용 중인 이메일입니다.</span>
+                               ) : (
+                                   <span style={{ color: 'green' }}>사용 가능한 이메일입니다.</span>
+                               )}
+                           </div>
+                       )}
+                       <ValidationMessage message={errors.email} />
+                   </div>
+               </div>
 
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>

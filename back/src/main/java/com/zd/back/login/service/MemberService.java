@@ -58,6 +58,16 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public boolean isIdDuplicate(String memId) {
+        return memberMapper.countByMemId(memId) > 0;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isEmailDuplicate(String email) {
+        return memberMapper.countByEmail(email) > 0;
+    }
+
     @Transactional
     public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
         Map<String, Object> result = new HashMap<>();
@@ -157,10 +167,6 @@ public class MemberService {
         message.setSubject("비밀번호 재설정");
         message.setText("임시 비밀번호: " + tempPassword);
         emailSender.send(message);
-    }
-
-    public boolean isIdDuplicate(String memId) {
-        return memberMapper.countByMemId(memId) > 0;
     }
 
     public boolean validateLogin(String memId, String rawPassword) {
