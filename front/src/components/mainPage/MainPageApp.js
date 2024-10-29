@@ -13,7 +13,7 @@ function MainPageApp() {
 
     return (
       <div>
-        
+
           <Routes>
             <Route path="/" element={<Body/>}/>
           </Routes>
@@ -23,5 +23,5 @@ function MainPageApp() {
 }
 
 
-  
+
 export default MainPageApp;
