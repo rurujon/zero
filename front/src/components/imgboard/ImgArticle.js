@@ -5,25 +5,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const ImgArticle = () => {
-    const memId = useState(localStorage.getItem('memId'));
+    const [memId, setMemId] = useState(localStorage.getItem('memId')); 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const imgPostId = queryParams.get('imgPostId'); // 쿼리 파라미터에서 imgPostId 가져오기
+    const imgPostId = queryParams.get('imgPostId');
 
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();   
 
     useEffect(() => {
-
-        //alert 두번 뜸 (-) // 해당 아이디만 조회?(-)
-
         if (!memId) {
-            
-            alert("로그인 한 사용자만 게시글을 조회할 수 있습니다 !");       
+            alert("로그인 한 사용자만 게시글을 조회할 수 있습니다 !");
             navigate("/");
-        }            
-    
+        } 
     }, [memId, navigate]);
 
     useEffect(() => {
@@ -34,14 +29,13 @@ const ImgArticle = () => {
                 });
                 setArticle(response.data);
                 setLoading(false);
-
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
                 setLoading(false);
             }
         };
 
-        fetchArticle(); // API 호출
+        fetchArticle();
     }, [imgPostId]);
 
     const getCateLabel = (cate) => {
@@ -62,65 +56,48 @@ const ImgArticle = () => {
             const response = await axios.delete(`/imgboard/deleted`, {
                 params: { imgPostId }
             });
-            alert(response.data); // 서버에서 반환한 메시지 표시
-            navigate('/imgboard/list'); // 삭제 후 목록으로 리다이렉트
-
+            alert(response.data);
+            navigate('/imgboard/list');
         } catch (error) {
             console.error('게시물을 삭제하는 데 오류가 발생했습니다.', error);
-
             const errorMessage = error.response && error.response.data 
                 ? error.response.data 
                 : '알 수 없는 오류가 발생했습니다.';
-    
             alert('게시물 삭제에 실패했습니다: ' + errorMessage);
         }
     };
-    
 
     const handleAuth = async () => {
-    
-        //  alert(imgPostId);
-    
         try {
-            // POST 요청에서 params가 아닌 data로 imgPostId 전달
             const response = await axios.post(`/imgboard/auth`, null, {
                 params: { imgPostId }
             });
-
             alert(response.data);
-
             window.location.reload(); 
-
         } catch (error) {
             console.error('인증 승인 시 오류가 발생했습니다.', error);
-    
             const errorMessage = error.response && error.response.data 
                 ? error.response.data 
                 : '알 수 없는 오류가 발생했습니다.';
-    
             alert('인증 승인에 실패했습니다: ' + errorMessage);
         }
     };
     
     if (loading) {
-        return <p>로딩 중...</p>; // 로딩 중일 때 표시
+        return <p>로딩 중...</p>;
     }
 
     if (!article) {
         return <p>게시물을 찾을 수 없습니다.</p>; 
-        // 게시물이 없을 때 표시
     }
-
 
     return (
         <div className="article-container">
             <h2 className="article-title">{article.imgPost.title}</h2>
             <div className="article-meta-container">
                 <p className="article-meta"><strong>승인여부:</strong> {article.imgPost.auth}</p>
-                {(memId === "suzi123")&&(
-                    <>
+                {memId === "suzi123" && (
                     <button type='button' onClick={handleAuth}>인증승인</button>
-                    </>
                 )}
                 <hr className="divider" />
                 <p className="article-meta"><strong>사용자 ID:</strong> {article.imgPost.memId}</p>
@@ -133,9 +110,7 @@ const ImgArticle = () => {
                 <p>{article.imgPost.content}</p>
                 <div className="image-gallery">
                     {article.images && article.images.map(img => (
-                    
-                     <img key={img.imgId} src={`/images/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
-                    
+                        <img key={img.imgId} src={`/images/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
                     ))}
                 </div>
             </div>
@@ -148,7 +123,7 @@ const ImgArticle = () => {
                         </button>
                         <button className="action-button" onClick={handleDelete}>삭제하기</button>             
                     </>
-                )}
+                )}         
                 <button className="action-button" onClick={() => window.location.href = '/imgboard/list'}>
                     목록가기
                 </button>
