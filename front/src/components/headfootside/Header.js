@@ -88,7 +88,7 @@ function Header() {
             </h1>
             <nav>
               <ul>
-                <li><Link to="/loginMain">Login</Link></li>
+                <li><Link to="/login">Login</Link></li>
                 <li><Link to="/about">MyPage</Link></li>
                 <li><Link to="/services">메뉴3</Link></li>
                 <li><Link to="/contact">메뉴4</Link></li>

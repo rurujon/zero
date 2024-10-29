@@ -19,6 +19,8 @@ import SeoulNewsEnv from "./components/seoulnews/SeoulNewsEnv";
 import SeoulNewsGreen from "./components/seoulnews/SeoulNewsGreen";
 import GoogleMaps from "./components/smartmap/GoogleMaps";
 import ImgCreated from "./components/imgboard/ImgCreated";
+import MemberInfoPage from "./components/login/MemberInfoPage";
+import RegisterPage from "./components/login/RegisterPage";
 
 
 
@@ -30,8 +32,13 @@ import ImgCreated from "./components/imgboard/ImgCreated";
 
 export const routes = [
 
-    
+
     { path:'/', element:<MainPageApp/>},    //메인페이지
+
+    { path: '/login', element: <HomePage /> },  // 로그인 페이지
+    { path: '/member-info', element: <MemberInfoPage/> },//회원정보조회
+    { path: '/register', element: <RegisterPage/> },//회원가입
+
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
 
@@ -45,9 +52,9 @@ export const routes = [
     { path:'/orgList', element:<OrgApp/>},   //봉사단체 리스트
     { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
     { path:'/minEnv/:rssId', element:<MinEnvArticle/>},   //환경부 Rss 상세 페이지
-    
+
     { path:'/googleMap', element:<GoogleMaps/>},   //봉사단체 리스트
-    
+
 
     // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
 
