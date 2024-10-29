@@ -1061,3 +1061,19 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 13:24:49.105 DEBUG 12360 --- [http-nio-8080-exec-6] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@2082091937 wrapping oracle.jdbc.driver.T4CConnection@32a3340c] will not be managed by Spring
 2024-10-29 13:24:49.105 DEBUG 12360 --- [http-nio-8080-exec-6] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : ==>  Preparing: select QUIZID, question, answer, explanation from (select QUIZID, question, answer, explanation from quiz order by DBMS_RANDOM.VALUE) where ROWNUM =1
 2024-10-29 13:24:49.107 DEBUG 12360 --- [http-nio-8080-exec-6] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : ==> Parameters: 
+2024-10-29 13:24:49.108 DEBUG 12360 --- [http-nio-8080-exec-6] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : <==      Total: 1
+2024-10-29 13:24:49.108 DEBUG 12360 --- [http-nio-8080-exec-6] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2a73b63a]
+2024-10-29 13:24:49.112 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-29 13:24:49.112 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@653ebfd5] was not registered for synchronization because synchronization is not active
+2024-10-29 13:24:49.112 DEBUG 12360 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1265754174 wrapping oracle.jdbc.driver.T4CConnection@32a3340c] will not be managed by Spring
+2024-10-29 13:24:49.112 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==>  Preparing: SELECT memId, pwd, memName, email, tel, post, addr1, addr2, CASE WHEN termsAccepted = 1 THEN 'true' ELSE 'false' END as termsAccepted, CASE WHEN privacyAccepted = 1 THEN 'true' ELSE 'false' END as privacyAccepted FROM member WHERE memId = ?
+2024-10-29 13:24:49.113 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : ==> Parameters: kkkk1965(String)
+2024-10-29 13:24:49.113 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.l.m.MemberMapper.selectMemberById  : <==      Total: 1
+2024-10-29 13:24:49.114 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@653ebfd5]
+2024-10-29 13:24:49.114 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
+2024-10-29 13:24:49.115 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@61fa4b0a] was not registered for synchronization because synchronization is not active
+2024-10-29 13:24:49.115 DEBUG 12360 --- [http-nio-8080-exec-9] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1950873057 wrapping oracle.jdbc.driver.T4CConnection@32a3340c] will not be managed by Spring
+2024-10-29 13:24:49.115 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : ==>  Preparing: select QUIZID, question, answer, explanation from (select QUIZID, question, answer, explanation from quiz order by DBMS_RANDOM.VALUE) where ROWNUM =1
+2024-10-29 13:24:49.115 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : ==> Parameters: 
+2024-10-29 13:24:49.116 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : <==      Total: 1
+2024-10-29 13:24:49.116 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@61fa4b0a]
