@@ -46,7 +46,7 @@ export const routes = [
     { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
     { path:'/minEnv/:rssId', element:<MinEnvArticle/>},   //환경부 Rss 상세 페이지
     
-    { path:'/googleMap', element:<GoogleMaps/>},   //봉사단체 리스트
+    { path:'/googleMap', element:<GoogleMaps/>},   //구글맵 api
     
 
     // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
