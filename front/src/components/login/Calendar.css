@@ -1,0 +1,48 @@
+.calendar {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.calendar th {
+    background-color: #f5f5f5;
+}
+
+.calendar .empty {
+    background-color: #f9f9f9;
+}
+
+.calendar .attended {
+    background-color: #007bff; /* 출석한 날의 배경색 */
+    color: white;
+}
+
+.calendar .not-attended {
+    background-color: #ffffff; /* 출석하지 않은 날의 배경색 */
+}
+
