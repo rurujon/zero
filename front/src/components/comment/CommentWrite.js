@@ -40,7 +40,7 @@ function CommentWrite(props) {
 			console.log(resp.data);
 
 			if (resp.data.boardno != null) {
-				alert("댓글을 성공적으로 등록했습니다 :D");
+				alert("댓글이 등록되었습니다.");
 				navigate(0);
 			}
 

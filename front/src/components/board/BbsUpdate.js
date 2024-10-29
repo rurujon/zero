@@ -36,7 +36,7 @@ function BbsUpdate() {
 			console.log(resp.data);
 
 			if (resp.data.updatedRecordCount == 1) {
-				alert("게시글을 성공적으로 수정했습니다 :D");
+				alert("게시글이 수정되었습니다.");
 				navigate(`/board/${board.boardno}`); // 글 상세로 이동
 			}
 

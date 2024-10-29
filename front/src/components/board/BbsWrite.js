@@ -34,12 +34,14 @@ function BbsWrite() {
 			content: content
 		};
 
+
+
 		await axios.post("http://localhost:8080/board/write", req, { headers: headers })
 			.then((resp) => {
 				console.log("[BbsWrite.js] insertBoard() success :D");
 				console.log(resp.data);
 
-				alert("새로운 게시글을 성공적으로 등록했습니다 :D");
+				alert("게시글이 등록되었습니다.");
 				navigate(`/board/${resp.data.boardno}`); // 새롭게 등록한 글 상세로 이동
 			})
 			.catch((err) => {
@@ -58,6 +60,12 @@ function BbsWrite() {
 		}
 	}, [navigate]);
 
+	const cancelWrite = () => {
+		const confirmed = window.confirm("게시물 작성을 취소하시겠습니까?");
+    	if (!confirmed) return;
+		navigate("/board/list");
+	};
+
 	return (
 		<div>
 			<table className="table">
@@ -70,7 +78,7 @@ function BbsWrite() {
 					</tr>
 
 					<tr>
-                        <th className="table-primary">정보유형</th> {/* 카테고리 추가 */}
+                        <th className="table-primary">정보유형</th>
                         <td>
                             <select
                                 value={category}
@@ -81,6 +89,7 @@ function BbsWrite() {
                                 <option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
                                 <option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
                                 <option value="업사이클링 아이디어">업사이클링 아이디어</option>
+								<option value="기타">기타</option>
                             </select>
                         </td>
                     </tr>
@@ -102,7 +111,8 @@ function BbsWrite() {
 			</table>
 
 			<div className="my-5 d-flex justify-content-center">
-				<button className="btn btn-outline-secondary" onClick={insertBoard}><i className="fas fa-pen"></i> 등록하기</button>
+				<button className="btn btn-outline-secondary" onClick={insertBoard}><i className="fas fa-pen"></i> 등록하기</button>&nbsp;
+				<button className="btn btn-outline-secondary" onClick={cancelWrite}><i className="fas fa-pen"></i> 취소하기</button>
 			</div>
 		</div>
 	);

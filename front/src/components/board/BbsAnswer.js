@@ -38,7 +38,7 @@ function BbsAnswer() {
 			console.log("[BbsAnswer.js] createBbsAnswer() success :D");
 			console.log(resp.data);
 
-			alert("답글을 성공적으로 등록했습니다 :D");
+			alert("답글이 등록되었습니다.");
 			navigate(`/board/${resp.data.boardno}`); // 새롭게 등록한 답글 상세로 이동
 		})
 		.catch((err) => {
@@ -52,15 +52,45 @@ function BbsAnswer() {
 
 	useEffect(() => {
 		if (!localStorage.getItem("memId")) {
-			alert("로그인 한 사용자만 게시글에 대한 답글을 작성할 수 있습니다 !");
+			alert("로그인 한 사용자만 게시글에 대한 답글을 작성할 수 있습니다.");
 			navigate(-1);
 		}
 	}, []);
 
+	const cancelWrite = () => {
+		const confirmed = window.confirm("답글 작성을 취소하시겠습니까?");
+    	if (!confirmed) return;
+		navigate(`/board/${parentno}`);
+	};
+
 	return (
 		<div>
 			{/* 부모 게시글 정보 */}
-			<table className="table">
+			<table className="table table-striped">
+				<tbody>
+					<tr>
+						<th className="col-3">작성자</th>
+						<td>
+							<span>{parentBbs.memId}</span>
+						</td>
+					</tr>
+
+					<tr>
+						<th>제목</th>
+						<td>
+							<span>{parentBbs.title}</span>
+						</td>
+					</tr>
+
+					<tr>
+						<th>내용</th>
+						<td>
+							<pre>{parentBbs.content}</pre>
+						</td>
+					</tr>
+				</tbody>
+			</table><br/><br/>
+			{/* <table className="table">
 				<tbody>
 					<tr>
 						<th className="table-primary">작성자</th>
@@ -75,8 +105,15 @@ function BbsAnswer() {
 							<input type="text" className="form-control" value={parentBbs.title} size="50px" readOnly />
 						</td>
 					</tr>
+
+					<tr>
+						<th className="table-primary">내용</th>
+						<td>
+							<input type="text" className="form-control" value={parentBbs.content} rows="10" readOnly />
+						</td>
+					</tr>
 				</tbody>
-			</table><br/><br/>
+			</table><br/><br/> */}
 			
 			{/* 답글 작성 */}
 			<h3>📌 Reply</h3>
@@ -106,7 +143,8 @@ function BbsAnswer() {
 			</table>
 
 			<div className="my-5 d-flex justify-content-center">
-				<button className="btn btn-outline-secondary" onClick={createBbsAnswer}><i className="fas fa-pen"></i> 답글달기</button>
+				<button className="btn btn-outline-secondary" onClick={createBbsAnswer}><i className="fas fa-pen"></i>등록하기</button>&nbsp;
+				<button className="btn btn-outline-secondary" onClick={cancelWrite}><i className="fas fa-pen"></i> 취소하기</button>
 			</div>
 		</div>
 	);

@@ -100,7 +100,7 @@
 	<!-- 게시글 삭제 -->
 	<update id="deleteBoard" parameterType="int">
 		UPDATE tipboard
-		SET del = 1
+		SET del = 1, category = NULL
 		WHERE boardno=#{boardno}
 	</update>
 

@@ -4,9 +4,6 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import CommentWrite from "../comment/CommentWrite";
 import CommentList from "../comment/CommentList";
 
-// import CommentWrite from "../comment/CommentWrite";
-// import CommentList from "../comment/CommentList";
-
 function BbsDetail() {
 	const [board, setboard] = useState({});
 	const { boardno } = useParams(); // 파라미터 가져오기
@@ -29,13 +26,16 @@ function BbsDetail() {
 	}
 
 	const deleteBoard = async () => {
+		const confirmed = window.confirm("정말 이 게시글을 삭제하시겠습니까?");
+    	if (!confirmed) return;
+
 		await axios.get(`http://localhost:8080/board/delete/${boardno}`)
 		.then((resp) => {
 			console.log("[BbsDetail.js] deleteBoard() success :D");
 			console.log(resp.data);
 
 			if (resp.data.deletedRecordCount === 1) {
-				alert("게시글을 성공적으로 삭제했습니다 :D");
+				alert("게시글이 삭제되었습니다.");
 				navigate("/board/list");
 			}
 		}).catch((err) => {

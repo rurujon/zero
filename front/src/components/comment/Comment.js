@@ -31,7 +31,7 @@ function Comment(props) {
 				console.log("[Comment.js] updateComment() success :D");
 				console.log(resp.data);
 
-				alert("댓글을 성공적으로 수정했습니다 !");
+				alert("댓글이 수정되었습니다.");
 				setContent(resp.data.updatedContent);
 				navigate(0); // 새로고침
 			}).catch((err) => {
@@ -46,13 +46,16 @@ function Comment(props) {
 
 	/* 댓글 삭제 */
 	const deleteComment = async () => {
+		const confirmed = window.confirm("정말 이 게시글을 삭제하시겠습니까?");
+    	if (!confirmed) return;
+		
 		await axios.get(`http://localhost:8080/comment/${comment.commentno}?boardno=${boardno}`, { headers })
 			.then((resp) => {
 				console.log("[Comment.js] deleteComment() success :D");
 				console.log(resp.data);
 
 				if (resp.data.deletedRecordCount === 1) {
-					alert("댓글을 성공적으로 삭제했습니다 :D");
+					alert("댓글이 삭제되었습니다.");
 					navigate(0);
 				}
 			}).catch((err) => {
@@ -120,13 +123,12 @@ function Comment(props) {
 		);
 	}
 
-	// 삭제된 댓글의 경우
 	else {
 		return (
 			<>
 				<div className="my-5 d-flex justify-content-center">
 					<div className="comment">
-						<span className="del-span">⚠️ 작성자에 의해 삭제된 댓글입니다.</span>
+						<span className="del-span">⚠️ 삭제된 댓글입니다.</span>
 					</div>
 				</div>
 			</>
