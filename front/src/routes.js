@@ -21,6 +21,10 @@ import GoogleMaps from "./components/smartmap/GoogleMaps";
 import ImgCreated from "./components/imgboard/ImgCreated";
 import MemberInfoPage from "./components/login/MemberInfoPage";
 import RegisterPage from "./components/login/RegisterPage";
+import FindIdModal from "./components/login/FindIdModal";
+import FindPasswordModal from "./components/login/FindPasswordModal";
+import PointInfoModal from "./components/login/PointInfoModal";
+import Calendar from "./components/login/Calendar";
 
 
 
@@ -38,6 +42,10 @@ export const routes = [
     { path: '/login', element: <HomePage /> },  // 로그인 페이지
     { path: '/member-info', element: <MemberInfoPage/> },//회원정보조회
     { path: '/register', element: <RegisterPage/> },//회원가입
+    { path: '/find-id', element: <FindIdModal /> },
+    { path: '/find-password', element: <FindPasswordModal /> },
+    { path: '/point-info', element: <PointInfoModal /> },
+    { path: '/attendance', element: <Calendar /> },
 
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
