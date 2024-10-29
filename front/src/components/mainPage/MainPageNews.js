@@ -8,6 +8,7 @@ const MainPageNews = () => {
     const [naverNews, setNaverNews] = useState([])
     const [seoulNews, setSeoulNews] = useState([])
     const [notices, setNotices] = useState([])
+    const [envLaw, setEnvLaw] = useState([])
   
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -44,10 +45,21 @@ const MainPageNews = () => {
             }
         };
 
+        const fetchEnvLaw = async () => {
+            try {
+                const response = await axios.get('/api/rss/env/mini');
+                console.log('EnvLaw data:', response.data); // 데이터가 제대로 받아졌는지 콘솔에 출력
+                setEnvLaw(response.data);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        };
+
 
         fetchNotices();
         fetchNaverNews();
         fetchSeoulNews();
+        fetchEnvLaw();
     },[])
 
 
@@ -72,8 +84,8 @@ const MainPageNews = () => {
                         </button>
                     </li>
                     <li style={styles.li}>
-                        <button onClick={() => handleTabClick('menu3')} style={styles.button}>
-                            메뉴3
+                        <button onClick={() => handleTabClick('envLaw')} style={styles.button}>
+                            환경부 환경정책
                         </button>
                     </li>
                 </ul>
@@ -122,11 +134,15 @@ const MainPageNews = () => {
                         </ul>
                     </div>
                 )}
-                {activeTab === 'menu3' && (
+                {activeTab === 'envLaw' && (
                     <div>
                         <ul>
-                            <li><a href='#'>메뉴3 기사 1</a></li>
-                            <li><a href='#'>메뉴3 기사 2</a></li>
+                            {envLaw.map((envLaw, index) => (
+                                <li key={index}>
+                                    {/* <Link to={`/news/${index}`}>{newsItem.title}</Link> */}
+                                    <a href={envLaw.link} target="_blank" rel="noopener noreferrer">{envLaw.title}</a>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 )}

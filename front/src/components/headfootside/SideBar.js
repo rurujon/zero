@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './SideBar.css'; // 사이드바 스타일링
+// import './SideBar.css'; // 사이드바 스타일링
 
 function SideBar() {
     return (

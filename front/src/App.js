@@ -10,62 +10,41 @@ import NewsList from './components/naverapi/NewsList';
 import SmartMapApp from './components/smartmap/SmartMapApp';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
-
-import HttpHeadersProvider from './components/context/HttpHeadersProvider';
-import BbsWrite from './components/board/BbsWrite';
+import AutoLogout from './components/login/AutoLogout';
+import ImgApp from './components/imgboard/ImgApp';
 
 function AppContent() {
 
   //React Router에서 경로를 가져오는 훅. 단, 이걸 사용하기 위해서는 정의되는 함수가 <BrowserRouter> 안에 있어야 한다고 합니다.
   //그래서 아래처럼 App()에서 <BrowserRouter></BrowserRouter>로 감싼 AppContent를 불러오도록 구조를 변경해야 합니다.
   const location = useLocation();
+  const isMainPage = location.pathname === '/'; // 메인 페이지인지 확인
 
   return (
-    <div>
+    
+    <div className='container'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
-      <Header />
+      <Header className='header'/>        
 
-     {/*  {location.pathname !== '/' && <SideBar/>}  */}
-      {/* 사이드바 조건부 렌더링 */}
-
-
-
-<<<<<<< HEAD
-      <MainPageApp/>
-      <LoginApp/>
-      {/* <NewsList/> */}
-      {/* <SmartMapApp/>  */}
-      {/* <ImgApp/> */}
-      {/* <QuizModal/> */}
-      {/* <Pay/> */}
-      {/* <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes> */}
-      {/* <LoginApp/> */}
-      {/* <QuizModal/> */}
-=======
-      {/* <MainPageApp/> */}
-      <LoginApp/>
-      {/* <NewsList/> */}
-      {/* <SmartMapApp/> */}
-      {/* <ImgApp/> */}
-      {/* <QuizModal/> */}
-      {/* <BbsWrite/> */}
-
-     <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes>
+        {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
+        <div className={isMainPage ? 'main-content' : 'main-layout'}>
+          
+          {/* 메인페이지가 아닌 경우에만 사이드바 렌더링 */}
+          {!isMainPage && <SideBar className='sidebar'/>}
+          
+          <div className={isMainPage ? 'main-content' : 'content'}>
+            <Routes>
+              {routes.map((route) => (
+                <Route key={route.path} path={route.path} element={route.element} />
+              ))}
+            </Routes>
+          </div>
+        </div>
 
 
->>>>>>> SeounEun2
-      {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
- {/*      <Footer />
-      <AutoLogout />
- */}
+        {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
+        <Footer className='footer'/>
+        <AutoLogout />
 
     </div>
   );

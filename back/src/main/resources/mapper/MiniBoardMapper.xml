@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 공지사항, 에코뉴스 등 틀이 잡히면 수정할 예정. -->
     <select id="selectNotice" parameterType="string" resultType="com.zd.back.mainminiboard.model.MiniBoard">
-        SELECT title,writer,created FROM notice order by created desc
+        select * from (SELECT title,writer,created FROM notice ORDER BY created DESC) where rownum &lt;=6
     </select>
 
     <!-- <select id="selectNews" parameterType="string" resultType="com.zd.back.mainminiboard.model.MiniBoard">

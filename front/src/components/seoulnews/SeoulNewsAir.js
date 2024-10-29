@@ -1,6 +1,7 @@
 // src/components/NewsList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const SeoulNewsAir = () => {
   const [newsList, setNewsList] = useState([]);
@@ -12,7 +13,6 @@ const SeoulNewsAir = () => {
   }, []);
 
   const fetchNews = async () => {
-
     try {
       const response = await axios.get('/api/seoul/seoulNews/air');
       setNewsList(response.data);
@@ -47,7 +47,7 @@ const SeoulNewsAir = () => {
           <li key={news.title}>
             <h2>{news.title}</h2>
             <p>{news.content}</p>
-            <a href={news.link} target="_blank" rel="noopener noreferrer">Read more</a>
+            <Link to={`/seoulNewsArticle/${news.seoulId}`}>Read more</Link>
             <p>{news.publishedDate}</p>
           </li>
         ))}

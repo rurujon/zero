@@ -50,6 +50,12 @@ dependencies {
 	//2024-10-17 정우준 추가
 	implementation 'net.nurigo:sdk:4.2.7'
 
+	//2024-10-21 정윤재 추가 - 네이버 api db 안 정규화 표현식 제거용
+	implementation 'org.apache.commons:commons-text:1.9'
+
+	//2024-10-22 정윤재 추가 - rss 피딩 xml 리딩 관련
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+
 	//2024-10-24 조준영 결제api의존 추가
 	implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 

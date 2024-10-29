@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.naversearchapi.mapper.SearchApiMapper">
     <insert id="insertNews" parameterType="com.zd.back.naversearchapi.model.News">
-        INSERT INTO naverNews (title, originallink, link, description, pubDate)
-        VALUES (#{title}, #{originallink}, #{link}, #{description}, #{pubDate})
+        INSERT INTO naverNews (title, link, description, pubDate)
+        VALUES (#{title}, #{link}, #{description}, #{pubDate})
     </insert>
 
     <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.naversearchapi.model.News">
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 메인화면에 표시될 최신 10개의 뉴스 데이터 가져오기 -->
     <select id="miniNews" resultType="com.zd.back.naversearchapi.model.News">
-        select * from (SELECT * FROM naverNews ORDER BY pubDate DESC) where rownum &lt;=10
+        select * from (SELECT * FROM naverNews ORDER BY pubDate DESC) where rownum &lt;=6
     </select>
 
 </mapper>
