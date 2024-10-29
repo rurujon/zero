@@ -3,8 +3,8 @@ import './Body.css'; // 스타일 파일
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login';
 import MainPageNews from './MainPageNews';
-import HomePage from '../login/HomePage';
 import MainPageNewsCopy from './MainPageNewsCopy';
+import HomePage from '../login/HomePage';
 
 
 const Body = () => {
@@ -14,7 +14,7 @@ const Body = () => {
         {/* 첫 번째 층 */}
         <div style={styles.row}>
           <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNews/></div>
-          <div style={{ ...styles.box, flexGrow: 1 }}></div>
+          <div style={{ ...styles.box, flexGrow: 1 }}><HomePage/></div>
         </div>
         {/* 두 번째 층 */}
         <div style={styles.row}>

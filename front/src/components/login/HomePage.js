@@ -50,7 +50,7 @@ const HomePage = () => {
     };
 
     return (
-        <div className="container mt-4">
+        <div>
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
@@ -68,11 +68,11 @@ const HomePage = () => {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                position: 'fixed',
+                                position: 'relative',
                                 top: 0,
                                 left: 0,
                                 width: '100%',
-                                height: '100%',
+                                height: '100px',
                                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                 zIndex: 1000
                             }}

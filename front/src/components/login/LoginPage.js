@@ -28,10 +28,10 @@ const LoginPage = () => {
             alert("로그인 처리 중 문제가 발생했습니다.");
         }
     };
-  
+
 
     return (
-        <div className="container" style={{ marginBottom: '15px', margin:'15px'}}>
+        <div style={{ marginBottom: '15px', margin:'15px'}}>
             <h2>로그인</h2><br />
             <form onSubmit={handleSubmit}>
                 <div className="dl-item">
