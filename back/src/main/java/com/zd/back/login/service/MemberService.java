@@ -1,5 +1,7 @@
 package com.zd.back.login.service;
 
+import com.zd.back.JY.domain.attendance.AttendanceService;
+import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,18 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class MemberService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     @Autowired
     private MemberMapper memberMapper;
@@ -19,57 +28,130 @@ public class MemberService {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private PointService pointService;
+
+    @Autowired
+    private AttendanceService attendanceService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Transactional
     public void registerMember(Member member) {
-        // 비밀번호를 BCrypt로 암호화
-        String encryptedPassword = passwordEncoder.encode(member.getPwd());
-        System.out.println("암호화된 비밀번호: " + encryptedPassword); // 콘솔에 출력해 확인
-        member.setPwd(encryptedPassword);
-        memberMapper.insertMember(member);
+        try {
+            String encryptedPassword = passwordEncoder.encode(member.getPwd());
+            member.setPwd(encryptedPassword);
 
+            memberMapper.insertMember(member);
+
+            try {
+                pointService.insertData(member.getMemId());
+            } catch (Exception e) {
+                logger.error("포인트 데이터 삽입 중 오류 발생: {}", e.getMessage(), e);
+                throw new RuntimeException("포인트 데이터 처리 중 오류가 발생했습니다.", e);
+            }
+
+            logger.info("회원가입 및 포인트 지급 완료: {}", member.getMemId());
+        } catch (Exception e) {
+            logger.error("회원가입 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("회원가입 처리 중 문제가 발생했습니다: " + e.getMessage(), e);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isIdDuplicate(String memId) {
+        return memberMapper.countByMemId(memId) > 0;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isEmailDuplicate(String email) {
+        return memberMapper.countByEmail(email) > 0;
+    }
+
+    @Transactional
+    public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("isValid", false);
+        result.put("isFirstLoginToday", false);
+
+        Member member = memberMapper.selectMemberById(memId);
+        if (member == null || !passwordEncoder.matches(rawPassword, member.getPwd())) {
+            return result;
+        }
+
+        result.put("isValid", true);
+        try {
+            // 출석 체크
+            if (attendanceService.checkToday(memId) == 0) {
+                attendanceService.insertAtt(memId); // 출석 체크
+
+                // 오늘 처음 로그인하는 경우에만 포인트 추가
+                pointService.addAttendancePoint(memId);
+                result.put("isFirstLoginToday", true);
+                logger.info("첫 로그인 시 출석 체크 및 포인트 추가 완료: {}", memId);
+            } else {
+                logger.info("오늘 이미 출석한 회원: {}", memId);
+            }
+        } catch (Exception e) {
+            logger.error("출석 체크 또는 포인트 추가 중 오류 발생", e);
+        }
+        return result;
     }
 
     public Member getMemberById(String memId) {
         return memberMapper.selectMemberById(memId);
     }
 
+    @Transactional
     public void updateMember(Member member) {
         Member existingMember = memberMapper.selectMemberById(member.getMemId());
         if (existingMember != null) {
             if (member.getPwd() != null && !member.getPwd().isEmpty()) {
-                // 새 비밀번호가 제공되고 비어있지 않은 경우에만 암호화
                 String encryptedPassword = passwordEncoder.encode(member.getPwd());
                 member.setPwd(encryptedPassword);
             } else {
-                // 비밀번호가 제공되지 않거나 빈 문자열인 경우 기존 비밀번호 유지
                 member.setPwd(existingMember.getPwd());
             }
             memberMapper.updateMember(member);
+            logger.info("회원정보 수정 완료: {}", member.getMemId());
         }
     }
 
+    @Transactional
     public void deleteMember(String memId) {
-        memberMapper.deleteMember(memId);
+        try {
+            // 1. 포인트 이력 삭제
+            pointService.deletePointHistory(memId);
+
+            // 2. 포인트 정보 삭제
+            pointService.deletePoint(memId);
+
+            // 3. 출석 정보 삭제
+            attendanceService.deleteAttendance(memId);
+
+            // 4. 회원 정보 삭제
+            memberMapper.deleteMember(memId);
+
+            logger.info("회원 탈퇴 완료: {}", memId);
+        } catch (Exception e) {
+            logger.error("회원 탈퇴 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("회원 탈퇴 처리 중 문제가 발생했습니다: " + e.getMessage(), e);
+        }
     }
 
     public String findIdByEmail(String email) {
         return memberMapper.findIdByEmail(email);
     }
 
+    @Transactional
     public boolean resetPassword(String memId, String email) {
         Member member = memberMapper.selectMemberById(memId);
         if (member != null && member.getEmail().equals(email)) {
             String tempPassword = generateTempPassword();
-            member.setPwd(tempPassword);
-            sendPasswordResetEmail(email, tempPassword);
-
-            String encryptedPassword = passwordEncoder.encode(member.getPwd());
-            System.out.println("암호화된 비밀번호: " + encryptedPassword);
+            String encryptedPassword = passwordEncoder.encode(tempPassword);
             member.setPwd(encryptedPassword);
-
             memberMapper.updateMember(member);
-
+            sendPasswordResetEmail(email, tempPassword);
             return true;
         }
         return false;
@@ -87,26 +169,12 @@ public class MemberService {
         emailSender.send(message);
     }
 
-    public boolean isIdDuplicate(String memId) {
-        return memberMapper.countByMemId(memId) > 0;
-    }
-
     public boolean validateLogin(String memId, String rawPassword) {
-        // 데이터베이스에서 사용자 정보 조회
         Member member = memberMapper.selectMemberById(memId);
         if (member == null) {
-            System.out.println("회원 정보를 찾을 수 없음");
-            return false; // 회원 정보가 없을 경우
+            logger.info("회원 정보를 찾을 수 없음: {}", memId);
+            return false;
         }
-
-        System.out.println("DB에서 가져온 암호화된 비밀번호: " + member.getPwd());
-        System.out.println("사용자가 입력한 비밀번호: " + rawPassword);
-
-        // 입력한 비밀번호와 암호화된 비밀번호를 비교
-        boolean isPasswordMatch = passwordEncoder.matches(rawPassword, member.getPwd());
-        System.out.println("비밀번호 일치 여부: " + isPasswordMatch);
-
-        return isPasswordMatch;
+        return passwordEncoder.matches(rawPassword, member.getPwd());
     }
-
 }

@@ -1,6 +1,7 @@
 import HomePage from "./components/login/HomePage";
 import MainPageApp from "./components/mainPage/MainPageApp";
 import NewsList from "./components/naverapi/NewsList";
+import Pay from "./components/pay/Pay";
 
 
 
@@ -21,6 +22,7 @@ export const routes = [
     // { path:'/seoulNewsAir', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
     // { path:'/seoulNewsGreen', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
 
+    // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
 
     
 

@@ -9,14 +9,13 @@ function LoginApp() {
         <>
             <div className="App">
                 <Routes>
-                    <Route path="/" element={<HomePage/>} />
-                    <Route path="/register" element={<RegisterPage/>} />
-                    <Route path="/member-info" element={<MemberInfoPage/>} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/member-info" element={<MemberInfoPage />} />
                 </Routes>
             </div>
         </>
     );
 }
-
 
 export default LoginApp;

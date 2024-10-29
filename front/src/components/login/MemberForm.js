@@ -1,9 +1,12 @@
+// MemberForm.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { adjustWindowSize } from './utils/Sizing';
 import ValidationMessage from './ValidationMessage';
 import { validateField } from './utils/validating';
+import { useNavigate } from 'react-router-dom';
 
 const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [member, setMember] = useState({
@@ -16,9 +19,11 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         post: '',
         addr1: '',
         addr2: '',
-        termsAccepted: false // 이용약관 동의 필드
+        termsAccepted: false,
+        privacyAccepted: false
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
@@ -27,28 +32,49 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [termsContent, setTermsContent] = useState('');
-
+    const [privacyContent, setPrivacyContent] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [serverError, setServerError] = useState('');
+    const [isEmailDuplicate, setIsEmailDuplicate] = useState(false); // 이메일 중복 상태 추가
+    const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 중복 확인 여부
 
     useEffect(() => {
-
-        setTermsContent(`이용약관\n\n1. 이용자는 ...\n2. 서비스 제공 ...\n3. ...\n내용은 추후 수정`);
-
         if (initialData) {
             setMember(prevState => ({
                 ...prevState,
                 ...initialData,
                 pwd: '',
                 pwdConfirm: '',
-                termsAccepted: false
+                termsAccepted: false,
+                privacyAccepted: false
             }));
             setPhoneNumber(initialData.tel || '');
             adjustWindowSize(window, initialData, true, []);
         }
 
-        axios.get('/api/terms')
-        .then(response => setTermsContent(response.data))  // 응답 데이터로 이용약관 내용을 설정
-        .catch(error => console.error('이용약관 불러오기 오류:', error));
+        // 이용약관 불러오기
+        axios.get('/member/terms')
+        .then(response => {
+            if (response.data && typeof response.data === 'string') {
+                setTermsContent(response.data);
+            }
+        })
+        .catch(error => {
+            console.error('이용약관 불러오기 오류:', error);
+            setTermsContent('이용약관을 불러오는 중 오류가 발생했습니다.');
+        });
 
+        // 개인정보 처리방침 불러오기
+        axios.get('/member/privacy')
+        .then(response => {
+            if (response.data && typeof response.data === 'string') {
+                setPrivacyContent(response.data);
+            }
+        })
+        .catch(error => {
+            console.error('개인정보 처리방침 불러오기 오류:', error);
+            setPrivacyContent('개인정보 처리방침을 불러오는 중 오류가 발생했습니다.');
+        });
     }, [initialData]);
 
     const checkDuplicateId = () => {
@@ -59,11 +85,28 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         axios.get('/member/check-id', { params: { memId: member.memId } })
             .then(response => {
-                setIsDuplicate(response.data);
+                setIsDuplicate(response.data.isDuplicate);
                 setIsChecked(true);
             })
             .catch(error => {
                 console.error('아이디 중복 체크 오류:', error);
+            });
+    };
+
+    // 이메일 중복 확인 함수 추가
+    const checkDuplicateEmail = () => {
+        if (!member.email || member.email.trim() === '') {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
+
+        axios.get('/member/check-email', { params: { email: member.email } })
+            .then(response => {
+                setIsEmailDuplicate(response.data);
+                setIsEmailChecked(true);
+            })
+            .catch(error => {
+                console.error('이메일 중복 체크 오류:', error);
             });
     };
 
@@ -96,6 +139,10 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             newErrors.termsAccepted = '이용약관에 동의해야 합니다.';
         }
 
+        if (!isEditing && !member.privacyAccepted) {
+            newErrors.privacyAccepted = '개인정보 처리방침에 동의해야 합니다.';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -105,7 +152,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         setMember(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value  // 체크박스일 경우 checked 상태 반영
+            [name]: type === 'checkbox' ? checked : value
         }));
 
         if (name === 'memId') {
@@ -123,7 +170,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
 
         if (isEditing && name === 'pwd' && value.trim() === '') {
-            setErrors(prev => ({ ...prev, pwd: undefined }));
+            setErrors(prev => ({...prev, pwd: undefined }));
         } else {
             const errorMessage = validateField(name, value);
             setErrors(prev => ({
@@ -133,19 +180,19 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
             if (!isEditing && (name === 'pwd' || name === 'pwdConfirm')) {
                 if (name === 'pwd' && member.pwdConfirm && value !== member.pwdConfirm) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else if (name === 'pwdConfirm' && value !== member.pwd) {
-                    setErrors(prev => ({ ...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
+                    setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
                 } else {
-                    setErrors(prev => ({ ...prev, pwdConfirm: undefined }));
+                    setErrors(prev => ({...prev, pwdConfirm: undefined }));
                 }
             }
         }
 
-        adjustWindowSize(window, { ...member, [name]: type === 'checkbox' ? checked : value }, true, []);
+        adjustWindowSize(window, {...member, [name]: type === 'checkbox' ? checked : value }, true, []);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isEditing && !isVerified) {
             alert('휴대폰 인증을 완료해주세요.');
@@ -166,26 +213,46 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 alert('이미 사용 중인 아이디입니다.');
                 return;
             }
+            if (!member.termsAccepted || !member.privacyAccepted) {
+                alert('이용약관과 개인정보 처리방침에 모두 동의해야 합니다.');
+                return;
+            }
         }
 
         if (validateForm()) {
-            const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
-            const data = {
-                ...member,
-                pwd: isEditing && !member.pwd ? undefined : member.pwd,
-                tel: isPhoneVerificationRequired ? phoneNumber : member.tel
-            };
+            setIsLoading(true);
+            setServerError(null);
 
-            axios.post(url, data, { withCredentials: true })
-                .then(response => {
-                    console.log(response);
-                    alert(isEditing ? '회원정보가 수정되었습니다.' : '회원가입이 완료되었습니다.');
-                    onSubmit();
-                })
-                .catch(error => {
-                    console.error('Error:', error.response);
-                    alert(error.response?.data || (isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.'));
-                });
+            try {
+                const url = isEditing ? `/member/update/${member.memId}` : '/member/register';
+                const data = {
+                    ...member,
+                    pwd: isEditing && !member.pwd ? undefined : member.pwd,
+                    tel: isPhoneVerificationRequired ? phoneNumber : member.tel
+                };
+
+                const response = await axios.post(url, data, { withCredentials: true });
+
+                if (response.status === 200) {
+                    const successMessage = isEditing ? '회원정보가 성공적으로 수정되었습니다.' : '회원가입이 성공적으로 완료되었습니다.';
+                    alert(successMessage);
+                    if (isEditing) {
+                        onSubmit(member);
+                    } else {
+                        // 회원가입 성공 시 로그인 페이지로 이동
+                        navigate('/login');
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error.response);
+                if (error.response && error.response.data && error.response.data.error) {
+                    setServerError(error.response.data.error);
+                } else {
+                    setServerError(isEditing ? '회원정보 수정 중 오류가 발생했습니다.' : '회원가입 중 오류가 발생했습니다.');
+                }
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -206,7 +273,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     post: data.zonecode,
                     addr1: data.address
                 }));
-                adjustWindowSize(window, { ...member, post: data.zonecode, addr1: data.address }, true, []);
+                adjustWindowSize(window, {...member, post: data.zonecode, addr1: data.address }, true, []);
             }
         }).open();
     };
@@ -240,6 +307,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         <div className="container" style={{ marginBottom: '15px', margin: '15px' }}>
             <h2>{isEditing ? '회원정보 수정' : '회원가입'}</h2><br/>
             <form onSubmit={handleSubmit}>
+                {serverError && <div className="alert alert-danger">{serverError}</div>}
+                {isLoading && <div className="alert alert-info">처리 중입니다...</div>}
+
                 <div className="row mb-3">
                     <label className="col-sm-2 col-form-label col-form-label-sm">아이디</label>
                     <div className="col-sm-10">
@@ -248,7 +318,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                         {isChecked && (
                         <div>
                             {isDuplicate ? (
-                                <span style={{ color: 'red' }}>이미 사용 중인 아이디입니다.</span>
+                                <span style={{ color:'red' }}>이미 사용 중인 아이디입니다.</span>
                             ) : (
                                 <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
                             )}
@@ -284,37 +354,48 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     </div>
                 </div>
 
+                {/* 이메일 입력 필드 및 중복 확인 버튼 */}
                 <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
-                    <div className="col-sm-10">
-                        <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
-                        <ValidationMessage message={errors.email} />
-                    </div>
-                </div>
+                   <label className="col-sm-2 col-form-label col-form-label-sm">이메일</label>
+                   <div className="col-sm-10">
+                       <input type="email" name="email" className="form-control" value={member.email || ''} onChange={handleInputChange} required />
+                       {!isEditing && (<button type="button" onClick={checkDuplicateEmail} className="btn btn-primary btn-sm mt-2">중복 확인</button>)}
+                       {isEmailChecked && (
+                           <div>
+                               {isEmailDuplicate ? (
+                                   <span style={{ color:'red' }}>이미 사용 중인 이메일입니다.</span>
+                               ) : (
+                                   <span style={{ color: 'green' }}>사용 가능한 이메일입니다.</span>
+                               )}
+                           </div>
+                       )}
+                       <ValidationMessage message={errors.email} />
+                   </div>
+               </div>
 
                 <div className="row mb-3">
-            <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
-            <div className="col-sm-10">
-                <input
-                    type="tel"
-                    name="tel"
-                    className="form-control"
-                    value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
-                    placeholder={isEditing ? '(변경시에만 재인증)' : ''}
-                    onChange={(e) => {
-                        if (isEditing) {
-                            if (isPhoneVerificationRequired) {
-                                setPhoneNumber(e.target.value);
-                            } else {
-                                handleInputChange(e);
-                            }
-                        } else {
-                            setPhoneNumber(e.target.value);
-                            handleInputChange(e);
-                        }
-                    }}
-                    readOnly={isEditing && !isPhoneVerificationRequired}
-                />
+                    <label className="col-sm-2 col-form-label col-form-label-sm">핸드폰 번호</label>
+                    <div className="col-sm-10">
+                        <input
+                            type="tel"
+                            name="tel"
+                            className="form-control"
+                            value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
+                            placeholder={isEditing ? '(변경시에만 재인증)' : ''}
+                            onChange={(e) => {
+                                if (isEditing) {
+                                    if (isPhoneVerificationRequired) {
+                                        setPhoneNumber(e.target.value);
+                                    } else {
+                                        handleInputChange(e);
+                                    }
+                                } else {
+                                    setPhoneNumber(e.target.value);
+                                    handleInputChange(e);
+                                }
+                            }}
+                            readOnly={isEditing && !isPhoneVerificationRequired}
+                        />
                         {isEditing && !isPhoneVerificationRequired && (
                             <button type="button" onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">핸드폰 재인증</button>
                         )}
@@ -370,27 +451,59 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 {!isEditing && (
-                <div className="row mb-3">
-                    <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
-                    <div className="col-sm-10">
-                        <textarea
-                            className="form-control"
-                            value={termsContent}
-                            readOnly
-                            rows="6"
-                            style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
-                        />
+                <>
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">이용약관</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                className="form-control"
+                                value={termsContent}
+                                readOnly
+                                rows="6"
+                                style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+                            />
+                            <div className="form-check mb-3">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="termsAccepted"
+                                    checked={member.termsAccepted}
+                                    onChange={handleInputChange}
+                                />
+                                <label className="form-check-label" htmlFor="termsAccepted">
+                                    이용약관에 동의합니다.
+                                </label>
+                                {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
+                            </div>
+                        </div>
+                    </div>
 
-
-                <div className="form-check mb-3">
-                    <input className="form-check-input" type="checkbox" name="termsAccepted" checked={member.termsAccepted} onChange={handleInputChange} />
-                    <label className="form-check-label" htmlFor="termsAccepted">
-                        이용약관에 동의합니다.
-                    </label>
-                    {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
-                </div>
-                </div>
-                </div>
+                    <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label col-form-label-sm">개인정보 처리방침</label>
+                        <div className="col-sm-10">
+                            <textarea
+                                className="form-control"
+                                value={privacyContent}
+                                readOnly
+                                rows="6"
+                                style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+                            />
+                            <div className="form-check mb-3">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name="privacyAccepted"
+                                    checked={member.privacyAccepted}
+                                    onChange={handleInputChange}
+                                />
+                                <label className="form-check-label" htmlFor="privacyAccepted">
+                                    개인정보 처리방침에 동의합니다.
+                                </label>
+                                {errors.privacyAccepted && <ValidationMessage message={errors.privacyAccepted} />}
+                            </div>
+                        </div>
+                    </div>
+                </>
                 )}
 
                 <div className="mt-3">
@@ -400,6 +513,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
             </form>
         </div>
     );
+
 };
 
 export default MemberForm;

@@ -199,7 +199,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 09:31:10.453 DEBUG 16244 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@75ccb158]
 2024-10-29 09:31:10.454 DEBUG 16244 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@75ccb158]
 2024-10-29 09:31:10.454 DEBUG 16244 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@75ccb158]
+<<<<<<< HEAD
 2024-10-29 09:31:10.458 ERROR 16244 --- [http-nio-8080-exec-2] c.z.b.login.controller.MemberController  : ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
+=======
+2024-10-29 09:31:10.458 ERROR 16244 --- [http-nio-8080-exec-2] c.z.b.login.controller.MemberController  : ·Î±×ÀÎ Áß ¿À·ù ¹ß»ý
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "PRIVACYACCEPTED": invalid identifier
@@ -527,7 +531,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 09:31:16.678 DEBUG 16244 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@267afada]
 2024-10-29 09:31:16.679 DEBUG 16244 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@267afada]
 2024-10-29 09:31:16.679 DEBUG 16244 --- [http-nio-8080-exec-1] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@267afada]
+<<<<<<< HEAD
 2024-10-29 09:31:16.682 ERROR 16244 --- [http-nio-8080-exec-1] c.z.b.login.controller.MemberController  : ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
+=======
+2024-10-29 09:31:16.682 ERROR 16244 --- [http-nio-8080-exec-1] c.z.b.login.controller.MemberController  : ·Î±×ÀÎ Áß ¿À·ù ¹ß»ý
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "PRIVACYACCEPTED": invalid identifier
@@ -773,7 +781,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 11:35:53.512 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.514 DEBUG 12360 --- [http-nio-8080-exec-2] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1973736699 wrapping oracle.jdbc.driver.T4CConnection@406f8221] will be managed by Spring
 2024-10-29 11:35:53.514 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.l.m.MemberMapper.insertMember      : ==>  Preparing: INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, termsAccepted, privacyAccepted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DECODE(?, 'true', 1, 0), DECODE(?, 'true', 1, 0))
+<<<<<<< HEAD
 2024-10-29 11:35:53.517 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.l.m.MemberMapper.insertMember      : ==> Parameters: kkkk1965(String), $2a$10$gW6w2GHqQk/ikUa/V6s4nug7Wicn8Z6RNtrBVImv90xnAO3ds6aw.(String), ï¿½ï¿½ï¿½Ø¿ï¿½(String), idwnsdud1965@naver.com(String), 01080121965(String), 21969(String), ï¿½ï¿½Ãµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ¿ï¿½Ý·ï¿½83ï¿½ï¿½ï¿½ï¿½ 12(String), 125ï¿½ï¿½ 203È£(String), true(Boolean), true(Boolean)
+=======
+2024-10-29 11:35:53.517 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.l.m.MemberMapper.insertMember      : ==> Parameters: kkkk1965(String), $2a$10$gW6w2GHqQk/ikUa/V6s4nug7Wicn8Z6RNtrBVImv90xnAO3ds6aw.(String), Á¶ÁØ¿µ(String), idwnsdud1965@naver.com(String), 01080121965(String), 21969(String), ÀÎÃµ ¿¬¼ö±¸ ¸Õ¿ì±Ý·Î83¹ø±æ 12(String), 125µ¿ 203È£(String), true(Boolean), true(Boolean)
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 2024-10-29 11:35:53.521 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.l.m.MemberMapper.insertMember      : <==    Updates: 1
 2024-10-29 11:35:53.522 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.528 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858] from current transaction
@@ -793,11 +805,19 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 11:35:53.544 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.544 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858] from current transaction
 2024-10-29 11:35:53.544 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.J.d.p.P.insertPointHistory         : ==>  Preparing: INSERT INTO point_history (history_id, mem_id, point_change, change_reason, change_date) VALUES (point_history_seq.NEXTVAL, ?, ?, ?, ?)
+<<<<<<< HEAD
 2024-10-29 11:35:53.582 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.J.d.p.P.insertPointHistory         : ==> Parameters: kkkk1965(String), 50(Integer), È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê½ï¿½(String), 2024-10-29T11:35:53.544(LocalDateTime)
 2024-10-29 11:35:53.585 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.J.d.p.P.insertPointHistory         : <==    Updates: 1
 2024-10-29 11:35:53.585 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.586  INFO 12360 --- [http-nio-8080-exec-2] c.zd.back.JY.domain.point.PointService   : ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½: kkkk1965
 2024-10-29 11:35:53.586  INFO 12360 --- [http-nio-8080-exec-2] com.zd.back.login.service.MemberService  : È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½: kkkk1965
+=======
+2024-10-29 11:35:53.582 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.J.d.p.P.insertPointHistory         : ==> Parameters: kkkk1965(String), 50(Integer), È¸¿ø°¡ÀÔ º¸³Ê½º(String), 2024-10-29T11:35:53.544(LocalDateTime)
+2024-10-29 11:35:53.585 DEBUG 12360 --- [http-nio-8080-exec-2] c.z.b.J.d.p.P.insertPointHistory         : <==    Updates: 1
+2024-10-29 11:35:53.585 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
+2024-10-29 11:35:53.586  INFO 12360 --- [http-nio-8080-exec-2] c.zd.back.JY.domain.point.PointService   : Æ÷ÀÎÆ® µ¥ÀÌÅÍ »ðÀÔ ¿Ï·á: kkkk1965
+2024-10-29 11:35:53.586  INFO 12360 --- [http-nio-8080-exec-2] com.zd.back.login.service.MemberService  : È¸¿ø°¡ÀÔ ¹× Æ÷ÀÎÆ® Áö±Þ ¿Ï·á: kkkk1965
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 2024-10-29 11:35:53.586 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.587 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
 2024-10-29 11:35:53.587 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d26b858]
@@ -837,10 +857,17 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 11:36:09.255 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
 2024-10-29 11:36:09.256 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4] from current transaction
 2024-10-29 11:36:09.256 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.p.P.insertPointHistory         : ==>  Preparing: INSERT INTO point_history (history_id, mem_id, point_change, change_reason, change_date) VALUES (point_history_seq.NEXTVAL, ?, ?, ?, ?)
+<<<<<<< HEAD
 2024-10-29 11:36:09.258 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.p.P.insertPointHistory         : ==> Parameters: kkkk1965(String), 1(Integer), ï¿½â¼® ï¿½ï¿½ï¿½Ê½ï¿½(String), 2024-10-29T11:36:09.256(LocalDateTime)
 2024-10-29 11:36:09.258 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.p.P.insertPointHistory         : <==    Updates: 1
 2024-10-29 11:36:09.259 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
 2024-10-29 11:36:09.259  INFO 12360 --- [http-nio-8080-exec-3] com.zd.back.login.service.MemberService  : Ã¹ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½â¼® Ã¼Å© ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½ ï¿½Ï·ï¿½: kkkk1965
+=======
+2024-10-29 11:36:09.258 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.p.P.insertPointHistory         : ==> Parameters: kkkk1965(String), 1(Integer), Ãâ¼® º¸³Ê½º(String), 2024-10-29T11:36:09.256(LocalDateTime)
+2024-10-29 11:36:09.258 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.p.P.insertPointHistory         : <==    Updates: 1
+2024-10-29 11:36:09.259 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
+2024-10-29 11:36:09.259  INFO 12360 --- [http-nio-8080-exec-3] com.zd.back.login.service.MemberService  : Ã¹ ·Î±×ÀÎ ½Ã Ãâ¼® Ã¼Å© ¹× Æ÷ÀÎÆ® Ãß°¡ ¿Ï·á: kkkk1965
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 2024-10-29 11:36:09.259 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
 2024-10-29 11:36:09.259 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
 2024-10-29 11:36:09.260 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66d0e2f4]
@@ -1045,7 +1072,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 13:24:45.256 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.a.AttendanceMapper.checkToday  : ==> Parameters: kkkk1965(String)
 2024-10-29 13:24:45.257 DEBUG 12360 --- [http-nio-8080-exec-3] c.z.b.J.d.a.AttendanceMapper.checkToday  : <==      Total: 1
 2024-10-29 13:24:45.257 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32b24e1a]
+<<<<<<< HEAD
 2024-10-29 13:24:45.257  INFO 12360 --- [http-nio-8080-exec-3] com.zd.back.login.service.MemberService  : ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½â¼®ï¿½ï¿½ È¸ï¿½ï¿½: kkkk1965
+=======
+2024-10-29 13:24:45.257  INFO 12360 --- [http-nio-8080-exec-3] com.zd.back.login.service.MemberService  : ¿À´Ã ÀÌ¹Ì Ãâ¼®ÇÑ È¸¿ø: kkkk1965
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
 2024-10-29 13:24:45.257 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32b24e1a]
 2024-10-29 13:24:45.257 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32b24e1a]
 2024-10-29 13:24:45.257 DEBUG 12360 --- [http-nio-8080-exec-3] org.mybatis.spring.SqlSessionUtils       : Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32b24e1a]
@@ -1077,6 +1108,7 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "PRIVACYACCEPTED": in
 2024-10-29 13:24:49.115 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : ==> Parameters: 
 2024-10-29 13:24:49.116 DEBUG 12360 --- [http-nio-8080-exec-9] c.z.b.J.d.d.QuizMapper.getRandomQuiz     : <==      Total: 1
 2024-10-29 13:24:49.116 DEBUG 12360 --- [http-nio-8080-exec-9] org.mybatis.spring.SqlSessionUtils       : Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@61fa4b0a]
+<<<<<<< HEAD
 2024-10-29 13:54:42.210 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : Creating a new SqlSession
 2024-10-29 13:54:42.210 DEBUG 12360 --- [http-nio-8080-exec-2] org.mybatis.spring.SqlSessionUtils       : SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@dd3cf3d] was not registered for synchronization because synchronization is not active
 2024-10-29 13:54:42.216 DEBUG 12360 --- [http-nio-8080-exec-2] o.m.s.t.SpringManagedTransaction         : JDBC Connection [HikariProxyConnection@1647243727 wrapping oracle.jdbc.driver.T4CConnection@22474962] will not be managed by Spring
@@ -3326,3 +3358,5 @@ oracle.jdbc.OracleDatabaseException: ORA-00942: table or view does not exist
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.70.jar:9.0.70]
 	at java.lang.Thread.run(Thread.java:750) [na:1.8.0_391]
 
+=======
+>>>>>>> 7cef0912067b9cdec5be83aa6eecd878c3b92b2d
