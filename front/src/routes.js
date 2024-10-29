@@ -64,7 +64,7 @@ export const routes = [
     { path:'/googleMap', element:<GoogleMaps/>},   //구글맵 api
     
 
-    // { path: '/donate', element: <Pay /> }   //결제(후원) 경로
+    { path: '/donate', element: <Pay/> },   //결제(후원) 경로
 
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
