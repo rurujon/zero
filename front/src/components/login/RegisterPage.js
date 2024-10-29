@@ -40,20 +40,7 @@ const RegisterPage = ({ onRegisterCancel }) => {
         }
 
         alert('회원가입이 성공적으로 완료되었습니다.');
-
-        try {
-            // 회원가입 성공 후 자동 로그인 시도
-            const response = await axios.post('/member/login', null, { params: { memId: memberData.memId, pwd: memberData.pwd } });
-            if (response.data.token) {
-                login(response.data.token, memberData.memId);
-                navigate('/member-info'); // 로그인된 회원의 페이지로 이동
-            } else {
-                navigate('/login'); // 자동 로그인 실패 시 로그인 페이지로 이동
-            }
-        } catch (error) {
-            console.error('자동 로그인 오류:', error);
-            navigate('/login'); // 오류 발생 시 로그인 페이지로 이동
-        }
+        navigate('/');
     };
 
     const handleCancel = () => {

@@ -19,7 +19,7 @@ const LoginPage = () => {
                 if (response.data.upPoint === "1") {
                     alert("출석이 인정되었습니다! +1 포인트");
                 }
-                navigate('/member-info'); // 로그인 성공 시 회원 정보 페이지로 이동
+                navigate('/');
             } else {
                 alert("로그인 정보가 올바르지 않습니다.");
             }

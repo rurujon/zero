@@ -218,12 +218,12 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
                     const successMessage = isEditing ? '회원정보가 성공적으로 수정되었습니다.' : '회원가입이 성공적으로 완료되었습니다.';
                     alert(successMessage);
                     if (isEditing) {
-                      onSubmit(member);
+                        onSubmit(member);
                     } else {
-                      // 회원가입 성공 시 로그인 페이지로 이동
-                      navigate('/login');
+                        // 회원가입 성공 시 로그인 페이지로 이동
+                        navigate('/login');
                     }
-                  }
+                }
             } catch (error) {
                 console.error('Error:', error.response);
                 if (error.response && error.response.data && error.response.data.error) {
