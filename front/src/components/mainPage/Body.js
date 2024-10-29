@@ -14,7 +14,7 @@ const Body = () => {
         {/* 첫 번째 층 */}
         <div style={styles.row}>
           <div style={{ ...styles.box, ...styles.alignTop, flexGrow: 3}}><MainPageNews/></div>
-          <div style={{ ...styles.box, flexGrow: 1 }}><HomePage/></div>
+          <div style={{ ...styles.box, flexGrow: 1 }}></div>
         </div>
         {/* 두 번째 층 */}
         <div style={styles.row}>
