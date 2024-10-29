@@ -12,6 +12,8 @@ import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import AutoLogout from './components/login/AutoLogout';
 import ImgApp from './components/imgboard/ImgApp';
+import HttpHeadersProvider from './components/context/HttpHeadersProvider';
+import routes from './routes';
 
 function AppContent() {
 
