@@ -139,8 +139,8 @@ function TableRow(props) {
 					<td>[{board.category}]</td>
 					<td>
 						<Arrow depth={board.depth} />
-						<Link to={{ pathname: `/board/${board.boardno}` }}>
-							<span className="underline bbs-title">{board.title}</span>
+						<Link to={{ pathname: `/board/${board.boardno}` }} style={{ textDecoration: 'none', color: 'inherit' }}>
+							<span className="underline bbs-title">&nbsp;{board.title}</span>
 						</Link>
 					</td>
 					<td>{board.memId}</td>
@@ -152,8 +152,11 @@ function TableRow(props) {
 					<td></td>
 					<td>
 						<Arrow depth={board.depth} />
-						<span className="del-span">⚠️ 삭제된 게시물입니다.</span>
+						<span className="del-span">&nbsp;⚠️ 삭제된 게시물입니다.</span>
 					</td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</>
 			)}
 		</tr>
