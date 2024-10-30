@@ -16,17 +16,23 @@ function AppContent() {
   const location = useLocation();
   const isMainPage = location.pathname === '/'; // 메인 페이지인지 확인
 
+  // 숨길 경로 목록. 특정 경로의 웹페이지에서 헤더와 푸터, 사이드바를 보기 싫을 때 이 배열에 경로저장해주세요.
+  const hiddenPaths = ['/member-info'];
+  const isHiddenPage = hiddenPaths.includes(location.pathname); // 현재 경로가 숨길 경로 목록에 있는지 확인
+
   return (
     
-    <div className='container'>
+    <div id='wrap'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
-      <Header className='header'/>        
+      {!isHiddenPage && <Header className='header' />} 
+
+      <div className='container'>  
 
         {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
         <div className={isMainPage ? 'main-content' : 'main-layout'}>
           
           {/* 메인페이지가 아닌 경우에만 사이드바 렌더링 */}
-          {!isMainPage && <SideBar className='sidebar'/>}
+          {!isMainPage && !isHiddenPage && <SideBar className='sidebar' />}
           
           <div className={isMainPage ? 'main-content' : 'content'}>
             <Routes>
@@ -36,10 +42,10 @@ function AppContent() {
             </Routes>
           </div>
         </div>
+      </div>  
 
-
-        {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
-        <Footer className='footer'/>
+      {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
+      <Footer className='footer'/>
 
     </div>
   );
@@ -53,7 +59,7 @@ function App() {
       <HttpHeadersProvider>
         <AxiosInterceptor>
           <BrowserRouter>
-            <AppContent />
+            <AppContent/>
           </BrowserRouter>
         </AxiosInterceptor>
       </HttpHeadersProvider>
