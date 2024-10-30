@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from './context/AuthContext';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
@@ -7,10 +8,15 @@ const AdminPage = () => {
     const [points, setPoints] = useState(0);
     const [operation, setOperation] = useState('add');
     const [reason, setReason] = useState('');
+    const { role } = useContext(AuthContext);
 
     useEffect(() => {
+        if (role !== 'ADMIN') {
+            alert('관리자 권한이 확인되었습니다.');
+            return;
+        }
         fetchUsers();
-    }, []);
+    }, [role]);
 
     const fetchUsers = async () => {
         try {
@@ -18,6 +24,9 @@ const AdminPage = () => {
             setUsers(response.data);
         } catch (error) {
             console.error('사용자 목록 조회 실패:', error);
+            if (error.response && error.response.status === 403) {
+                alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
+            }
         }
     };
 
@@ -66,6 +75,19 @@ const AdminPage = () => {
         }
     };
 
+    const handleDeleteUser = async (memId) => {
+        if (window.confirm('정말로 이 회원을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+            try {
+                await axios.delete(`/member/${memId}`);
+                alert('회원이 성공적으로 삭제되었습니다.');
+                fetchUsers(); // 사용자 목록 새로고침
+            } catch (error) {
+                console.error('회원 삭제 실패:', error);
+                alert('회원 삭제 중 오류가 발생했습니다.');
+            }
+        }
+    };
+
     return (
         <div className="container mt-5">
             <h2>관리자 페이지</h2>
@@ -80,6 +102,7 @@ const AdminPage = () => {
                         <th>전화번호</th>
                         <th>역할</th>
                         <th>역할 변경</th>
+                        <th>회원삭제</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,6 +122,14 @@ const AdminPage = () => {
                                     <option value="USER">USER</option>
                                     <option value="ADMIN">ADMIN</option>
                                 </select>
+                            </td>
+                            <td>
+                                <button
+                                    className="btn btn-danger btn-sm"
+                                    onClick={() => handleDeleteUser(user.memId)}
+                                >
+                                    삭제
+                                </button>
                             </td>
                         </tr>
                     ))}

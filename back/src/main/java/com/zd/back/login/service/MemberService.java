@@ -80,17 +80,6 @@ public class MemberService {
         return memberMapper.countByEmail(email) > 0;
     }
 
-    @Transactional
-    public void updateMemberRole(String memId, Role role) {
-        Member member = memberMapper.selectMemberById(memId);
-        if (member != null) {
-            member.setRole(role);
-            memberMapper.updateMember(member);
-        } else {
-            throw new RuntimeException("회원을 찾을 수 없습니다.");
-        }
-    }
-
     @Transactional(readOnly = true)
     public List<MemberDTO> getAllUsers() {
         List<Member> members = memberMapper.selectAllMembers();
@@ -103,6 +92,17 @@ public class MemberService {
             dto.setRole(member.getRole().name());
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateMemberRole(String memId, Role role) {
+        Member member = memberMapper.selectMemberById(memId);
+        if (member != null) {
+            member.setRole(role);
+            memberMapper.updateMember(member);
+        } else {
+            throw new RuntimeException("회원을 찾을 수 없습니다.");
+        }
     }
 
     @Transactional

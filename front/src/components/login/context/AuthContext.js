@@ -22,23 +22,42 @@ export const AuthProvider = ({ children }) => {
         delete axios.defaults.headers.common['Authorization'];
     }, []);
 
+    const refreshAccessToken = useCallback(async () => {
+        try {
+            const response = await axios.post('/member/refresh-token', { refreshToken });
+            const newToken = response.data.token;
+            setToken(newToken);
+            localStorage.setItem('token', newToken);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+            return newToken;
+        } catch (error) {
+            console.error('Token refresh failed:', error);
+            logout();
+            return null;
+        }
+    }, [refreshToken, logout]);
+
     useEffect(() => {
         const savedToken = localStorage.getItem('token');
         const savedRefreshToken = localStorage.getItem('refreshToken');
         if (savedToken && savedRefreshToken) {
             try {
                 const decoded = jwtDecode(savedToken);
-                setToken(savedToken);
-                setRefreshToken(savedRefreshToken);
-                setMemId(decoded.sub);
-                setRole(decoded.role);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+                if (decoded.exp * 1000 < Date.now()) {
+                    refreshAccessToken();
+                } else {
+                    setToken(savedToken);
+                    setRefreshToken(savedRefreshToken);
+                    setMemId(decoded.sub);
+                    setRole(decoded.role);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+                }
             } catch (error) {
                 console.error('Token decoding failed:', error);
                 logout();
             }
         }
-    }, [logout]);
+    }, [logout, refreshAccessToken]);
 
     const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
@@ -53,35 +72,13 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('role', userRole);
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         } catch (error) {
-            console.error('Failed to store token:', error);
-        }
-    }, []);
-
-    const refreshTokenFunc = useCallback(async () => {
-        try {
-            const response = await axios.post('/member/refresh-token', { refreshToken });
-            const newToken = response.data.token;
-            setToken(newToken);
-            localStorage.setItem('token', newToken);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-            return newToken;
-        } catch (error) {
-            console.error('Failed to refresh token:', error);
+            console.error('Login failed:', error);
             logout();
-            return null;
         }
-    }, [refreshToken, logout]);
+    }, [logout]);
 
     return (
-        <AuthContext.Provider value={{
-            token,
-            refreshToken,
-            memId,
-            role,
-            login,
-            logout,
-            refreshTokenFunc
-        }}>
+        <AuthContext.Provider value={{ token, refreshToken, memId, role, login, logout, refreshAccessToken }}>
             {children}
         </AuthContext.Provider>
     );

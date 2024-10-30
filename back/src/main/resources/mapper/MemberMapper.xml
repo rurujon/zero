@@ -37,12 +37,6 @@
     WHERE memId = #{memId}
     </update>
 
-    <update id="updateMemberRole">
-    UPDATE member
-    SET role = #{role}
-    WHERE memId = #{memId}
-    </update>
-
     <delete id="deleteMember" parameterType="string">
         DELETE FROM member WHERE memId = #{memId}
     </delete>
@@ -58,6 +52,13 @@
     <select id="countByEmail" resultType="int" parameterType="String">
         SELECT COUNT(*) FROM member WHERE email = #{email}
     </select>
+
+    <update id="updateMemberRole">
+    UPDATE member
+    SET role = #{role}
+    WHERE memId = #{memId}
+    </update>
+
 
     <select id="selectAllMembers" resultType="com.zd.back.login.model.Member">
         SELECT memId, memName, email, tel, role

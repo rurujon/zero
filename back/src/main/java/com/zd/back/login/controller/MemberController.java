@@ -133,17 +133,6 @@ public class MemberController {
         }
     }
 
-    // 관리자 전용 API: 사용자 역할 변경
-    @PostMapping("/admin/change-role")
-    public ResponseEntity<?> changeUserRole(@RequestParam String memId, @RequestParam Role role) {
-        try {
-            memberService.updateMemberRole(memId, role);
-            return ResponseEntity.ok("사용자 역할이 성공적으로 변경되었습니다.");
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body("역할 변경 중 오류 발생: " + e.getMessage());
-            }
-        }
-
     // 관리자 전용: 모든 사용자 목록 조회
     @GetMapping("/admin/users")
     @PreAuthorize("hasRole('ADMIN')")
@@ -154,6 +143,29 @@ public class MemberController {
         } catch (Exception e) {
             logger.error("사용자 목록 조회 중 오류 발생", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // 관리자 전용 API: 사용자 역할 변경
+    @PostMapping("/admin/change-role")
+    public ResponseEntity<?> changeUserRole(@RequestParam String memId, @RequestParam Role role) {
+        try {
+            memberService.updateMemberRole(memId, role);
+            return ResponseEntity.ok("사용자 역할이 성공적으로 변경되었습니다.");
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("역할 변경 중 오류 발생: " + e.getMessage());
+            }
+    }
+
+    // 관리자 전용: 회원 삭제
+    @DeleteMapping("/admin/{memId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteUserByAdmin(@PathVariable String memId) {
+        try {
+            memberService.deleteMember(memId);
+            return ResponseEntity.ok("회원이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("회원 삭제 중 오류 발생: " + e.getMessage());
         }
     }
 
