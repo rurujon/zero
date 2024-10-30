@@ -42,7 +42,8 @@ function RssData() {
                     <li key={index}>
                         <h2>{item.title}</h2>
                         <p>{item.description}</p>
-                        <Link to={`/minEnv/${item.rssId}`}>Read more</Link>
+                        <Link to={`/minEnv/${item.rssId}`}>본문</Link>
+                        <br/><br/>
                     </li>
                 ))}
             </ul>

@@ -6,6 +6,7 @@ import PointInfoModal from './PointInfoModal';
 import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css'
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -49,7 +50,7 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+        <div className='mini_login_wrap'>
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>

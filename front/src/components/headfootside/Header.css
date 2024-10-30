@@ -1,23 +1,40 @@
+.header {
+    position: relative;
+    overflow: visible; 
+    display: flex; /* 자식 요소를 flexbox로 설정 */
+    justify-content: center; /* 자식 요소를 수평 가운데 정렬 */
+    width: 100%; /* 너비를 100%로 설정 */
+    flex-direction: column; /* 세로 방향으로 쌓기 */
+    align-items: center; /* 수평 중앙 정렬 */
+    padding-bottom: 50px;
+}
+
 /* 공통 헤더 스타일 */
+/* 배경 이미지와 크기 비율 */
 .header-background {
-    width: 100vw; /* 뷰포트의 너비로 설정하여 전체 너비를 차지 */
-    position: relative; /* 하위 메뉴와의 위치 조정 */
-    left: 50%; /* 왼쪽 여백을 뷰포트 중심으로 이동 */
-    margin-left: -50vw; /* 뷰포트의 절반만큼 왼쪽으로 이동하여 중앙 정렬 */
-    margin-right: -50vw; /* 뷰포트의 절반만큼 오른쪽으로 이동하여 중앙 정렬 */
+    max-width: 1320px; /* 너비를 1320px로 설정 */
+    width: 100%;
+    height: 80px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 위, 아래 메뉴 간격 조정 */
+    padding-bottom: 50px;
+    align-items: center; /* 수평 중앙 정렬 */
 }
 
 .header-background_one {
-    background-color: #7ED957; /* 헤더 배경색 */
+    background-color: rgb(102, 202, 55);
 }
 
 .header-background_two {
-    background-color: #333; /* 헤더 배경색 */
+    background-color: #333;
 }
 
 .header-background_three {
     background-color: #555; /* 하위 메뉴 배경색 */
     z-index: 100; /* 다른 요소 위에 나타나도록 */
+    position: relative; /* z-index가 작동하려면 position 설정 */
 }
 
 /* 헤더 콘텐츠 스타일 */
@@ -25,6 +42,8 @@
     max-width: 1320px; /* 최대 너비 설정 */
     margin: 0 auto; /* 가운데 정렬 */
     padding: 0 20px; /* 내부 패딩 설정 */
+    width: 100%;
+    position: relative;
 }
 
 /* 상단 네비게이션 스타일 */
@@ -32,7 +51,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px;
     color: black;
 }
 
@@ -44,6 +63,7 @@
 
 .top-nav img {
     margin-right: 10px;
+    width: 3rem;
 }
 
 .top-nav ul {
@@ -66,19 +86,20 @@
 
 /* 하단 네비게이션 */
 .bottom-nav {
-    position: relative; /* 하위 메뉴를 위한 기준 설정 */
-    padding: 10px 20px;
+    padding: 25px;
+    position: relative;
 }
 
 .bottom-nav ul {
     list-style: none;
     display: flex;
     justify-content: space-around;
+    padding: 0;
 }
 
 .bottom-nav li {
-    position: relative; /* 하위 메뉴를 absolute로 만들기 위한 기준 */
-    padding: 20px 30px; /* 상하, 좌우 패딩 추가하여 높이 및 간격 증가 */
+    margin: 0 15px;
+    position: relative; /* 자식 요소의 위치 기준을 설정 */
 }
 
 .bottom-nav a {

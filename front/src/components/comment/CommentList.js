@@ -43,7 +43,7 @@ function CommentList(props) {
 		<>
 
 			<div className="my-1 d-flex justify-content-center">
-				<h5><i className="fas fa-paperclip"></i> 댓글 목록 </h5>
+				<h5><i className="fas fa-paperclip"></i>댓글 [{totalCnt}]</h5>
 			</div>
 
             {

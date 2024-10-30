@@ -85,36 +85,12 @@ function BbsAnswer() {
 					<tr>
 						<th>내용</th>
 						<td>
-							<pre>{parentBbs.content}</pre>
+							<span style={{ whiteSpace: "pre-line" }}>{parentBbs.content}</span>
 						</td>
 					</tr>
 				</tbody>
 			</table><br/><br/>
-			{/* <table className="table">
-				<tbody>
-					<tr>
-						<th className="table-primary">작성자</th>
-						<td>
-							<input type="text" className="form-control" value={parentBbs.memId} size="50px" readOnly />
-						</td>
-					</tr>
 
-					<tr>
-						<th className="table-primary">제목</th>
-						<td>
-							<input type="text" className="form-control" value={parentBbs.title} size="50px" readOnly />
-						</td>
-					</tr>
-
-					<tr>
-						<th className="table-primary">내용</th>
-						<td>
-							<input type="text" className="form-control" value={parentBbs.content} rows="10" readOnly />
-						</td>
-					</tr>
-				</tbody>
-			</table><br/><br/> */}
-			
 			{/* 답글 작성 */}
 			<h3>📌 Reply</h3>
 			<table className="table">
