@@ -103,7 +103,6 @@ public class PointController {
 
 
         mav.setViewName("/JY/signup");
-        System.out.println("getMapping/signup.action 114line");
         return mav;
     }
 

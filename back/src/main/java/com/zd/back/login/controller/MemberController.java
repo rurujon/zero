@@ -103,8 +103,10 @@ public class MemberController {
 
             if (isValid) {
                 String token = jwtUtil.generateToken(memId);
+                String refreshToken = jwtUtil.generateRefreshToken(memId);
                 Map<String, String> response = new HashMap<>();
                 response.put("token", token);
+                response.put("refreshToken", refreshToken);
 
                 if ((boolean) result.get("isFirstLoginToday")) {
                     response.put("upPoint", "1");
@@ -112,7 +114,6 @@ public class MemberController {
 
                 return ResponseEntity.ok(response);
             }
-            // 로그인 실패 시
             Map<String, String> failureResponse = new HashMap<>();
             failureResponse.put("error", "로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
@@ -123,6 +124,20 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> refreshTokenRequest) {
+        String refreshToken = refreshTokenRequest.get("refreshToken");
+        if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
+            String memId = jwtUtil.extractMemId(refreshToken);
+            String newToken = jwtUtil.generateToken(memId);
+            Map<String, String> response = new HashMap<>();
+            response.put("token", newToken);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
+    }
+
 
     @GetMapping("/info")
     public ResponseEntity<Member> getMemberInfo(@RequestHeader("Authorization") String authHeader) {

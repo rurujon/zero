@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import QuizModal from '../dailyQuiz/QuizModal';
 import './Header.css';
 
@@ -63,7 +63,14 @@ function Header() {
     }
   };
   const openQuizModal = () => {
-    setIsQuizModalOpen(true); // 모달 열기
+    const memId = localStorage.getItem('memId'); // localStorage에서 memId 확인
+
+    if (memId) {
+      setIsQuizModalOpen(true); // 로그인된 경우 모달 열기
+    } else {
+      alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
+      Navigate("/login"); // 로그인 페이지로 이동
+    }
   };
 
   const closeQuizModal = () => {
@@ -91,7 +98,10 @@ function Header() {
               <ul>
                 <li><Link to="/login">Login</Link></li>
                 <li><Link to="/about">MyPage</Link></li>
-                <li><Link to="/services">메뉴3</Link></li>
+                {/* QuizModal을 텍스트 링크처럼 보이도록 수정 */}
+                <li style={{ cursor: 'pointer', color: 'black', textDecoration: 'none', }} onClick={openQuizModal}>
+                  일일퀴즈
+                </li>
                 <li><Link to="/contact">메뉴4</Link></li>
               </ul>
             </nav>
@@ -121,6 +131,7 @@ function Header() {
           </nav>
         </div>
       </div>
+      <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
     </div>
   );
 }
