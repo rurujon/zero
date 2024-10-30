@@ -69,16 +69,16 @@ const MainPageNewsCopy = () => {
         <div className="board_tab_wrap">
             <ul className="tabs" id="tabs">
                 <li className={`tab ${activeTab === 'tab1' ? 'active' : ''}`}>
-                    <a href="#tab1" onClick={() => handleTabClick('tab1')} title="">공지사항</a>
+                    <button onClick={() => handleTabClick('tab1')} title="">공지사항</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab2' ? 'active' : ''}`}>
-                    <a href="#tab2" onClick={() => handleTabClick('tab2')} title="">네이버 뉴스</a>
+                    <button onClick={() => handleTabClick('tab2')} title="">네이버 뉴스</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab3' ? 'active' : ''}`}>
-                    <a href="#tab3" onClick={() => handleTabClick('tab3')} title="">서울시 뉴스</a>
+                    <button onClick={() => handleTabClick('tab3')} title="">서울시 뉴스</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab4' ? 'active' : ''}`}>
-                    <a href="#tab4" onClick={() => handleTabClick('tab4')} title="">환경부 환경정책</a>
+                    <button onClick={() => handleTabClick('tab4')} title="">환경부 환경정책</button>
                 </li>
             </ul>
 

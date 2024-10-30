@@ -85,12 +85,12 @@ function Header() {
   });
   return (
     <div className='header'>
-      <div className="header-background header-background_one">
+      <div className='header-background header-background_one'>
         <div className="header-content" onMouseLeave={handleMouseLeave}>
           <div className="top-nav">
             <h1>
               <Link to="/">
-                <img src="/images/logo.png" width="50px" alt="logo" />
+                <img src='/images/logo.png'/>
               </Link>
               My Website
             </h1>
@@ -108,7 +108,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="header-background header-background_two">
+      <div className='header-background header-background_two'>
         <div className="header-content" onMouseLeave={handleMouseLeave}>
           <nav className="bottom-nav">
             <ul>
