@@ -1,15 +1,18 @@
+import React, { useEffect, useState } from 'react';
+import "./MainPageNews.css"
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
-const MainPageNews = () => {
-    const [activeTab, setActiveTab] = useState('notices');
+const MainPageNewsCopy = () => {
+    // 탭 상태 관리
+    const [activeTab, setActiveTab] = useState('tab1');
 
     const [naverNews, setNaverNews] = useState([])
     const [seoulNews, setSeoulNews] = useState([])
     const [notices, setNotices] = useState([])
     const [envLaw, setEnvLaw] = useState([])
-  
+
+    // 탭 클릭 핸들러
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
@@ -62,85 +65,71 @@ const MainPageNews = () => {
         fetchEnvLaw();
     },[])
 
-
-  
     return (
-        <div>
-            <div>
-                <ul style={styles.ul}>
-                    <li style={styles.li}>
-                        <button onClick={() => handleTabClick('notices')} style={styles.button}>
-                            공지사항
-                        </button>
-                    </li>
-                    <li style={styles.li}>
-                        <button onClick={() => handleTabClick('naverNews')} style={styles.button}>
-                            네이버 뉴스
-                        </button>
-                    </li>
-                    <li style={styles.li}>
-                        <button onClick={() => handleTabClick('seoulNews')} style={styles.button}>
-                            서울시 뉴스
-                        </button>
-                    </li>
-                    <li style={styles.li}>
-                        <button onClick={() => handleTabClick('envLaw')} style={styles.button}>
-                            환경부 환경정책
-                        </button>
-                    </li>
-                </ul>
-            </div>
+        <div className="board_tab_wrap">
+            <ul className="tabs" id="tabs">
+                <li className={`tab ${activeTab === 'tab1' ? 'active' : ''}`}>
+                    <button onClick={() => handleTabClick('tab1')} title="">공지사항</button>
+                </li>
+                <li className={`tab ${activeTab === 'tab2' ? 'active' : ''}`}>
+                    <button onClick={() => handleTabClick('tab2')} title="">네이버 뉴스</button>
+                </li>
+                <li className={`tab ${activeTab === 'tab3' ? 'active' : ''}`}>
+                    <button onClick={() => handleTabClick('tab3')} title="">서울시 뉴스</button>
+                </li>
+                <li className={`tab ${activeTab === 'tab4' ? 'active' : ''}`}>
+                    <button onClick={() => handleTabClick('tab4')} title="">환경부 환경정책</button>
+                </li>
+            </ul>
 
-            <div style={styles.dataContainer}>
-                {activeTab === 'notices' && (
-                    <div>
-                        <table style={styles.table}>
-                            <tbody>
-                                {notices.map((notice, index) => (
-                                    <tr key={index}>
-                                        <td style={styles.td}>
-                                            <Link to={`/notices/${index}`}>{notice.title}</Link>
-                                        </td>
-                                        <td style={styles.td}>{notice.writer}</td>
-                                        <td style={styles.td}>{new Date(notice.created).toISOString().split('T')[0]}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-                {activeTab === 'naverNews' && (
-                    <div>
-                        <ul>
-                            {naverNews.map((naverNews, index) => (
+            <div className="tab_container">
+                {activeTab === 'tab1' && (
+                    <div id="tab1" className="tab_content">
+                        <h3 className="hidden_only">공지사항</h3>
+                        <ul className="board_list">
+                            {notices.map((notice, index) => (
                                 <li key={index}>
-                                    {/* <Link to={`/news/${index}`}>{newsItem.title}</Link> */}
-                                    <a href={naverNews.link} target="_blank" rel="noopener noreferrer">{naverNews.title}</a>
+                                    <Link to={`/notices/${index}`}>{notice.title}</Link>
+                                    <span className="board_date">{new Date(notice.created).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
-                {activeTab === 'seoulNews' && (
-                    <div>
-                        <ul>
-                            {seoulNews.map((seoulNews, index) => (
+                {activeTab === 'tab2' && (
+                    <div id="tab2" className="tab_content">
+                        <h3 className="hidden_only">네이버 뉴스</h3>
+                        <ul className="board_list">
+                            {naverNews.map((news, index) => (
                                 <li key={index}>
-                                    {/* <Link to={`/news/${index}`}>{newsItem.title}</Link> */}
-                                    {seoulNews.seoulNewsGroup }
-                                    <a href={seoulNews.link} target="_blank" rel="noopener noreferrer">{seoulNews.title}</a>
+                                    <a href={news.link}>{news.title}</a>
+                                    <span className="board_date">{new Date(news.pubDate).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
-                {activeTab === 'envLaw' && (
-                    <div>
-                        <ul>
-                            {envLaw.map((envLaw, index) => (
+                {activeTab === 'tab3' && (
+                    <div id="tab3" className="tab_content">
+                        <h3 className="hidden_only">서울시 뉴스</h3>
+                        <ul className="board_list">
+                            {seoulNews.map((news, index) => (
                                 <li key={index}>
-                                    {/* <Link to={`/news/${index}`}>{newsItem.title}</Link> */}
-                                    <a href={envLaw.link} target="_blank" rel="noopener noreferrer">{envLaw.title}</a>
+                                    <Link to={`/seoulNewsArticle/${news.seoulId}`}>{news.title}</Link>
+                                    <span className="board_date">{new Date(news.publishedDate).toISOString().split('T')[0]}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {activeTab === 'tab4' && (
+                    <div id="tab4" className="tab_content">
+                        <h3 className="hidden_only">환경부 환경정책</h3>
+                        <ul className="board_list">
+                            {envLaw.map((law, index) => (
+                                <li key={index}>
+                                    <Link to={`/minEnv/${law.rssId}`}>{law.title}</Link>
+                                    <span>{law.pubDate}</span>
                                 </li>
                             ))}
                         </ul>
@@ -150,43 +139,5 @@ const MainPageNews = () => {
         </div>
     );
 };
-  
-const styles = {
-    ul: {
-      display: 'flex',
-      listStyle: 'none',
-      padding: 0,
-      margin: 0,
-    },
-    li: {
-      marginRight: '20px',
-    },
-    button: {
-      background: 'none',
-      border: 'none',
-      color: 'blue',
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
 
-    dataContainer: {
-        overflow: 'auto', // 스크롤 활성화
-        maxHeight: '400px', // 원하는 최대 높이 설정
-    },
-
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-    },
-    th: {
-        borderBottom: '2px solid black',
-        padding: '10px',
-        textAlign: 'left',
-    },
-    td: {
-        borderBottom: '1px solid gray',
-        padding: '10px',
-    },
-};
-
-export default MainPageNews;
+export default MainPageNewsCopy;
