@@ -8,12 +8,12 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [memId, setMemId] = useState(null);
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setToken(null);
-        setMemId(null);
-        // 필요한 경우 다른 상태도 초기화
-      };
+    // const logout = () => {
+    //     localStorage.removeItem('token');
+    //     setToken(null);
+    //     setMemId(null);
+    //     // 필요한 경우 다른 상태도 초기화
+    //   };
 
     // const logout = useCallback(() => {
     //     setToken(null);
@@ -22,6 +22,15 @@ export const AuthProvider = ({ children }) => {
     //     localStorage.removeItem('memId');
     //     delete axios.defaults.headers.common['Authorization'];
     // }, []);
+
+    const logout = useCallback(() => {
+        setToken(null);
+        setMemId(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('memId');
+        delete axios.defaults.headers.common['Authorization'];
+        setTimeout(() => window.location.href = '/login', 0); // 리다이렉트 지연 확인
+    }, []);
 
     useEffect(() => {
         const savedToken = localStorage.getItem('token');

@@ -47,7 +47,8 @@ function Header() {
       case 'zero-activity':
         return (
           <>
-            <Link to="/sub">참여게시판</Link>
+            <Link to="/board/list">참여게시판</Link>
+            <Link to="/imgboard/list">인증게시판</Link>
           </>
         );
       case 'zero-consumer':
@@ -90,7 +91,10 @@ function Header() {
               <ul>
                 <li><Link to="/login">Login</Link></li>
                 <li><Link to="/about">MyPage</Link></li>
-                <li><Link to="/services">메뉴3</Link></li>
+                {/* QuizModal을 텍스트 링크처럼 보이도록 수정 */}
+                <li style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }} onClick={openQuizModal}>
+                  일일퀴즈
+                </li>
                 <li><Link to="/contact">메뉴4</Link></li>
               </ul>
             </nav>
@@ -120,6 +124,7 @@ function Header() {
           </nav>
         </div>
       </div>
+      <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
     </div>
   );
 }

@@ -4,14 +4,13 @@ import './QuizModal.css';
 import Quiz from './Quiz'
 import QuizResult from './QuizResult';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 Modal.setAppElement('#root');
 
 
 const QuizModal = ({isOpen, setIsOpen}) => {
-
-    const [memId, setMemId] = useState('');
-    const [pwd, setPwd] = useState('');
-
+    const [memId, setMemId] = useState(localStorage.getItem('memId')); // localStorage에서 memId 가져오기
+    const navigate = useNavigate(); // navigate 훅 추가
 
     //사용자의 O,X
     const [result, setResult] = useState("ON");
@@ -20,27 +19,25 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
 
-    const modalOn = () => {
-        axios.post('/member/login', null, {
-            params: { memId, pwd }
-        })
-        .then(response => {
-            if (response.data.upPoint === "1") {
-                console.log("금일 최초 로그인")
-            }
-        })
-        .catch(error => {
-            console.error("오류오류", error)
-        })
-    }
+    useEffect(() => {
+        // memId가 없으면 로그인 페이지로 이동
+        //alert 두번 뜸 (-)
+        if (!memId) {
+             
+            alert("로그인 한 사용자만 일일퀴즈 가능합니다!");       
+            navigate("/login");
+        }
+    }, [memId, navigate]);
 
+
+
+    
     return (
         <>
             {/* <div>
                 {answer} + {result}
             </div> */}
 
-            <button onClick={()=> setIsOpen(true)}>모달 열기</button>
             <div className='bg'></div>
             
             <Modal 
