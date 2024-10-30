@@ -95,9 +95,11 @@ const HomePage = () => {
             ) : (
                 <div>
                     <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
-                    <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
-                    <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
-                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
+                    <div className="button-group">
+                        <button type="button" className="btn btn-link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>
+                        <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
+                        <button type="button" className="btn btn-link" onClick={handleRegister}>회원가입</button>
+                    </div>
                     {/* <QuizModal /> */}
                     {showPointInfoModal && (
                         <PointInfoModal

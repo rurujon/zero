@@ -1,7 +1,7 @@
 .main_content_02 {
     display: flex; /* Flexbox 사용 */
     flex-wrap: wrap; /* 줄 바꿈 허용 */
-    justify-content: flex-start; /* 왼쪽 정렬 */
+    justify-content: space-between; /* 왼쪽 정렬 */
     align-items: center; /* 세로 중앙 정렬 */
     padding: 20px; /* 여유 공간 추가 */
     margin: 0 auto; /* 중앙 정렬 */

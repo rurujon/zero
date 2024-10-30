@@ -129,7 +129,7 @@ const MainPageNewsCopy = () => {
                             {envLaw.map((law, index) => (
                                 <li key={index}>
                                     <Link to={`/minEnv/${law.rssId}`}>{law.title}</Link>
-                                    <span>{law.pubDate}</span>
+                                    <span className='board_date'>{law.pubDate}</span>
                                 </li>
                             ))}
                         </ul>

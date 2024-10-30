@@ -12,8 +12,7 @@
 /* 공통 헤더 스타일 */
 /* 배경 이미지와 크기 비율 */
 .header-background {
-    max-width: 1320px; /* 너비를 1320px로 설정 */
-    width: 100%;
+    width: 100vw;
     height: 80px;
     position: relative;
     display: flex;
