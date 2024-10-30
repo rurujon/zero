@@ -45,7 +45,7 @@ function AppContent() {
       </div>  
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
-      <Footer className='footer'/>
+      {!isHiddenPage && <Footer className='footer' />}
 
     </div>
   );
