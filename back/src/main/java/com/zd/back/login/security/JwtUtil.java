@@ -17,13 +17,25 @@ public class JwtUtil {
     private String SECRET_KEY;
 
     @Value("${jwt.expiration}")
-    private long EXPIRATION_TIME; // e.g., 86400000 for 1 day
+    private long EXPIRATION_TIME;
+
+    @Value("${jwt.refresh.expiration}")
+    private long REFRESH_EXPIRATION_TIME;
 
     public String generateToken(String memId) {
         return Jwts.builder()
                 .setSubject(memId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .compact();
+    }
+
+    public String generateRefreshToken(String memId) {
+        return Jwts.builder()
+                .setSubject(memId)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }

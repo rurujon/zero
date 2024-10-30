@@ -33,14 +33,12 @@ public class SecurityConfig {
 
         http
             .cors().and().csrf().disable()
-            .headers().frameOptions().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**").permitAll()
+                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token").permitAll()
                 .antMatchers("/attendance/**", "/api/point/**").authenticated()
                 .anyRequest().permitAll()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
