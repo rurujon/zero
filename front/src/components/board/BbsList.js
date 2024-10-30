@@ -152,7 +152,7 @@ function TableRow(props) {
 					<td></td>
 					<td>
 						<Arrow depth={board.depth} />
-						<span className="del-span">&nbsp;⚠️ 삭제된 게시물입니다.</span>
+						<span className="del-span">⚠️ 삭제된 게시물입니다.</span>
 					</td>
 					<td></td>
 					<td></td>
@@ -171,8 +171,8 @@ function Arrow({ depth }) {
 
 	return (
 		<>
-			{taps}
-			<ArrowRightIcon style={{ height: '15px', width: '15px', color: 'black' }} />
+			{taps}➥&nbsp;[Re:]&nbsp;
+			{/* <ArrowRightIcon style={{ height: '15px', width: '15px', color: 'black' }} /> */}
 		</>
 	);
 }
