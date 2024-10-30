@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +82,7 @@ public class PointService {
                     throw new IllegalStateException("포인트가 부족합니다.");
                 }
                 dto.setUsedPoint(dto.getUsedPoint() - updown);
+                dto.setMaxPoint(dto.getMaxPoint() - updown);
             } else {
                 throw new IllegalArgumentException("잘못된 연산자입니다.");
             }
@@ -197,14 +199,54 @@ public class PointService {
             }
         updateGrade(memId);
 
-    // 포인트 히스토리 추가
-    PointHistoryDTO historyDTO = new PointHistoryDTO();
-    historyDTO.setMemId(memId);
-    historyDTO.setPointChange(1); // 출석체크로 인한 1점 추가
-    historyDTO.setChangeReason("출석 보너스");
-    historyDTO.setChangeDate(LocalDateTime.now());
-    pointHistoryMapper.insertPointHistory(historyDTO);
+        // 포인트 히스토리 추가
+        PointHistoryDTO historyDTO = new PointHistoryDTO();
+        historyDTO.setMemId(memId);
+        historyDTO.setPointChange(1); // 출석체크로 인한 1점 추가
+        historyDTO.setChangeReason("출석 보너스");
+        historyDTO.setChangeDate(LocalDateTime.now());
+        pointHistoryMapper.insertPointHistory(historyDTO);
+    }
+
+    @Transactional
+    public void managePoints(String memId, int points, String operation) {
+        PointDTO pointDTO = pointMapper.findByMemId(memId);
+        if (pointDTO == null) {
+            throw new RuntimeException("회원의 포인트 정보를 찾을 수 없습니다.");
         }
+
+        int currentUsedPoint = pointDTO.getUsedPoint();
+        int currentMaxPoint = pointDTO.getMaxPoint();
+        int newUsedPoint;
+        int newMaxPoint;
+
+        if ("add".equals(operation)) {
+            newUsedPoint = currentUsedPoint + points;
+            newMaxPoint = currentMaxPoint + points;
+        } else if ("subtract".equals(operation)) {
+            newUsedPoint = currentUsedPoint - points;
+            newMaxPoint = currentMaxPoint - points;
+            if (newUsedPoint < 0 || newMaxPoint < 0) {
+                throw new RuntimeException("포인트가 부족합니다.");
+            }
+        } else {
+            throw new RuntimeException("잘못된 연산입니다.");
+        }
+
+        pointDTO.setUsedPoint(newUsedPoint);
+        pointDTO.setMaxPoint(newMaxPoint);
+        pointMapper.updatePoint(pointDTO);
+
+        // 포인트 이력 추가
+        PointHistoryDTO historyDTO = new PointHistoryDTO();
+        historyDTO.setMemId(memId);
+        historyDTO.setPointChange("add".equals(operation) ? points : -points);
+        historyDTO.setChangeReason("관리자에 의한 포인트 조정");
+        historyDTO.setChangeDate(LocalDateTime.now());
+        pointHistoryMapper.insertPointHistory(historyDTO);
+
+        logger.info("포인트 관리 완료: {}, 변경된 사용 포인트: {}, 변경된 최대 포인트: {}", memId, newUsedPoint, newMaxPoint);
+    }
 
     @Transactional
     public void deletePointHistory(String memId) {
@@ -215,5 +257,4 @@ public class PointService {
     public void deletePoint(String memId) {
         pointMapper.deleteByMemId(memId);
     }
-
 }

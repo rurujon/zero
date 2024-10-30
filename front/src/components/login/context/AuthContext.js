@@ -8,21 +8,17 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [refreshToken, setRefreshToken] = useState(null);
     const [memId, setMemId] = useState(null);
-
-    // const logout = () => {
-    //     localStorage.removeItem('token');
-    //     setToken(null);
-    //     setMemId(null);
-    //     // 필요한 경우 다른 상태도 초기화
-    //   };
+    const [role, setRole] = useState(null);
 
     const logout = useCallback(() => {
         setToken(null);
         setRefreshToken(null);
         setMemId(null);
+        setRole(null);
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('memId');
+        localStorage.removeItem('role');
         delete axios.defaults.headers.common['Authorization'];
     }, []);
 
@@ -35,6 +31,7 @@ export const AuthProvider = ({ children }) => {
                 setToken(savedToken);
                 setRefreshToken(savedRefreshToken);
                 setMemId(decoded.sub);
+                setRole(decoded.role);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
             } catch (error) {
                 console.error('Token decoding failed:', error);
@@ -43,15 +40,17 @@ export const AuthProvider = ({ children }) => {
         }
     }, [logout]);
 
-    const login = useCallback((newToken, newRefreshToken, id) => {
+    const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
             jwtDecode(newToken);
             setToken(newToken);
             setRefreshToken(newRefreshToken);
             setMemId(id);
+            setRole(userRole);
             localStorage.setItem('token', newToken);
             localStorage.setItem('refreshToken', newRefreshToken);
             localStorage.setItem('memId', id);
+            localStorage.setItem('role', userRole);
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         } catch (error) {
             console.error('Failed to store token:', error);
@@ -78,6 +77,7 @@ export const AuthProvider = ({ children }) => {
             token,
             refreshToken,
             memId,
+            role,
             login,
             logout,
             refreshTokenFunc

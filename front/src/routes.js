@@ -25,6 +25,7 @@ import FindIdModal from "./components/login/FindIdModal";
 import FindPasswordModal from "./components/login/FindPasswordModal";
 import PointInfoModal from "./components/login/PointInfoModal";
 import Calendar from "./components/login/Calendar";
+import AdminPage from "./components/login/AdminPage";
 
 
 
@@ -46,6 +47,7 @@ export const routes = [
     { path: '/find-password', element: <FindPasswordModal /> },
     { path: '/point-info', element: <PointInfoModal /> },
     { path: '/attendance', element: <Calendar /> },
+    { path: '/admin', element: <AdminPage />},
 
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
@@ -60,9 +62,9 @@ export const routes = [
     { path:'/orgList', element:<OrgApp/>},   //봉사단체 리스트
     { path:'/minEnv', element:<RssData/>},   //환경부 Rss 배포 환경정책 리스트
     { path:'/minEnv/:rssId', element:<MinEnvArticle/>},   //환경부 Rss 상세 페이지
-    
+
     { path:'/googleMap', element:<GoogleMaps/>},   //구글맵 api
-    
+
 
     { path: '/donate', element: <Pay/> },   //결제(후원) 경로
 

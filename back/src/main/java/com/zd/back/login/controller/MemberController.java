@@ -1,6 +1,8 @@
 package com.zd.back.login.controller;
 
+import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
+import com.zd.back.login.model.Role;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
 import org.slf4j.Logger;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import com.zd.back.login.model.MemberDTO; // 추가
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -19,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -28,6 +33,8 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private PointService pointService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -102,11 +109,12 @@ public class MemberController {
             boolean isValid = (boolean) result.get("isValid");
 
             if (isValid) {
-                String token = jwtUtil.generateToken(memId);
+                String token = jwtUtil.generateToken(memId, (String) result.get("role"));
                 String refreshToken = jwtUtil.generateRefreshToken(memId);
                 Map<String, String> response = new HashMap<>();
                 response.put("token", token);
                 response.put("refreshToken", refreshToken);
+                response.put("role", (String) result.get("role"));
 
                 if ((boolean) result.get("isFirstLoginToday")) {
                     response.put("upPoint", "1");
@@ -125,15 +133,53 @@ public class MemberController {
         }
     }
 
+    // 관리자 전용 API: 사용자 역할 변경
+    @PostMapping("/admin/change-role")
+    public ResponseEntity<?> changeUserRole(@RequestParam String memId, @RequestParam Role role) {
+        try {
+            memberService.updateMemberRole(memId, role);
+            return ResponseEntity.ok("사용자 역할이 성공적으로 변경되었습니다.");
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("역할 변경 중 오류 발생: " + e.getMessage());
+            }
+        }
+
+    // 관리자 전용: 모든 사용자 목록 조회
+    @GetMapping("/admin/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<MemberDTO>> getAllUsers() {
+        try {
+            List<MemberDTO> users = memberService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            logger.error("사용자 목록 조회 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/admin/manage-points")
+    public ResponseEntity<?> managePoints(@RequestParam String memId, @RequestParam int points, @RequestParam String operation) {
+        try {
+            pointService.managePoints(memId, points, operation);
+            return ResponseEntity.ok("포인트가 성공적으로 조정되었습니다.");
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("포인트 조정 중 오류 발생: " + e.getMessage());
+            }
+        }
+
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.get("refreshToken");
         if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
             String memId = jwtUtil.extractMemId(refreshToken);
-            String newToken = jwtUtil.generateToken(memId);
-            Map<String, String> response = new HashMap<>();
-            response.put("token", newToken);
-            return ResponseEntity.ok(response);
+            Member member = memberService.getMemberById(memId);
+            if (member != null) {
+                String role = member.getRole().name(); // 멤버의 역할을 가져옵니다.
+                String newToken = jwtUtil.generateToken(memId, role);
+                Map<String, String> response = new HashMap<>();
+                response.put("token", newToken);
+                return ResponseEntity.ok(response);
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
     }
@@ -283,4 +329,5 @@ public class MemberController {
         boolean isDuplicate = memberService.isEmailDuplicate(email);
         return ResponseEntity.ok(isDuplicate);
     }
+
 }
