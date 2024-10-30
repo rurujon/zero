@@ -140,10 +140,10 @@ public class MemberController {
         try {
             List<MemberDTO> users = memberService.getAllUsers();
             return ResponseEntity.ok(users);
-        } catch (Exception e) {
-            logger.error("사용자 목록 조회 중 오류 발생", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+            } catch (Exception e) {
+                logger.error("사용자 목록 조회 중 오류 발생", e);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
     }
 
     // 관리자 전용 API: 사용자 역할 변경
@@ -164,9 +164,9 @@ public class MemberController {
         try {
             memberService.deleteMember(memId);
             return ResponseEntity.ok("회원이 성공적으로 삭제되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("회원 삭제 중 오류 발생: " + e.getMessage());
-        }
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("회원 삭제 중 오류 발생: " + e.getMessage());
+            }
     }
 
     @PostMapping("/admin/manage-points")

@@ -12,7 +12,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         if (role !== 'ADMIN') {
-            alert('관리자 권한이 확인되었습니다.');
+            alert('관리자 권한이 없습니다.');
             return;
         }
         fetchUsers();
@@ -26,6 +26,8 @@ const AdminPage = () => {
             console.error('사용자 목록 조회 실패:', error);
             if (error.response && error.response.status === 403) {
                 alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
+            } else {
+                alert('사용자 목록을 불러오는 데 실패했습니다.');
             }
         }
     };
@@ -78,7 +80,7 @@ const AdminPage = () => {
     const handleDeleteUser = async (memId) => {
         if (window.confirm('정말로 이 회원을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
             try {
-                await axios.delete(`/member/${memId}`);
+                await axios.delete(`/member/admin/${memId}`);
                 alert('회원이 성공적으로 삭제되었습니다.');
                 fetchUsers(); // 사용자 목록 새로고침
             } catch (error) {
