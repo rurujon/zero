@@ -122,7 +122,7 @@ function BbsDetail() {
 					<tr>
 						<th>내용</th>
 						<td>
-							<pre>{board.content}</pre>
+							<span style={{ whiteSpace: "pre-line" }}>{board.content}</span>
 						</td>
 					</tr>
 				</tbody>
