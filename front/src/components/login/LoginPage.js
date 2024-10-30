@@ -14,8 +14,8 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const response = await axios.post('/member/login', null, { params: { memId, pwd } });
-            if (response.data.token) {
-                login(response.data.token, memId);
+            if (response.data.token && response.data.refreshToken) {
+                login(response.data.token, response.data.refreshToken, memId);
                 if (response.data.upPoint === "1") {
                     alert("출석이 인정되었습니다! +1 포인트");
                 }
