@@ -16,14 +16,6 @@ export const AuthProvider = ({ children }) => {
     //     // 필요한 경우 다른 상태도 초기화
     //   };
 
-    // const logout = useCallback(() => {
-    //     setToken(null);
-    //     setMemId(null);
-    //     localStorage.removeItem('token');
-    //     localStorage.removeItem('memId');
-    //     delete axios.defaults.headers.common['Authorization'];
-    // }, []);
-
     const logout = useCallback(() => {
         setToken(null);
         setRefreshToken(null);
