@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
-import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
 import './bbs.css';
 import './page.css';
@@ -60,7 +59,7 @@ function BbsList() {
 				<tbody>
 					<tr className="category-filter">
 						<td>
-							<select value={category} onChange={changeCategory} className="form-control">
+							<select value={category} onChange={changeCategory} className="form-control" style={{border: 0} }>
 								<option value="">전체 카테고리</option>
 								<option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
 								<option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
@@ -68,10 +67,8 @@ function BbsList() {
 								<option value="기타">기타</option>
 							</select>
 						</td>
-					</tr>
-					<tr>
 						<td>
-							<select className="custom-select" value={choiceVal} onChange={changeChoice}>
+							<select className="form-control" value={choiceVal} onChange={changeChoice} style={{border: 0}}>
 								<option>검색 옵션 선택</option>
 								<option value="title">제목</option>
 								<option value="content">내용</option>
@@ -99,7 +96,7 @@ function BbsList() {
 						<th className="col-5">제목</th>
 						<th className="col-1">작성자</th>
 						<th className="col-1">조회수</th>
-						<th className="col-2">작성일</th>
+						<th className="col-2">등록일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -172,7 +169,6 @@ function Arrow({ depth }) {
 	return (
 		<>
 			{taps}➥&nbsp;[Re:]&nbsp;
-			{/* <ArrowRightIcon style={{ height: '15px', width: '15px', color: 'black' }} /> */}
 		</>
 	);
 }

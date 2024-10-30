@@ -64,7 +64,8 @@ function BbsDetail() {
 
 	const parentBbs = {
 		memId: board.memId,
-		title: board.title
+		title: board.title,
+		content: board.content
 	}
 
 	return (
