@@ -97,7 +97,7 @@ const HomePage = () => {
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
-                    <QuizModal />
+                    {/* <QuizModal /> */}
                     {showPointInfoModal && (
                         <PointInfoModal
                             show={showPointInfoModal}

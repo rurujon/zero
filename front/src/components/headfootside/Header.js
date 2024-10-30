@@ -90,7 +90,10 @@ function Header() {
               <ul>
                 <li><Link to="/login">Login</Link></li>
                 <li><Link to="/about">MyPage</Link></li>
-                <li><Link to="/services">메뉴3</Link></li>
+                {/* QuizModal을 텍스트 링크처럼 보이도록 수정 */}
+                <li style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }} onClick={openQuizModal}>
+                  일일퀴즈
+                </li>
                 <li><Link to="/contact">메뉴4</Link></li>
               </ul>
             </nav>
@@ -120,6 +123,7 @@ function Header() {
           </nav>
         </div>
       </div>
+      <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
     </div>
   );
 }

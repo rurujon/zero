@@ -22,7 +22,6 @@ public class AttendanceService {
     private AttendanceMapper mapper;
 
     @Autowired
-    private PointService pointService;
 
     @Transactional(readOnly = true)
     public int maxNum() {
