@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Pagination from "react-js-pagination";
+import '../board/page.css';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
@@ -46,28 +48,39 @@ function ImgList() {
                         backgroundColor: '#f0f0f0', 
                         width: '22%'
                     }}>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', fontSize: 0 }}>
+                      
+                        <div style={{ 
+                            width: '200px', 
+                            height: '150px', 
+                            overflow: 'hidden',         // 이미지를 영역에 맞게 자르기 위해 사용
+                            borderRadius: '5px',        // 모서리를 부드럽게 하기 위해 추가 (옵션)
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center' 
+                        }}>
                             {board.images && board.images.length > 0 ? (
                                 board.images.map((img) => (
                                     <img
-                                        key={img.imgId}
-                                        src={`/images/${img.saveFileName}`}
-                                        alt={img.saveFileName}
-                                        style={{ 
-                                            width: '350px', 
-                                            height: '200px', 
-                                            margin: '5px', 
-                                            display: 'block', 
-                                            verticalAlign: 'top'
-                                        }}
-                                    />
+                                    key={img.imgId}
+                                    src={`/images/${img.saveFileName}`}
+                                    alt={img.saveFileName}
+                                    style={{ 
+                                        width: '100%',           
+                                        height: '100%',          
+                                        maxHeight: '200px',    
+                                        margin: '5px',
+                                        display: 'block',
+                                        objectFit: 'cover',      
+                                        verticalAlign: 'top'
+                                    }}
+                                     />
                                 ))
                             ) : (
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
-    
-                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '10px' }}>
+                    
+                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '1px' }}>
                             <p style={{ color: '#fff' }}>인증 승인: {board.imgPost.auth}</p>
                         </div>
                         <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
