@@ -1,15 +1,39 @@
-import React,{useEffect, useState} from 'react';
+import React,{useCallback, useContext, useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import './QuizModal.css';
 import Quiz from './Quiz'
 import QuizResult from './QuizResult';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../login/context/AuthContext';
+import { adjustWindowSize } from '../login/utils/Sizing';
 Modal.setAppElement('#root');
 
 
 const QuizModal = ({isOpen, setIsOpen}) => {
-    const [memId, setMemId] = useState(localStorage.getItem('memId')); // localStorage에서 memId 가져오기
+    const [member, setMember] = useState(null);
+
+    const {token} = useContext(AuthContext);
+
+    const fetchMemberInfo = useCallback(() => {
+        axios.get('/member/info', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(response => {
+                setMember(response.data);
+                adjustWindowSize(window, response.data);
+            })
+            .catch(error => {
+                console.error('회원 정보 조회 실패:', error);
+            });
+    }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            fetchMemberInfo();
+        }
+    }, [fetchMemberInfo, token]);
+
     const navigate = useNavigate(); // navigate 훅 추가
 
     //사용자의 O,X
@@ -20,14 +44,13 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     const [answer, setAnswer] = useState("null");
 
     useEffect(() => {
-        // memId가 없으면 로그인 페이지로 이동
-        //alert 두번 뜸 (-)
-        if (!memId) {
-             
-            alert("로그인 한 사용자만 일일퀴즈 가능합니다!");       
+        // 모달이 열릴 때 memId가 없으면 로그인 페이지로 이동
+        if (isOpen && !member) {
+            alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
             navigate("/login");
+            setIsOpen(false); // 모달 닫기
         }
-    }, [memId, navigate]);
+    }, [isOpen, member, navigate, setIsOpen]);
 
 
 
@@ -52,7 +75,7 @@ const QuizModal = ({isOpen, setIsOpen}) => {
                 result === "ON" ? (
                     <Quiz setIsOpen={setIsOpen} setResult={setResult} setAnswer={setAnswer} setExplanation={setExplanation}/>
                     
-                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation}/>
+                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation} member={member}/>
             }
             </Modal>
         </>
