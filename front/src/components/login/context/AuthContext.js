@@ -15,21 +15,13 @@ export const AuthProvider = ({ children }) => {
     //     // 필요한 경우 다른 상태도 초기화
     //   };
 
-    // const logout = useCallback(() => {
-    //     setToken(null);
-    //     setMemId(null);
-    //     localStorage.removeItem('token');
-    //     localStorage.removeItem('memId');
-    //     delete axios.defaults.headers.common['Authorization'];
-    // }, []);
-
     const logout = useCallback(() => {
         setToken(null);
         setMemId(null);
         localStorage.removeItem('token');
         localStorage.removeItem('memId');
         delete axios.defaults.headers.common['Authorization'];
-        setTimeout(() => window.location.href = '/login', 0); // 리다이렉트 지연 확인
+        // setTimeout(() => window.location.href = '/', 0); // 리다이렉트 지연 확인
     }, []);
 
     useEffect(() => {

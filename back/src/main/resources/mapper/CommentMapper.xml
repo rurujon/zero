@@ -3,10 +3,10 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.SY.comment.mapper.CommentMapper">
+<mapper namespace="com.zd.back.comment.mapper.CommentMapper">
 
 	<!-- 댓글 추가 -->
-	<insert id="createComment" parameterType="com.zd.back.SY.comment.model.param.CommentParam">
+	<insert id="createComment" parameterType="com.zd.back.comment.model.param.CommentParam">
 		<selectKey keyProperty="commentno" resultType="int" order="BEFORE">
 			SELECT tip_commentno.NEXTVAL FROM dual
 		</selectKey>
@@ -16,8 +16,8 @@
 
 
 	<!-- 댓글 조회 -->
-	<select id="getCommentPageList" parameterType="com.zd.back.SY.comment.model.param.CommentListParam"
-			resultType="com.zd.back.SY.comment.model.Comment">
+	<select id="getCommentPageList" parameterType="com.zd.back.comment.model.param.CommentListParam"
+			resultType="com.zd.back.comment.model.Comment">
 		SELECT commentno, memId, content, boardno, del, created
 		FROM (
 			SELECT row_number() OVER(ORDER BY created DESC) AS rnum, commentno, memId, content, boardno, del, created
@@ -39,14 +39,14 @@
 
 	<!-- 댓글 조회 -->
 	<select id="getCommentBySeq" parameterType="int"
-					resultType="com.zd.back.SY.comment.model.Comment">
+					resultType="com.zd.back.comment.model.Comment">
 		SELECT commentno, memId, content, boardno, del, created
 		FROM tipcomment
 		WHERE commentno=#{commentno}
 	</select>
 
 	<!-- 댓글 수정 -->
-	<update id="updateComment" parameterType="com.zd.back.SY.comment.model.param.CommentParam">
+	<update id="updateComment" parameterType="com.zd.back.comment.model.param.CommentParam">
 		UPDATE tipcomment
 		SET content = #{content}
 		WHERE commentno = #{commentno}
