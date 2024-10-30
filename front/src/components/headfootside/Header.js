@@ -48,6 +48,7 @@ function Header() {
         return (
           <>
             <Link to="/board/list">참여게시판</Link>
+            <Link to="/imgboard/list">인증게시판</Link>
           </>
         );
       case 'zero-consumer':
