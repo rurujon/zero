@@ -4,13 +4,17 @@ import com.zd.back.JY.domain.attendance.AttendanceService;
 import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
+import com.zd.back.login.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.zd.back.login.model.MemberDTO;
+import java.util.stream.Collectors;
 
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,6 +46,13 @@ public class MemberService {
             String encryptedPassword = passwordEncoder.encode(member.getPwd());
             member.setPwd(encryptedPassword);
 
+            // 관리자 계정 확인 및 역할 설정
+            if ("suzi123".equals(member.getMemId())) {
+                member.setRole(Role.ADMIN);
+            } else {
+                member.setRole(Role.USER); // 기본 역할을 USER로 설정
+            }
+
             memberMapper.insertMember(member);
 
             try {
@@ -69,10 +80,36 @@ public class MemberService {
     }
 
     @Transactional
+public void updateMemberRole(String memId, Role role) {
+    Member member = memberMapper.selectMemberById(memId);
+    if (member != null) {
+        member.setRole(role);
+        memberMapper.updateMember(member);
+    } else {
+        throw new RuntimeException("회원을 찾을 수 없습니다.");
+    }
+}
+
+    @Transactional(readOnly = true)
+    public List<MemberDTO> getAllUsers() {
+        List<Member> members = memberMapper.selectAllMembers();
+        return members.stream().map(member -> {
+            MemberDTO dto = new MemberDTO();
+            dto.setMemId(member.getMemId());
+            dto.setMemName(member.getMemName());
+            dto.setEmail(member.getEmail());
+            dto.setTel(member.getTel());
+            dto.setRole(member.getRole().name());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    @Transactional
     public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
         Map<String, Object> result = new HashMap<>();
         result.put("isValid", false);
         result.put("isFirstLoginToday", false);
+        result.put("role", Role.GUEST.name());
 
         Member member = memberMapper.selectMemberById(memId);
         if (member == null || !passwordEncoder.matches(rawPassword, member.getPwd())) {
@@ -80,6 +117,8 @@ public class MemberService {
         }
 
         result.put("isValid", true);
+        result.put("role", member.getRole().name());
+
         try {
             // 출석 체크
             if (attendanceService.checkToday(memId) == 0) {
@@ -177,4 +216,6 @@ public class MemberService {
         }
         return passwordEncoder.matches(rawPassword, member.getPwd());
     }
+
+
 }

@@ -45,6 +45,34 @@ public class PointController {
         }
     }
 
+    @GetMapping("/history/{memId}")
+    public ResponseEntity<List<PointHistoryDTO>> getPointHistory(@PathVariable String memId) {
+        List<PointHistoryDTO> history = pointService.getPointHistory(memId);
+        return ResponseEntity.ok(history);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updatePoint(@RequestBody Map<String, Object> request) {
+        try {
+            String memId = (String) request.get("memId");
+            pointService.updatePoint(memId, request);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/admin/manage-points")
+    public ResponseEntity<?> managePoints(@RequestParam String memId, @RequestParam int points, @RequestParam String operation, @RequestParam String reason) {
+        try {
+            pointService.managePoints(memId, points, operation);
+            return ResponseEntity.ok("포인트가 성공적으로 조정되었습니다.");
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("포인트 조정 중 오류 발생: " + e.getMessage());
+            }
+        }
+    }
+
     // 기존 코드 주석 처리
     /*
     @PostMapping("/result.action")
@@ -145,20 +173,4 @@ public class PointController {
     }
     */
 
-    @GetMapping("/history/{memId}")
-    public ResponseEntity<List<PointHistoryDTO>> getPointHistory(@PathVariable String memId) {
-        List<PointHistoryDTO> history = pointService.getPointHistory(memId);
-        return ResponseEntity.ok(history);
-    }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updatePoint(@RequestBody Map<String, Object> request) {
-        try {
-            String memId = (String) request.get("memId");
-            pointService.updatePoint(memId, request);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-}

@@ -5,7 +5,6 @@ import FindPasswordModal from './FindPasswordModal';
 import PointInfoModal from './PointInfoModal';
 import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
-import QuizModal from '../dailyQuiz/QuizModal';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -14,7 +13,7 @@ const HomePage = () => {
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
     const [showPointInfoModal, setShowPointInfoModal] = useState(false);
 
-    const { token, logout, login, memId } = useContext(AuthContext);
+    const { token, logout, login, memId, role } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -94,10 +93,13 @@ const HomePage = () => {
             ) : (
                 <div>
                     <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
+                    <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
-                    {/* <QuizModal /> */}
+                    {role === 'ADMIN' && (
+                        <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
+                    )}
                     {showPointInfoModal && (
                         <PointInfoModal
                             show={showPointInfoModal}
