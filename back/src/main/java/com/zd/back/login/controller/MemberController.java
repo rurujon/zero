@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.zd.back.login.model.MemberDTO; // 추가
+import com.zd.back.login.model.MemberDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.validation.Valid;
@@ -290,11 +290,16 @@ public class MemberController {
         String memId = request.get("memId");
         String email = request.get("email");
 
-        boolean result = memberService.resetPassword(memId, email);
-        if (result) {
-            return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-        } else {
-            return ResponseEntity.badRequest().body("비밀번호 재설정에 실패했습니다.");
+        try {
+            boolean result = memberService.resetPassword(memId, email);
+            if (result) {
+                return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+            } else {
+                return ResponseEntity.badRequest().body("비밀번호 재설정에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            logger.error("비밀번호 재설정 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
         }
     }
 

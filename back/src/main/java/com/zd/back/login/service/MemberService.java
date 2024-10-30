@@ -6,6 +6,7 @@ import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -80,15 +81,15 @@ public class MemberService {
     }
 
     @Transactional
-public void updateMemberRole(String memId, Role role) {
-    Member member = memberMapper.selectMemberById(memId);
-    if (member != null) {
-        member.setRole(role);
-        memberMapper.updateMember(member);
-    } else {
-        throw new RuntimeException("회원을 찾을 수 없습니다.");
+    public void updateMemberRole(String memId, Role role) {
+        Member member = memberMapper.selectMemberById(memId);
+        if (member != null) {
+            member.setRole(role);
+            memberMapper.updateMember(member);
+        } else {
+            throw new RuntimeException("회원을 찾을 수 없습니다.");
+        }
     }
-}
 
     @Transactional(readOnly = true)
     public List<MemberDTO> getAllUsers() {
@@ -117,7 +118,7 @@ public void updateMemberRole(String memId, Role role) {
         }
 
         result.put("isValid", true);
-        result.put("role", member.getRole().name());
+        result.put("role", member.getRole().name().toUpperCase());
 
         try {
             // 출석 체크
@@ -151,6 +152,7 @@ public void updateMemberRole(String memId, Role role) {
             } else {
                 member.setPwd(existingMember.getPwd());
             }
+            member.setRole(existingMember.getRole()); // 기존 역할 유지
             memberMapper.updateMember(member);
             logger.info("회원정보 수정 완료: {}", member.getMemId());
         }
@@ -205,7 +207,13 @@ public void updateMemberRole(String memId, Role role) {
         message.setTo(email);
         message.setSubject("비밀번호 재설정");
         message.setText("임시 비밀번호: " + tempPassword);
-        emailSender.send(message);
+        try {
+            emailSender.send(message);
+            logger.info("비밀번호 재설정 이메일 전송 성공: {}", email);
+        } catch (MailException e) {
+            logger.error("비밀번호 재설정 이메일 전송 실패: {}", email, e);
+            throw new RuntimeException("이메일 전송 실패", e);
+        }
     }
 
     public boolean validateLogin(String memId, String rawPassword) {
@@ -216,6 +224,4 @@ public void updateMemberRole(String memId, Role role) {
         }
         return passwordEncoder.matches(rawPassword, member.getPwd());
     }
-
-
 }
