@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 
-const AxiosInterceptor = ({ children }) => {
+const AxiosInterceptor = ({ children, navigate }) => {
     const { refreshAccessToken, logout } = useContext(AuthContext);
 
     useEffect(() => {
@@ -16,6 +16,7 @@ const AxiosInterceptor = ({ children }) => {
                         return axios.request(error.config);
                     } else {
                         logout();
+                        navigate('/login');
                     }
                 }
                 return Promise.reject(error);
@@ -25,7 +26,7 @@ const AxiosInterceptor = ({ children }) => {
         return () => {
             axios.interceptors.response.eject(interceptor);
         };
-    }, [refreshAccessToken, logout]);
+    }, [refreshAccessToken, logout, navigate]);
 
     return <>{children}</>;
 };

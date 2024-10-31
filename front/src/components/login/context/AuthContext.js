@@ -5,10 +5,10 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
-    const [refreshToken, setRefreshToken] = useState(null);
-    const [memId, setMemId] = useState(null);
-    const [role, setRole] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
+    const [memId, setMemId] = useState(localStorage.getItem('memId'));
+    const [role, setRole] = useState(localStorage.getItem('role'));
 
     const logout = useCallback(() => {
         setToken(null);
@@ -38,26 +38,20 @@ export const AuthProvider = ({ children }) => {
     }, [refreshToken, logout]);
 
     useEffect(() => {
-        const savedToken = localStorage.getItem('token');
-        const savedRefreshToken = localStorage.getItem('refreshToken');
-        if (savedToken && savedRefreshToken) {
+        if (token) {
             try {
-                const decoded = jwtDecode(savedToken);
+                const decoded = jwtDecode(token);
                 if (decoded.exp * 1000 < Date.now()) {
                     refreshAccessToken();
                 } else {
-                    setToken(savedToken);
-                    setRefreshToken(savedRefreshToken);
-                    setMemId(decoded.sub);
-                    setRole(decoded.role);
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 }
             } catch (error) {
                 console.error('Token decoding failed:', error);
                 logout();
             }
         }
-    }, [logout, refreshAccessToken]);
+    }, [token, logout, refreshAccessToken]);
 
     const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
