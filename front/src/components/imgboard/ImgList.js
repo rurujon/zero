@@ -5,18 +5,33 @@ import '../board/page.css';
 
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
 
+    const itemsPerPage = 8; // 한 페이지당 보여줄 게시물 수
     useEffect(() => {
-        axios.get('/imgboard/list')
-            .then(response => {
-                setImgPosts(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('이미지를 찾을 수 없습니다.', error);
+        fetchImgPosts(currentPage);
+    }, [currentPage]);
+
+    const fetchImgPosts = async (page) => {
+        try {
+            const response = await axios.get('/imgboard/list', {
+                params: {
+                    page: page,
+                    size: itemsPerPage
+                }
             });
-    }, []);
-   
+            setImgPosts(response.data.content);
+            setTotalItems(response.data.totalElements);
+        } catch (error) {
+            console.error('이미지를 찾을 수 없습니다.', error);
+        }
+    };
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     const getCateLabel = (cate) => {
         switch (cate) {
             case 'tum':
@@ -95,6 +110,16 @@ function ImgList() {
                     </div>
                 ))}
             </div>
+            <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={itemsPerPage}
+                totalItemsCount={totalItems}
+                pageRangeDisplayed={5}
+                onChange={handlePageChange}
+                itemClass="page-item"
+                linkClass="page-link"
+            />
+
         </div>
     );
 }
