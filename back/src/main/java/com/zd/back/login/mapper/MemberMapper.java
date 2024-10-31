@@ -3,6 +3,7 @@ package com.zd.back.login.mapper;
 import com.zd.back.login.model.Member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,4 +19,6 @@ public interface MemberMapper {
     int countByEmail(@Param("email") String email);
     void updateMemberRole(@Param("memId") String memId, @Param("role") String role);
     List<Member> selectAllMembers();
+    List<Member> searchMembers(Map<String, Object> params);
+    int countMembers(Map<String, Object> params);
 }
