@@ -22,9 +22,10 @@ public class JwtUtil {
     @Value("${jwt.refresh.expiration}")
     private long REFRESH_EXPIRATION_TIME;
 
-    public String generateToken(String memId) {
+    public String generateToken(String memId, String role) {
         return Jwts.builder()
                 .setSubject(memId)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)

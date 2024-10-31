@@ -11,11 +11,15 @@ const FindPasswordModal = ({ show, onHide }) => {
         e.preventDefault();
         axios.post('/member/find-password', { memId, email })
             .then(response => {
-                setResult('임시 비밀번호가 이메일로 전송되었습니다.');
+                setResult(response.data);
             })
             .catch(error => {
                 console.error('비밀번호 찾기 실패:', error);
-                setResult('비밀번호를 찾을 수 없습니다.');
+                if (error.response && error.response.data) {
+                    setResult(error.response.data);
+                } else {
+                    setResult('비밀번호를 찾을 수 없습니다.');
+                }
             });
     };
 
