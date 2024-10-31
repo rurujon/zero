@@ -3,7 +3,7 @@ package com.zd.back.imgboard.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.apache.ibatis.annotations.Param;
 
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
@@ -17,9 +17,7 @@ public interface ImgPostMapper {
 
     int getDataCount();
 
-/*     List<ImgBoard> getImgBoards();
-     
-    Page<ImgBoard> getImgBoards(Pageable pageable);*/
+    List<ImgBoard> getImgBoards(@Param("pageStart") int pageStart, @Param("pageEnd") int pageEnd);
 
     ImgBoard getImgPostById(int imgPostId);
 

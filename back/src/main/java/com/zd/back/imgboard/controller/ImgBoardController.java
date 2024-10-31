@@ -2,6 +2,7 @@ package com.zd.back.imgboard.controller;
 
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
+import com.zd.back.imgboard.model.ImgBoardResponse;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
@@ -58,21 +59,18 @@ public class ImgBoardController {
         }
     }
 
-/*     @GetMapping("/list")
-    public ResponseEntity<List<ImgBoard>> getImgBoards() {
-        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
-
-        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
-    } 
     @GetMapping("/list")
-    public ResponseEntity<Map<String, Object>> getImgBoards(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "8") int size) {
-        Map<String, Object> result = imgPostService.getImgBoards(page, size);
-        return ResponseEntity.ok(result);
-    }
+    public ResponseEntity<ImgBoardResponse> getImgBoards(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "8") int size) {
+        
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards(page, size);
+        int totalElements = imgPostService.getDataCount();
+       
+        ImgBoardResponse response = new ImgBoardResponse(imgBoards, totalElements);
 
-*/
+        return ResponseEntity.ok(response);
+    }
 
 
 

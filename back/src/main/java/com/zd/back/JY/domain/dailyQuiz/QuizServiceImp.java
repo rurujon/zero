@@ -24,7 +24,7 @@ public class QuizServiceImp implements QuizService {
 
     
 
-    public int checkToday(String memId){
+    public boolean checkToday(String memId){
         return quizHistoryMapper.checkToday(memId);
     }
     public void insertquiz(Map map){
