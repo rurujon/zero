@@ -1,18 +1,15 @@
 package com.zd.back.imgboard.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zd.back.imgboard.model.Img;
 import com.zd.back.imgboard.model.ImgBoard;
 import com.zd.back.imgboard.model.ImgPost;
 import com.zd.back.imgboard.service.ImgPostService;
 import com.zd.back.imgboard.service.ImgService;
-import com.zd.back.login.security.JwtUtil;
 import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,14 +57,14 @@ public class ImgBoardController {
         }
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<ImgBoard>> getImgBoards() {
-        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
-
-        
-        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+/*     @GetMapping("/list")
+    public ResponseEntity<Page<ImgBoard>> getImgBoards(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size) {
+        Page<ImgBoard> imgBoards = imgPostService.getImgBoards(PageRequest.of(page, size));
+        return ResponseEntity.ok(imgBoards);
     }
-    
+     */
     @GetMapping("/article")  
     public ResponseEntity<ImgBoard> getImgPostById(@RequestParam int imgPostId) {
        try{

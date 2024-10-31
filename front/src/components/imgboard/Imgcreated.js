@@ -16,6 +16,7 @@ const ImgCreated = () => {
     const [images, setImages] = useState(Array(3).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(3).fill(null));
     const [loading, setLoading] = useState(updatedMode);
+    const [auth, setAuth] = useState(0);
 
     const fileInputRefs = useRef([]);
     const titleRef = useRef(null);
@@ -41,14 +42,19 @@ const ImgCreated = () => {
                     });
                     
                     const { imgPost, images: existingImages } = response.data;
-                    const { memId: postMemId, title, content, cate } = imgPost;
+                    const { memId: postMemId, title, content, cate, auth} = imgPost;
 
-                    //alert 두번 뜸 (-)
                     if (postMemId !== memId && memId!=='suzi123') {
                         alert("본인이 작성한 게시물만 수정할 수 있습니다.");
                         navigate('/imgboard/list');
 
                         return;
+
+                    }else if (auth === 1) {
+                        alert("인증된 게시물은 수정할 수 없습니다");
+                        navigate(`/imgboard/article?imgPostId=${imgPostId}`);
+                        return;
+
                     }
 
                     setMemId(memId);
@@ -59,6 +65,7 @@ const ImgCreated = () => {
                     const newPreviews = existingImages.map(img => `/images/${img.saveFileName}`);
                     setImagePreviews(newPreviews);
                     setLoading(false);
+                    
                 } catch (error) {
                     alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
                     setLoading(false);
