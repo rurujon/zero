@@ -35,10 +35,10 @@ public class QuizController {
         public ResponseEntity<?> checkAttendance(@RequestParam String memId) {
             try {
                 // 해당 회원의 오늘 퀴즈 참여 여부를 체크
-                int count = quizService.checkToday(memId);
-                
+                boolean check = quizService.checkToday(memId);
+                System.out.println(check);
                 // 오늘 퀴즈에 참여한 경우
-                if (count > 0) {
+                if (check) {
                     Map<String, String> response = new HashMap<>();
                     response.put("message", "done");
                     return ResponseEntity.ok().body(response);
