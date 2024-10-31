@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './RssData.css'
 
 function RssData() {
     const [rssItems, setRssItems] = useState([]);
@@ -34,19 +35,22 @@ function RssData() {
     
 
     return (
-        <div>
-            <h1>RSS Feed</h1>
-            <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
-            <ul>
-                {rssItems.map((item, index) => (
-                    <li key={index}>
-                        <h2>{item.title}</h2>
-                        <p>{item.description}</p>
-                        <Link to={`/minEnv/${item.rssId}`}>본문</Link>
-                        <br/><br/>
-                    </li>
-                ))}
-            </ul>
+        <div className='RSS-container'>
+            <div className='RSS-main-title'>
+                <h1>RSS Feed</h1>
+                <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
+            </div>
+            <div className='RSS-main-content'>
+                <ul>
+                    {rssItems.map((item, index) => (
+                        <li key={index}>
+                            <Link to={`/minEnv/${item.rssId}`}><h3>{item.title}</h3></Link>
+                            <span>등록일 : {item.pubDate}</span>
+                            <Link to={`/minEnv/${item.rssId}`}><p>{item.description}</p></Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

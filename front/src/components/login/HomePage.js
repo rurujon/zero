@@ -93,13 +93,14 @@ const HomePage = () => {
                 </div>
             ) : (
                 <div>
-                    <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
-                    
+                    <h4>안녕하세요, {memId}님.</h4>
+                    <h4>오늘도 행복한 하루되세요.</h4>
+
                     {/* <QuizModal /> */}
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
-                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
+                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
                     )}

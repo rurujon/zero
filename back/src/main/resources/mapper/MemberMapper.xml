@@ -65,4 +65,37 @@
         FROM member
     </select>
 
+    <select id="searchMembers" parameterType="map" resultType="com.zd.back.login.model.Member">
+    SELECT * FROM (
+        SELECT m.*, ROWNUM rn FROM (
+            SELECT * FROM member
+            <where>
+                <if test="searchTerm != null and searchTerm != ''">
+                    AND (memId LIKE '%'||#{searchTerm}||'%'
+                    OR memName LIKE '%'||#{searchTerm}||'%'
+                    OR email LIKE '%'||#{searchTerm}||'%'
+                    OR tel LIKE '%'||#{searchTerm}||'%')
+                </if>
+            </where>
+            ORDER BY memId
+        ) m
+        WHERE ROWNUM <![CDATA[<=]]> #{offset} + #{limit}
+    )
+    WHERE rn <![CDATA[>]]> #{offset}
+    </select>
+
+    <select id="countMembers" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM member
+    <where>
+        <if test="searchTerm != null and searchTerm != ''">
+            AND (memId LIKE '%'||#{searchTerm}||'%'
+            OR memName LIKE '%'||#{searchTerm}||'%'
+            OR email LIKE '%'||#{searchTerm}||'%'
+            OR tel LIKE '%'||#{searchTerm}||'%')
+        </if>
+    </where>
+    </select>
+
+
+
 </mapper>

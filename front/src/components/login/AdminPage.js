@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Table, Form, Button, Pagination } from 'react-bootstrap';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
@@ -11,6 +12,11 @@ const AdminPage = () => {
     const [reason, setReason] = useState('');
     const { role, token } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [pageSize] = useState(10);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -42,20 +48,30 @@ const AdminPage = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('/member/admin/users', {
-                headers: { Authorization: `Bearer ${token}` }
+            const response = await axios.get('/member/admin/search', {
+                headers: { Authorization: `Bearer ${token}` },
+                params: { searchTerm, page: currentPage, size: pageSize }
             });
-            setUsers(response.data);
+            setUsers(response.data.members);
+            setTotalPages(Math.ceil(response.data.totalCount / pageSize));
         } catch (error) {
             console.error('사용자 목록 조회 실패:', error);
-            if (error.response && error.response.status === 403) {
-                alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
-                navigate('/login');
+            if (error.response) {
+                if (error.response.status === 403) {
+                    alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
+                    navigate('/login');
+                } else {
+                    alert(`사용자 목록을 불러오는 데 실패했습니다: ${error.response.data}`);
+                }
             } else {
-                alert('사용자 목록을 불러오는 데 실패했습니다.');
+                alert('서버와의 통신 중 오류가 발생했습니다.');
             }
         }
     };
+
+    useEffect(() => {
+        fetchUsers();
+    }, [currentPage, searchTerm]);
 
     const handleRoleChange = async (memId, newRole) => {
         try {
@@ -107,7 +123,7 @@ const AdminPage = () => {
             try {
                 await axios.delete(`/member/admin/${memId}`);
                 alert('회원이 성공적으로 삭제되었습니다.');
-                fetchUsers(); // 사용자 목록 새로고침
+                fetchUsers();
             } catch (error) {
                 console.error('회원 삭제 실패:', error);
                 alert('회원 삭제 중 오류가 발생했습니다.');
@@ -115,12 +131,35 @@ const AdminPage = () => {
         }
     };
 
+    // 페이지 변경 핸들러
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // 검색 핸들러
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setCurrentPage(1);
+        fetchUsers();
+    };
+
     return (
         <div className="container mt-5">
             <h2>관리자 페이지</h2>
             <hr />
             <h3>사용자 목록</h3>
-            <table className="table table-bordered">
+            <Form onSubmit={handleSearch} className="mb-3">
+                <Form.Group className="mb-3" controlId="searchForm">
+                    <Form.Control
+                        type="text"
+                        placeholder="아이디, 이름, 이메일 또는 전화번호로 검색"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </Form.Group>
+                <Button variant="primary" type="submit">검색</Button>
+            </Form>
+            <Table className="table table-bordered">
                 <thead>
                     <tr>
                         <th>아이디</th>
@@ -161,7 +200,18 @@ const AdminPage = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
+            <Pagination>
+                {[...Array(totalPages).keys()].map(number => (
+                    <Pagination.Item
+                        key={number + 1}
+                        active={number + 1 === currentPage}
+                        onClick={() => handlePageChange(number + 1)}
+                    >
+                        {number + 1}
+                    </Pagination.Item>
+                ))}
+            </Pagination>
 
             <h3 className="mt-4">포인트 관리</h3>
             <div className="row mb-3">
@@ -218,7 +268,6 @@ const AdminPage = () => {
             <button className="btn btn-primary" onClick={handlePointManagement}>포인트 조정</button>
         </div>
     );
-
 };
 
 export default AdminPage;

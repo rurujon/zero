@@ -28,6 +28,7 @@ import Calendar from "./components/login/Calendar";
 import AdminPage from "./components/login/AdminPage";
 import SuccessPage from "./components/pay/SuccessPage ";
 import FailurePage from "./components/pay/FailurePage";
+import ProtectedRoute from './components/login/utils/ProtectedRoute';
 
 
 
@@ -50,6 +51,13 @@ export const routes = [
     { path: '/point-info', element: <PointInfoModal /> },
     { path: '/attendance', element: <Calendar /> },
     { path: '/admin', element: <AdminPage />},
+    { path: '/admin',
+        element: (
+            <ProtectedRoute roles={['ADMIN']}>
+                <AdminPage />
+            </ProtectedRoute>
+        )
+    },
 
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트

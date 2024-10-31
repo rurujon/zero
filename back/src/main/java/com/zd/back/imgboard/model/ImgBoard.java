@@ -11,5 +11,8 @@ public class ImgBoard {
     private ImgPost imgPost;
     private List<Img> images; 
  
+    //페이징 처리를 위함
+    private int page;
+    private int size;
 
 }
