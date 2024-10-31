@@ -38,6 +38,7 @@ const ImgArticle = () => {
         fetchArticle();
     }, [imgPostId]);
 
+    
     const getCateLabel = (cate) => {
         switch (cate) {
             case 'tum':
@@ -50,6 +51,19 @@ const ImgArticle = () => {
                 return '알 수 없음';
         }
     };
+
+    const getAuthLabel = (auth) => {
+        switch (auth) {
+            case 1:
+                return '승인완료';
+            case 0:
+                return '미승인';
+            default:
+                return '알 수 없음';
+        }
+    };
+
+
 
     const handleDelete = async () => {
         try {
@@ -95,7 +109,7 @@ const ImgArticle = () => {
         <div className="article-container">
             <h2 className="article-title">{article.imgPost.title}</h2>
             <div className="article-meta-container">
-                <p className="article-meta"><strong>승인여부:</strong> {article.imgPost.auth}</p>
+                <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}</p>
                 {memId === "suzi123" && (
                     <button type='button' onClick={handleAuth}>인증승인</button>
                 )}
@@ -129,6 +143,7 @@ const ImgArticle = () => {
                 </button>
             </div>
         </div>
+        
     );
 };
 
