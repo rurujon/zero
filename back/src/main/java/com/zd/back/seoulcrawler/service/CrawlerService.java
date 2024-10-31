@@ -11,9 +11,11 @@ import com.zd.back.seoulcrawler.model.SeoulNews;
 public interface CrawlerService {
 
     void insertSeoulNews(SeoulNews seoulNews);
+    List<SeoulNews> selectSeoulNewsAll();
     List<SeoulNews> selectSeoulNewsMini();
     SeoulNews selectNewsByTitle(String title);
     void crawling(int totalPage, String group);
+    void crawlingAll(int totalPage);
     List<SeoulNews> selectSeoulNewsEnv();
     List<SeoulNews> selectSeoulNewsEco();
     List<SeoulNews> selectSeoulNewsAir();

@@ -27,6 +27,7 @@ import PointInfoModal from "./components/login/PointInfoModal";
 import Calendar from "./components/login/Calendar";
 import AdminPage from "./components/login/AdminPage";
 import ProtectedRoute from './components/login/utils/ProtectedRoute';
+import SeoulNews from "./components/seoulnews/SeoulNews";
 
 
 
@@ -64,6 +65,7 @@ export const routes = [
     { path:'/seoulNews/Eco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
     { path:'/seoulNews/Air', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
     { path:'/seoulNews/Green', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
+    { path:'/seoulNews/All', element:<SeoulNews/>},   //서울green 뉴스리스트
     { path:'/seoulNewsArticle/:seoulId', element:<SeoulNewsArticle/>},   //서울 뉴스 상세페이지
 
 

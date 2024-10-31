@@ -9,6 +9,10 @@
         insert into seoulNews (seoulId, title, link, content, publishedDate, seoulNewsGroup) values (#{seoulId}, #{title}, #{link}, #{content}, #{publishedDate}, #{seoulNewsGroup})
     </insert>
 
+    <select id="selectSeoulNewsAll" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM seoulNews order by publishedDate desc
+    </select>
+
     <select id="selectNewsByTitle" parameterType="String" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
         SELECT * FROM seoulNews WHERE title = #{title}
     </select>

@@ -13,6 +13,7 @@ import com.zd.back.seoulcrawler.model.SeoulNews;
 public interface CrawlerMapper {
 
     void insertSeoulNews(SeoulNews seoulNews);
+    List<SeoulNews> selectSeoulNewsAll();
     List<SeoulNews> selectSeoulNewsMini();
     SeoulNews selectNewsByTitle(String title);
     void crawling(int totalPage);
