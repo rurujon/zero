@@ -9,6 +9,7 @@ function ImgList() {
     const [totalItems, setTotalItems] = useState(0);
 
     const itemsPerPage = 8; // 한 페이지당 보여줄 게시물 수
+
     useEffect(() => {
         fetchImgPosts(currentPage);
     }, [currentPage]);
@@ -116,8 +117,7 @@ function ImgList() {
                 totalItemsCount={totalItems}
                 pageRangeDisplayed={5}
                 onChange={handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
+
             />
 
         </div>
