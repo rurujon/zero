@@ -100,7 +100,6 @@ const Paystep2 = ({setStep,memberInfo, setMemberInfo}) => {
 
                     <button onClick={prestep}>이전단계</button>
                     <button onClick={nextstep}>다음단계</button>
-                    <hidden><Paystep3 /></hidden>
                 </div>
 
         </div>

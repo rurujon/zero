@@ -11,6 +11,7 @@ const Pay = () => {
     const navigate = useNavigate();
 
     const toDonate = () => {
+      console.log("후원하기 버튼 클릭됨"); // 로그 추가
       navigate('/donate');
   };
 
@@ -71,33 +72,20 @@ const Pay = () => {
 
   const render = () => {
     if (step === 1) {
-      return <Paystep1 amountChange={amountChange} setStep={setStep} />;
+        return <Paystep1 amountChange={amountChange} setStep={setStep} />;
     } else if (step === 2) {
-      return <Paystep2 setStep={setStep} memberInfo={memberInfo} setMemberInfo={setMemberInfo}/>;
+        return <Paystep2 setStep={setStep} memberInfo={memberInfo} setMemberInfo={setMemberInfo} />;
     } else {
-      return <Paystep3 setStep={setStep} requestPay={requestPay}/>;
+        return <Paystep3 setStep={setStep} requestPay={requestPay} amount={amount} memberInfo={memberInfo}/>;
     }
-  };
+};
  
 
   return (
     <div>
       <div className="App">
-        <Routes>
-          <Route path="/donate" element={render()} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/failure" element={<FailurePage />} />
-        </Routes>
+      {render()} {/* 단계별 컴포넌트 렌더링 */}
       </div>
-
-      <div>
-        <ul>
-          <dl>{amount}</dl>
-          <dl>{memberInfo.email}</dl>
-          <dl>{memberInfo.tel}</dl>
-        </ul>
-      </div>
-      <button onClick={toDonate}>후원하기</button>
     </div>
   );
 };

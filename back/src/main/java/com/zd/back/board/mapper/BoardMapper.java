@@ -30,4 +30,6 @@ public interface BoardMapper {
 	void createBbsAnswer(BoardParam param);
     String getCategoryByBoardno(int parentno); //답글생성시 카테고리값 지정
 
+    void updateFileDetails(Board board);
+
 }

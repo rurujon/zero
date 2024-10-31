@@ -26,6 +26,8 @@ import FindPasswordModal from "./components/login/FindPasswordModal";
 import PointInfoModal from "./components/login/PointInfoModal";
 import Calendar from "./components/login/Calendar";
 import AdminPage from "./components/login/AdminPage";
+import SuccessPage from "./components/pay/SuccessPage ";
+import FailurePage from "./components/pay/FailurePage";
 import ProtectedRoute from './components/login/utils/ProtectedRoute';
 import SeoulNews from "./components/seoulnews/SeoulNews";
 
@@ -77,7 +79,8 @@ export const routes = [
 
 
     { path: '/donate', element: <Pay/> },   //결제(후원) 경로
-
+    { path: '/success', element: <SuccessPage /> },
+    { path: '/failure', element: <FailurePage /> },
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
     { path: '/imgboard/updated', element: <ImgCreated/> }, // ImgCreated.js에서 Mode바꿔서 사용

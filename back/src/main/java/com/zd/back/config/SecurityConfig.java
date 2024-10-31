@@ -13,6 +13,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.zd.back.login.security.JwtFilter;
+import com.zd.back.login.service.LogoutService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -30,6 +32,9 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private LogoutService logoutService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -43,7 +48,13 @@ public class SecurityConfig {
                 .antMatchers("/member/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
             .and()
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout()
+                .logoutUrl("/member/logout")
+                .addLogoutHandler(logoutService)
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    // 로그아웃 성공 시 처리
+                });
 
         return http.build();
     }
@@ -62,21 +73,7 @@ public class SecurityConfig {
         return http.build();
         }
 
-        /* http
-            .cors().configurationSource(corsConfigurationSource()).and()
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/", "/member/register", "/api/auth/**", "/member/login", "/member/info", "/member/**", "/member/logout", "/*", "/api/naver", "/imgboard/**", "/api/miniboard/**", "/api/naver/**", "/api/seoul/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .formLogin().disable()
-            .httpBasic().disable();
 
-        return http.build();
-    }
  */
     @Bean
     public RestTemplate restTemplate() {

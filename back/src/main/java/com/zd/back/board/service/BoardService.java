@@ -1,11 +1,16 @@
 package com.zd.back.board.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zd.back.board.mapper.BoardMapper;
 import com.zd.back.board.model.Board;
@@ -28,6 +33,9 @@ public class BoardService {
 
     @Autowired
     private final BoardMapper boardMapper;
+
+	@Value("${file.upload-dir}")
+    private String uploadDir;
 
     /* 글 추가 */
     public void writeBoard(Board board) throws Exception {
@@ -97,4 +105,27 @@ public class BoardService {
 		
 		return new CreateBbsResponse(param.getBoardno());
 	}
+
+	public void saveFile(MultipartFile file, int boardno) throws IOException {
+        String saveFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String urlFile = "/images/imgboard/" + saveFileName; // 웹에서 접근할 수 있는 경로
+        String originalFileName = file.getOriginalFilename();
+
+		System.out.println("File Name: " + file.getOriginalFilename());
+		System.out.println("File Size: " + file.getSize());
+		System.out.println("Content Type: " + file.getContentType());
+
+        // 저장할 경로
+        File uploadFile = new File(uploadDir + "\\" + saveFileName);
+        file.transferTo(uploadFile);
+
+        Board board = new Board();
+        board.setBoardno(boardno);
+        board.setSaveFileName(saveFileName);
+        board.setOriginalFileName(originalFileName);
+        board.setUrlFile(urlFile);
+
+        boardMapper.updateFileDetails(board);
+    }
+	
 }

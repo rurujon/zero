@@ -77,7 +77,7 @@ function BbsDetail() {
 
 				{
 					/* 자신이 작성한 게시글인 경우에만 수정 삭제 가능 */
-					(localStorage.getItem("memId") === board.memId) ? (
+					(localStorage.getItem("memId") === board.memId || localStorage.getItem("role") === "ADMIN") ? (
 						<>
 							<Link className="btn btn-outline-secondary" to={{ pathname: `/board/update/${board.boardno}` }} state={{ board: updateBoard }}>
 								<i className="fas fa-edit"></i> 수정

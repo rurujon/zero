@@ -14,41 +14,25 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth})
     </insert>
 
-<!--     <select id="getImgBoards" resultMap="ImgBoardResultMap">
-        SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-        FROM ImgPost ip
-        LEFT JOIN (
-            SELECT imgPostId, imgId, saveFileName, filePath
-            FROM Img
-            WHERE imgId IN (
-                SELECT MIN(imgId) 
-                FROM Img 
-                GROUP BY imgPostId
-            )
-        ) i ON ip.imgPostId = i.imgPostId
-        ORDER BY ip.imgPostId DESC
-    </select>
- -->
-
-<select id="getImgBoards" resultMap="ImgBoardResultMap">
-    SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-    FROM (
-        SELECT * FROM ImgPost
-        ORDER BY imgPostId DESC
-        OFFSET #{pageable.offset} ROWS FETCH NEXT #{pageable.pageSize} ROWS ONLY
-    ) ip
-    LEFT JOIN (
-        SELECT imgPostId, imgId, saveFileName, filePath
-        FROM Img
-        WHERE imgId IN (
-            SELECT MIN(imgId) 
-            FROM Img 
-            GROUP BY imgPostId
+ <select id="getImgBoards" resultMap="ImgBoardResultMap">
+        SELECT * FROM (
+            SELECT ip.*, i.imgId, i.saveFileName, i.filePath,
+                   ROW_NUMBER() OVER (ORDER BY ip.imgPostId DESC) AS rnum
+            FROM ImgPost ip
+            LEFT JOIN (
+                SELECT imgPostId, imgId, saveFileName, filePath
+                FROM Img
+                WHERE imgId IN (
+                    SELECT MIN(imgId) 
+                    FROM Img 
+                    GROUP BY imgPostId
+                )
+            ) i ON ip.imgPostId = i.imgPostId
         )
-    ) i ON ip.imgPostId = i.imgPostId
-</select>
+        WHERE rnum BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
 
-<select id="count" resultType="long">
+<select id="getDataCount" resultType="int">
     SELECT COUNT(*) FROM ImgPost
 </select>
 

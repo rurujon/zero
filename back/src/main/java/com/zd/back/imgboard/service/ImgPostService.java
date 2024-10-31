@@ -29,14 +29,13 @@ public class ImgPostService {
     public int getDataCount() {
         return imgPostMapper.getDataCount();
     }
-/*     public List<ImgBoard> getImgBoards() {
-        return imgPostMapper.getImgBoards();
-    }
+
     @Transactional(readOnly = true)
-    public Page<ImgBoard> getImgBoards(Pageable pageable) {
-        return imgPostMapper.getImgBoards(pageable);
+    public List<ImgBoard> getImgBoards(int page, int size) {
+        int pageStart = (page-1) * size; // 시작 인덱스
+        int pageEnd = page*size;
+        return imgPostMapper.getImgBoards(pageStart, pageEnd);
     }
- */
 
     public ImgBoard getImgPostById(int imgPostId) {
         return imgPostMapper.getImgPostById(imgPostId); 

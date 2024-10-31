@@ -39,6 +39,9 @@ public class MemberService {
     @Autowired
     private AttendanceService attendanceService;
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
@@ -242,5 +245,10 @@ public List<MemberDTO> getAllUsers() {
         Map<String, Object> params = new HashMap<>();
         params.put("searchTerm", searchTerm);
         return memberMapper.countMembers(params);
+    }
+
+    @Transactional
+    public void logout(String token) {
+        tokenBlacklistService.addToBlacklist(token);
     }
 }

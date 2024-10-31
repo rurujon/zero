@@ -268,8 +268,13 @@ public class MemberController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
-        return ResponseEntity.ok("로그아웃 성공");
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            memberService.logout(token);
+            return ResponseEntity.ok("로그아웃 성공");
+        }
+        return ResponseEntity.badRequest().body("유효하지 않은 토큰");
     }
 
     @DeleteMapping("/{memId}")

@@ -23,5 +23,8 @@ public class Board {
     private int hitcount;
     private int del;
     private Date created; 
+    private String saveFileName;
+    private String originalFileName;
+    private String urlFile;
     
 }
