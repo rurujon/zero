@@ -1,0 +1,246 @@
+<div class="ct_text">
+<div class="n1-search sch-full">
+	<div class="inner">
+		<form id="n1search" name="n1search" action="#" method="GET" onsubmit="return searchForm(this);">
+			<select id="n1_search" class="select" name="searchCate">
+				<option value="">구분</option>
+				<option value="1">제목</option>
+				<option value="2">내용</option>
+			</select>
+			<input type="text" name="s" id="sss" class="input" value="" title="검색어 입력폼">
+			<button type="submit" id="csb" class="bt-sch">검색</button>
+		</form>
+	</div>
+</div>
+<script type="text/javascript"> 
+
+	function searchForm(frm){
+
+		//form checking
+		
+		return true;
+	}
+
+</script>
+
+
+
+<div class="post-lst">
+
+
+
+
+
+<!--디버깅.....-->
+	<div id="post-560592" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560592?listPage=1" rel="bookmark" title="지구 한 바퀴나 된다고?! 한 해 버려지는 전자폐기물 6,200만톤!">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/20241029_142808.png" class="attachment-130x90 size-130x90 wp-post-image" alt="지구 한 바퀴나 된다고?! 한 해 버려지는 전자폐기물 6,200만톤!">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560592?listPage=1" title="지구 한 바퀴나 된다고?! 한 해 버려지는 전자폐기물 6,200만톤!" rel="bookmark">지구 한 바퀴나 된다고?! 한 해 버려지는 전자폐기물 6,200만톤!</a></h3>			
+			<span class="time">등록일 : 2024-10-29<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560592?listPage=1" title="지구 한 바퀴나 된다고?! 한 해 버려지는 전자폐기물 6,200만톤!" rel="bookmark">손풍기, 보조배터리, 무선 이어폰, 전자담배 등 간편하게 충전해 사용하는 소형 전자제품들 속에는 ‘리튬 배터리’ 가 들어있기 때문에 
+수거 후 운반 및 폐기 처리 과정 등에서 충격이 가해지면 화재 위험이 있어 꼭! 분리배출을 해주셔야 해요.</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/sr%ec%84%bc%ed%84%b0" rel="tag">SR센터</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%8f%84%ec%8b%9c%ea%b8%88%ec%86%8d%ed%9a%8c%ec%88%98%ec%84%bc%ed%84%b0" rel="tag">도시금속회수센터</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%a6%ac%ed%8a%ac%eb%b0%b0%ed%84%b0%eb%a6%ac" rel="tag">리튬배터리</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%84%9c%ec%9a%b8%eb%8f%84%ec%8b%9c%ea%b8%88%ec%86%8d%ed%9a%8c%ec%88%98%ec%84%bc%ed%84%b0" rel="tag">서울도시금속회수센터</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%84%ec%9e%90%ec%a0%9c%ed%92%88" rel="tag">전자제품</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%8f%90%ea%b8%b0%eb%ac%bc" rel="tag">폐기물</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%8f%90%ec%a0%84%ec%9e%90%ea%b8%b0%ea%b8%b0" rel="tag">폐전자기기</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%8f%90%ec%a0%84%ec%9e%90%ec%a0%9c%ed%92%88" rel="tag">폐전자제품</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-560206" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560206?listPage=1" rel="bookmark" title="[탄소중립 라이프 #6] 탄소 중립을 위한 친환경 수송! | 기업편">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/20241021_143322.png" class="attachment-130x90 size-130x90 wp-post-image" alt="[탄소중립 라이프 #6] 탄소 중립을 위한 친환경 수송! | 기업편">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560206?listPage=1" title="[탄소중립 라이프 #6] 탄소 중립을 위한 친환경 수송! | 기업편" rel="bookmark">[탄소중립 라이프 #6] 탄소 중립을 위한 친환경 수송! | 기업편</a></h3>			
+			<span class="time">등록일 : 2024-10-25<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560206?listPage=1" title="[탄소중립 라이프 #6] 탄소 중립을 위한 친환경 수송! | 기업편" rel="bookmark">제로서울이 탄소중립을 위한 생활 실천 행동을 알려드리는 '탄소중립 라이프' 시리즈를 준비했어요. 오늘은 기업에서 친환경 수송으로 탄소중립을 실천할 수 있는 방법을 소개해 드릴게요!</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%eb%8c%80%ec%a4%91%ea%b5%90%ed%86%b5" rel="tag">대중교통</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%94%b0%eb%a6%89%ec%9d%b4" rel="tag">따릉이</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%ac%b4%ea%b3%b5%ed%95%b4%ec%b0%a8" rel="tag">무공해차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%88%98%ec%86%8c%ec%b0%a8" rel="tag">수소차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%98%a8%ec%8b%a4%ea%b0%80%ec%8a%a4" rel="tag">온실가스</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%80%ea%b3%b5%ed%95%b4%ec%b0%a8" rel="tag">저공해차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%84%ea%b8%b0%ec%b0%a8" rel="tag">전기차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%9c%eb%a1%9c%ec%84%9c%ec%9a%b8" rel="tag">제로서울</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%b9%9c%ed%99%98%ea%b2%bd" rel="tag">친환경</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd" rel="tag">탄소중립</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd%eb%9d%bc%ec%9d%b4%ed%94%84" rel="tag">탄소중립라이프</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-560193" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560193?listPage=1" rel="bookmark" title="[탄소중립 라이프 #5] 탄소 중립을 위한 친환경 수송! | 가정편">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/20241021_142551.png" class="attachment-130x90 size-130x90 wp-post-image" alt="[탄소중립 라이프 #5] 탄소 중립을 위한 친환경 수송! | 가정편">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560193?listPage=1" title="[탄소중립 라이프 #5] 탄소 중립을 위한 친환경 수송! | 가정편" rel="bookmark">[탄소중립 라이프 #5] 탄소 중립을 위한 친환경 수송! | 가정편</a></h3>			
+			<span class="time">등록일 : 2024-10-23<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560193?listPage=1" title="[탄소중립 라이프 #5] 탄소 중립을 위한 친환경 수송! | 가정편" rel="bookmark">제로서울이 탄소중립을 위한 생활 실천 행동을 알려드리는 '탄소중립 라이프' 시리즈를 준비했어요. 오늘은 가정에서 친환경 수송으로 탄소중립을 실천할 수 있는 방법을 소개해 드릴게요!</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%eb%8c%80%ec%a4%91%ea%b5%90%ed%86%b5" rel="tag">대중교통</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%94%b0%eb%a6%89%ec%9d%b4" rel="tag">따릉이</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%ac%b4%ea%b3%b5%ed%95%b4%ec%b0%a8" rel="tag">무공해차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%88%98%eb%8b%a8%eb%b6%84%eb%8b%b4%eb%a5%a0" rel="tag">수단분담률</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%88%98%ec%86%8c%ec%b0%a8" rel="tag">수소차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%88%98%ec%86%a1%eb%b6%84%ec%95%bc-%ec%98%a8%ec%8b%a4%ea%b0%80%ec%8a%a4" rel="tag">수송분야 온실가스</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%97%90%ec%bd%94%eb%93%9c%eb%9d%bc%ec%9d%b4%eb%b8%8c" rel="tag">에코드라이브</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%98%a8%ec%8b%a4%ea%b0%80%ec%8a%a4" rel="tag">온실가스</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%9e%90%eb%8f%99%ec%b0%a8-%ea%b3%b5%ea%b8%b0%ec%95%95" rel="tag">자동차 공기압</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%80%ea%b3%b5%ed%95%b4%ec%b0%a8" rel="tag">저공해차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%84%ea%b8%b0%ec%b0%a8" rel="tag">전기차</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%9c%eb%a1%9c%ec%84%9c%ec%9a%b8" rel="tag">제로서울</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%b9%9c%ed%99%98%ea%b2%bd" rel="tag">친환경</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%80%ec%9d%b4%ec%96%b4-%ea%b3%b5%ea%b8%b0%ec%95%95" rel="tag">타이어 공기압</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd" rel="tag">탄소중립</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd%eb%9d%bc%ec%9d%b4%ed%94%84" rel="tag">탄소중립라이프</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-560257" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560257?listPage=1" rel="bookmark" title="2024 서울 국제기후환경 포럼 개최 안내">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/env_hotissue1025.jpg" class="attachment-130x90 size-130x90 wp-post-image" alt="2024 서울 국제기후환경 포럼 개최 안내">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560257?listPage=1" title="2024 서울 국제기후환경 포럼 개최 안내" rel="bookmark">2024 서울 국제기후환경 포럼 개최 안내</a></h3>			
+			<span class="time">등록일 : 2024-10-22<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560257?listPage=1" title="2024 서울 국제기후환경 포럼 개최 안내" rel="bookmark">2024 서울 국제기후환경 포럼 
+개최 안내
+참가등록 신청방법</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/2024-%ec%84%9c%ec%9a%b8-%ea%b5%ad%ec%a0%9c%ea%b8%b0%ed%9b%84%ed%99%98%ea%b2%bd-%ed%8f%ac%eb%9f%bc" rel="tag">2024 서울 국제기후환경 포럼</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%8f%ac%eb%9f%bc" rel="tag">포럼</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%94%8c%eb%9d%bc%ec%8a%a4%ed%8b%b1" rel="tag">플라스틱</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-560180" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560180?listPage=1" rel="bookmark" title="[탄소중립 라이프 #4] 탄소중립을 위한 친환경 소비! | 기업편">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/20241021_142433.png" class="attachment-130x90 size-130x90 wp-post-image" alt="[탄소중립 라이프 #4] 탄소중립을 위한 친환경 소비! | 기업편">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560180?listPage=1" title="[탄소중립 라이프 #4] 탄소중립을 위한 친환경 소비! | 기업편" rel="bookmark">[탄소중립 라이프 #4] 탄소중립을 위한 친환경 소비! | 기업편</a></h3>			
+			<span class="time">등록일 : 2024-10-21<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560180?listPage=1" title="[탄소중립 라이프 #4] 탄소중립을 위한 친환경 소비! | 기업편" rel="bookmark">제로서울이 탄소중립을 위한 생활 실천 행동을 알려드리는 '탄소중립 라이프' 시리즈를 준비했어요. 오늘은 기업에서 친환경 소비로 탄소중립을 실천할 수 있는 방법을 소개해 드릴게요!
+</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%eb%85%b9%ec%83%89" rel="tag">녹색</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%85%b9%ec%83%89%ec%84%b1%ec%9e%a5" rel="tag">녹색성장</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%85%b9%ec%83%89%ec%a0%9c%ed%92%88" rel="tag">녹색제품</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%85%b9%ec%83%89%ec%a0%9c%ed%92%88%ea%b5%ac%eb%a7%a4%ec%a0%9c%eb%8f%84" rel="tag">녹색제품구매제도</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%9e%90%ec%9b%90%ec%88%9c%ed%99%98" rel="tag">자원순환</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%80%ed%83%84%ec%86%8c" rel="tag">저탄소</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%a0%80%ed%83%84%ec%86%8c%ec%8b%9d%eb%8b%a8" rel="tag">저탄소식단</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%eb%b0%9c%ec%9e%90%ea%b5%ad" rel="tag">탄소발자국</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd" rel="tag">탄소중립</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%83%84%ec%86%8c%ec%a4%91%eb%a6%bd%eb%9d%bc%ec%9d%b4%ed%94%84" rel="tag">탄소중립라이프</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-560163" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/560163?listPage=1" rel="bookmark" title="2024 서울 기후테크 컨퍼런스와 함께하실 대표님을 모십니다!">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/10/67123590420c05.25429796.png" class="attachment-130x90 size-130x90 wp-post-image" alt="2024 서울 기후테크 컨퍼런스와 함께하실 대표님을 모십니다!">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/560163?listPage=1" title="2024 서울 기후테크 컨퍼런스와 함께하실 대표님을 모십니다!" rel="bookmark">2024 서울 기후테크 컨퍼런스와 함께하실 대표님을 모십니다!</a></h3>			
+			<span class="time">등록일 : 2024-10-18<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/560163?listPage=1" title="2024 서울 기후테크 컨퍼런스와 함께하실 대표님을 모십니다!" rel="bookmark">2024 서울 기후네크 컨퍼런스 전시부스 참여기업을 모집합니다
+ - 모집기간 : 2024. 10. 17.(목) ~ 2024. 11.5.(화)
+ - 참여대상 :  기후테크 관련 기업이면 누구나(스타트업, 1인기업, 청년기업, 중소,중견기업 등)</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%ea%b8%b0%ec%97%85%ec%a0%84%ec%8b%9c" rel="tag">기업전시</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ea%b8%b0%ed%9b%84%ed%85%8c%ed%81%ac" rel="tag">기후테크</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%bb%a8%ed%8d%bc%eb%9f%b0%ec%8a%a4" rel="tag">컨퍼런스</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-559835" class="child_policyDL">
+		
+						<div class="child_policyDL_R" style="width:auto;">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/559835?listPage=1" title="친환경 보일러 보급사업 잔여분 선착순 접수…1대당 최대 60만원" rel="bookmark">친환경 보일러 보급사업 잔여분 선착순 접수…1대당 최대 60만원</a></h3>			
+			<span class="time">등록일 : 2024-09-30<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont_1">
+				<a href="https://news.seoul.go.kr/env/archives/559835?listPage=1" title="친환경 보일러 보급사업 잔여분 선착순 접수…1대당 최대 60만원" rel="bookmark">서울시는 동절기 대비 취약계층을 대상으로 친환경 보일러 설치·교체 비용을 지원한다. 1대당 최대 60만원까지 지원하며, 지원 대상은 기준 중위소득 70% 이하인 다자녀가구, 사회복지시설, 기초생활수급자, 차상위계층, 장애인 연금수급자 등이다.</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%eb%b3%b4%ea%b8%89%ec%82%ac%ec%97%85" rel="tag">보급사업</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%b9%9c%ed%99%98%ea%b2%bd-%eb%b3%b4%ec%9d%bc%eb%9f%ac" rel="tag">친환경 보일러</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-559821" class="child_policyDL">
+		
+						<div class="child_policyDL_R" style="width:auto;">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/559821?listPage=1" title="하루 100kg 이상 폐기물 배출 사업장 신고 후 처리하세요" rel="bookmark">하루 100kg 이상 폐기물 배출 사업장 신고 후 처리하세요</a></h3>			
+			<span class="time">등록일 : 2024-09-27<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont_1">
+				<a href="https://news.seoul.go.kr/env/archives/559821?listPage=1" title="하루 100kg 이상 폐기물 배출 사업장 신고 후 처리하세요" rel="bookmark">서울시는 배출시설(대기 및 수질오염물질 등)을 설치·운영하며 1일 100kg 이상의 폐기물을 배출하는 사업장과 그 외 1일 300kg 이상 폐기물을 배출하는 대형건물 및 사업장 등은「폐기물관리법」에 따라 관할 구청에 사업장폐기물 배출자 신고 후 자체 처리해야 한다고 밝...</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%ec%82%ac%ec%97%85%ec%9e%a5" rel="tag">사업장</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%8f%90%ea%b8%b0%eb%ac%bc-%eb%b0%b0%ec%b6%9c" rel="tag">폐기물 배출</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-559652" class="child_policyDL">
+		
+						<div class="child_policyDL_R" style="width:auto;">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/559652?listPage=1" title="2024 서울 국제기후환경 포럼 사진 공모전(접수 : 9.11. ~ 10.20.)" rel="bookmark">2024 서울 국제기후환경 포럼 사진 공모전(접수 : 9.11. ~ 10.20.)</a></h3>			
+			<span class="time">등록일 : 2024-09-20<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont_1">
+				<a href="https://news.seoul.go.kr/env/archives/559652?listPage=1" title="2024 서울 국제기후환경 포럼 사진 공모전(접수 : 9.11. ~ 10.20.)" rel="bookmark">공모 주제 : 플라스틱 관련 자유 주제, 플라스틱 오염 현장, 플라스틱 오염에 대처하는 자세 
+시상내역 : 대상 100만(1인), 최우수 60만(2인), 우수 30만(3인), 장려 10만(14인) / 접수일정 : 9.11.(수) ~ 10.20.(일) 
+결과발표 : ...</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/2024-%ec%84%9c%ec%9a%b8-%ea%b5%ad%ec%a0%9c%ea%b8%b0%ed%9b%84%ed%99%98%ea%b2%bd-%ed%8f%ac%eb%9f%bc" rel="tag">2024 서울 국제기후환경 포럼</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ea%b3%b5%eb%aa%a8%ec%a0%84" rel="tag">공모전</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%82%ac%ec%a7%84%ec%a0%84" rel="tag">사진전</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ed%94%8c%eb%9d%bc%ec%8a%a4%ed%8b%b1" rel="tag">플라스틱</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    <!--디버깅.....-->
+	<div id="post-559608" class="child_policyDL">
+		
+					<div class="child_policyDL_l">
+				<a href="https://news.seoul.go.kr/env/archives/559608?listPage=1" rel="bookmark" title="외출 전 미세먼지만? 이젠 '오존농도'도 함께 체크하세요!">	
+
+				<img src="https://news.seoul.go.kr/env/files/2024/09/20240919_095239-1.png" class="attachment-130x90 size-130x90 wp-post-image" alt="외출 전 미세먼지만? 이젠 '오존농도'도 함께 체크하세요!">	 	
+				</a>
+			</div>
+						<div class="child_policyDL_R">
+			<h3 class="tit"><a href="https://news.seoul.go.kr/env/archives/559608?listPage=1" title="외출 전 미세먼지만? 이젠 '오존농도'도 함께 체크하세요!" rel="bookmark">외출 전 미세먼지만? 이젠 '오존농도'도 함께 체크하세요!</a></h3>			
+			<span class="time">등록일 : 2024-09-19<span class="part"><a href="https://news.seoul.go.kr/env/archives/category/climate-environment-news_c1/climate-environment-news-n1" rel="category tag">기후환경 소식</a>/ <a href="https://news.seoul.go.kr/env/archives/category/main-news" rel="category tag">새소식</a></span></span>
+			<div class="topicCont">
+				<a href="https://news.seoul.go.kr/env/archives/559608?listPage=1" title="외출 전 미세먼지만? 이젠 '오존농도'도 함께 체크하세요!" rel="bookmark">혹시 외출 전 미세먼지만 체크하시나요? 이젠 '오존농도'도 함께 체크하세요!
+오존 예측정보와 주의보 발령내용 및 행동요령 등 신속하게 안내받고 싶다면 서울시 대기환경정보 누리집에서 알림서비스를 무료로 신청할 수 있어요.</a>
+			</div>
+			<h4 class="invisible">관련태그</h4>
+			<div class="tagDiv">
+				<img src="https://news.seoul.go.kr/env/wp-content/themes/seoul/images/common/icon_tag.gif" alt="태그" style="float:left">
+				<ul><li style="overflow-wrap: break-word;"><a href="https://news.seoul.go.kr/env/archives/tag/%ea%b3%a0%eb%86%8d%eb%8f%84%ec%98%a4%ec%a1%b4" rel="tag">고농도오존</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%8c%80%ea%b8%b0%ec%a7%88" rel="tag">대기질</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%8c%80%ea%b8%b0%ec%a7%88%ec%95%8c%eb%a6%bc%ec%84%9c%eb%b9%84%ec%8a%a4" rel="tag">대기질알림서비스</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%eb%8c%80%ea%b8%b0%ed%99%98%ea%b2%bd%ed%86%b5%ed%95%a9%ec%a0%95%eb%b3%b4" rel="tag">대기환경통합정보</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%98%a4%ec%a1%b4" rel="tag">오존</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%98%a4%ec%a1%b4%ec%98%88%ec%b8%a1" rel="tag">오존예측</a>&nbsp;</li><li style="overflow-wrap: break-word;"> <a href="https://news.seoul.go.kr/env/archives/tag/%ec%98%a4%ec%a1%b4%ec%a3%bc%ec%9d%98%eb%b3%b4" rel="tag">오존주의보</a></li></ul>
+			</div>			
+		</div>
+	</div>
+    </div>
+</div>

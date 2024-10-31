@@ -1,6 +1,7 @@
 package com.zd.back.JY.domain.dailyQuiz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,31 @@ public class QuizController {
     @Resource
     private QuizService quizService;
 
+
+    @PostMapping("/checkQH")
+        public ResponseEntity<?> checkAttendance(@RequestParam String memId) {
+            try {
+                // 해당 회원의 오늘 퀴즈 참여 여부를 체크
+                int count = quizService.checkToday(memId);
+                
+                // 오늘 퀴즈에 참여한 경우
+                if (count > 0) {
+                    Map<String, String> response = new HashMap<>();
+                    response.put("message", "done");
+                    return ResponseEntity.ok().body(response);
+                } else {
+                    // 오늘 퀴즈에 참여하지 않은 경우
+                    Map<String, String> response = new HashMap<>();
+                    response.put("message", "yet");
+                    return ResponseEntity.ok().body(response);
+                }
+            } catch (Exception e) {
+                // 예외 발생 시 에러 메시지 반환
+                Map<String, String> errorResponse = new HashMap<>();
+                errorResponse.put("error", e.getMessage());
+                return ResponseEntity.badRequest().body(errorResponse);
+            }
+    }
 
     @GetMapping(value="/quiz")
     public ModelAndView test() throws Exception{

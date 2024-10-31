@@ -2,7 +2,9 @@ package com.zd.back.imgboard.service;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zd.back.imgboard.mapper.ImgPostMapper;
 import com.zd.back.imgboard.model.ImgBoard;
@@ -27,9 +29,14 @@ public class ImgPostService {
     public int getDataCount() {
         return imgPostMapper.getDataCount();
     }
-    public List<ImgBoard> getImgBoards() {
+/*     public List<ImgBoard> getImgBoards() {
         return imgPostMapper.getImgBoards();
     }
+    @Transactional(readOnly = true)
+    public Page<ImgBoard> getImgBoards(Pageable pageable) {
+        return imgPostMapper.getImgBoards(pageable);
+    }
+ */
 
     public ImgBoard getImgPostById(int imgPostId) {
         return imgPostMapper.getImgPostById(imgPostId); 

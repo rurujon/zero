@@ -9,6 +9,7 @@ import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,13 +59,23 @@ public class ImgBoardController {
     }
 
 /*     @GetMapping("/list")
-    public ResponseEntity<Page<ImgBoard>> getImgBoards(
-            @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<List<ImgBoard>> getImgBoards() {
+        List<ImgBoard> imgBoards = imgPostService.getImgBoards();
+
+        return new ResponseEntity<>(imgBoards, HttpStatus.OK);
+    } 
+    @GetMapping("/list")
+    public ResponseEntity<Map<String, Object>> getImgBoards(
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "8") int size) {
-        Page<ImgBoard> imgBoards = imgPostService.getImgBoards(PageRequest.of(page, size));
-        return ResponseEntity.ok(imgBoards);
+        Map<String, Object> result = imgPostService.getImgBoards(page, size);
+        return ResponseEntity.ok(result);
     }
-     */
+
+*/
+
+
+
     @GetMapping("/article")  
     public ResponseEntity<ImgBoard> getImgPostById(@RequestParam int imgPostId) {
        try{
