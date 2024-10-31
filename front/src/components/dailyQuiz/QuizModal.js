@@ -14,7 +14,9 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     const [member, setMember] = useState(null);
     const [quizId, setQuizId] = useState(null);
     const {token} = useContext(AuthContext);
+    const [todayQh, setTodayQH] = useState(null);
 
+    //회원 토큰 조회
     const fetchMemberInfo = useCallback(() => {
         axios.get('/member/info', {
             headers: { Authorization: `Bearer ${token}` }
@@ -27,6 +29,34 @@ const QuizModal = ({isOpen, setIsOpen}) => {
                 console.error('회원 정보 조회 실패:', error);
             });
     }, [token]);
+
+    useEffect(() => {
+        if (isOpen && member) {
+            checkQH(); // 모달이 열릴 때 퀴즈 참여 여부 확인
+        }
+    }, [isOpen, member]);
+    
+    //퀴즈풀었는지 유무 
+    const checkQH = async () => {
+        try {
+            // 서버에 POST 요청을 보내어 퀴즈풀었는지 유무 반환
+            const response = await axios.post("/checkQH", null, {
+                params: {
+                    memId: member.memId
+                }
+            });
+    
+            // 응답 데이터에서 메시지를 확인
+            if (response.data.message === 'done') {
+                // 오늘 퀴즈에 참여한 경우 모달을 false로 설정
+                alert("오늘의 퀴즈는 하루에 한번만 가능합니다")
+                setIsOpen(false);
+            }
+        } catch (error) {
+            // 에러 발생 시 콘솔에 에러 메시지 출력
+            console.error("퀴즈 히스토리 호출 실패", error.response ? error.response.data : error.message);
+        }
+    };
 
     useEffect(() => {
         if (token) {
@@ -43,6 +73,8 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
 
+    
+
     useEffect(() => {
         // 모달이 열릴 때 memId가 없으면 로그인 페이지로 이동
         if (isOpen && !member) {
@@ -50,10 +82,11 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             navigate("/login");
             setIsOpen(false); // 모달 닫기
         }
+
     }, [isOpen, member, navigate, setIsOpen]);
 
 
-    
+
     
     return (
         <>
