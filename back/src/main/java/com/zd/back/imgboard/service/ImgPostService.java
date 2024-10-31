@@ -31,12 +31,12 @@ public class ImgPostService {
     }
 /*     public List<ImgBoard> getImgBoards() {
         return imgPostMapper.getImgBoards();
-    } */
+    }
     @Transactional(readOnly = true)
     public Page<ImgBoard> getImgBoards(Pageable pageable) {
         return imgPostMapper.getImgBoards(pageable);
     }
-
+ */
 
     public ImgBoard getImgPostById(int imgPostId) {
         return imgPostMapper.getImgPostById(imgPostId); 

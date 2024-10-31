@@ -63,7 +63,7 @@ public class ImgBoardController {
         List<ImgBoard> imgBoards = imgPostService.getImgBoards();
 
         return new ResponseEntity<>(imgBoards, HttpStatus.OK);
-    } */
+    } 
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getImgBoards(
             @RequestParam(defaultValue = "1") int page,
@@ -72,7 +72,7 @@ public class ImgBoardController {
         return ResponseEntity.ok(result);
     }
 
-
+*/
 
 
 

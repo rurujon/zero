@@ -18,8 +18,8 @@ public interface ImgPostMapper {
     int getDataCount();
 
 /*     List<ImgBoard> getImgBoards();
- */    
-    Page<ImgBoard> getImgBoards(Pageable pageable);
+     
+    Page<ImgBoard> getImgBoards(Pageable pageable);*/
 
     ImgBoard getImgPostById(int imgPostId);
 
