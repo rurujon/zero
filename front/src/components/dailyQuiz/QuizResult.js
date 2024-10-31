@@ -2,14 +2,14 @@ import React from 'react';
 import QuizO from './QuizO';
 import QuizX from './QuizX';
 
-const QuizResult = ({setIsOpen, answer, result,explanation,member}) => {
+const QuizResult = ({setIsOpen, answer, result,explanation,member, quizId}) => {
     return (
         <>
 
             {
-                answer===result ? <QuizO setIsOpen={setIsOpen} explanation={explanation} member={member}/>
+                answer===result ? <QuizO setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
                 :
-                <QuizX setIsOpen={setIsOpen} explanation={explanation} member={member}/>
+                <QuizX setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
             }
         </>
     );

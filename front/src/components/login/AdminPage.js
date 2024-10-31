@@ -1,6 +1,7 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
@@ -8,24 +9,48 @@ const AdminPage = () => {
     const [points, setPoints] = useState(0);
     const [operation, setOperation] = useState('add');
     const [reason, setReason] = useState('');
-    const { role } = useContext(AuthContext);
+    const { role, token } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (role !== 'ADMIN') {
-            alert('관리자 권한이 없습니다.');
-            return;
-        }
-        fetchUsers();
-    }, [role]);
+        const checkAdminStatus = async () => {
+            if (!token) {
+                alert('로그인이 필요합니다.');
+                navigate('/login');
+                return;
+            }
+
+            try {
+                const response = await axios.get('/member/info', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (response.data.role !== 'ADMIN') {
+                    alert('관리자 권한이 없습니다.');
+                    navigate('/');
+                    return;
+                }
+                fetchUsers();
+            } catch (error) {
+                console.error('사용자 정보 확인 실패:', error);
+                alert('사용자 정보를 확인하는 데 실패했습니다.');
+                navigate('/');
+            }
+        };
+
+        checkAdminStatus();
+    }, [token, navigate]);
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('/member/admin/users');
+            const response = await axios.get('/member/admin/users', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             setUsers(response.data);
         } catch (error) {
             console.error('사용자 목록 조회 실패:', error);
             if (error.response && error.response.status === 403) {
                 alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
+                navigate('/login');
             } else {
                 alert('사용자 목록을 불러오는 데 실패했습니다.');
             }

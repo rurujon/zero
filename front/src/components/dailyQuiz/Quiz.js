@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import QuizOX from './QuizOX';
 import QuizItem from './QuizItem';
-const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation}) => {
+const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) => {
 
     const [quiz, setQuiz] = useState(null);
     
     useEffect(()=> {
         if(quiz){
-
+            alert(quiz.id)
+            setQuizId(quiz.id)
             setAnswer(quiz.answer)
         
             setExplanation(quiz.explanation)
         }
-    },[quiz, setAnswer, setExplanation])
+    },[quiz, setAnswer, setExplanation,setQuizId])
     
 
     return (

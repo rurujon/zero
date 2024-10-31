@@ -8,8 +8,12 @@ import javax.annotation.Resource;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,14 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-
+@CrossOrigin(origins = "http://localhost:3000") // 클라이언트의 주소
 @Controller
 public class QuizController {
     
     @Resource
     private QuizService quizService;
-
-    QuizDTO dto;
 
 
     @GetMapping(value="/quiz")
@@ -57,7 +59,22 @@ public class QuizController {
         if(dto!=null){
             return object;
         } else throw new Exception("퀴즈를 찾을 수 없습니다.");
-
-    
     }
+    
+    @PostMapping("/insertQH")
+    public ResponseEntity<String> insertQuizHistory(@RequestBody Map<Object, Object> request) {
+        try {
+            // 요청 데이터 로그 출력
+            System.out.println("Received request: " + request);
+    
+            quizService.insertQH(request);
+            return ResponseEntity.ok("퀴즈 히스토리 저장 성공");
+        } catch (Exception e) {
+            // 예외 메시지 로그 출력
+            System.err.println("Error occurred: " + e.getMessage());
+            return ResponseEntity.status(500).body("퀴즈 히스토리 저장 실패: " + e.getMessage());
+        }
+        
+    }
+
 }

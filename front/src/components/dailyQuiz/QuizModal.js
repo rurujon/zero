@@ -12,7 +12,7 @@ Modal.setAppElement('#root');
 
 const QuizModal = ({isOpen, setIsOpen}) => {
     const [member, setMember] = useState(null);
-
+    const [quizId, setQuizId] = useState(null);
     const {token} = useContext(AuthContext);
 
     const fetchMemberInfo = useCallback(() => {
@@ -53,7 +53,7 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     }, [isOpen, member, navigate, setIsOpen]);
 
 
-
+    
     
     return (
         <>
@@ -73,9 +73,9 @@ const QuizModal = ({isOpen, setIsOpen}) => {
 
             {
                 result === "ON" ? (
-                    <Quiz setIsOpen={setIsOpen} setResult={setResult} setAnswer={setAnswer} setExplanation={setExplanation}/>
+                    <Quiz setIsOpen={setIsOpen} setResult={setResult} setAnswer={setAnswer} setExplanation={setExplanation} setQuizId={setQuizId}/>
                     
-                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation} member={member}/>
+                ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation} member={member} quizId={quizId}/>
             }
             </Modal>
         </>
