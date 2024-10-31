@@ -35,6 +35,22 @@ public class CrawlerController {
         return ResponseEntity.ok("갱신 완료");
     }
 
+    @PostMapping("/seoulNews/updateAll")
+    public ResponseEntity<String> crawlSeoulNewsAll() {
+        //TODO: process POST request
+
+        int totalPage = 10;
+
+        crawlerService.crawlingAll(totalPage);
+        
+        return ResponseEntity.ok("갱신 완료");
+    }
+
+    @GetMapping("/seoulNews/all")
+    public List<SeoulNews> getAllNews() {
+        return crawlerService.selectSeoulNewsAll();
+    }
+
     
     @GetMapping("/seoulNews/mini")
     public List<SeoulNews> getMiniNews() {

@@ -1,5 +1,6 @@
 package com.zd.back.seoulcrawler.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,12 @@ public class CrawlerServiceImpl implements CrawlerService{
             crawlerMapper.insertSeoulNews(seoulNews);
         }
         
+    }
+
+    @Override
+    public List<SeoulNews> selectSeoulNewsAll() {
+        // TODO Auto-generated method stub
+        return crawlerMapper.selectSeoulNewsAll();
     }
 
     @Override
@@ -103,6 +110,35 @@ public class CrawlerServiceImpl implements CrawlerService{
                 insertSeoulNews(seoulNews);
             }
         }
+    }
+
+    @Override
+    public void crawlingAll(int totalPage) {
+        
+        List<SeoulNews> seoulNewsList = new ArrayList<>();
+
+        // 각 그룹별 크롤러를 실행하고 결과를 리스트에 추가
+        CrawlerEnv crawlerEnv = new CrawlerEnv();
+        seoulNewsList.addAll(crawlerEnv.SeoulNewsCrawl(totalPage));
+
+        CrawlerAir crawlerAir = new CrawlerAir();
+        seoulNewsList.addAll(crawlerAir.SeoulNewsCrawl(totalPage));
+
+        CrawlerEco crawlerEco = new CrawlerEco();
+        seoulNewsList.addAll(crawlerEco.SeoulNewsCrawl(totalPage));
+
+        CrawlerGreen crawlerGreen = new CrawlerGreen();
+        seoulNewsList.addAll(crawlerGreen.SeoulNewsCrawl(totalPage));
+
+        // 각 뉴스 항목을 DB에 삽입
+        for (SeoulNews seoulNews : seoulNewsList) {
+            int seoulId = maxNum() + 1; // 새로운 ID 할당
+            seoulNews.setSeoulId(seoulId);
+
+            insertSeoulNews(seoulNews);
+        }
+        
+        
     }
 
     @Override

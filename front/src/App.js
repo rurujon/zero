@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Header from './components/headfootside/Header';
 import Footer from './components/headfootside/Footer';
 import SideBar from './components/headfootside/SideBar';
 import { AuthProvider } from './components/login/context/AuthContext';
 import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import HttpHeadersProvider from './components/context/HttpHeadersProvider';
 import routes from './routes';
+import HeaderSample from './components/headfootside/HeaderSample';
 
 function AppContent() {
 
@@ -25,15 +25,12 @@ function AppContent() {
     
     <div id='wrap'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
-      {!isHiddenPage && <Header className='header' />} 
+      {!isHiddenPage && <HeaderSample/>} 
 
       <div className='container'>  
 
         {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
         <div className={isMainPage ? 'main-content' : 'main-layout'}>
-          
-          {/* 메인페이지가 아닌 경우에만 사이드바 렌더링 */}
-          {!isMainPage &&!isLoginPage && !isHiddenPage && <SideBar className='sidebar' />}
           
           <div className={isMainPage ? 'main-content' : 'content'}>
             <Routes>

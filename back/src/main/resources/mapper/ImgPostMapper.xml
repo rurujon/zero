@@ -14,22 +14,6 @@
         VALUES (#{imgPostId}, #{memId}, #{cate}, #{title}, #{content}, SYSDATE, #{auth})
     </insert>
 
-<!--     <select id="getImgBoards" resultMap="ImgBoardResultMap">
-        SELECT ip.*, i.imgId, i.saveFileName, i.filePath
-        FROM ImgPost ip
-        LEFT JOIN (
-            SELECT imgPostId, imgId, saveFileName, filePath
-            FROM Img
-            WHERE imgId IN (
-                SELECT MIN(imgId) 
-                FROM Img 
-                GROUP BY imgPostId
-            )
-        ) i ON ip.imgPostId = i.imgPostId
-        ORDER BY ip.imgPostId DESC
-    </select>
- -->
-
  <select id="getImgBoards" resultMap="ImgBoardResultMap">
         SELECT * FROM (
             SELECT ip.*, i.imgId, i.saveFileName, i.filePath,

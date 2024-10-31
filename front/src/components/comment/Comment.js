@@ -89,7 +89,7 @@ function Comment(props) {
 					<div className="col-3 d-flex justify-content-end">
 					{
 						/* 자신이 작성한 댓글인 경우에만 수정 삭제 가능 */
-						(memId === comment.memId) ?
+						(memId === comment.memId || localStorage.getItem("role") === "ADMIN") ?
 							<>
 								<button className="btn btn-outline-secondary" onClick={updateToggle}><i className="fas fa-edit"></i> 수정</button> &nbsp; 
 								<button className="btn btn-outline-danger" onClick={deleteComment}><i className="fas fa-trash-alt"></i> 삭제</button>

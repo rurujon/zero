@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zd.back.board.model.Board;
 import com.zd.back.board.model.request.BbsListRequest;
@@ -38,16 +40,33 @@ public class BoardController {
 
     @PostMapping("/write")
     @Transactional
-    public ResponseEntity<?> writeBoard(@RequestBody Board board) throws Exception {
-
+    public ResponseEntity<?> writeBoard(
+            @ModelAttribute Board board) throws Exception {
+        // 게시글 등록
         boardService.writeBoard(board);
-        // System.out.println("Generated boardno: " + board.getBoardno());
 
         Map<String, Object> map = new HashMap<>();
         map.put("boardno", board.getBoardno());
         map.put("message", "글이 등록되었습니다.");
         return ResponseEntity.ok(map);
     }
+
+    @PostMapping("/uploadFile")
+    public ResponseEntity<?> uploadFile(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("boardno") int boardno) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("파일이 비어 있습니다.");
+        }
+
+        try {
+            boardService.saveFile(file, boardno);
+            return ResponseEntity.ok("파일 업로드 완료!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패: " + e.getMessage());
+        }
+    }
+
 
 	@GetMapping("/list")
 	public ResponseEntity<BbsListResponse> getBoardList(@ModelAttribute BbsListRequest req){
@@ -78,5 +97,7 @@ public class BoardController {
 
 		return ResponseEntity.ok(boardService.createBbsAnswer(parentno, req));
 	}
+	
+	
 
 }

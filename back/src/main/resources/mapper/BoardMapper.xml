@@ -38,7 +38,7 @@
 			</where>
 			ORDER BY ref DESC, step ASC
 		) a
-		WHERE rnum BETWEEN ${pageStart} AND ${pageEnd}
+		WHERE rnum BETWEEN #{pageStart} AND #{pageEnd}
 	</select>
 
 	<!-- 글 총 개수 조회 -->
@@ -144,5 +144,13 @@
 			(SELECT depth FROM tipboard WHERE boardno = #{parentno}) + 1,
 			#{title}, #{content}, #{category}, 0, 0)
 	</insert>
+
+	<update id="updateFileDetails" parameterType="Board">
+		UPDATE tipboard
+		SET saveFileName = #{saveFileName},
+			originalFileName = #{originalFileName},
+			urlFile = #{urlFile}
+		WHERE boardno = #{boardno}
+	</update>
 
 </mapper>
