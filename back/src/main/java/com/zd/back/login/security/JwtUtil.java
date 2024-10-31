@@ -20,7 +20,7 @@ public class JwtUtil {
     private long EXPIRATION_TIME;
 
     @Value("${jwt.refresh.expiration}")
-    private long REFRESH_EXPIRATION_TIME;
+    private long REFRESH_EXPIRATION_TIME = 3600000 * 24;
 
     public String generateToken(String memId, String role) {
         return Jwts.builder()
