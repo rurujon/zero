@@ -61,10 +61,13 @@ dependencies {
 
 	// 주석 처리: JPA 스타터 제거하여 MyBatis와의 충돌 방지
 	// implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	
+
 	//2024-10-26 문승은 추가
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+
+	//2024-10-31 정우준 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

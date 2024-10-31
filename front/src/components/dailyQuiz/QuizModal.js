@@ -14,7 +14,6 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     const [member, setMember] = useState(null);
     const [quizId, setQuizId] = useState(null);
     const {token} = useContext(AuthContext);
-    const [todayQh, setTodayQH] = useState(null);
 
     //회원 토큰 조회
     const fetchMemberInfo = useCallback(() => {
@@ -23,7 +22,6 @@ const QuizModal = ({isOpen, setIsOpen}) => {
         })
             .then(response => {
                 setMember(response.data);
-                adjustWindowSize(window, response.data);
             })
             .catch(error => {
                 console.error('회원 정보 조회 실패:', error);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Paystep3 = ({setStep,requestPay}) => {
+const Paystep3 = ({setStep,requestPay,amount,memberInfo}) => {
 
     const prestep = () =>{
         setStep(1)
@@ -8,7 +8,13 @@ const Paystep3 = ({setStep,requestPay}) => {
 
     return (
         <div>
-            Paystep3
+                  <div>
+        <ul>
+          <dl>{amount}</dl>
+          <dl>{memberInfo.email}</dl>
+          <dl>{memberInfo.tel}</dl>
+        </ul>
+      </div>
             <button onClick={requestPay}>결제하기1</button>
         </div>
     );
