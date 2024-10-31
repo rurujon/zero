@@ -22,7 +22,11 @@ public class QuizServiceImp implements QuizService {
         return quizHistoryMapper.QHMaxNum();
     }
 
+    
 
+    public int checkToday(String memId){
+        return quizHistoryMapper.checkToday(memId);
+    }
     public void insertquiz(Map map){
 
         QuizDTO dto;
