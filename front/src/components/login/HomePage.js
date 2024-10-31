@@ -5,8 +5,8 @@ import FindPasswordModal from './FindPasswordModal';
 import PointInfoModal from './PointInfoModal';
 import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
-import QuizModal from '../dailyQuiz/QuizModal';
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css'
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -14,7 +14,7 @@ const HomePage = () => {
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
     const [showPointInfoModal, setShowPointInfoModal] = useState(false);
 
-    const { token, logout, login, memId } = useContext(AuthContext);
+    const { token, logout, login, memId, role } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+        <div className='mini_login_wrap'>
             {!isLoggedIn ? (
                 <div>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
@@ -83,7 +83,7 @@ const HomePage = () => {
                             </div>
                         </div>
                     )}
-                    <div>
+                    <div className="button-group">
                         <button type="button" className="btn btn-link" onClick={() => setShowFindIdModal(true)}>아이디 찾기</button>
                         <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
                         <button type="button" className="btn btn-link" onClick={handleRegister}>회원가입</button>
@@ -94,10 +94,15 @@ const HomePage = () => {
             ) : (
                 <div>
                     <h2>안녕하세요, {memId}님. 좋은 하루되세요.</h2>
+                    
+                    {/* <QuizModal /> */}
+                    <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>
-                    {/* <QuizModal /> */}
+                    {role === 'ADMIN' && (
+                        <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
+                    )}
                     {showPointInfoModal && (
                         <PointInfoModal
                             show={showPointInfoModal}

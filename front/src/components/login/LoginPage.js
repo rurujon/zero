@@ -15,7 +15,7 @@ const LoginPage = () => {
         try {
             const response = await axios.post('/member/login', null, { params: { memId, pwd } });
             if (response.data.token && response.data.refreshToken) {
-                login(response.data.token, response.data.refreshToken, memId);
+                login(response.data.token, response.data.refreshToken, memId, response.data.role);
                 if (response.data.upPoint === "1") {
                     alert("출석이 인정되었습니다! +1 포인트");
                 }
@@ -28,7 +28,6 @@ const LoginPage = () => {
             alert("로그인 처리 중 문제가 발생했습니다.");
         }
     };
-
 
     return (
         <div style={{ marginBottom: '15px', margin:'15px'}}>

@@ -1,0 +1,51 @@
+.mini_login_wrap {
+    flex: 1 1 calc(30% - 20px); /* 자유롭게 크기 조정 */
+    margin: 10px; /* 요소 간 간격 추가 */
+    background-color: #ffffff; /* 배경색 설정 (선택 사항) */
+    border-radius: 5px; /* 모서리 둥글게 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    padding: 20px; /* 내부 패딩 추가 */
+    min-width: 250px; /* 최소 너비 설정 (필요에 따라 조정) */
+    max-width: 500px; /* 최대 너비 설정 (필요에 따라 조정) */
+    max-height: 200px;
+    position: relative;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    justify-content: center; /* 세로 방향 중앙 정렬 */
+    align-items: center; /* 가로 방향 중앙 정렬 */
+    text-align: center; /* 텍스트를 중앙 정렬 */
+}
+
+.mini_login_wrap h5 {
+    margin-bottom: 20px; /* 제목과 버튼 간격 */
+}
+
+.mini_login_wrap .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* 버튼 간 간격 */
+}
+
+.mini_login_wrap .button-group .btn-link {
+    padding: 0; /* 링크 버튼 패딩 제거 */
+}
+
+.mini_login_wrap .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.mini_login_wrap .modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}

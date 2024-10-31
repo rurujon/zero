@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
+import { Emoji } from 'react-emoji-render';
+const gradeEmojis = {
+    'LEVEL1': '🥉',
+    'LEVEL2': '🥈',
+    'LEVEL3': '🥇',
+    'LEVEL4': '💎',
+    'LEVEL5': '🌟',
+    'LEVEL6': '👑'
+  };
 
 const PointInfoModal = ({ show, onHide, memId }) => {
     const [pointInfo, setPointInfo] = useState(null);
@@ -47,7 +56,7 @@ const PointInfoModal = ({ show, onHide, memId }) => {
                     <div>
                         <p>현재 포인트: {pointInfo.usedPoint}</p>
                         <p>누적 포인트: {pointInfo.maxPoint}</p>
-                        <p>회원 등급: {pointInfo.grade}</p>
+                        <p>회원등급: {pointInfo.grade} {gradeEmojis[pointInfo.grade]}</p>
                         <h5>포인트 히스토리</h5>
                         <Table striped bordered hover>
                             <thead>

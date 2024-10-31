@@ -29,4 +29,6 @@ public class Member {
     private String addr2;
     private boolean termsAccepted;
     private boolean privacyAccepted;
+
+    private Role role;
 }

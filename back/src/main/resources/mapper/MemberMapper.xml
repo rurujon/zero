@@ -6,16 +6,18 @@
 <mapper namespace="com.zd.back.login.mapper.MemberMapper">
 
     <insert id="insertMember" parameterType="com.zd.back.login.model.Member">
-    INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, termsAccepted, privacyAccepted)
+    INSERT INTO member (memId, pwd, memName, email, tel, post, addr1, addr2, termsAccepted, privacyAccepted, role)
     VALUES (#{memId}, #{pwd}, #{memName}, #{email}, #{tel}, #{post}, #{addr1}, #{addr2},
             DECODE(#{termsAccepted}, 'true', 1, 0),
-            DECODE(#{privacyAccepted}, 'true', 1, 0))
+            DECODE(#{privacyAccepted}, 'true', 1, 0),
+            #{role})
     </insert>
 
     <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
     SELECT memId, pwd, memName, email, tel, post, addr1, addr2,
            CASE WHEN termsAccepted = 1 THEN 'true' ELSE 'false' END as termsAccepted,
-           CASE WHEN privacyAccepted = 1 THEN 'true' ELSE 'false' END as privacyAccepted
+           CASE WHEN privacyAccepted = 1 THEN 'true' ELSE 'false' END as privacyAccepted,
+           role
     FROM member
     WHERE memId = #{memId}
     </select>
@@ -30,7 +32,8 @@
         addr1 = #{addr1},
         addr2 = #{addr2},
         termsAccepted = DECODE(#{termsAccepted}, 'true', 1, 0),
-        privacyAccepted = DECODE(#{privacyAccepted}, 'true', 1, 0)
+        privacyAccepted = DECODE(#{privacyAccepted}, 'true', 1, 0),
+        role = #{role}
     WHERE memId = #{memId}
     </update>
 
@@ -48,6 +51,18 @@
 
     <select id="countByEmail" resultType="int" parameterType="String">
         SELECT COUNT(*) FROM member WHERE email = #{email}
+    </select>
+
+    <update id="updateMemberRole">
+    UPDATE member
+    SET role = #{role}
+    WHERE memId = #{memId}
+    </update>
+
+
+    <select id="selectAllMembers" resultType="com.zd.back.login.model.Member">
+        SELECT memId, memName, email, tel, role
+        FROM member
     </select>
 
 </mapper>
