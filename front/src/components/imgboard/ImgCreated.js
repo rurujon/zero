@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../login/context/AuthContext';
 
 const ImgCreated = () => {
     const navigate = useNavigate(); // navigate 훅 추가
@@ -9,13 +10,16 @@ const ImgCreated = () => {
     const imgPostId = queryParams.get('imgPostId'); // updated 시 받는 imgPostId
     const updatedMode = Boolean(imgPostId); // imgPostId가 있으면 updatedMode
 
-    const [memId, setMemId] = useState(localStorage.getItem('memId')); // localStorage에서 memId 가져오기
+    // AuthContext에서 token, memId, role 가져오기
+    const { token, memId, role } = useContext(AuthContext);
+
+
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState(Array(3).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(3).fill(null));
-    const [loading, setLoading] = useState(updatedMode);
+    const [loading, setLoading] = useState(true);
     const [auth, setAuth] = useState(0);
 
     const fileInputRefs = useRef([]);
@@ -24,15 +28,14 @@ const ImgCreated = () => {
    
 
     useEffect(() => {
-        // memId가 없으면 로그인 페이지로 이동
-        //alert 두번 뜸 (-)
-        if (!memId) {
-             
-            alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");       
-            navigate("/");
+        if (!token) { 
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+        } else {
+            setLoading(false);
         }
-    }, [memId, navigate]);
-   
+    }, [token, navigate]);
+
     useEffect(() => {
         if (updatedMode) {
             const fetchArticle = async () => {
@@ -44,7 +47,7 @@ const ImgCreated = () => {
                     const { imgPost, images: existingImages } = response.data;
                     const { memId: postMemId, title, content, cate, auth} = imgPost;
 
-                    if (postMemId !== memId && memId!=='suzi123') {
+                    if (postMemId !== memId && role !== 'ADMIN') {
                         alert("본인이 작성한 게시물만 수정할 수 있습니다.");
                         navigate('/imgboard/list');
 
@@ -57,7 +60,6 @@ const ImgCreated = () => {
 
                     }
 
-                    setMemId(memId);
                     setTitle(title);
                     setContent(content);
                     setCate(cate);
@@ -74,7 +76,7 @@ const ImgCreated = () => {
 
             fetchArticle();
         }
-    }, [imgPostId, updatedMode]);
+    }, [imgPostId, updatedMode, memId, role, navigate]);
 
     const handleTextReset = () => {
         setCate('');
