@@ -6,19 +6,18 @@ import '../board/page.css';
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalItems, setTotalItems] = useState(0);
-
+    const [totalItems, setTotalItems] = useState(0); // 총 페이지수 
     const itemsPerPage = 8; // 한 페이지당 보여줄 게시물 수
 
     useEffect(() => {
         fetchImgPosts(currentPage);
     }, [currentPage]);
 
-    const fetchImgPosts = async (page) => {
+    const fetchImgPosts = async (page) => { 
         try {
             const response = await axios.get('/imgboard/list', {
                 params: {
-                    page: page,
+                    page: page ,
                     size: itemsPerPage
                 }
             });
@@ -30,6 +29,7 @@ function ImgList() {
     };
 
     const handlePageChange = (pageNumber) => {
+        console.log(`active page is ${pageNumber}`);
         setCurrentPage(pageNumber);
     };
 
@@ -64,12 +64,11 @@ function ImgList() {
                         backgroundColor: '#f0f0f0', 
                         width: '22%'
                     }}>
-                      
                         <div style={{ 
                             width: '200px', 
                             height: '150px', 
-                            overflow: 'hidden',         // 이미지를 영역에 맞게 자르기 위해 사용
-                            borderRadius: '5px',        // 모서리를 부드럽게 하기 위해 추가 (옵션)
+                            overflow: 'hidden',
+                            borderRadius: '5px',
                             display: 'flex', 
                             alignItems: 'center', 
                             justifyContent: 'center' 
@@ -77,25 +76,24 @@ function ImgList() {
                             {board.images && board.images.length > 0 ? (
                                 board.images.map((img) => (
                                     <img
-                                    key={img.imgId}
-                                    src={`/images/${img.saveFileName}`}
-                                    alt={img.saveFileName}
-                                    style={{ 
-                                        width: '100%',           
-                                        height: '100%',          
-                                        maxHeight: '200px',    
-                                        margin: '5px',
-                                        display: 'block',
-                                        objectFit: 'cover',      
-                                        verticalAlign: 'top'
-                                    }}
-                                     />
+                                        key={img.imgId}
+                                        src={`/images/${img.saveFileName}`}
+                                        alt={img.saveFileName}
+                                        style={{ 
+                                            width: '100%',           
+                                            height: '100%',          
+                                            maxHeight: '200px',    
+                                            margin: '5px',
+                                            display: 'block',
+                                            objectFit: 'cover',      
+                                            verticalAlign: 'top'
+                                        }}
+                                    />
                                 ))
                             ) : (
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
-                    
                         <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '1px' }}>
                             <p style={{ color: '#fff' }}>인증 승인: {board.imgPost.auth}</p>
                         </div>
@@ -111,15 +109,16 @@ function ImgList() {
                     </div>
                 ))}
             </div>
+            
             <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={itemsPerPage}
                 totalItemsCount={totalItems}
                 pageRangeDisplayed={5}
                 onChange={handlePageChange}
-
+                itemClass="page-item"
+                linkClass="page-link"
             />
-
         </div>
     );
 }
