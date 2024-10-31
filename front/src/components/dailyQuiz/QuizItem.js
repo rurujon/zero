@@ -24,19 +24,21 @@ const QuizItem = ({setQuiz, quiz}) => {
         <div className='Quiz'>
                 <div className='box'>
                     {/* <span className='span'>오늘의 O,X퀴즈</span> */}
-                    <span style={{paddingTop:'30px', marginBottom:'0%'}}>
-                        <p style={{fontSize: '50px',}}>Q.</p>
+                    <fieldset>
+                    <span style={{height: '20%', marginTop:'5%', marginBottom:'0%'}}>
+                        <legend style={{fontSize: '50px',}}>Q.</legend>
                     </span>
                     <span className='span'>
                         {quiz ? ( // quiz가 null이 아닐 때만 렌더링ㄴ
                             <span>
                             
-                            <h4 key={quiz.id}>{quiz.question}</h4>
+                            <h2 key={quiz.id}>{quiz.question}</h2>
                             </span>
                         ) : (
                             <h4>퀴즈를 불러오는 중입니다...</h4> // 로딩 메시지 또는 기본 메시지
                         )}
                     </span>
+                    </fieldset>
                     </div>
             </div>
     );

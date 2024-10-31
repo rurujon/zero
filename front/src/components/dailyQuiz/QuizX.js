@@ -20,17 +20,27 @@ const insertQH = async () => {
     setIsOpen(false)
 }
 
-    return (
-        <>
-            <div>
-                <button onClick={()=> insertQH()}className="close">나가기</button>
-            </div>
-            <div>
-                {explanation}
-            </div>
+return (
+    <>
+    <div className="expl">
+        <div className="minimodal-header">
 
-        </>
-    );
+        <fieldset>
+        <div>
+            <legend>오답입니다!</legend>
+        </div>
+        <div>
+        <fieldset>
+            <legend>해설</legend>
+            <h2>{explanation}</h2>
+        </fieldset>
+        </div>
+        </fieldset>
+        </div>
+        <button onClick={insertQH} className="point-button">나가기</button>
+    </div>
+    </>
+);
 };
 
 export default QuizX;

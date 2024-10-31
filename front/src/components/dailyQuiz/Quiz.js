@@ -20,8 +20,10 @@ const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) =>
     return (
         <>
 
-            <div>
-                <button onClick={()=> setIsOpen(false)}className="close">나가기</button>
+            <div 
+                style={{ textAlign: 'right', marginBottom: '10px' }}
+            >
+                <button onClick={() => setIsOpen(false)} className="close">나가기</button>
             </div>
 
             <QuizItem setQuiz={setQuiz} quiz={quiz}/>

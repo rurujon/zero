@@ -41,16 +41,20 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
 
     return (
         <>
-            <div>
-            <p>정답입니다!</p>
-                {/* 포인트 부여 버튼 */}
-                <button onClick={uppoint} className="point-button">포인트 받기</button>
-                {/* 모달 닫기 버튼 */}
-                <button onClick={() => setIsOpen(false)} className="close">나가기</button>
-            </div>
-            <div>
-                {/* 정답 설명 */}
-                <p>{explanation}</p>
+            <div className="expl">
+                <div className="minimodal-headerr">
+                    <fieldset style={{border:'none'}}>
+                        <legend>정답입니다!</legend>
+                        <fieldset>
+                            <legend>해설</legend>
+                            <h2>{explanation}</h2>
+                    </fieldset>
+                    </fieldset>
+                </div>
+                <div style={{width:'80%',display:'felx', justifyContent:'center', alignContent:'center'}}>
+                    <button onClick={() => {uppoint()}} 
+                className="point-button">포인트 받기</button>
+                </div>
             </div>
         </>
     );
