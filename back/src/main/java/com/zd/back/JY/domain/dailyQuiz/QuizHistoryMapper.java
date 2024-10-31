@@ -1,4 +1,4 @@
-package com.zd.back.quizhistory;
+package com.zd.back.JY.domain.dailyQuiz;
 
 import java.util.Map;
 
@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Mapper
 public interface QuizHistoryMapper{
 
+    public int QHMaxNum();
+
     @Transactional
-    public void insertQH(Map map);  //결과, sysdate, memid
+    public void insertQH(QuizHistoryDTO dto);  //결과, sysdate, memid
+
 
 }

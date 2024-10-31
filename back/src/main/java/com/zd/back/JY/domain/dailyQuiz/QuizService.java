@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 public interface QuizService {
     public int maxNum();
     public void insertquiz(Map map);
-
     public QuizDTO getRandomQuiz();
+    public int QHMaxNum();
+
+    public void insertQH(Map<Object, Object> map);
 }
