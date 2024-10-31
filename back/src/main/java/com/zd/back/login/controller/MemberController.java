@@ -136,14 +136,28 @@ public class MemberController {
     // 관리자 전용: 모든 사용자 목록 조회
     @GetMapping("/admin/users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<MemberDTO>> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() {
         try {
             List<MemberDTO> users = memberService.getAllUsers();
             return ResponseEntity.ok(users);
             } catch (Exception e) {
                 logger.error("사용자 목록 조회 중 오류 발생", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 목록 조회 중 오류가 발생했습니다.");
             }
+    }
+
+    @GetMapping("/admin/search")
+    public ResponseEntity<Map<String, Object>> searchMembers(
+        @RequestParam(defaultValue = "") String searchTerm,
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "10") int size) {
+            List<Member> members = memberService.searchMembers(searchTerm, page, size);
+            int totalCount = memberService.countMembers(searchTerm);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("members", members);
+            response.put("totalCount", totalCount);
+            return ResponseEntity.ok(response);
     }
 
     // 관리자 전용 API: 사용자 역할 변경

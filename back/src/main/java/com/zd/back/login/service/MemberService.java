@@ -81,7 +81,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberDTO> getAllUsers() {
+public List<MemberDTO> getAllUsers() {
+    try {
         List<Member> members = memberMapper.selectAllMembers();
         return members.stream().map(member -> {
             MemberDTO dto = new MemberDTO();
@@ -92,7 +93,11 @@ public class MemberService {
             dto.setRole(member.getRole().name());
             return dto;
         }).collect(Collectors.toList());
+    } catch (Exception e) {
+        logger.error("사용자 목록 조회 중 오류 발생", e);
+        throw new RuntimeException("사용자 목록 조회 중 오류가 발생했습니다.", e);
     }
+}
 
     @Transactional
     public void updateMemberRole(String memId, Role role) {
@@ -223,5 +228,19 @@ public class MemberService {
             return false;
         }
         return passwordEncoder.matches(rawPassword, member.getPwd());
+    }
+
+    public List<Member> searchMembers(String searchTerm, int page, int size) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("searchTerm", searchTerm);
+        params.put("offset", (page - 1) * size);
+        params.put("limit", size);
+        return memberMapper.searchMembers(params);
+    }
+
+    public int countMembers(String searchTerm) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("searchTerm", searchTerm);
+        return memberMapper.countMembers(params);
     }
 }

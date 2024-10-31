@@ -26,6 +26,7 @@ import FindPasswordModal from "./components/login/FindPasswordModal";
 import PointInfoModal from "./components/login/PointInfoModal";
 import Calendar from "./components/login/Calendar";
 import AdminPage from "./components/login/AdminPage";
+import ProtectedRoute from './components/login/utils/ProtectedRoute';
 
 
 
@@ -48,6 +49,13 @@ export const routes = [
     { path: '/point-info', element: <PointInfoModal /> },
     { path: '/attendance', element: <Calendar /> },
     { path: '/admin', element: <AdminPage />},
+    { path: '/admin',
+        element: (
+            <ProtectedRoute roles={['ADMIN']}>
+                <AdminPage />
+            </ProtectedRoute>
+        )
+    },
 
 
     { path:'/naverNewsList', element:<NewsList/>},   //네이버api 뉴스리스트
