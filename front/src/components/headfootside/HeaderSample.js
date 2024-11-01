@@ -94,7 +94,7 @@ const HeaderSample = () => {
                 <nav className="header-content" onMouseLeave={handleMouseLeave}>
                     <div className="top-nav">
                         <h1>
-                            <Link to="/">
+                            <Link to="/mainpage">
                                 여기다 로고
                             </Link>
                         </h1>

@@ -30,6 +30,7 @@ import SuccessPage from "./components/pay/SuccessPage ";
 import FailurePage from "./components/pay/FailurePage";
 import ProtectedRoute from './components/login/utils/ProtectedRoute';
 import SeoulNews from "./components/seoulnews/SeoulNews";
+import Cover from "./components/mainPage/Cover";
 
 
 
@@ -41,8 +42,8 @@ import SeoulNews from "./components/seoulnews/SeoulNews";
 
 export const routes = [
 
-
-    { path:'/', element:<MainPageApp/>},    //메인페이지
+    { path:'/', element:<Cover/>},    //메인페이지
+    { path:'/mainpage', element:<MainPageApp/>},    //메인페이지
 
     { path: '/login', element: <HomePage /> },  // 로그인 페이지
     { path: '/member-info', element: <MemberInfoPage/> },//회원정보조회
