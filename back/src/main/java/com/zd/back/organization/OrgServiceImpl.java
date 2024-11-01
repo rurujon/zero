@@ -24,7 +24,7 @@ public class OrgServiceImpl implements OrgService{
     }
 
     @Override
-    public List<OrgData> selectGlobalOrg() {
+    public List<GlobalOrgData> selectGlobalOrg() {
         // TODO Auto-generated method stub
         return orgMapper.selectGlobalOrg();
     }
@@ -39,6 +39,9 @@ public class OrgServiceImpl implements OrgService{
         for(OrgData orgData : orgList){
             // 중복 확인
             if (orgMapper.selectByName(orgData.getName()) == null) {
+                int maxNum = orgMapper.maxNum();
+                
+                orgData.setOrgId(maxNum + 1);
                 insertOrg(orgData);
             } else {
                 System.out.println("중복된 데이터: " + orgData.getName());

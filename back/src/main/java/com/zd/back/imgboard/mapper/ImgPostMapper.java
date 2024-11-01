@@ -25,5 +25,6 @@ public interface ImgPostMapper {
 
     void updateImgPost(ImgPost imgPost);
 
+    /*  ##### 인증 승인 auth 부분 */
     void updateAuth (int imgPostId);
 }

@@ -108,6 +108,9 @@ public class SearchApiServiceImpl implements SearchApiService{
             news.setDescription(cleanedDescription);
             news.setPubDate(newsData.get("pubDate"));
 
+            int maxNum = searchApiMapper.maxNum();
+            news.setNaverId(maxNum + 1);
+
             insertNews(news); // 뉴스 저장 로직 호출
         }
 

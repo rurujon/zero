@@ -121,11 +121,20 @@ function BbsDetail() {
 					</tr>
 
 					<tr>
-						<th>내용</th>
-						<td>
-							<span style={{ whiteSpace: "pre-line" }}>{board.content}</span>
-						</td>
-					</tr>
+                        <th>내용</th>
+                        <td>
+                            <span style={{ whiteSpace: "pre-line" }}>{board.content}</span>
+                            {board.urlFile && (
+                                <div>
+                                    <img 
+                                        src={board.urlFile} 
+                                        alt="첨부된 이미지" 
+                                        style={{ maxWidth: "70%", marginTop: "20px" }}
+                                    />
+                                </div>
+                            )}
+                        </td>
+                    </tr>
 				</tbody>
 			</table>
 
