@@ -63,7 +63,7 @@ function BbsList() {
 								<option value="">전체 카테고리</option>
 								<option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
 								<option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
-								<option value="업사이클링 아이디어">업사이클링 아이디어</option>
+								<option value="대체용품 사용후기">대체용품 사용후기</option>
 								<option value="기타">기타</option>
 							</select>
 						</td>
@@ -137,7 +137,12 @@ function TableRow(props) {
 					<td>
 						<Arrow depth={board.depth} />
 						<Link to={{ pathname: `/board/${board.boardno}` }} style={{ textDecoration: 'none', color: 'inherit' }}>
-							<span className="underline bbs-title">&nbsp;{board.title}</span>
+							<span className="underline bbs-title">
+                        &nbsp;{board.title}
+                        {board.urlFile && board.urlFile !== '' && (
+                            <span style={{ marginLeft: '5px' }}>🧷</span> //🧷🖼️
+                        )}
+                    </span>
 						</Link>
 					</td>
 					<td>{board.memId}</td>
