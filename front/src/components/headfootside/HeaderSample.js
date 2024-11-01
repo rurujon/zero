@@ -109,7 +109,9 @@ const HeaderSample = () => {
                             
                         </nav>
                         <div>
-                            <div>로그</div>
+                          <div>로그</div>
+                        <div onClick={openQuizModal} style={navItemStyle('quiz')}>퀴즈</div>
+                        <QuizModal isOpen={isQuizModalOpen} setIsOpen={closeQuizModal} />
                         </div>
                     </div>
                     {activeMenu && (

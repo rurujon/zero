@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zd.back.JY.domain.point.PointService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,6 @@ public class AttendanceService {
     @Autowired
     private AttendanceMapper mapper;
 
-    @Autowired
 
     @Transactional(readOnly = true)
     public int maxNum() {
