@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-    //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21
+    //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21 -- /images/imgboard/ 변경 확인함 --24/11/01
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/imgboard/**")  // 제공할 URL 패턴

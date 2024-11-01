@@ -30,6 +30,8 @@ import SuccessPage from "./components/pay/SuccessPage ";
 import FailurePage from "./components/pay/FailurePage";
 import ProtectedRoute from './components/login/utils/ProtectedRoute';
 import SeoulNews from "./components/seoulnews/SeoulNews";
+import Notices from "./components/notice/Notices";
+import NocArticle from "./components/notice/NocArticle";
 
 
 
@@ -81,13 +83,16 @@ export const routes = [
     { path: '/donate', element: <Pay/> },   //결제(후원) 경로
     { path: '/success', element: <SuccessPage /> },
     { path: '/failure', element: <FailurePage /> },
+    
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
     { path: '/imgboard/updated', element: <ImgCreated/> }, // ImgCreated.js에서 Mode바꿔서 사용
     { path: '/imgboard/list', element: <ImgList /> },
     { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 사용
 
-
+    //Notices
+    {path: '/notices',element:<Notices/>},
+    {path: '/nocarticle',element:<NocArticle/>},
 
     //TipBoard
     { path: '/board/list', element: <BbsList /> },
