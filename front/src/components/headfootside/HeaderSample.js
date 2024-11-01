@@ -5,6 +5,7 @@ import './HeaderSample.css';
 import { Link, Navigate } from 'react-router-dom';
 
 
+
 const HeaderSample = () => {
 
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false); // 모달 상태 추가
@@ -110,8 +111,8 @@ const HeaderSample = () => {
                             
                         </nav>
                         <div>
-                            
-                            <div>로그</div>
+                            <img src='/images/home.png'></img>
+                            <img src='/images/login.png'></img>
                         </div>
                     </div>
                     {activeMenu && (
