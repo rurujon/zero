@@ -6,6 +6,11 @@ import './RssData.css'
 function RssData() {
     const [rssItems, setRssItems] = useState([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10); // 페이지당 항목 수
+
+    const pagesPerGroup = 5; // 한 번에 표시할 페이지 버튼 개수
+
     // 데이터 fetch 함수
     const fetchRssData = async () => {
         try {
@@ -18,7 +23,6 @@ function RssData() {
 
     // 컴포넌트 마운트 시 데이터 fetch
     useEffect(() => {
-        handleUpdate();
         fetchRssData();
     }, []);
 
@@ -32,6 +36,40 @@ function RssData() {
         }
     };
 
+    // 현재 페이지에 해당하는 항목들만 가져옴
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = rssItems.slice(indexOfFirstItem, indexOfLastItem);
+
+    // 전체 페이지 수 계산
+    const totalPages = Math.ceil(rssItems.length / itemsPerPage);
+
+    // 현재 페이지 그룹의 시작 및 끝 페이지 계산
+    const currentGroup = Math.ceil(currentPage / pagesPerGroup);
+    const groupStart = (currentGroup - 1) * pagesPerGroup + 1;
+    const groupEnd = Math.min(groupStart + pagesPerGroup - 1, totalPages);
+
+    // 페이지 변경 핸들러
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // 페이징 버튼 렌더링
+    const renderPageNumbers = () => {
+        const pageNumbers = [];
+        for (let i = groupStart; i <= groupEnd; i++) {
+            pageNumbers.push(
+                <button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    className={i === currentPage ? 'active' : ''}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return pageNumbers;
+    };
     
 
     return (
@@ -40,9 +78,15 @@ function RssData() {
                 <h1>RSS Feed</h1>
                 <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
             </div>
+
+            <div className='seoul-search-line'>
+                <ul>
+                    <li>게시글 : {rssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
+                </ul>
+            </div>
             <div className='RSS-main-content'>
                 <ul>
-                    {rssItems.map((item, index) => (
+                    {currentItems.map((item, index) => (
                         <li key={index}>
                             <Link to={`/minEnv/${item.rssId}`}><h3>{item.title}</h3></Link>
                             <span>등록일 : {item.pubDate}</span>
@@ -50,6 +94,17 @@ function RssData() {
                         </li>
                     ))}
                 </ul>
+            </div>
+
+            {/* 페이징 버튼 */}
+            <div className='pagination'>
+                {groupStart > 1 && (
+                    <button onClick={() => handlePageChange(groupStart - 1)}>이전</button>
+                )}
+                {renderPageNumbers()}
+                {groupEnd < totalPages && (
+                    <button onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
+                )}
             </div>
         </div>
     );

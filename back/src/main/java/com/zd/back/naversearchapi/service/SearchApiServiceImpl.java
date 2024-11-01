@@ -31,10 +31,17 @@ public class SearchApiServiceImpl implements SearchApiService{
     @Override
     public void insertNews(News news){
 
+        String naverNewsPrefix = "https://n.news.naver.com";
 
-        // 중복 체크 후 삽입 로직
-        if (searchApiMapper.selectNewsByTitle(news.getTitle()) == null) {
-            searchApiMapper.insertNews(news);
+        if (news.getLink().startsWith(naverNewsPrefix)) {
+
+            // 중복 체크 후 삽입 로직
+            if (searchApiMapper.selectNewsByTitle(news.getTitle()) == null) {
+
+                int maxNum = searchApiMapper.maxNum();
+                news.setNaverId(maxNum + 1);
+                searchApiMapper.insertNews(news);
+            }
         }
 
     }
@@ -107,9 +114,6 @@ public class SearchApiServiceImpl implements SearchApiService{
             news.setLink(newsData.get("link"));
             news.setDescription(cleanedDescription);
             news.setPubDate(newsData.get("pubDate"));
-
-            int maxNum = searchApiMapper.maxNum();
-            news.setNaverId(maxNum + 1);
 
             insertNews(news); // 뉴스 저장 로직 호출
         }
