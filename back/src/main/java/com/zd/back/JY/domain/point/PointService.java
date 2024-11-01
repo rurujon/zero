@@ -257,4 +257,13 @@ public class PointService {
     public void deletePoint(String memId) {
         pointMapper.deleteByMemId(memId);
     }
+
+    public List<PointHistoryDTO> getPointHistoryPaged(String memId, int page, int size) {
+        int offset = (page - 1) * size;
+        return pointHistoryMapper.getPointHistoryPaged(memId, offset, size);
+    }
+
+    public long countPointHistory(String memId) {
+        return pointHistoryMapper.countPointHistory(memId);
+    }
 }

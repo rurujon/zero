@@ -152,12 +152,12 @@ const AdminPage = () => {
                 <Form.Group className="mb-3" controlId="searchForm">
                     <Form.Control
                         type="text"
-                        placeholder="아이디, 이름, 이메일 또는 전화번호로 검색"
+                        placeholder="아이디, 이름, 이메일 또는 전화번호를 직접 입력하여 자동 검색"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit">검색</Button>
+
             </Form>
             <Table className="table table-bordered">
                 <thead>
