@@ -129,7 +129,7 @@ const ImgArticle = () => {
                 <p>{article.imgPost.content}</p>
                 <div className="image-gallery">
                     {article.images && article.images.map(img => (
-                        <img key={img.imgId} src={`/images/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
+                        <img key={img.imgId} src={`/images/imgboard/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
                     ))}
                 </div>
             </div>
