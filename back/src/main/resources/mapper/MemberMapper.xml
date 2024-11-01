@@ -79,9 +79,8 @@
             </where>
             ORDER BY memId
         ) m
-        WHERE ROWNUM <![CDATA[<=]]> #{offset} + #{limit}
     )
-    WHERE rn <![CDATA[>]]> #{offset}
+    WHERE rn BETWEEN #{offset} + 1 AND #{offset} + #{limit}
     </select>
 
     <select id="countMembers" parameterType="map" resultType="int">

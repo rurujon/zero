@@ -151,13 +151,9 @@ public class MemberController {
         @RequestParam(defaultValue = "") String searchTerm,
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "10") int size) {
-            List<Member> members = memberService.searchMembers(searchTerm, page, size);
-            int totalCount = memberService.countMembers(searchTerm);
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("members", members);
-            response.put("totalCount", totalCount);
-            return ResponseEntity.ok(response);
+            Map<String, Object> result = memberService.searchMembers(searchTerm, page, size);
+            return ResponseEntity.ok(result);
     }
 
     // 관리자 전용 API: 사용자 역할 변경
