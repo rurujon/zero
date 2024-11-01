@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrgData {
+public class GlobalOrgData {
 
-    private int orgId;
-    private String location;
+    private int ngoId;
     private String name;
     private String description;
     private String imgUrl;
