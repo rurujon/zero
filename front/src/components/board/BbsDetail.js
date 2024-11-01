@@ -51,6 +51,29 @@ function BbsDetail() {
 		return date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 반환
 	};
 
+	const renderContentWithLinks = (content) => {
+		// content가 undefined 또는 null인 경우 빈 문자열 반환
+		if (!content) {
+			return '';
+		}
+	
+		// 정규 표현식을 사용하여 URL을 찾고 링크로 변환
+		const urlRegex = /(https?:\/\/[^\s]+)/g;
+		const parts = content.split(urlRegex);
+		return parts.map((part, index) => {
+			if (urlRegex.test(part)) {
+				return (
+					<a key={index} href={part} target="_blank" rel="noopener noreferrer">
+						{part}
+					</a>
+				);
+			}
+			return part;
+		});
+	};
+	
+	
+
 	useEffect(() => {
 		getBbsDetail();
 	}, []);
@@ -121,11 +144,20 @@ function BbsDetail() {
 					</tr>
 
 					<tr>
-						<th>내용</th>
-						<td>
-							<span style={{ whiteSpace: "pre-line" }}>{board.content}</span>
-						</td>
-					</tr>
+                        <th>내용</th>
+                        <td>
+                            {board.urlFile && (
+                                <div>
+                                    <img 
+                                        src={board.urlFile} 
+                                        alt="첨부된 이미지" 
+                                        style={{ maxWidth: "50%", marginTop: "20px" }}
+                                    />
+                                </div>
+                            )}
+							<span style={{ whiteSpace: "pre-line" }}><br/>{renderContentWithLinks(board.content)}<br/></span>
+                        </td>
+                    </tr>
 				</tbody>
 			</table>
 

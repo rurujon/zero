@@ -21,4 +21,7 @@ public interface MemberMapper {
     List<Member> selectAllMembers();
     List<Member> searchMembers(Map<String, Object> params);
     int countMembers(Map<String, Object> params);
+    List<Member> searchMembers(@Param("searchTerm") String searchTerm, @Param("offset") int offset, @Param("limit") int limit);
+
+    int countMembers(@Param("searchTerm") String searchTerm);
 }

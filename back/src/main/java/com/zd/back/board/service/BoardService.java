@@ -62,11 +62,7 @@ public class BoardService {
 			if (result == 1) {
 				int updatedRecordCount = boardMapper.increaseBbsReadCount(boardno); // 조회수 증가
 			}
-		// } else {
-		// 	// readerId가 없는 경우에도 조회수 증가
-		// 	boardMapper.increaseBbsReadCount(boardno);
 		}
-
 		return new BbsResponse(boardMapper.getBoard(boardno));
 	}
 

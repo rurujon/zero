@@ -6,61 +6,62 @@ import '../board/page.css';
 function ImgList() {
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalItems, setTotalItems] = useState(0); // 총 페이지수 
+    const [totalItems, setTotalItems] = useState(0); // 총 게시물 수
     const itemsPerPage = 8; // 한 페이지당 보여줄 게시물 수
 
     const [searchKey, setSearchKey] = useState('title'); // 기본 검색 항목
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    useEffect(() => {
-        fetchImgPosts(currentPage);
-    }, [currentPage]);
-
-    useEffect(() => {
-        setSearchResults(imgPosts); // 초기 검색 결과는 전체 게시물
-    }, [imgPosts]);
-
-    const fetchImgPosts = async (page) => { 
+    // 전체 이미지 게시물을 가져오는 함수
+    const fetchImgPosts = async () => { 
         try {
             const response = await axios.get('/imgboard/list', {
                 params: {
-                    page: page,
-                    size: itemsPerPage
+                    page: 1, // 첫 페이지를 기본으로 가져옴
+                    size: 1000 // 충분히 큰 수로 전체 데이터를 가져옴
                 }
             });
             setImgPosts(response.data.content);
+            setSearchResults(response.data.content); // 초기 검색 결과는 전체 게시물
             setTotalItems(response.data.totalElements);
         } catch (error) {
             console.error('이미지를 찾을 수 없습니다.', error);
         }
     };
 
+    useEffect(() => {
+        fetchImgPosts(); // 컴포넌트가 마운트될 때 모든 데이터 로드
+    }, []);
+
     const handlePageChange = (pageNumber) => {
-        console.log(`active page is ${pageNumber}`);
         setCurrentPage(pageNumber);
     };
 
-    //검색
+    // 검색
     const handleSearch = () => {
-   
         const filtered = imgPosts.filter(board => {
-      
             switch (searchKey) {
                 case 'cate':
                     return board.imgPost.cate === searchValue;  
-
                 case 'memId':
-                return board.imgPost.memId.includes(searchValue);
-
+                    return board.imgPost.memId.includes(searchValue);
                 case 'title':
                     return board.imgPost.title.includes(searchValue);
-
                 default:
                     return true;
             }
         });
-        setSearchResults(filtered);
+
+        setSearchResults(filtered); // 검색 결과
+        setTotalItems(filtered.length); // 검색된 결과 수로 업데이트
+        setCurrentPage(1); // 검색 후 첫 페이지로 초기화
+    };
+
+    // 페이지네이션에 맞게 현재 페이지의 데이터만 추출
+    const getPaginatedResults = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return searchResults.slice(startIndex, startIndex + itemsPerPage);
     };
 
     const getCateLabel = (cate) => {
@@ -76,7 +77,7 @@ function ImgList() {
         }
     };
 
-    const getAuthLabel=(auth)=>{
+    const getAuthLabel = (auth) => {
         switch (auth) {
             case 1:
                 return '승인완료';
@@ -112,9 +113,7 @@ function ImgList() {
                         <option value='group'>단체활동 참여</option>
                     </select>
                 )}
-
-                            
-                {searchKey !== 'cate' && searchKey !== 'auth' && (
+                {searchKey !== 'cate' && (
                     <input
                         type="text"
                         placeholder="검색어 입력"
@@ -128,7 +127,7 @@ function ImgList() {
                 </button>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
-                {searchResults.map((board, index) => (
+                {getPaginatedResults().map((board, index) => (
                     <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
                         border: '2px solid red', 
                         margin: '15px',
@@ -150,7 +149,7 @@ function ImgList() {
                                 board.images.map((img) => (
                                     <img
                                         key={img.imgId}
-                                        src={`/images/${img.saveFileName}`}
+                                        src={`/images/imgboard/${img.saveFileName}`}
                                         alt={img.saveFileName}
                                         style={{ 
                                             width: '100%',           
@@ -182,7 +181,6 @@ function ImgList() {
                     </div>
                 ))}
             </div>
-            
             <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={itemsPerPage}

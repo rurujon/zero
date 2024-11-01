@@ -5,6 +5,7 @@
     align-items: center; /* 세로 중앙 정렬 */
     padding: 20px; /* 여유 공간 추가 */
     margin: 0 auto; /* 중앙 정렬 */
+    width: 100%;
     max-width: 1320px; /* 최대 너비 설정 */
     background-color: #F5F5F5; /* 배경색 설정 */
 }

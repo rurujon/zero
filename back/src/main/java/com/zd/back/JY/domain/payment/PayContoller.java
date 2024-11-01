@@ -29,7 +29,7 @@ public class PayContoller {
     }
     
     @PostMapping("/paymentHistory")
-    public ResponseEntity<?> savePaymentHistory(@RequestBody Map<Object, Object> response) {
+    public ResponseEntity<?> savePaymentHistory(@RequestBody Map<Object, Object> response) {    //paymentData
         // paymentData를 데이터베이스에 저장하는 로직 구현
         // 예: paymentService.save(paymentData);
         System.out.println("controller 호출 완료");

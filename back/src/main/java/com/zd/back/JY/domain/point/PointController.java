@@ -46,9 +46,21 @@ public class PointController {
     }
 
     @GetMapping("/history/{memId}")
-    public ResponseEntity<List<PointHistoryDTO>> getPointHistory(@PathVariable String memId) {
-        List<PointHistoryDTO> history = pointService.getPointHistory(memId);
-        return ResponseEntity.ok(history);
+    public ResponseEntity<Map<String, Object>> getPointHistory(
+            @PathVariable String memId,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "4") int size) {
+        List<PointHistoryDTO> history = pointService.getPointHistoryPaged(memId, page, size);
+        long totalItems = pointService.countPointHistory(memId);
+        long totalPages = (totalItems + size - 1) / size;
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("history", history);
+        response.put("currentPage", page);
+        response.put("totalItems", totalItems);
+        response.put("totalPages", totalPages);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/update")

@@ -49,6 +49,7 @@ public class ImgPostService {
         imgPostMapper.deleteImgPostById(imgPostId);
     }
 
+    /*  ##### 인증 승인 auth 부분 */
     public void updateAuth(int imgPostId) {
         imgPostMapper.updateAuth(imgPostId);
     }
