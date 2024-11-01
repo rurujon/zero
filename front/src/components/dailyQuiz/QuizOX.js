@@ -6,8 +6,11 @@ const QuizOX = ({setResult}) => {
         <div className='oxBox'>
             <div className='btn'>
                 <button onClick={()=> setResult("O")}>O</button>
+            </div>
+            <div className='btn'>
                 <button onClick={()=> setResult("X")}>X</button>
             </div>
+                <span></span>
         </div>
     </div>
     );

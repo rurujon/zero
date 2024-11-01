@@ -15,10 +15,10 @@
 
 	<!-- 글 목록 조회 -->
 	<select id="getBbsSearchPageList" parameterType="com.zd.back.board.model.param.BoardParam" resultType="com.zd.back.board.model.Board">
-		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
+		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created, saveFileName, originalFileName, urlFile
 		FROM (
 			SELECT row_number() OVER(ORDER BY ref DESC, step ASC) AS rnum,
-				boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
+				boardno, memId, ref, step, depth, title, content, category, hitcount, del, created, saveFileName, originalFileName, urlFile
 			FROM tipboard
 			<where>
 				<if test="category != null and category != ''">
@@ -65,7 +65,7 @@
 
 	<!-- 특정 게시글 조회 -->
 	<select id="getBoard" parameterType="int" resultType="com.zd.back.board.model.Board">
-		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created
+		SELECT boardno, memId, ref, step, depth, title, content, category, hitcount, del, created, saveFileName, originalFileName, urlFile
 		FROM tipboard
 		WHERE boardno=#{boardno}
 		ORDER BY ref DESC, step ASC

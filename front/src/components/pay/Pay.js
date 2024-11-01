@@ -46,8 +46,8 @@ const Pay = () => {
     
     IMP.request_pay(
       {
-        pg: "kakaopay.TC0ONETIME", // 결제 대행사 코드
-        // pg: "kakaopay", // 결제 대행사 코드
+        // pg: "kakaopay.TC0ONETIME", // 결제 대행사 코드
+        pg: "naverpay", // 결제 대행사 코드
         pay_method: "card", // 결제 방법
         merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
         name:`후원금`, // 상품 이름

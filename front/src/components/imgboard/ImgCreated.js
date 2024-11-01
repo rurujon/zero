@@ -20,7 +20,6 @@ const ImgCreated = () => {
     const [images, setImages] = useState(Array(3).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(3).fill(null));
     const [loading, setLoading] = useState(true);
-    const [auth, setAuth] = useState(0);
 
     const fileInputRefs = useRef([]);
     const titleRef = useRef(null);
@@ -39,6 +38,8 @@ const ImgCreated = () => {
     useEffect(() => {
         if (updatedMode) {
             const fetchArticle = async () => {
+
+                setLoading(true);
                 try {
                     const response = await axios.get('/imgboard/updated', {
                         params: { imgPostId }
@@ -84,7 +85,8 @@ const ImgCreated = () => {
         setContent('');
     };
 
-    const handleImageChange = (index, evt) => { // created
+    //파일선택
+    const handleImageChange = (index, evt) => {
         const file = evt.target.files[0];
         const newImages = [...images];
         const newPreviews = [...imagePreviews];
@@ -101,6 +103,7 @@ const ImgCreated = () => {
         setImagePreviews(newPreviews);
     };
 
+    //선택파일 취소 
     const handleImageRemove = (index) => {
         const newImages = [...images];
         const newPreviews = [...imagePreviews];
@@ -170,6 +173,7 @@ const ImgCreated = () => {
         }
     };
 
+    //유효성 검사
     const validateForm = (nonEmptyImages, existingImagesCount) => {
         if (cate === "") {
             alert("인증 유형을 선택하세요.");

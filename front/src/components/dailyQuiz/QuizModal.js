@@ -41,6 +41,7 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             const response = await axios.post("/checkQH", null, {
                 params: {
                     memId: member.memId
+                    
                 }
             });
     
