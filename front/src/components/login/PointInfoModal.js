@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Table } from 'react-bootstrap';
+import { Modal, Button, Table, Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import { Emoji } from 'react-emoji-render';
 const gradeEmojis = {
@@ -15,11 +15,13 @@ const PointInfoModal = ({ show, onHide, memId }) => {
     const [pointInfo, setPointInfo] = useState(null);
     const [pointHistory, setPointHistory] = useState([]);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         if (show && memId) {
             fetchPointInfo();
-            fetchPointHistory();
+            fetchPointHistory(1);
         }
     }, [show, memId]);
 
@@ -34,14 +36,20 @@ const PointInfoModal = ({ show, onHide, memId }) => {
         }
     };
 
-    const fetchPointHistory = async () => {
+    const fetchPointHistory = async (page) => {
         try {
-            const response = await axios.get(`/api/point/history/${memId}`);
-            setPointHistory(response.data);
+            const response = await axios.get(`/api/point/history/${memId}?page=${page}&size=4`);
+            setPointHistory(response.data.history);
+            setCurrentPage(response.data.currentPage);
+            setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error('포인트 히스토리 조회 실패:', error);
             setError('포인트 히스토리를 불러오는 중 문제가 발생했습니다.');
         }
+    };
+
+    const handlePageChange = (pageNumber) => {
+        fetchPointHistory(pageNumber);
     };
 
     return (
@@ -54,7 +62,7 @@ const PointInfoModal = ({ show, onHide, memId }) => {
                     <p className="text-danger">{error}</p>
                 ) : pointInfo ? (
                     <div>
-                        <p>현재 포인트: {pointInfo.usedPoint}</p>
+                        <p>현재 포인트: {pointInfo.maxPoint - pointInfo.usedPoint}</p>
                         <p>누적 포인트: {pointInfo.maxPoint}</p>
                         <p>회원등급: {pointInfo.grade} {gradeEmojis[pointInfo.grade]}</p>
                         <h5>포인트 히스토리</h5>
@@ -76,6 +84,17 @@ const PointInfoModal = ({ show, onHide, memId }) => {
                                 ))}
                             </tbody>
                         </Table>
+                        <Pagination>
+                            {[...Array(totalPages).keys()].map((number) => (
+                                <Pagination.Item
+                                    key={number + 1}
+                                    active={number + 1 === currentPage}
+                                    onClick={() => handlePageChange(number + 1)}
+                                >
+                                    {number + 1}
+                                </Pagination.Item>
+                            ))}
+                        </Pagination>
                     </div>
                 ) : (
                     <p>포인트 정보를 불러오는 중...</p>
