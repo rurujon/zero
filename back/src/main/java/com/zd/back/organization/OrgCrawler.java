@@ -42,8 +42,10 @@ public class OrgCrawler {
 
                 String link = "";
 
+                int orgId = 0;
+
                 // DTO 객체 생성 (Grantee는 DTO로 가정)
-                OrgData orgData = new OrgData(location, name, description, imageUrl, link); // 이미지 URL 추가
+                OrgData orgData = new OrgData(orgId, location, name, description, imageUrl, link); // 이미지 URL 추가
 
                 // 리스트에 추가
                 orgLists.add(orgData);

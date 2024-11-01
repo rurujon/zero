@@ -12,8 +12,9 @@ public interface OrgMapper {
 
     void insertOrg(OrgData orgData);
     List<OrgData> selectAll();
-    List<OrgData> selectGlobalOrg();
+    List<GlobalOrgData> selectGlobalOrg();
     void crawling();
     OrgData selectByName(String name);
+    int maxNum();
 
 }

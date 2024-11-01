@@ -53,6 +53,7 @@ const OrgApp = () => {
         
         <section className='list'>
             <div className="list_container">
+                <button onClick={handleCrawl}>Update org Data</button> {/* 업데이트 버튼 */}
 
                 <h2 className='title'>국제 환경 보호 단체</h2>
                 <ul className="card">
