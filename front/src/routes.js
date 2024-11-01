@@ -42,7 +42,7 @@ import Cover from "./components/mainPage/Cover";
 
 export const routes = [
 
-    { path:'/', element:<Cover/>},    //메인페이지
+    { path:'/', element:<Cover/>},    //커버
     { path:'/mainpage', element:<MainPageApp/>},    //메인페이지
 
     { path: '/login', element: <HomePage /> },  // 로그인 페이지

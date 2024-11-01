@@ -14,7 +14,7 @@ function AppContent() {
   //React Router에서 경로를 가져오는 훅. 단, 이걸 사용하기 위해서는 정의되는 함수가 <BrowserRouter> 안에 있어야 한다고 합니다.
   //그래서 아래처럼 App()에서 <BrowserRouter></BrowserRouter>로 감싼 AppContent를 불러오도록 구조를 변경해야 합니다.
   const location = useLocation();
-  const isMainPage = location.pathname === '/'; // 메인 페이지인지 확인
+  const isMainPage = location.pathname === '/mianpage'; // 메인 페이지인지 확인
   const isLoginPage = location.pathname === '/login'; // 로그인 페이지인지 확인
 
   // 숨길 경로 목록. 특정 경로의 웹페이지에서 헤더와 푸터, 사이드바를 보기 싫을 때 이 배열에 경로저장해주세요.
