@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
                 .antMatchers("/api/notices/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
                 .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

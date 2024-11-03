@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 
+import { AuthContext } from '../login/context/AuthContext';
 import './bbs.css';
 import './page.css';
 
 function BbsList() {
+	const { token } = useContext(AuthContext); // AuthContext에서 token 가져오기
 	const [bbsList, setBbsList] = useState([]);
 	const [choiceVal, setChoiceVal] = useState("");
 	const [searchVal, setSearchVal] = useState("");
@@ -16,13 +18,21 @@ function BbsList() {
 	let navigate = useNavigate();
 
 	const getBbsList = async (choice, search, page) => {
-		await axios.get("http://localhost:8080/board/list", { params: { "choice": choice, "search": search, "page": page, "category": category } })
-			.then((resp) => {
-				setBbsList(resp.data.bbsList);
-				setTotalCnt(resp.data.pageCnt);
-			})
-			.catch((err) => console.log(err));
+		try {
+			// token이 있을 때만 Authorization 헤더를 포함
+			const headers = token ? { Authorization: `Bearer ${token}` } : {};
+			
+			const response = await axios.get("http://localhost:8080/board/list", {
+				headers: headers,
+				params: { choice, search, page, category }
+			});
+			setBbsList(response.data.bbsList);
+			setTotalCnt(response.data.pageCnt);
+		} catch (err) {
+			console.log("게시글 목록 조회 실패:", err);
+		}
 	};
+	
 
 	useEffect(() => {
 		getBbsList("", "", 1, "");

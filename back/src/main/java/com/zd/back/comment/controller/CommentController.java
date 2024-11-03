@@ -2,9 +2,8 @@ package com.zd.back.comment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,9 +51,8 @@ public class CommentController {
         return ResponseEntity.ok(commentService.updateComment(memId, commentno, req));
     }
 
-    @GetMapping("/{commentno}")
+    @DeleteMapping("/{commentno}")
     public ResponseEntity<DeleteCommentResponse> deleteComment(@PathVariable int commentno) {
-
         return ResponseEntity.ok(commentService.deleteComment(commentno));
     }
 }

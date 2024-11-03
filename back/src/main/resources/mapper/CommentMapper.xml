@@ -53,11 +53,10 @@
 	</update>
 
 	<!-- 댓글 삭제 -->
-	<update id="deleteComment" parameterType="int">
-		UPDATE tipcomment
-		SET del = 1
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM tipcomment
 		WHERE commentno = #{commentno}
-	</update>
+	</delete>
 
 </mapper>
 
