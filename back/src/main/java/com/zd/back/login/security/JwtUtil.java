@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class JwtUtil {
     private long EXPIRATION_TIME;
 
     @Value("${jwt.refresh.expiration}")
-    private long REFRESH_EXPIRATION_TIME = 3600000 * 24;
+    private long REFRESH_EXPIRATION_TIME;
 
     public String generateToken(String memId, String role) {
         return Jwts.builder()
@@ -42,36 +43,38 @@ public class JwtUtil {
     }
 
     public String extractMemId(String token) {
-        Claims claims = Jwts.parser()
-                            .setSigningKey(SECRET_KEY)
-                            .parseClaimsJws(token)
-                            .getBody();
-        return claims.getSubject();
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
+        } catch (SignatureException e) {
+            logger.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
             logger.error("JWT token is expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
             logger.error("JWT token is unsupported: {}", e.getMessage());
-        } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token: {}", e.getMessage());
-        } catch (SignatureException e) {
-            logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
         return false;
     }
 
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String memId = extractMemId(token);
+        return (memId.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
+
     public Date getExpirationDateFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
     }
 }

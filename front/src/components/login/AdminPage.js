@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Table, Form, Button, Pagination } from 'react-bootstrap';
+import { Table, Form, Button, Pagination, Modal } from 'react-bootstrap';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
@@ -17,6 +17,12 @@ const AdminPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [pageSize] = useState(10);
+
+    const [notices, setNotices] = useState([]);
+    const [showNoticeModal, setShowNoticeModal] = useState(false);
+    const [currentNotice, setCurrentNotice] = useState({ title: '', content: '' });
+    const [noticeOperation, setNoticeOperation] = useState('create');
+
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -143,6 +149,71 @@ const AdminPage = () => {
         fetchUsers();
     };
 
+    // 공지사항 목록 조회
+    const fetchNotices = async () => {
+        try {
+            const response = await axios.get('/api/notices', {
+                headers: { Authorization: `Bearer ${token}` },
+                params: { page: currentPage, size: pageSize }
+            });
+            setNotices(response.data.notices);
+            setTotalPages(Math.ceil(response.data.totalCount / pageSize));
+        } catch (error) {
+            console.error('공지사항 목록 조회 실패:', error);
+            alert('공지사항 목록을 불러오는 데 실패했습니다.');
+        }
+    };
+
+    useEffect(() => {
+        if (role === 'ADMIN') {
+            fetchNotices();
+        }
+    }, [role, currentPage]);
+
+    // 공지사항 모달 열기
+    const openNoticeModal = (operation, notice = { title: '', content: '' }) => {
+        setNoticeOperation(operation);
+        setCurrentNotice(notice);
+        setShowNoticeModal(true);
+    };
+
+    // 공지사항 저장
+    const handleSaveNotice = async () => {
+        try {
+            const response = await axios.post('/api/notices', currentNotice, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // 토큰을 헤더에 추가
+                }
+            });
+            setShowNoticeModal(false);
+            fetchNotices();
+            alert('공지사항이 성공적으로 저장되었습니다.');
+        } catch (error) {
+            console.error('공지사항 저장 실패:', error);
+            if (error.response) {
+                alert(`공지사항 저장에 실패했습니다: ${error.response.data.error || error.response.data}`);
+            } else {
+                alert('공지사항 저장 중 오류가 발생했습니다.');
+            }
+        }
+    };
+
+    // 공지사항 삭제
+    const handleDeleteNotice = async (noticeId) => {
+        if (window.confirm('이 공지사항을 삭제하시겠습니까?')) {
+            try {
+                await axios.delete(`/api/notices/${noticeId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                fetchNotices();
+            } catch (error) {
+                console.error('공지사항 삭제 실패:', error);
+                alert('공지사항 삭제에 실패했습니다.');
+            }
+        }
+    };
+
     return (
         <div className="container mt-5">
             <h2>관리자 페이지</h2>
@@ -266,6 +337,63 @@ const AdminPage = () => {
                 </div>
             </div>
             <button className="btn btn-primary" onClick={handlePointManagement}>포인트 조정</button>
+
+            <h3 className="mt-4">공지사항 관리</h3>
+            <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성</Button>
+            <Table className="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {notices.map(notice => (
+                        <tr key={notice.noticeId}>
+                            <td>{notice.title}</td>
+                            <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
+                            <td>{notice.views}</td>
+                            <td>
+                                <Button variant="info" size="sm" onClick={() => openNoticeModal('edit', notice)} className="me-2">수정</Button>
+                                <Button variant="danger" size="sm" onClick={() => handleDeleteNotice(notice.noticeId)}>삭제</Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+
+            <Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{noticeOperation === 'create' ? '새 공지사항 작성' : '공지사항 수정'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>제목</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={currentNotice.title}
+                                onChange={(e) => setCurrentNotice({...currentNotice, title: e.target.value})}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>내용</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={currentNotice.content}
+                                onChange={(e) => setCurrentNotice({...currentNotice, content: e.target.value})}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowNoticeModal(false)}>취소</Button>
+                    <Button variant="primary" onClick={handleSaveNotice}>저장</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
