@@ -20,9 +20,9 @@ const MainPageNewsCopy = () => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await axios.get('/api/miniboard/miniNotice');
-                console.log('Notices data:', response.data); // 데이터가 제대로 받아졌는지 콘솔에 출력
-                setNotices(response.data);
+                const response = await axios.get('/api/notices');
+                console.log('Notices data:', response.data);
+                setNotices(response.data.notices || []); // 응답 구조에 따라 조정
             } catch (error) {
                 console.error('Error fetching notices:', error);
             }

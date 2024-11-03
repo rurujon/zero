@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -45,22 +46,31 @@ public class JwtFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 memId = jwtUtil.extractMemId(jwt);
+                logger.info("Extracted memId from JWT: {}", memId);
             } catch (Exception e) {
                 logger.error("Failed to extract memId from JWT", e);
             }
+        } else {
+            logger.debug("No JWT token found in request headers");
         }
 
         if (memId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
                 Member member = memberService.getMemberById(memId);
                 if (member != null && jwtUtil.validateToken(jwt)) {
+                    UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                            .username(member.getMemId())
+                            .password(member.getPwd())
+                            .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRole().name())))
+                            .build();
+
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            member,
-                            null,
-                            Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()))
-                    );
+                            userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    logger.info("Authentication set for user: {}", memId);
+                } else {
+                    logger.warn("Token validation failed for user: {}", memId);
                 }
             } catch (Exception e) {
                 logger.error("Failed to set authentication", e);
