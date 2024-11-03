@@ -35,12 +35,16 @@ const MainPageNewsCopy = () => {
         const fetchNotices = async () => {
             try {
                 const response = await axios.get('/api/notices');
-                console.log('Notices data:', response.data);
-                setNotices(response.data.notices || []); // 응답 구조에 따라 조정
+                const validatedNotices = response.data.notices.map(notice => ({
+                    ...notice,
+                    created: validateDate(notice.created)
+                }));
+                setNotices(validatedNotices);
             } catch (error) {
                 console.error('Error fetching notices:', error);
             }
         };
+
 
         const fetchNaverNews = async () => {
             try {
