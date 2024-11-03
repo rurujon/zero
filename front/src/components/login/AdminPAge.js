@@ -248,7 +248,7 @@ const AdminPage = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <Form.Label>포인트 금액</Form.Label>
+                            <Form.Label>포인트수정</Form.Label>
                             <Form.Control type="number" value={pointAmount} onChange={(e) => setPointAmount(e.target.value)} />
                         </Form.Group>
                         <Form.Group>
