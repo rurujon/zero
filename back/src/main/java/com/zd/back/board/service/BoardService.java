@@ -45,7 +45,7 @@ public class BoardService {
 	/* 게시글 조회 */
 	public BbsListResponse getBoardList(BbsListRequest req) {
 		BoardParam param = new BoardParam(req);
-		param.setBoardParam(req.getPage(), 10);
+		param.setBoardParam(req.getPage(), 15);
 
 		List<Board> bbsList = boardMapper.getBbsSearchPageList(param);
 		int pageCnt = boardMapper.getBbsCount(new BoardParam(req));
