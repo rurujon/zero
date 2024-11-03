@@ -4,7 +4,7 @@ import QuizOX from './QuizOX';
 import QuizItem from './QuizItem';
 const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) => {
 
-    const [quiz, setQuiz] = useState(null);
+    const [quiz, setQuiz,] = useState(null);
     
     useEffect(()=> {
         if(quiz){
