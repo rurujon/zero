@@ -116,7 +116,7 @@ function BbsWrite() {
 								<option value="">정보 유형을 선택하세요</option>
 								<option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
 								<option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
-								<option value="업사이클링 아이디어">업사이클링 아이디어</option>
+								<option value="대체용품 사용후기">대체용품 사용후기</option>
 								<option value="기타">기타</option>
 							</select>
 						</td>

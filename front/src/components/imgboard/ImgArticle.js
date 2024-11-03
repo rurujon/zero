@@ -81,6 +81,9 @@ const ImgArticle = () => {
         }
     };
 
+
+                   
+ /*  ##### 인증 승인 auth 부분  */
     const handleAuth = async () => {
         try {
             const response = await axios.post(`/imgboard/auth`, null, {
@@ -110,7 +113,9 @@ const ImgArticle = () => {
             <h2 className="article-title">{article.imgPost.title}</h2>
             <div className="article-meta-container">
                 <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}</p>
-                {memId === "suzi123" && (
+
+                {/*  ##### 인증 승인 auth 부분  */}
+                {memId === "suzi123" && article.imgPost.auth === 0 && (
                     <button type='button' onClick={handleAuth}>인증승인</button>
                 )}
                 <hr className="divider" />
@@ -124,7 +129,7 @@ const ImgArticle = () => {
                 <p>{article.imgPost.content}</p>
                 <div className="image-gallery">
                     {article.images && article.images.map(img => (
-                        <img key={img.imgId} src={`/images/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
+                        <img key={img.imgId} src={`/images/imgboard/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
                     ))}
                 </div>
             </div>

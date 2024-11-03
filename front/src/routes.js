@@ -33,6 +33,9 @@ import SeoulNews from "./components/seoulnews/SeoulNews";
 import NoticeList from "./components/notice/NoticeList";
 import NoticeDetail from "./components/notice/NoticeDetail";
 
+import Notices from "./components/notice/Notices";
+import NocArticle from "./components/notice/NocArticle";
+import Cover from "./components/mainPage/Cover";
 
 
 
@@ -43,8 +46,8 @@ import NoticeDetail from "./components/notice/NoticeDetail";
 
 export const routes = [
 
-
-    { path:'/', element:<MainPageApp/>},    //메인페이지
+    { path:'/', element:<Cover/>},    //커버
+    { path:'/mainpage', element:<MainPageApp/>},    //메인페이지
 
     { path: '/login', element: <HomePage /> },  // 로그인 페이지
     { path: '/member-info', element: <MemberInfoPage/> },//회원정보조회
@@ -83,13 +86,16 @@ export const routes = [
     { path: '/donate', element: <Pay/> },   //결제(후원) 경로
     { path: '/success', element: <SuccessPage /> },
     { path: '/failure', element: <FailurePage /> },
+
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
     { path: '/imgboard/updated', element: <ImgCreated/> }, // ImgCreated.js에서 Mode바꿔서 사용
     { path: '/imgboard/list', element: <ImgList /> },
     { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 사용
 
-
+    //Notices
+    {path: '/notices',element:<Notices/>},
+    {path: '/nocarticle',element:<NocArticle/>},
 
     //TipBoard
     { path: '/board/list', element: <BbsList /> },

@@ -259,7 +259,6 @@ const NewsList = () => {
   };
 
   useEffect(() => {
-    updateNewsData();
     fetchNewsData();
 
     // const intervalId = setInterval(() => {
@@ -307,13 +306,14 @@ const NewsList = () => {
 
   return (
     <NewsContainer>
-      <NewsHeader>ECO NEWS</NewsHeader>
+      <NewsHeader>Naver NEWS</NewsHeader>
+      <button onClick={updateNewsData}>Crawl News</button> {/* 크롤링 버튼 추가 */}
       {error && <p>{error}</p>}
       {newsData.length > 0 ? (
         <>
           <NewsListContainer>
             {currentItems.map((news, index) => (
-              <NewsItem key={index} onClick={() => openModal(news)}>
+              <NewsItem key={index} onClick={() => window.open(news.link, '_blank')}>
                 <NewsLink as="span">{news.title}</NewsLink>
                 <NewsDescription>{news.description}</NewsDescription>
                 <NewsDate>{new Date(news.pubDate).toLocaleString()}</NewsDate>

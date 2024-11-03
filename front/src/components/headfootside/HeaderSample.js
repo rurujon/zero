@@ -4,6 +4,8 @@ import QuizModal from '../dailyQuiz/QuizModal';
 import './HeaderSample.css';
 import { Link, Navigate } from 'react-router-dom';
 
+
+
 const HeaderSample = () => {
 
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false); // 모달 상태 추가
@@ -93,7 +95,7 @@ const HeaderSample = () => {
                 <nav className="header-content" onMouseLeave={handleMouseLeave}>
                     <div className="top-nav">
                         <h1>
-                            <Link to="/">
+                            <Link to="/mainpage">
                                 여기다 로고
                             </Link>
                         </h1>
@@ -109,7 +111,8 @@ const HeaderSample = () => {
                             
                         </nav>
                         <div>
-                            <div>로그</div>
+                            <img src='/images/home.png'></img>
+                            <img src='/images/login.png'></img>
                         </div>
                     </div>
                     {activeMenu && (

@@ -149,7 +149,7 @@ function ImgList() {
                                 board.images.map((img) => (
                                     <img
                                         key={img.imgId}
-                                        src={`/images/${img.saveFileName}`}
+                                        src={`/images/imgboard/${img.saveFileName}`}
                                         alt={img.saveFileName}
                                         style={{ 
                                             width: '100%',           
@@ -181,7 +181,6 @@ function ImgList() {
                     </div>
                 ))}
             </div>
-            
             <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={itemsPerPage}

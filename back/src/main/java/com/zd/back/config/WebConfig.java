@@ -20,10 +20,10 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-    //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21
+    //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21 -- /images/imgboard/ 변경 확인함 --24/11/01
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**")  // 제공할 URL 패턴
+        registry.addResourceHandler("/images/imgboard/**")  // 제공할 URL 패턴
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/imgboard/");  // 실제 파일 경로
     }
 }

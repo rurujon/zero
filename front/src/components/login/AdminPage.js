@@ -24,123 +24,118 @@ const AdminPage = () => {
     const [noticeOperation, setNoticeOperation] = useState('create');
 
 
-    useEffect(() => {
-        const checkAdminStatus = async () => {
-            if (!token) {
-                alert('로그인이 필요합니다.');
-                navigate('/login');
-                return;
-            }
-
-            try {
-                const response = await axios.get('/member/info', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (response.data.role !== 'ADMIN') {
-                    alert('관리자 권한이 없습니다.');
-                    navigate('/');
-                    return;
-                }
-                fetchUsers();
-            } catch (error) {
-                console.error('사용자 정보 확인 실패:', error);
-                alert('사용자 정보를 확인하는 데 실패했습니다.');
-                navigate('/');
-            }
-        };
-
-        checkAdminStatus();
-    }, [token, navigate]);
-
-    const fetchUsers = async () => {
-        try {
-            const response = await axios.get('/member/admin/search', {
-                headers: { Authorization: `Bearer ${token}` },
-                params: { searchTerm, page: currentPage, size: pageSize }
-            });
-            setUsers(response.data.members);
-            setTotalPages(Math.ceil(response.data.totalCount / pageSize));
-        } catch (error) {
-            console.error('사용자 목록 조회 실패:', error);
-            if (error.response) {
-                if (error.response.status === 403) {
-                    alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
-                    navigate('/login');
-                } else {
-                    alert(`사용자 목록을 불러오는 데 실패했습니다: ${error.response.data}`);
-                }
-            } else {
-                alert('서버와의 통신 중 오류가 발생했습니다.');
-            }
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (!token) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+      try {
+        const response = await axios.get('/member/info', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (response.data.role !== 'ADMIN') {
+          alert('관리자 권한이 없습니다.');
+          navigate('/');
+          return;
         }
+        fetchMembers();
+      } catch (error) {
+        console.error('사용자 정보 확인 실패:', error);
+        alert('사용자 정보를 확인하는 데 실패했습니다.');
+        navigate('/');
+      }
     };
+    checkAdminStatus();
+  }, [token, navigate]);
 
-    useEffect(() => {
-        fetchUsers();
-    }, [currentPage, searchTerm]);
-
-    const handleRoleChange = async (memId, newRole) => {
-        try {
-            await axios.post('/member/admin/change-role', null, { params: { memId, role: newRole } });
-            alert('역할이 성공적으로 변경되었습니다.');
-            fetchUsers();
-        } catch (error) {
-            console.error('역할 변경 실패:', error);
-            alert('역할 변경 중 오류가 발생했습니다.');
-        }
-    };
-
-    const handlePointManagement = async () => {
-        if (!selectedUser || points <= 0) {
-            alert('사용자와 포인트를 올바르게 입력해주세요.');
-            return;
-        }
-        try {
-            await axios.post('/api/point/admin/manage-points', null, {
-                params: {
-                    memId: selectedUser,
-                    points,
-                    operation,
-                    reason
-                }
-            });
-            alert('포인트가 성공적으로 조정되었습니다.');
-            fetchUsers();
-            setSelectedUser('');
-            setPoints(0);
-            setReason('');
-        } catch (error) {
-            console.error('포인트 조정 실패:', error);
-            alert('포인트 조정 중 오류가 발생했습니다.');
-        }
-    };
-
-    const handlePointsChange = (e) => {
-        const value = parseInt(e.target.value, 10);
-        if (isNaN(value)) {
-            setPoints(0);
+  const fetchMembers = async () => {
+    try {
+      const response = await axios.get('/member/admin/search', {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { searchTerm, page: currentPage, size: pageSize }
+      });
+      setUsers(response.data.members);
+      setTotalPages(Math.ceil(response.data.totalCount / pageSize));
+    } catch (error) {
+      console.error('사용자 목록 조회 실패:', error);
+      if (error.response) {
+        if (error.response.status === 403) {
+          alert('관리자 권한이 필요합니다. 다시 로그인해주세요.');
+          navigate('/login');
         } else {
-            setPoints(value);
+          alert(`사용자 목록을 불러오는 데 실패했습니다: ${error.response.data}`);
         }
-    };
+      } else {
+        alert('서버와의 통신 중 오류가 발생했습니다.');
+      }
+    }
+  };
 
-    const handleDeleteUser = async (memId) => {
-        if (window.confirm('정말로 이 회원을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-            try {
-                await axios.delete(`/member/admin/${memId}`);
-                alert('회원이 성공적으로 삭제되었습니다.');
-                fetchUsers();
-            } catch (error) {
-                console.error('회원 삭제 실패:', error);
-                alert('회원 삭제 중 오류가 발생했습니다.');
-            }
-        }
-    };
+  useEffect(() => {
+    fetchMembers();
+  }, [currentPage, searchTerm]);
 
-    // 페이지 변경 핸들러
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+  const handleRoleChange = async (memId, newRole) => {
+    try {
+      await axios.post('/member/admin/change-role', null, {
+        params: { memId, role: newRole }
+      });
+      alert('역할이 성공적으로 변경되었습니다.');
+      fetchMembers();
+    } catch (error) {
+      console.error('역할 변경 실패:', error);
+      alert('역할 변경 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handlePointManagement = async () => {
+    if (!selectedUser || points <= 0) {
+      alert('사용자와 포인트를 올바르게 입력해주세요.');
+      return;
+    }
+    try {
+      await axios.post('/api/point/admin/manage-points', null, {
+        params: { memId: selectedUser, points, operation, reason }
+      });
+      alert('포인트가 성공적으로 조정되었습니다.');
+      fetchMembers();
+      setSelectedUser('');
+      setPoints(0);
+      setReason('');
+    } catch (error) {
+      console.error('포인트 조정 실패:', error);
+      alert('포인트 조정 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handlePointsChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value)) {
+      setPoints(0);
+    } else {
+      setPoints(value);
+    }
+  };
+
+  const handleDeleteUser = async (memId) => {
+    if (window.confirm('정말로 이 회원을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+      try {
+        await axios.delete(`/member/admin/${memId}`);
+        alert('회원이 성공적으로 삭제되었습니다.');
+        fetchMembers();
+      } catch (error) {
+        console.error('회원 삭제 실패:', error);
+        alert('회원 삭제 중 오류가 발생했습니다.');
+      }
+    }
+  };
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
     // 검색 핸들러
     const handleSearch = (e) => {

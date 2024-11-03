@@ -72,8 +72,6 @@ public class ImgBoardController {
         return ResponseEntity.ok(response);
     }
 
-
-
     @GetMapping("/article")  
     public ResponseEntity<ImgBoard> getImgPostById(@RequestParam int imgPostId) {
        try{
@@ -156,7 +154,8 @@ public class ImgBoardController {
     }
 
 
-    //memId:suzi123 
+ /*  ##### 인증 승인 auth 부분  -- ctrl + 클릭 하면 해당 import 된 파일로 이동함  */
+
     @PostMapping("/auth")
     public ResponseEntity<String> getAuthorized(@RequestParam int imgPostId){
 

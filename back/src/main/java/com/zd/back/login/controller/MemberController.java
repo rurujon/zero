@@ -148,16 +148,13 @@ public class MemberController {
 
     @GetMapping("/admin/search")
     public ResponseEntity<Map<String, Object>> searchMembers(
-        @RequestParam(defaultValue = "") String searchTerm,
+        @RequestParam(required = false) String searchTerm,
         @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "10") int size) {
-            List<Member> members = memberService.searchMembers(searchTerm, page, size);
-            int totalCount = memberService.countMembers(searchTerm);
+        @RequestParam(defaultValue = "5") int size) {
+            // 검색 시 항상 첫 페이지부터 결과를 반환
+            Map<String, Object> result = memberService.searchMembers(searchTerm, 1, size);
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("members", members);
-            response.put("totalCount", totalCount);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(result);
     }
 
     // 관리자 전용 API: 사용자 역할 변경
