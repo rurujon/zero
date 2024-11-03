@@ -33,8 +33,6 @@ import SeoulNews from "./components/seoulnews/SeoulNews";
 import NoticeList from "./components/notice/NoticeList";
 import NoticeDetail from "./components/notice/NoticeDetail";
 
-import Notices from "./components/notice/Notices";
-import NocArticle from "./components/notice/NocArticle";
 import Cover from "./components/mainPage/Cover";
 
 import Recycling from "./components/zerodongheng/Recycling";
@@ -100,10 +98,6 @@ export const routes = [
     { path: '/imgboard/updated', element: <ImgCreated/> }, // ImgCreated.js에서 Mode바꿔서 사용
     { path: '/imgboard/list', element: <ImgList /> },
     { path: '/imgboard/article', element: <ImgArticle/> }, //QueryParameter 사용
-
-    //Notices
-    {path: '/notices',element:<Notices/>},
-    {path: '/nocarticle',element:<NocArticle/>},
 
     //TipBoard
     { path: '/board/list', element: <BbsList /> },
