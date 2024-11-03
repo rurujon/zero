@@ -37,7 +37,9 @@ import Notices from "./components/notice/Notices";
 import NocArticle from "./components/notice/NocArticle";
 import Cover from "./components/mainPage/Cover";
 
-
+import Recycling from "./components/zerodongheng/Recycling";
+import Upcycling from "./components/zerodongheng/Upcycling";
+import Zerowaste from "./components/zerodongheng/Zerowaste";
 
 //링크 경로를 기록하는 파일입니다.
 //공용 파일이니 보기 쉽도록 App.js와 같은 위치에 만들었습니다.
@@ -86,6 +88,12 @@ export const routes = [
     { path: '/donate', element: <Pay/> },   //결제(후원) 경로
     { path: '/success', element: <SuccessPage /> },
     { path: '/failure', element: <FailurePage /> },
+
+    //zerodongheng
+    
+    { path: '/zerowaste', element: <Zerowaste /> },
+    { path: '/recycling', element: <Recycling /> },
+    { path: '/upcycling', element: <Upcycling /> },
 
     //ImgBoard
     { path: '/imgboard/created', element: <ImgCreated/> },
