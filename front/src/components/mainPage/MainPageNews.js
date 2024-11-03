@@ -17,6 +17,20 @@ const MainPageNewsCopy = () => {
         setActiveTab(tab);
     };
 
+    // 날짜 유효성 검사 함수
+    const validateDate = (dateString) => {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        return isNaN(date.getTime()) ? null : date;
+    };
+
+    // 날짜 포맷팅 함수
+    const formatDate = (date) => {
+        if (!date) return '날짜 없음';
+        return date instanceof Date ? date.toISOString().split('T')[0] : '유효하지 않은 날짜';
+    };
+
+
     useEffect(() => {
         const fetchNotices = async () => {
             try {
@@ -64,6 +78,8 @@ const MainPageNewsCopy = () => {
         fetchSeoulNews();
         fetchEnvLaw();
     },[])
+
+
 
     return (
         <div className="board_tab_wrap">
