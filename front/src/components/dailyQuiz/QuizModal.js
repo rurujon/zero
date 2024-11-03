@@ -97,7 +97,6 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             
             <Modal 
                 isOpen={isOpen}
-                onRequestClose={setIsOpen} // 모달 닫기 
                 contentLabel = "QOX"
                 className={result ==='ON' ? 'modal' : 'smallModal'}
             >

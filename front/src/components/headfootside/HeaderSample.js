@@ -8,8 +8,8 @@ import { Link, Navigate } from 'react-router-dom';
 
 const HeaderSample = () => {
 
-    const [isQuizModalOpen, setIsQuizModalOpen] = useState(false); // 모달 상태 추가
-
+    const [isOpen, setIsopen] = useState(false); // 모달 상태 추가
+    const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     // 각 메뉴에 대한 하위 메뉴 표시 여부를 관리하는 상태 변수
     const [activeMenu, setActiveMenu] = useState('');
   
@@ -77,9 +77,7 @@ const HeaderSample = () => {
       }
     };
   
-    const closeQuizModal = () => {
-      setIsQuizModalOpen(false); // 모달 닫기
-    };
+
   
   
     const navItemStyle = (menu) => ({
@@ -111,6 +109,8 @@ const HeaderSample = () => {
                             
                         </nav>
                         <div>
+                        <button onClick={openQuizModal}>퀴즈 열기</button>
+                        <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
                             <img src='/images/home.png'></img>
                             <img src='/images/login.png'></img>
                         </div>
@@ -126,6 +126,7 @@ const HeaderSample = () => {
                     )}
                 </nav>
             </div>
+
         </div>
     );
 };
