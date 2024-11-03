@@ -1,0 +1,40 @@
+.zero-waste-intro {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .zero-waste-intro h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .zero-waste-intro h3 {
+    color: #555;
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  .zero-waste-intro p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .zero-waste-intro ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .zero-waste-intro li {
+    margin: 5px 0;
+  }
+  
+  .zero-waste-intro li strong {
+    color: #2c3e50;
+  }
+  
