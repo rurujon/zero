@@ -17,31 +17,14 @@ const MainPageNewsCopy = () => {
         setActiveTab(tab);
     };
 
-    // 날짜 유효성 검사 함수
-    const validateDate = (dateString) => {
-        if (!dateString) return null;
-        const date = new Date(dateString);
-        return isNaN(date.getTime()) ? null : date;
-    };
-
-    // 날짜 포맷팅 함수
-    const formatDate = (date) => {
-        if (!date) return '날짜 없음';
-        return date instanceof Date ? date.toISOString().split('T')[0] : '유효하지 않은 날짜';
-    };
-
-
     useEffect(() => {
         const fetchNotices = async () => {
             try {
                 const response = await axios.get('/api/notices', {
                     params: { page: 1, size: 5 } // 최근 5개의 공지사항만 가져옵니다.
                 });
-                const validatedNotices = response.data.notices.map(notice => ({
-                    ...notice,
-                    created: validateDate(notice.created)
-                }));
-                setNotices(validatedNotices);
+
+                setNotices(response.data.notices);
             } catch (error) {
                 console.error('Error fetching notices:', error);
             }
@@ -85,6 +68,13 @@ const MainPageNewsCopy = () => {
         fetchEnvLaw();
     },[])
 
+    // 날짜 포맷팅 함수
+    const formatDate = (dateString) => {
+    if (!dateString) return '날짜 없음';
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? '유효하지 않은 날짜' : date.toISOString().split('T')[0];
+  };
+
 
 
     return (
@@ -107,17 +97,17 @@ const MainPageNewsCopy = () => {
             <div className="tab_container">
                 {activeTab === 'tab1' && (
                     <div id="tab1" className="tab_content">
-                        <h3 className="hidden_only">공지사항</h3>
-                        <ul className="board_list">
-                            {notices.map((notice, index) => (
-                                <li key={index}>
-                                    <Link to={`/notices/${index}`}>{notice.title}</Link>
-                                    <span className="board_date">{new Date(notice.created).toISOString().split('T')[0]}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link to="/notices" className="more-link">더 보기</Link>
-                    </div>
+                    <h3 className="hidden_only">공지사항</h3>
+                    <ul className="board_list">
+                      {notices.map((notice) => (
+                        <li key={notice.noticeId}>
+                          <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
+                          <span className="board_date">{formatDate(notice.createdAt)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link to="/notices" className="more-link">더 보기</Link>
+                  </div>
                 )}
                 {activeTab === 'tab2' && (
                     <div id="tab2" className="tab_content">
