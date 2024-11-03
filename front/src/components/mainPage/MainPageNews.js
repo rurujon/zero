@@ -34,7 +34,9 @@ const MainPageNewsCopy = () => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await axios.get('/api/notices');
+                const response = await axios.get('/api/notices', {
+                    params: { page: 1, size: 5 } // 최근 5개의 공지사항만 가져옵니다.
+                });
                 const validatedNotices = response.data.notices.map(notice => ({
                     ...notice,
                     created: validateDate(notice.created)
@@ -114,6 +116,7 @@ const MainPageNewsCopy = () => {
                                 </li>
                             ))}
                         </ul>
+                        <Link to="/notices" className="more-link">더 보기</Link>
                     </div>
                 )}
                 {activeTab === 'tab2' && (
