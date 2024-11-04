@@ -38,6 +38,9 @@ import Cover from "./components/mainPage/Cover";
 import Recycling from "./components/zerodongheng/Recycling";
 import Upcycling from "./components/zerodongheng/Upcycling";
 import Zerowaste from "./components/zerodongheng/Zerowaste";
+import ExCreated from "./components/exchange/ExCreated";
+import ExList from "./components/exchange/ExList";
+import ExArticle from "./components/exchange/ExArticle";
 
 //링크 경로를 기록하는 파일입니다.
 //공용 파일이니 보기 쉽도록 App.js와 같은 위치에 만들었습니다.
