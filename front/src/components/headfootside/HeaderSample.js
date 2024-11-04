@@ -103,7 +103,7 @@ const HeaderSample = () => {
                             <ul>
                             {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
                                 <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}>
-                                <Link to={`/${menu}`}>{menu.replace('-', ' ').toUpperCase()}</Link>
+                                {menu.replace('-', ' ').toUpperCase()}
                                 </li>
                             ))}
                             </ul>
@@ -111,10 +111,10 @@ const HeaderSample = () => {
                             
                         </nav>
                         <div>
-                        <button onClick={openQuizModal}>퀴즈 열기</button>
-                        <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
-                            <img src='/images/home.png'></img>
-                            <img src='/images/login.png'></img>
+                            <button onClick={openQuizModal}>퀴즈 열기</button>
+                            <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
+                            <Link to="/mainpage"><img src='/images/home.png'></img></Link>
+                            <Link><img src='/images/login.png'></img></Link>
                         </div>
                     </div>
                     {activeMenu && (

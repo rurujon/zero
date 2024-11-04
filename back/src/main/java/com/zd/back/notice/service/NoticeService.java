@@ -29,10 +29,12 @@ public class NoticeService {
     }
 
     public NoticeDTO getNotice(Long noticeId) {
-        noticeMapper.incrementViews(noticeId);
-        return noticeMapper.getNoticeById(noticeId);
+        NoticeDTO notice = noticeMapper.getNoticeById(noticeId);
+        if (notice != null) {
+            noticeMapper.incrementViews(noticeId);
+        }
+        return notice;
     }
-
     public List<NoticeDTO> getAllNotices() {
         return noticeMapper.getAllNotices();
     }

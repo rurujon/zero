@@ -49,13 +49,15 @@ const AdminPage = () => {
 
     const handleRoleChange = async (memId, newRole) => {
         try {
-            await axios.post('/member/admin/change-role', null, {
+            const response = await axios.post('/member/admin/change-role', null, {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { memId, role: newRole }
             });
             fetchMembers();
+            alert(response.data.message || '역할이 성공적으로 변경되었습니다.');
         } catch (error) {
             console.error('Error changing role:', error);
+            alert(error.response?.data?.message || '역할 변경 중 오류가 발생했습니다.');
         }
     };
 
@@ -79,7 +81,7 @@ const AdminPage = () => {
 
     const handlePointSubmit = async () => {
         try {
-            await axios.post('/member/admin/manage-points', null, {
+            const response=await axios.post('/member/admin/manage-points', null, {
                 headers: { Authorization: `Bearer ${token}` },
                 params: {
                     memId: selectedMember.memId,
@@ -89,8 +91,10 @@ const AdminPage = () => {
             });
             setShowModal(false);
             fetchMembers();
+            alert(response.data.message || '포인트가 성공적으로 조정되었습니다.');
         } catch (error) {
             console.error('Error managing points:', error);
+            alert(error.response?.data?.message || '포인트 조정 중 오류가 발생했습니다.');
         }
     };
 

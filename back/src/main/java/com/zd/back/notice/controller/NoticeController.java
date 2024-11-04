@@ -46,11 +46,14 @@ public class NoticeController {
     public ResponseEntity<?> getNotice(@PathVariable Long noticeId) {
         try {
             NoticeDTO notice = noticeService.getNotice(noticeId);
-            return ResponseEntity.ok(notice);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("공지사항 조회 실패: " + e.getMessage());
+        if (notice == null) {
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(notice);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body("공지사항 조회 실패: " + e.getMessage());
     }
+}
 
     @GetMapping
     public ResponseEntity<?> getNotices(

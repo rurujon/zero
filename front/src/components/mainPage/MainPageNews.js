@@ -17,16 +17,36 @@ const MainPageNewsCopy = () => {
         setActiveTab(tab);
     };
 
+    // 날짜 유효성 검사 함수
+    const validateDate = (dateString) => {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        return isNaN(date.getTime()) ? null : date;
+    };
+
+    // 날짜 포맷팅 함수
+    const formatDate = (date) => {
+        if (!date) return '날짜 없음';
+        return date instanceof Date ? date.toISOString().split('T')[0] : '유효하지 않은 날짜';
+    };
+
+
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await axios.get('/api/notices');
-                console.log('Notices data:', response.data);
-                setNotices(response.data.notices || []); // 응답 구조에 따라 조정
+                const response = await axios.get('/api/notices', {
+                    params: { page: 1, size: 5 } // 최근 5개의 공지사항만 가져옵니다.
+                });
+                const validatedNotices = response.data.notices.map(notice => ({
+                    ...notice,
+                    created: validateDate(notice.created)
+                }));
+                setNotices(validatedNotices);
             } catch (error) {
                 console.error('Error fetching notices:', error);
             }
         };
+
 
         const fetchNaverNews = async () => {
             try {
@@ -65,6 +85,8 @@ const MainPageNewsCopy = () => {
         fetchEnvLaw();
     },[])
 
+
+
     return (
         <div className="board_tab_wrap">
             <ul className="tabs" id="tabs">
@@ -89,11 +111,12 @@ const MainPageNewsCopy = () => {
                         <ul className="board_list">
                             {notices.map((notice, index) => (
                                 <li key={index}>
-                                    <Link to={`/notices/${index}`}>{notice.title}</Link>
+                                    <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
                                     <span className="board_date">{new Date(notice.created).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
                         </ul>
+                        <Link to="/notices" className="more-link">더 보기</Link>
                     </div>
                 )}
                 {activeTab === 'tab2' && (

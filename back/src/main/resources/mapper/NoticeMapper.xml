@@ -8,7 +8,9 @@
 </insert>
 
     <select id="getNoticeById" resultType="com.zd.back.notice.model.NoticeDTO">
-        SELECT * FROM notice WHERE notice_id = #{noticeId}
+    SELECT notice_id as noticeId, title, content, author, created_at as createdAt, updated_at as updatedAt, views
+    FROM notice
+    WHERE notice_id = #{noticeId}
     </select>
 
     <select id="getAllNotices" resultType="com.zd.back.notice.model.NoticeDTO">

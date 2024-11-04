@@ -1,40 +1,45 @@
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { HttpHeadersContext } from "../context/HttpHeadersProvider";
+import { AuthContext } from '../login/context/AuthContext';
 
 function BbsWrite() {
 	const { headers } = useContext(HttpHeadersContext);
 	const navigate = useNavigate();
-
+	const { token } = useContext(AuthContext);
+	
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [category, setCategory] = useState("");
 	const [file, setFile] = useState(null);
-	const [loading, setLoading] = useState(false); // 로딩 상태 관리
+	const [loading, setLoading] = useState(false);
 
-	const changeTitle = (event) => {
-		setTitle(event.target.value);
+	// token에서 memId 가져오기
+	const getMemIdFromToken = (token) => {
+		if (token) {
+			const payloadBase64 = token.split('.')[1];
+			const decodedPayload = JSON.parse(atob(payloadBase64));
+			console.log("Decoded Token Data:", decodedPayload); // 디버깅 용도
+			return decodedPayload.sub; // sub 필드를 memId로 사용
+		}
+		return null;
 	};
 
-	const changeContent = (event) => {
-		setContent(event.target.value);
-	};
+	const memId = getMemIdFromToken(token);
 
-	const changeCategory = (event) => {
-		setCategory(event.target.value);
-	};
-
+	const changeTitle = (event) => setTitle(event.target.value);
+	const changeContent = (event) => setContent(event.target.value);
+	const changeCategory = (event) => setCategory(event.target.value);
 	const handleFileChange = (event) => setFile(event.target.files[0]);
 
 	const uploadFile = async (boardno) => {
-		if (!file) return; // 파일이 없으면 종료
-
+		if (!file) return;
 		const formData = new FormData();
 		formData.append("file", file);
-		formData.append("boardno", boardno); // 게시글 번호 추가
+		formData.append("boardno", boardno);
 
-		setLoading(true); // 로딩 시작
+		setLoading(true);
 		try {
 			await axios.post("http://localhost:8080/board/uploadFile", formData, {
 				headers: {
@@ -47,19 +52,27 @@ function BbsWrite() {
 			console.log("[BbsWrite.js] uploadFile() error :<");
 			alert("파일 업로드에 실패했습니다: " + err.message);
 		} finally {
-			setLoading(false); // 로딩 종료
+			setLoading(false);
 		}
 	};
+
+	// 로그인 상태 확인
+	useEffect(() => {
+		if (!memId) {
+			alert("로그인 한 사용자만 게시글을 작성할 수 있습니다!");
+			navigate("/mainpage");
+		}
+	}, [memId, navigate, token]);
 
 	// 게시글 작성
 	const insertBoard = async () => {
 		const formData = new FormData();
-		formData.append("memId", localStorage.getItem("memId"));
+		formData.append("memId", memId || '');  // 토큰에서 가져온 memId 사용
 		formData.append("category", category);
 		formData.append("title", title);
 		formData.append("content", content);
 
-		setLoading(true); // 로딩 시작
+		setLoading(true);
 		try {
 			const resp = await axios.post("http://localhost:8080/board/write", formData, {
 				headers: {
@@ -68,30 +81,18 @@ function BbsWrite() {
 				},
 			});
 			console.log("[BbsWrite.js] insertBoard() success :D");
-			console.log(resp.data);
-			const boardno = resp.data.boardno; // 새로 생성된 게시글 번호
+			const boardno = resp.data.boardno;
 
-			// 게시글이 성공적으로 등록된 후 파일 업로드
 			await uploadFile(boardno);
 			alert("게시글이 등록되었습니다.");
-			navigate(`/board/${boardno}`); // 새롭게 등록한 글 상세로 이동
+			navigate(`/board/${boardno}`);
 		} catch (err) {
 			console.log("[BbsWrite.js] insertBoard() error :<");
 			alert("게시글 등록에 실패했습니다: " + err.message);
 		} finally {
-			setLoading(false); // 로딩 종료
+			setLoading(false);
 		}
 	};
-
-	// 로그인 상태 확인
-	useEffect(() => {
-		const isLoggedIn = localStorage.getItem("memId"); // 로그인된 사용자 ID가 있으면 로그인 상태로 간주
-
-		if (!isLoggedIn) {
-			alert("로그인 한 사용자만 게시글을 작성할 수 있습니다 !");
-			navigate("/login"); // 로그인 페이지로 이동
-		}
-	}, [navigate]);
 
 	const cancelWrite = () => {
 		const confirmed = window.confirm("게시물 작성을 취소하시겠습니까?");
@@ -106,7 +107,7 @@ function BbsWrite() {
 					<tr>
 						<th className="table-primary">작성자</th>
 						<td>
-							<input type="text" className="form-control" value={localStorage.getItem("memId")} size="50px" readOnly />
+							<input type="text" className="form-control" value={memId || ''} size="50px" readOnly />
 						</td>
 					</tr>
 					<tr>

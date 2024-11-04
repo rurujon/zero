@@ -63,6 +63,7 @@ public class CommentService {
     }
 
     /* 댓글 삭제 */
+    @Transactional
     public DeleteCommentResponse deleteComment(int commentno) {
         int deletedRecordCount = commentMapper.deleteComment(commentno);
         return new DeleteCommentResponse(deletedRecordCount);

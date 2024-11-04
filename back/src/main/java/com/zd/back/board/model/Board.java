@@ -26,5 +26,6 @@ public class Board {
     private String saveFileName;
     private String originalFileName;
     private String urlFile;
+    private int commentCount;
     
 }
