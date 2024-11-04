@@ -309,6 +309,12 @@ const NewsList = () => {
       <NewsHeader>Naver NEWS</NewsHeader>
       <button onClick={updateNewsData}>Crawl News</button> {/* 크롤링 버튼 추가 */}
       {error && <p>{error}</p>}
+
+      <div>
+          <ul>
+              <li>게시글 : {newsData.length}, 페이지 : {currentPage} / {totalPages}</li>
+          </ul>
+      </div>
       {newsData.length > 0 ? (
         <>
           <NewsListContainer>

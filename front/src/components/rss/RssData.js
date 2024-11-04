@@ -59,11 +59,12 @@ function RssData() {
         const pageNumbers = [];
         for (let i = groupStart; i <= groupEnd; i++) {
             pageNumbers.push(
-                <button
+                <button 
+                    className='PageButton'
                     key={i}
                     onClick={() => handlePageChange(i)}
-                    className={i === currentPage ? 'active' : ''}
-                >
+                    disabled={i === currentPage}
+                    >
                     {i}
                 </button>
             );
@@ -79,31 +80,31 @@ function RssData() {
                 <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
             </div>
 
-            <div className='seoul-search-line'>
+            <div>
                 <ul>
                     <li>게시글 : {rssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
                 </ul>
             </div>
-            <div className='RSS-main-content'>
+            <div className='NewsListContainer'>
                 <ul>
                     {currentItems.map((item, index) => (
-                        <li key={index}>
-                            <Link to={`/minEnv/${item.rssId}`}><h3>{item.title}</h3></Link>
-                            <span>등록일 : {item.pubDate}</span>
-                            <Link to={`/minEnv/${item.rssId}`}><p>{item.description}</p></Link>
+                        <li className='NewsItem' key={index}>
+                            <Link to={`/minEnv/${item.rssId}`}><h3 className='NewsLink'>{item.title}</h3></Link>
+                            <span className='NewsDate'>등록일 : {item.pubDate}</span>
+                            <Link to={`/minEnv/${item.rssId}`}><p className='NewsDescription'>{item.description}</p></Link>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* 페이징 버튼 */}
-            <div className='pagination'>
+            <div className='PaginationContainer'>
                 {groupStart > 1 && (
-                    <button onClick={() => handlePageChange(groupStart - 1)}>이전</button>
+                    <button className='PaginationButton' onClick={() => handlePageChange(groupStart - 1)}>이전</button>
                 )}
                 {renderPageNumbers()}
                 {groupEnd < totalPages && (
-                    <button onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
+                    <button className='PaginationButton' onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
                 )}
             </div>
         </div>

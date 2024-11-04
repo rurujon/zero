@@ -1,7 +1,10 @@
 .RSS-container {
+    width: 100%;
     display: flex;    
     padding: 20px 10px 20px;
     flex-direction: column;
+    justify-content: center;
+    align-items: center; /* 수평 중앙 정렬 */
 }
 
 .RSS-main-title {
@@ -51,3 +54,128 @@
     color: inherit; /* 상속받은 색상 사용 (부모 요소의 색상과 동일하게) */
     text-decoration: none; /* 밑줄 제거 */
 }
+
+  /* NewsStyles.css */
+
+  .NewsContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .NewsHeader {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .NewsListContainer {
+    list-style-type: none;
+    padding: 0;
+    width: 1000px;
+  }
+  
+  .NewsItem {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .NewsItem a{
+    text-decoration : none;
+  }
+   
+  .NewsItem:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .NewsLink {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .NewsLink:hover {
+    color: #3498db;
+  }
+  
+  .NewsDescription {
+    color: #7f8c8d;
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+  
+  .NewsDate {
+    color: #95a5a6;
+    font-size: 0.8em;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  
+  .PaginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .PageButton {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .PageButton.active {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .PageButton:hover {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .PaginationButton {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .PaginationButton:hover {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .PaginationButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .CloseButton {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .NewsTitle {
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

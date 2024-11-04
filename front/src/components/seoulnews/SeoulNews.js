@@ -72,6 +72,21 @@ const SeoulNews = () => {
     setCurrentPage(currentPageGroup * pagesPerGroup + 1);
   };
 
+  const getGroupDetails = (group) => {
+    switch (group) {
+      case 'env':
+        return { text: '기후환경', className: 'env' };
+      case 'eco':
+        return { text: '친환경', className: 'eco' };
+      case 'air':
+        return { text: '공기', className: 'air' };
+      case 'green':
+        return { text: '녹색에너지', className: 'green' };
+      default:
+        return { text: '기타', className: 'default' }; // 기본 값
+    }
+  };
+
   const renderPageNumbers = () => {
     const startPage = (currentPageGroup - 1) * pagesPerGroup + 1;
     const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
@@ -79,7 +94,8 @@ const SeoulNews = () => {
     const pageNumbers = [];
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
-        <button
+        <button 
+          className='PageButton'
           key={i}
           onClick={() => handlePageChange(i)}
           disabled={i === currentPage}
@@ -119,25 +135,34 @@ const SeoulNews = () => {
           <li>게시글 : {filteredNewsList.length}, 페이지 : {currentPage} / {totalPages}</li>
         </ul>
       </div>
-      <ul>
-        {currentItems.map((news) => (
-          <li key={news.title}>
-            <p>{news.seoulNewsGroup}</p>
-            <h2>{news.title}</h2>
-            <p>{news.content}</p>
-            <Link to={`/seoulNewsArticle/${news.seoulId}`}>Read more</Link>
-            <p>{news.publishedDate}</p>
-          </li>
-        ))}
+      <ul className='NewsListContainer'>
+        {currentItems.map((news) => {
+          const { text, className } = getGroupDetails(news.seoulNewsGroup);
+
+          return (
+            <li className='NewsItem' key={news.title}>
+              <div className={`NewsGroup ${className}`}>
+                <p>{text}</p>
+              </div>
+              <Link to={`/seoulNewsArticle/${news.seoulId}`}>
+                <h2 className='NewsLink'>{news.title}</h2>
+              </Link>
+              <Link to={`/seoulNewsArticle/${news.seoulId}`}>
+                <p className='NewsDescription'>{news.content}</p>
+              </Link>
+              <p className='NewsDate'>{news.publishedDate}</p>
+            </li>
+          );
+        })}
       </ul>
 
-      <div className='pagination'>
+      <div className='PaginationContainer'>
         {currentPageGroup > 1 && (
-          <button onClick={handlePreviousGroup}>이전</button>
+          <button className='PaginationButton' onClick={handlePreviousGroup}>이전</button>
         )}
         {renderPageNumbers()}
         {currentPageGroup < Math.ceil(totalPages / pagesPerGroup) && (
-          <button onClick={handleNextGroup}>다음</button>
+          <button className='PaginationButton' onClick={handleNextGroup}>다음</button>
         )}
       </div>
     </div>
