@@ -29,37 +29,53 @@
     color: #7ED957;
 }
 
-.item {
+.cont .item {
     position: absolute;
-    width: 120px;
+    width: 200px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* 변환과 그림자 효과에 대한 transition 추가 */
 }
 
-.item:hover {
+.cont .circle h6 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    transition: font-size 0.3s ease;
+}
+
+.cont .circle .item:hover {
     transform: translateY(-10px); /* 위로 이동 */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    width: 240px;
+    height: 160px;
+
+}
+
+.cont .circle .item:hover p{
+    font-size: 26px;
+    /* transition: font-size 1.3s ease; */
 }
 
 .cont .top-left {
-    top: -50px; /* 원 위쪽으로 이동 */
-    left: -100px; /* 원 왼쪽으로 이동 */
+    top: -40px; /* 원 위쪽으로 이동 */
+    left: -190px; /* 원 왼쪽으로 이동 */
 }
 
 .cont .top-right {
-    top: -50px; /* 원 위쪽으로 이동 */
-    right: -100px; /* 원 오른쪽으로 이동 */
+    top: -40px; /* 원 위쪽으로 이동 */
+    right: -190px; /* 원 오른쪽으로 이동 */
 }
 
 .cont .bottom-left {
-    bottom: -50px; /* 원 아래쪽으로 이동 */
-    left: -100px; /* 원 왼쪽으로 이동 */
+    bottom: -40px; /* 원 아래쪽으로 이동 */
+    left: -190px; /* 원 왼쪽으로 이동 */
 }
 
 .cont .bottom-right {
-    bottom: -60px; /* 원 아래쪽으로 이동 */
-    right: -110px; /* 원 오른쪽으로 이동 */
+    bottom: -40px; /* 원 아래쪽으로 이동 */
+    right: -190px; /* 원 오른쪽으로 이동 */
+    
 }
 
 .cont .center {
@@ -72,8 +88,3 @@
     color: #04079f;
 }
 
-.cont h7 {
-    font-size: 13px; /* h7의 크기를 조정 */
-    font-weight: bold; /* 강조를 위해 굵게 설정 */
-    margin: 0 0 5px 0; /* 제목과 본문 사이의 여백 설정 */
-}

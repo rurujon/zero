@@ -52,10 +52,12 @@ function SeoulNewsArticle() {
 
     // useEffect에서 분리된 fetchRssItem을 호출
     useEffect(() => {
+        
         if (seoulId) {
             fetchSeoulNews(seoulId); // rssId가 있을 때만 호출
             previousNews(seoulId)
             nextNews(seoulId)
+            window.scrollTo(0, 0); // 페이지가 변경될 때 스크롤을 맨 위로 이동
         }
     }, [seoulId]); // rssId가 변경될 때마다 실행
 

@@ -37,7 +37,7 @@
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
   
     &:hover{
-      box-shadow: 0 0 40px 40px green inset;
+      box-shadow: 0 0 40px 40px gray inset;
     }
         
     &:focus {
@@ -49,6 +49,26 @@
 
   .seoul_tab_btn.active {
     background-color: green;
+    color: white;
+  }
+
+  .seoul_tab_btn.active-env {
+    background-color: #ff9800;
+    color: white;
+  }
+
+  .seoul_tab_btn.active-eco {
+    background-color: #8bc34a;
+    color: white;
+  }
+
+  .seoul_tab_btn.active-air {
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .seoul_tab_btn.active-green {
+    background-color: #4caf50;
     color: white;
   }
 
@@ -103,7 +123,7 @@
 }
 
 .NewsGroup.env {
-  background-color: #4caf50; /* 기후환경 색상 */
+  background-color: #ff9800; /* 기후환경 색상 */
 }
 
 .NewsGroup.eco {
@@ -115,7 +135,7 @@
 }
 
 .NewsGroup.green {
-  background-color: #ff9800; /* 그린에너지 색상 */
+  background-color: #4caf50; /* 그린에너지 색상 */
 }
 
 .NewsGroup.default {
