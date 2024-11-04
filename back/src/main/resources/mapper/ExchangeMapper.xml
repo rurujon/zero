@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.back.exchange.mapper.ExchangeMapper">
+
+    <select id="maxExchangeId" resultType="int">
+        SELECT NVL(MAX(exchangeId), 0) FROM exchange
+    </select>
+
+    <insert id="createdExchange" parameterType="com.zd.back.exchange.model.Exchange">
+        INSERT INTO exchange (exchangeId, memId, title, sender, receiver, content, addr1, addr2, post, tel,created)
+        VALUES (#{exchangeId}, #{memId}, #{title}, #{sender}, #{receiver}, #{content}, #{addr1}, #{addr2}, #{post}, #{tel}, SYSDATE)
+    </insert>
+
+    <select id="getExchanges" resultType="com.zd.back.exchange.model.Exchange">
+        SELECT exchangeId, memId, title, created FROM exchange WHERE exchangeId BETWEEN #{pageStart} AND #{pageEnd}
+    </select>
+
+    <select id="getDataCount" resultType="int">
+        SELECT COUNT(*) FROM exchange
+    </select>
+
+<!--  우편주소 및 전화번호 가져오기 위함 -->
+    <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
+        SELECT  memName, tel, post, addr1, addr2FROM member
+        WHERE memId = #{memId}
+    </select>
+
+</mapper>

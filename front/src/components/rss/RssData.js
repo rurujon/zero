@@ -59,11 +59,12 @@ function RssData() {
         const pageNumbers = [];
         for (let i = groupStart; i <= groupEnd; i++) {
             pageNumbers.push(
-                <button
+                <button 
+                    className='rss-PageButton'
                     key={i}
                     onClick={() => handlePageChange(i)}
-                    className={i === currentPage ? 'active' : ''}
-                >
+                    disabled={i === currentPage}
+                    >
                     {i}
                 </button>
             );
@@ -79,31 +80,34 @@ function RssData() {
                 <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
             </div>
 
-            <div className='seoul-search-line'>
+            <div>
                 <ul>
                     <li>게시글 : {rssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
                 </ul>
             </div>
-            <div className='RSS-main-content'>
+            <div className='rss-NewsListContainer'>
                 <ul>
                     {currentItems.map((item, index) => (
-                        <li key={index}>
-                            <Link to={`/minEnv/${item.rssId}`}><h3>{item.title}</h3></Link>
-                            <span>등록일 : {item.pubDate}</span>
-                            <Link to={`/minEnv/${item.rssId}`}><p>{item.description}</p></Link>
+                        <li className='rss-NewsItem' key={index}>
+                            <div className={`rss-NewsGroup`}>
+                                <p>환경부</p>
+                            </div>
+                            <Link to={`/minEnv/${item.rssId}`}><h3 className='rss-NewsLink'>{item.title}</h3></Link>
+                            <Link to={`/minEnv/${item.rssId}`}><p className='rss-NewsDescription'>{item.description}</p></Link>
+                            <span className='rss-NewsDate'>등록일 : {item.pubDate}</span>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* 페이징 버튼 */}
-            <div className='pagination'>
+            <div className='rss-PaginationContainer'>
                 {groupStart > 1 && (
-                    <button onClick={() => handlePageChange(groupStart - 1)}>이전</button>
+                    <button className='rss-PaginationButton' onClick={() => handlePageChange(groupStart - 1)}>이전</button>
                 )}
                 {renderPageNumbers()}
                 {groupEnd < totalPages && (
-                    <button onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
+                    <button className='rss-PaginationButton' onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
                 )}
             </div>
         </div>

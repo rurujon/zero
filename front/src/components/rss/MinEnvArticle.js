@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import './RssArticle.css'
 
 function MinEnvArticle() {
     const { rssId } = useParams(); // URL에서 id를 추출합니다.
@@ -30,25 +31,35 @@ function MinEnvArticle() {
     
     // 여기서 id를 사용하여 해당 RSS 항목의 데이터를 불러오는 로직을 추가할 수 있습니다.
     return (
-        <div>
-            <h1>RSS Detail for ID: {rssId}</h1>
-            {/* 추가 데이터 표시 로직 */}
-            <h2>{rssItem.title}</h2>
-            <h3>{rssItem.description} </h3>
-            <h3>{rssItem.pubDate} </h3>
-            <h3>{rssItem.author} </h3>
-            <h3>{rssItem.link} </h3>
+        <div className='.rss-article-wrap'>
+            <div className='rss-article-title'>
+                <h2>{rssItem.title}</h2>
+            </div>
+            <div className='rss-article-date'>
+                <div className={`rss-article-NewsGroup`}>
+                    <p>환경부</p>
+                </div>
+                <p>작성일 : {rssItem.pubDate} </p>
+            </div>
+            <div className='rss-article-download'>
+                <ul>
+                    {downloadLinks.map((linkData, index) => (
+                        <li key={index}>
+                            <a href={linkData.url} target="_blank" rel="noopener noreferrer">
+                                <img src='/images/download.png' className='rss-download-img'></img>
+                                {linkData.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className='rss-article-content'>
+                <p>{rssItem.description} </p>
+            </div>
 
-            <h3>Download Links</h3>
-            <ul>
-                {downloadLinks.map((linkData, index) => (
-                    <li key={index}>
-                        <a href={linkData.url} target="_blank" rel="noopener noreferrer">
-                            {linkData.title}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+            <div className='seoul-list-button'>
+                <Link to="/minEnv">목록</Link>
+            </div>
             
         </div>
     );

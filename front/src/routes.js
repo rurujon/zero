@@ -38,6 +38,9 @@ import Cover from "./components/mainPage/Cover";
 import Recycling from "./components/zerodongheng/Recycling";
 import Upcycling from "./components/zerodongheng/Upcycling";
 import Zerowaste from "./components/zerodongheng/Zerowaste";
+import ExCreated from "./components/exchange/ExCreated";
+import ExList from "./components/exchange/ExList";
+import ExArticle from "./components/exchange/ExArticle";
 
 //링크 경로를 기록하는 파일입니다.
 //공용 파일이니 보기 쉽도록 App.js와 같은 위치에 만들었습니다.
@@ -72,7 +75,7 @@ export const routes = [
     { path:'/seoulNews/Eco', element:<SeoulNewsEco/>},   //서울eco 뉴스리스트
     { path:'/seoulNews/Air', element:<SeoulNewsAir/>},   //서울air 뉴스리스트
     { path:'/seoulNews/Green', element:<SeoulNewsGreen/>},   //서울green 뉴스리스트
-    { path:'/seoulNews/All', element:<SeoulNews/>},   //서울green 뉴스리스트
+    { path:'/seoulNews/All', element:<SeoulNews/>},   //서울 뉴스리스트
     { path:'/seoulNewsArticle/:seoulId', element:<SeoulNewsArticle/>},   //서울 뉴스 상세페이지
 
 
@@ -110,7 +113,10 @@ export const routes = [
     { path: '/notices', element: <NoticeList /> },
     { path: '/notices/:noticeId', element: <NoticeDetail /> },
 
-
+     //Exchange
+    { path: '/exchange/created', element: <ExCreated/> },
+    { path: '/exchange/list', element: <ExList/> },
+    { path: '/exchange/article', element: <ExArticle/> },
 
 ]
 
