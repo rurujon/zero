@@ -98,6 +98,12 @@ public class BoardController {
 		return ResponseEntity.ok(boardService.createBbsAnswer(parentno, req));
 	}
 	
-	
+	@GetMapping("/maxBoardNo")
+    public Map<String, Integer> getMaxBoardNo() {
+        int maxBoardNo = boardService.getMaxBoardNo();
+        Map<String, Integer> response = new HashMap<>();
+        response.put("maxBoardNo", maxBoardNo);
+        return response;
+    }
 
 }

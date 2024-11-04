@@ -11,6 +11,7 @@ function BbsDetail() {
     const navigate = useNavigate();
     const location = useLocation();
     const { token } = useContext(AuthContext);
+    const [maxBoardNo, setMaxBoardNo] = useState(null); 
 
     // token에서 memId와 role 가져오기
     const getTokenData = (token) => {
@@ -27,11 +28,10 @@ function BbsDetail() {
     const getBbsDetail = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/board/${boardno}`, {
-                headers: { Authorization: `Bearer ${token}` }, // 인증 헤더 추가
+                headers: { Authorization: `Bearer ${token}` },
                 params: { readerId: memId || "" }
             });
             console.log("[BbsDetail.js] getBbsDetail() success :D");
-            console.log(response.data);
 
             setBoard(response.data.board);
         } catch (err) {
@@ -46,10 +46,9 @@ function BbsDetail() {
 
         try {
             const response = await axios.get(`http://localhost:8080/board/delete/${boardno}`, {
-                headers: { Authorization: `Bearer ${token}` } // 인증 헤더 추가
+                headers: { Authorization: `Bearer ${token}` }
             });
             console.log("[BbsDetail.js] deleteBoard() success :D");
-            console.log(response.data);
 
             if (response.data.deletedRecordCount === 1) {
                 alert("게시글이 삭제되었습니다.");
@@ -82,9 +81,19 @@ function BbsDetail() {
         ));
     };
 
+    const getMaxBoardNo = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/board/maxBoardNo`);
+            setMaxBoardNo(response.data.maxBoardNo);
+        } catch (err) {
+            console.log("[BbsDetail.js] getMaxBoardNo() error :<", err);
+        }
+    };
+
     useEffect(() => {
         getBbsDetail();
-    }, []);
+        getMaxBoardNo();
+    }, [boardno]);
 
     const updateBoard = {
         boardno: board.boardno,
@@ -96,7 +105,8 @@ function BbsDetail() {
     const parentBbs = {
         memId: board.memId,
         title: board.title,
-        content: board.content
+        content: board.content,
+        urlFile: board.urlFile
     };
 
     const goBackToList = () => {
@@ -106,22 +116,44 @@ function BbsDetail() {
 
     return (
         <div>
-            <div className="my-3 d-flex justify-content-end">
-                <Link className="btn btn-outline-secondary" to={{ pathname: `/board/answer/${board.boardno}` }} state={{ parentBbs }}>
-                    <i className="fas fa-pen"></i> 답글쓰기
-                </Link> &nbsp;
-
-                {/* 자신이 작성한 게시글인 경우에만 수정 삭제 가능 */}
-                {(memId === board.memId || role === "ADMIN") && (
-                    <>
-                        <Link className="btn btn-outline-secondary" to={{ pathname: `/board/update/${board.boardno}` }} state={{ board: updateBoard }}>
-                            <i className="fas fa-edit"></i> 수정
-                        </Link> &nbsp;
-                        <button className="btn btn-outline-danger" onClick={deleteBoard}>
-                            <i className="fas fa-trash-alt"></i> 삭제
+            <div className="my-3 d-flex justify-content-between">
+                <div>
+                    {/* 최대 boardno일 때 다음글 버튼 렌더링 X, 첫 게시글은 이전글 버튼 렌더링 X */}
+                    {parseInt(boardno) > 1 && (
+                        <button 
+                            className="btn btn-outline-secondary" 
+                            onClick={() => navigate(`/board/${parseInt(boardno) - 1}`)}
+                        >
+                            <i className="fas fa-arrow-left"></i> 이전글
                         </button>
-                    </>
-                )}
+                    )} &nbsp;
+                    {maxBoardNo && parseInt(boardno) < maxBoardNo && (
+                        <button 
+                            className="btn btn-outline-secondary" 
+                            onClick={() => navigate(`/board/${parseInt(boardno) + 1}`)}
+                        >
+                            다음글 <i className="fas fa-arrow-right"></i>
+                        </button>
+                    )}
+                </div>
+
+                {/* 답글쓰기, 수정, 삭제 버튼 */}
+                <div>
+                    <Link className="btn btn-outline-secondary" to={{ pathname: `/board/answer/${board.boardno}` }} state={{ parentBbs }}>
+                        <i className="fas fa-pen"></i> 답글쓰기
+                    </Link> &nbsp;
+
+                    {(memId === board.memId || role === "ADMIN") && (
+                        <>
+                            <Link className="btn btn-outline-secondary" to={{ pathname: `/board/update/${board.boardno}` }} state={{ board: updateBoard }}>
+                                <i className="fas fa-edit"></i> 수정
+                            </Link> &nbsp;
+                            <button className="btn btn-outline-danger" onClick={deleteBoard}>
+                                <i className="fas fa-trash-alt"></i> 삭제
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
 
             <table className="table table-striped">
