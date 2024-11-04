@@ -10,7 +10,7 @@
     </select>
 <insert id="saveImg" parameterType="com.zd.back.imgboard.model.Img">
     INSERT INTO Img (imgId, imgPostId, originalFileName, saveFileName, filePath, fileDate)
-    VALUES (imgseq.NEXTVAL, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
+    VALUES (img_seq.NEXTVAL, #{imgPostId}, #{originalFileName}, #{saveFileName}, #{filePath}, SYSDATE)
 </insert>
 
     <select id="getImagesByPostId" resultType="com.zd.back.imgboard.model.Img">
