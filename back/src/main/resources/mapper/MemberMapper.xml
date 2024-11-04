@@ -66,21 +66,19 @@
     </select>
 
     <select id="searchMembers" parameterType="map" resultType="com.zd.back.login.model.Member">
-    SELECT * FROM (
-        SELECT m.*, ROWNUM rn FROM (
-            SELECT * FROM member
-            <where>
-                <if test="searchTerm != null and searchTerm != ''">
-                    AND (memId LIKE '%'||#{searchTerm}||'%'
-                    OR memName LIKE '%'||#{searchTerm}||'%'
-                    OR email LIKE '%'||#{searchTerm}||'%'
-                    OR tel LIKE '%'||#{searchTerm}||'%')
-                </if>
-            </where>
-            ORDER BY memId
-        ) m
-    ) WHERE rn BETWEEN (#{page} - 1) * #{limit} + 1 AND #{page} * #{limit}
-    </select>
+  SELECT * FROM (
+    SELECT m.*, ROWNUM rn FROM (
+      SELECT * FROM member
+      <where>
+        <if test="searchTerm != null and searchTerm != ''">
+          AND (memId LIKE '%'||#{searchTerm}||'%' OR memName LIKE '%'||#{searchTerm}||'%' OR email LIKE '%'||#{searchTerm}||'%' OR tel LIKE '%'||#{searchTerm}||'%')
+        </if>
+      </where>
+      ORDER BY memId
+    ) m
+  )
+  WHERE rn BETWEEN (#{page} - 1) * #{limit} + 1 AND #{page} * #{limit} <!-- 'size'를 'limit'으로 변경 -->
+</select>
 
     <select id="countMembers" parameterType="map" resultType="int">
     SELECT COUNT(*) FROM member
