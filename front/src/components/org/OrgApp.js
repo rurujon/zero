@@ -69,7 +69,9 @@ const OrgApp = () => {
                                     <h2 className='card_content-name'>{globalOrg.name}</h2>
                                     <p className='card_content-description'>{globalOrg.description}</p>
                                 </div>
-                                <a href={globalOrg.link} className='card-btn'>홈페이지</a>
+                                <a href={globalOrg.link} className="card-btn" target="_blank" rel="noopener noreferrer">
+                                    홈페이지
+                                </a>
                             </div>
                         </li>
                     ))}
