@@ -7,13 +7,11 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import com.zd.back.exchange.model.Exchange;
 import com.zd.back.exchange.model.ExchangeResponse;
 import com.zd.back.exchange.service.ExchangeService;
-import com.zd.back.imgboard.model.ImgPost;
+
 
 
 @RestController
