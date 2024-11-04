@@ -32,4 +32,6 @@ public interface BoardMapper {
 
     void updateFileDetails(Board board);
 
+    int findMaxBoardNo();
+
 }

@@ -118,6 +118,18 @@ public class RssServiceImpl implements RssService{
         return articleData;
     }
 
+    @Override
+    public RssItem findPreviousNews(int rssId) {
+        // TODO Auto-generated method stub
+        return rssMapper.selectPreviousNews(rssId);
+    }
+
+    @Override
+    public RssItem findNextNews(int rssId) {
+        // TODO Auto-generated method stub
+        return rssMapper.selectNextNews(rssId);
+    }
+
     // 특정 URL에서 다운로드 링크 추출하는 메서드
     public List<Map<String, String>> extractDownloadLinks(String url) throws Exception {
         List<Map<String, String>> downloadLinks = new ArrayList<>();
@@ -150,5 +162,6 @@ public class RssServiceImpl implements RssService{
 
         return downloadLinks;
     }
+
     
 }

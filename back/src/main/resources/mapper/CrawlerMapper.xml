@@ -45,5 +45,25 @@
         select * from seoulNews where seoulId = #{seoulId}
     </select>
 
+    <!-- 이전글 가져오기 -->
+    <select id="selectPreviousNews" parameterType="int" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM (
+            SELECT *
+            FROM seoulNews
+            WHERE publishedDate &lt; (SELECT publishedDate FROM seoulNews WHERE seoulId = #{seoulId})
+            ORDER BY publishedDate DESC, seoulId DESC
+        ) WHERE ROWNUM = 1
+    </select>
+
+    <!-- 다음글 가져오기 -->
+    <select id="selectNextNews" parameterType="int" resultType="com.zd.back.seoulcrawler.model.SeoulNews">
+        SELECT * FROM (
+            SELECT *
+            FROM seoulNews
+            WHERE publishedDate &gt; (SELECT publishedDate FROM seoulNews WHERE seoulId = #{seoulId})
+            ORDER BY publishedDate ASC, seoulId ASC
+        ) WHERE ROWNUM = 1
+    </select>
+
 
 </mapper>

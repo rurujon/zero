@@ -123,5 +123,9 @@ public class BoardService {
 
         boardMapper.updateFileDetails(board);
     }
+
+	public int getMaxBoardNo() {
+        return boardMapper.findMaxBoardNo();
+    }
 	
 }
