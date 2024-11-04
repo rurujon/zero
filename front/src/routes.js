@@ -110,7 +110,10 @@ export const routes = [
     { path: '/notices', element: <NoticeList /> },
     { path: '/notices/:noticeId', element: <NoticeDetail /> },
 
-
+     //Exchange
+    { path: '/exchange/created', element: <ExCreated/> },
+    { path: '/exchange/list', element: <ExList/> },
+    { path: '/exchange/article', element: <ExArticle/> },
 
 ]
 
