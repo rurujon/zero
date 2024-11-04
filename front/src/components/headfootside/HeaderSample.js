@@ -29,6 +29,7 @@ const HeaderSample = () => {
               <Link to="/zerowaste">제로웨이스트 소개</Link>
               <Link to="/recycling">리사이클링 소개</Link>
               <Link to="/upcycling">업사이클링 소개</Link>
+              <Link to="/zerodongheng">팀 제로동행</Link>
             </>
           );
         case 'eco-news':
