@@ -32,7 +32,7 @@ const AdminPage = () => {
         try {
             const response = await axios.get('/member/admin/search', {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { searchTerm, page: currentPage, size: pageSize }
+                params: { searchTerm, page: currentPage, limit: pageSize }
             });
             setMembers(response.data.members);
             setTotalPages(Math.ceil(response.data.totalCount / pageSize));
@@ -103,7 +103,7 @@ const AdminPage = () => {
         try {
             const response = await axios.get('/api/notices', {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { page: currentPage, size: pageSize }
+                params: { page: currentPage, limit: pageSize }
             });
             setNotices(response.data.notices);
             setTotalPages(Math.ceil(response.data.totalCount / pageSize));
