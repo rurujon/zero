@@ -17,14 +17,31 @@ const MainPageNewsCopy = () => {
         setActiveTab(tab);
     };
 
+    // 날짜 유효성 검사 함수
+    const validateDate = (dateString) => {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        return isNaN(date.getTime()) ? null : date;
+    };
+
+    // 날짜 포맷팅 함수
+    const formatDate = (date) => {
+        if (!date) return '날짜 없음';
+        return date instanceof Date ? date.toISOString().split('T')[0] : '유효하지 않은 날짜';
+    };
+
+
     useEffect(() => {
         const fetchNotices = async () => {
             try {
                 const response = await axios.get('/api/notices', {
                     params: { page: 1, size: 5 } // 최근 5개의 공지사항만 가져옵니다.
                 });
-
-                setNotices(response.data.notices);
+                const validatedNotices = response.data.notices.map(notice => ({
+                    ...notice,
+                    created: validateDate(notice.created)
+                }));
+                setNotices(validatedNotices);
             } catch (error) {
                 console.error('Error fetching notices:', error);
             }
@@ -67,13 +84,6 @@ const MainPageNewsCopy = () => {
         fetchSeoulNews();
         fetchEnvLaw();
     },[])
-
-    // 날짜 포맷팅 함수
-    const formatDate = (dateString) => {
-    if (!dateString) return '날짜 없음';
-    const date = new Date(dateString);
-    return isNaN(date.getTime()) ? '유효하지 않은 날짜' : date.toISOString().split('T')[0];
-  };
 
 
 
