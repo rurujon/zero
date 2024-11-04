@@ -1,4 +1,4 @@
-.container {
+.cont {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@
   .center {
     z-index: 1; /* 중앙 아이템을 위로 */
   }
-  p{
+  .cont  p{
     font-size:5px;
   }
   
