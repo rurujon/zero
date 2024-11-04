@@ -41,3 +41,7 @@
     color: #2c3e50;
   }
   
+  .zero-waste-intro .right-align {
+    text-align: right; /* 텍스트를 오른쪽 정렬 */
+    margin-right: 20px; /* 오른쪽 여백 추가 (필요에 따라 조정) */
+  }
