@@ -6,7 +6,7 @@ const ExArticle = () => {
     const [memId, setMemId] = useState(localStorage.getItem('memId')); 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const imgPostId = queryParams.get('imgPostId');
+    const exchangeId = queryParams.get('exchangeId');
 
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -22,10 +22,10 @@ const ExArticle = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const response = await axios.get('/imgboard/article', {
-                    params: { imgPostId }
+                const response = await axios.get('/exchange/article', {
+                    params: { exchangeId }
                 });
-                setArticle(response.data);
+                setArticle(response.data);  
                 setLoading(false);
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
@@ -34,21 +34,9 @@ const ExArticle = () => {
         };
 
         fetchArticle();
-    }, [imgPostId]);
+    }, [exchangeId]);
 
-    
-    const getCateLabel = (cate) => {
-        switch (cate) {
-            case 'tum':
-                return '텀블러 이용';
-            case 'buy':
-                return '물품 구매';
-            case 'group':
-                return '단체활동 참여';
-            default:
-                return '알 수 없음';
-        }
-    };
+
 
     const getAuthLabel = (auth) => {
         switch (auth) {
@@ -63,11 +51,11 @@ const ExArticle = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`/imgboard/deleted`, {
-                params: { imgPostId }
+            const response = await axios.delete(`/exchange/deleted`, {
+                params: { exchangeId }
             });
             alert(response.data);
-            navigate('/imgboard/list');
+            navigate('/exchange/list');
         } catch (error) {
             console.error('게시물을 삭제하는 데 오류가 발생했습니다.', error);
             const errorMessage = error.response && error.response.data 
@@ -82,8 +70,8 @@ const ExArticle = () => {
  /*  ##### 인증 승인 auth 부분  */
     const handleAuth = async () => {
         try {
-            const response = await axios.post(`/imgboard/auth`, null, {
-                params: { imgPostId }
+            const response = await axios.post(`/exchange/auth`, null, {
+                params: { exchangeId }
             });
             alert(response.data);
             window.location.reload(); 
@@ -105,46 +93,77 @@ const ExArticle = () => {
     }
 
     return (
-        <div className="article-container">
-            <h2 className="article-title">{article.imgPost.title}</h2>
+        <div className="article-container" style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>
+            <h2 className="article-title" style={{ textAlign: 'center' }}>{article.title}</h2>
             <div className="article-meta-container">
-                <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}</p>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>승인여부:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{getAuthLabel(article.auth)}</span>
+                    {memId === "suzi123" && article.auth === 0 && (
+                        <button type='button' onClick={handleAuth}>인증승인</button>
+                    )}
+                </div>
 
-                {/*  ##### 인증 승인 auth 부분  */}
-                {memId === "suzi123" && article.imgPost.auth === 0 && (
-                    <button type='button' onClick={handleAuth}>인증승인</button>
-                )}
-                <hr className="divider" />
-                <p className="article-meta"><strong>사용자 ID:</strong> {article.imgPost.memId}</p>
-                <hr className="divider" />
-                <p className="article-meta"><strong>인증 유형:</strong> {getCateLabel(article.imgPost.cate)}</p>
-                <hr className="divider" />
-                <p className="article-meta"><strong>작성일:</strong> {new Date(article.imgPost.created).toLocaleDateString()}</p>
-            </div>
-            <div className="article-content">
-                <p>{article.imgPost.content}</p>
-                <div className="image-gallery">
-                    {article.images && article.images.map(img => (
-                        <img key={img.imgId} src={`/images/imgboard/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
-                    ))}
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>사용자 ID:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.memId}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.sender}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>받는 분:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.receiver}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>우편번호:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.post}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>주소:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.addr1}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>상세주소:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.addr2}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>전화번호:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.tel}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>작성일:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{new Date(article.created).toLocaleDateString()}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>배송 메세지:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{article.content}</span>
                 </div>
             </div>
-            <div className="button-container">
-            {((memId === article.imgPost.memId && article.imgPost.auth === 0) || memId === "suzi123") && (
-                    //본인의 게시물에만 수정, 삭제버튼 나옴
+
+            <div className="button-container" style={{ textAlign: 'center', marginTop: '20px' }}>
+                {((memId === article.memId && article.auth === 0) || memId === "suzi123") && (
                     <>
-                        <button className="action-button" onClick={() => window.location.href = `/imgboard/updated?imgPostId=${imgPostId}`}>
+                        <button className="action-button" onClick={() => window.location.href = `/exchange/updated?exchangeId=${exchangeId}`} style={{ margin: '5px' }}>
                             수정하기
                         </button>
-                        <button className="action-button" onClick={handleDelete}>삭제하기</button>             
+                        <button className="action-button" onClick={handleDelete} style={{ margin: '5px' }}>삭제하기</button>             
                     </>
                 )}         
-                <button className="action-button" onClick={() => window.location.href = '/imgboard/list'}>
+                <button className="action-button" onClick={() => window.location.href = '/exchange/list'} style={{ margin: '5px' }}>
                     목록가기
                 </button>
             </div>
         </div>
-        
     );
 };
 

@@ -10,4 +10,6 @@ public interface ExchangeMapper {
     void createdExchange(Exchange exchange);
     List<Exchange> getExchanges(int pageStart, int pageEnd);
     int getDataCount();
+    Exchange getExArticle(int exchangeId);
+
 }

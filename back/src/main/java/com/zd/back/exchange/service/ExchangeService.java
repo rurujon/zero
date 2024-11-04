@@ -31,4 +31,7 @@ public class ExchangeService {
     public int getDataCount() {
         return exchangeMapper.getDataCount();
     }
+    public Exchange getExArticle(int exchangeId) {
+        return exchangeMapper.getExArticle(exchangeId);
+    }
 }
