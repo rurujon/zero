@@ -60,7 +60,7 @@ function RssData() {
         for (let i = groupStart; i <= groupEnd; i++) {
             pageNumbers.push(
                 <button 
-                    className='PageButton'
+                    className='rss-PageButton'
                     key={i}
                     onClick={() => handlePageChange(i)}
                     disabled={i === currentPage}
@@ -85,26 +85,29 @@ function RssData() {
                     <li>게시글 : {rssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
                 </ul>
             </div>
-            <div className='NewsListContainer'>
+            <div className='rss-NewsListContainer'>
                 <ul>
                     {currentItems.map((item, index) => (
-                        <li className='NewsItem' key={index}>
-                            <Link to={`/minEnv/${item.rssId}`}><h3 className='NewsLink'>{item.title}</h3></Link>
-                            <span className='NewsDate'>등록일 : {item.pubDate}</span>
-                            <Link to={`/minEnv/${item.rssId}`}><p className='NewsDescription'>{item.description}</p></Link>
+                        <li className='rss-NewsItem' key={index}>
+                            <div className={`rss-NewsGroup`}>
+                                <p>환경부</p>
+                            </div>
+                            <Link to={`/minEnv/${item.rssId}`}><h3 className='rss-NewsLink'>{item.title}</h3></Link>
+                            <Link to={`/minEnv/${item.rssId}`}><p className='rss-NewsDescription'>{item.description}</p></Link>
+                            <span className='rss-NewsDate'>등록일 : {item.pubDate}</span>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* 페이징 버튼 */}
-            <div className='PaginationContainer'>
+            <div className='rss-PaginationContainer'>
                 {groupStart > 1 && (
-                    <button className='PaginationButton' onClick={() => handlePageChange(groupStart - 1)}>이전</button>
+                    <button className='rss-PaginationButton' onClick={() => handlePageChange(groupStart - 1)}>이전</button>
                 )}
                 {renderPageNumbers()}
                 {groupEnd < totalPages && (
-                    <button className='PaginationButton' onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
+                    <button className='rss-PaginationButton' onClick={() => handlePageChange(groupEnd + 1)}>다음</button>
                 )}
             </div>
         </div>
