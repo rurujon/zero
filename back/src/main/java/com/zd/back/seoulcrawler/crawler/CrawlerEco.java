@@ -70,8 +70,9 @@ public class CrawlerEco {
                  */
                 Elements articles = doc.select("div.child_PolicyDL_R");
 
-                for(Element article : articles) {
+                for(int j = 0; j < articles.size(); j++) {
 
+                    Element article = articles.get(j); // articles 리스트에서 현재 인덱스의 요소를 가져옵니다.
 
                     String title = article.select("h3.tit a").text(); // 제목 추출
                     String link = article.select("h3.tit a").attr("href"); // 링크 추출
@@ -89,7 +90,7 @@ public class CrawlerEco {
                     String seoulNewsGroup = "eco";
                     //서울시 소식은 기후환경, 친환경, 대기, 녹색에너지 등으로 그룹이 나눠져 있어서 그룹을 지정했습니다.
 
-                    int seoulId = 0;
+                    int seoulId = j;
 
                     SeoulNews seoulNews = new SeoulNews(seoulId,title,link,content,publishedDate,seoulNewsGroup);
 

@@ -81,6 +81,18 @@ public class CrawlerController {
     public Map<String,Object> getBySeoulId(@RequestParam int seoulId) {
         return crawlerService.selectBySeoulId(seoulId);
     }
+
+    @GetMapping("/seoulNews/previous")
+    public ResponseEntity<SeoulNews> getPreviousNews(@RequestParam int seoulId) {
+        SeoulNews previousNews = crawlerService.findPreviousNews(seoulId);
+        return ResponseEntity.ok(previousNews);
+    }
+
+    @GetMapping("/seoulNews/next")
+    public ResponseEntity<SeoulNews> getNextNews(@RequestParam int seoulId) {
+        SeoulNews nextNews = crawlerService.findNextNews(seoulId);
+        return ResponseEntity.ok(nextNews);
+    }
     
     
     

@@ -29,4 +29,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from rssItems where rssId = #{rssId}
     </select>
 
+    <!-- 이전글 가져오기 -->
+    <select id="selectPreviousNews" parameterType="int" resultType="com.zd.back.rssenv.RssItem">
+        SELECT * FROM (
+            SELECT *
+            FROM rssItems
+            WHERE pubDate &lt; (SELECT pubDate FROM rssItems WHERE rssId = #{rssId})
+            ORDER BY pubDate DESC, rssId DESC
+        ) WHERE ROWNUM = 1
+    </select>
+
+    <!-- 다음글 가져오기 -->
+    <select id="selectNextNews" parameterType="int" resultType="com.zd.back.rssenv.RssItem">
+        SELECT * FROM (
+            SELECT *
+            FROM rssItems
+            WHERE pubDate &gt; (SELECT pubDate FROM rssItems WHERE rssId = #{rssId})
+            ORDER BY pubDate ASC, rssId ASC
+        ) WHERE ROWNUM = 1
+    </select>
+
 </mapper>

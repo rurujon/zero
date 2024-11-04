@@ -10,6 +10,10 @@ function SeoulNewsArticle() {
     const [seoulNews, setSeoulNews] = useState([]);
     const [contentHtml, setContentHtml] = useState('');
 
+    const [previous, setPrevious] = useState([]);
+    const [next, setNext] = useState([]);
+
+
     // Axios GET 요청을 함수로 분리
     const fetchSeoulNews = async (id) => {
         try {
@@ -24,12 +28,36 @@ function SeoulNewsArticle() {
         }
     };
 
+    const previousNews = async (id) => {
+        try {
+
+            const response = await axios.get('/api/seoul/seoulNews/previous', { params: { seoulId : id}});
+            setPrevious(response.data);
+            
+        } catch (error) {
+            console.error('There was an error fetching the RSS data!', error);
+        }
+    }
+
+    const nextNews = async (id) => {
+        try {
+
+            const response = await axios.get('/api/seoul/seoulNews/next', { params: { seoulId : id}});
+            setNext(response.data);
+            
+        } catch (error) {
+            console.error('There was an error fetching the RSS data!', error);
+        }
+    }
+
     // useEffect에서 분리된 fetchRssItem을 호출
     useEffect(() => {
         if (seoulId) {
             fetchSeoulNews(seoulId); // rssId가 있을 때만 호출
+            previousNews(seoulId)
+            nextNews(seoulId)
         }
-    }, []); // rssId가 변경될 때마다 실행
+    }, [seoulId]); // rssId가 변경될 때마다 실행
 
     // 그룹별 텍스트와 CSS 클래스를 반환하는 함수
     const getGroupDetails = (group) => {
@@ -73,6 +101,24 @@ function SeoulNewsArticle() {
 
             <div className='seoul-list-button'>
                 <Link to="/seoulNews/All">목록</Link>
+            </div>
+
+            <div className='seoul-list-prev-next'>
+                <Link to={`/seoulNewsArticle/${previous.seoulId}`}>
+                    <img src='/images/previous.png' className='prev-img'></img>
+                    <div className='seoul-prev-text'>
+                        <p>이전글</p>
+                        <p>{previous.title}</p>
+                    </div>
+                </Link>
+                <Link to={`/seoulNewsArticle/${next.seoulId}`}> 
+                    <div className='seoul-next-text'>
+                        <p>다음글</p>
+                        <p>{next.title}</p>
+                    </div>
+                    <img src='/images/next.png' className='next-img'></img>
+                    
+                </Link>
             </div>
         
         </div>

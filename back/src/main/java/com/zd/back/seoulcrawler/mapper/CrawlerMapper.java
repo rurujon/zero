@@ -23,4 +23,6 @@ public interface CrawlerMapper {
     List<SeoulNews> selectSeoulNewsGreen();
     int maxNum();
     SeoulNews selectBySeoulId(int seoulId);
+    SeoulNews selectPreviousNews(int seoulId);
+    SeoulNews selectNextNews(int seoulId);
 }
