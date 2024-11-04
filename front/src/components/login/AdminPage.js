@@ -162,7 +162,7 @@ const AdminPage = () => {
             <h2>회원 목록</h2>
             <Form onSubmit={handleSearch} className="mb-3">
                 <Form.Group>
-                    <Form.Control type="text" placeholder="회원 검색" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                    <Form.Control type="text" placeholder="ID,이름,이메일 중 하나 입력하여 검색가능" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 </Form.Group>
                 <Button type="submit" className="mt-2">검색</Button>
             </Form>
