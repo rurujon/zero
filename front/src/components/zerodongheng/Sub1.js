@@ -2,7 +2,7 @@ import React from 'react';
 import './Sub1.css';
 const Sub1 = () => {
     return (
-        <div className="container">
+        <div className="cont">
       <div className="circle">
         <div className="logo">ITwill</div>
         <div className="item top-left">
