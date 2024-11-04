@@ -75,7 +75,8 @@ const AdminPage = () => {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { memId, role: newRole }
             });
-            fetchMembers();
+            // 현재 페이지 유지하며 목록 갱신
+            fetchMembers(memberCurrentPage);
         } catch (error) {
             console.error('Error changing role:', error);
         }
@@ -109,7 +110,8 @@ const AdminPage = () => {
                 params: { memId: selectedMember.memId, points: pointAmount, operation: pointOperation }
             });
             setShowModal(false);
-            fetchMembers();
+            // 현재 페이지 유지하며 목록 갱신
+            fetchMembers(memberCurrentPage);
         } catch (error) {
             console.error('Error managing points:', error);
         }

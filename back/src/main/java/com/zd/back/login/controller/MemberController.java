@@ -35,6 +35,7 @@ public class MemberController {
 
     @Autowired
     private PointService pointService;
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -147,14 +148,27 @@ public class MemberController {
     }
 
     @GetMapping("/admin/search")
-    public ResponseEntity<Map<String, Object>> searchMembers(
-        @RequestParam(required = false) String searchTerm,
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int limit) {
-            // 검색 시 항상 첫 페이지부터 결과를 반환
-            Map<String, Object> result = memberService.searchMembers(searchTerm, 1, limit);
+    public ResponseEntity<?> searchMembers(
+            @RequestParam String searchTerm,
+            @RequestParam int page,
+            @RequestParam int limit) {
 
-            return ResponseEntity.ok(result);
+        // 검색 조건 및 페이징 정보를 담은 파라미터 맵 생성
+        Map<String, Object> params = new HashMap<>();
+        params.put("searchTerm", searchTerm);
+        params.put("page", page);
+        params.put("limit", limit);
+
+        // 회원 목록과 총 회원 수 조회
+        List<Member> members = memberService.searchMembers(params);
+        int totalCount = memberService.countMembers(params);
+
+        // 결과를 담은 응답 맵 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("members", members);
+        response.put("totalCount", totalCount);
+
+        return ResponseEntity.ok(response);
     }
 
     // 관리자 전용 API: 사용자 역할 변경
