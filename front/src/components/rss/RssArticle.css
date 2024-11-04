@@ -81,3 +81,58 @@
     width: 20px;
     margin: 3px;
 }
+
+.rss-list-prev-next {
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 정렬 */
+    align-items: center; /* 세로 정렬 */
+    margin: 20px 0; /* 위아래 여백 */
+	max-height: 60px;
+}
+
+.rss-list-prev-next p {
+    padding: 5px;
+}
+
+.rss-list-prev-next a {
+    display: flex;
+    align-items: center; /* 이미지와 텍스트를 수직 중앙 정렬 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 텍스트 색상 */
+}
+
+.rss-prev-text {
+	text-align: left;
+}
+
+.rss-next-text {
+	text-align: right;
+}
+
+.prev-img {
+	height: 50px; /* 이미지 크기 조절 */
+    width: auto; /* 비율 유지 */
+    margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
+}
+
+.next-img {
+	height: 50px; /* 이미지 크기 조절 */
+    width: auto; /* 비율 유지 */
+    margin-left: 10px; /* 이미지와 텍스트 사이의 간격 */
+}
+
+.rss-list-prev-next div {
+    display: flex;
+    flex-direction: column; /* 텍스트 세로 정렬 */
+    justify-content: center; /* 텍스트 중앙 정렬 */
+}
+
+.rss-list-prev-next div p {
+    margin: 0; /* p 태그 기본 여백 제거 */
+    line-height: 1.2; /* 텍스트 간격 조정 */
+}
+
+.rss-list-prev-next a:hover {
+    color: #007bff; /* 링크 hover 색상 변경 */
+    transition: color 0.3s; /* 부드러운 전환 효과 */
+}

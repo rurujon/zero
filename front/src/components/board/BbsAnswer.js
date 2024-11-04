@@ -40,7 +40,6 @@ function BbsAnswer() {
 		try {
 			const resp = await axios.post(`http://localhost:8080/board/${parentno}/answer`, req, { headers });
 			console.log("[BbsAnswer.js] createBbsAnswer() success :D");
-			console.log(resp.data);
 
 			alert("답글이 등록되었습니다.");
 			navigate(`/board/${resp.data.boardno}`); // 새롭게 등록한 답글 상세로 이동
@@ -85,6 +84,15 @@ function BbsAnswer() {
 					<tr>
 						<th>내용</th>
 						<td>
+						{parentBbs.urlFile && (
+                                <div>
+                                    <img 
+                                        src={parentBbs.urlFile} 
+                                        alt="첨부된 이미지" 
+                                        style={{ maxWidth: "30%", marginTop: "20px" }}
+                                    />
+                                </div>
+                            )}
 							<span style={{ whiteSpace: "pre-line" }}>{parentBbs.content}</span>
 						</td>
 					</tr>

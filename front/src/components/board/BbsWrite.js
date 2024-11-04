@@ -20,7 +20,6 @@ function BbsWrite() {
 		if (token) {
 			const payloadBase64 = token.split('.')[1];
 			const decodedPayload = JSON.parse(atob(payloadBase64));
-			console.log("Decoded Token Data:", decodedPayload); // 디버깅 용도
 			return decodedPayload.sub; // sub 필드를 memId로 사용
 		}
 		return null;
@@ -66,6 +65,21 @@ function BbsWrite() {
 
 	// 게시글 작성
 	const insertBoard = async () => {
+		if (!category) {
+			alert("카테고리를 선택해 주세요.");
+			return;
+		}
+
+		if (!title) {
+			alert("제목을 입력해 주세요.");
+			return;
+		}
+		
+		if (!content) {
+			alert("내용을 입력해 주세요.");
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append("memId", memId || '');  // 토큰에서 가져온 memId 사용
 		formData.append("category", category);

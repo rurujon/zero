@@ -40,7 +40,6 @@ function BbsUpdate() {
 		try {
 			const resp = await axios.post(`http://localhost:8080/board/update/${board.boardno}`, req, { headers });
 			console.log("[BbsUpdate.js] updateBoard() success :D");
-			console.log(resp.data);
 
 			if (resp.data.updatedRecordCount === 1) {
 				alert("게시글이 수정되었습니다.");

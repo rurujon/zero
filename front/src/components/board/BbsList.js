@@ -25,7 +25,6 @@ function BbsList() {
 				headers: headers,
 				params: { choice, search, page, category }
 			});
-			console.log("게시글 목록 데이터:", response.data.bbsList); // commentCount 확인
 			setBbsList(response.data.bbsList);
 			setTotalCnt(response.data.pageCnt);
 		} catch (err) {
@@ -120,19 +119,22 @@ function BbsList() {
             </table>
 
             {/* 페이지네이션 */}
-            <Pagination
-                className="pagination"
-                activePage={page}
-                itemsCountPerPage={15}
-                totalItemsCount={totalCnt}
-                pageRangeDisplayed={5}
-                prevPageText={"‹"}
-                nextPageText={"›"}
-                onChange={changePage}
-            />
-            
-            <div className="my-5 d-flex justify-content-center">
-                <Link className="btn btn-outline-secondary" to="/board/write"><i className="fas fa-pen"></i>글쓰기</Link>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+                <div className="mx-auto">
+                    <Pagination
+                        className="pagination"
+                        activePage={page}
+                        itemsCountPerPage={15}
+                        totalItemsCount={totalCnt}
+                        pageRangeDisplayed={5}
+                        prevPageText={"‹"}
+                        nextPageText={"›"}
+                        onChange={changePage}
+                    />
+                </div>
+                <Link className="btn btn-outline-secondary" to="/board/write">
+                    <i className="fas fa-pen"></i> 글쓰기
+                </Link>
             </div>
         </div>
     );
@@ -158,7 +160,7 @@ function TableRow(props) {
                                 )}
                                 {/* 댓글 수 표시 */}
                                 {board.commentCount > 0 && (
-									<span style={{ marginLeft: '10px' }}>[{board.commentCount}]</span>
+									<span style={{ marginLeft: '10px', color: '#ff6347', fontWeight: 'bold' }}>[{board.commentCount}]</span>
 								)}
                             </span>
                         </Link>

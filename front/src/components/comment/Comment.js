@@ -68,57 +68,55 @@ function Comment(props) {
 	
 
 	return (
-		<>
-			{/* 상단 영역 (프로필 이미지, 댓글 작성자, 댓글 작성시간) */}
-			<div className="my-1 d-flex justify-content-center">
-				<div className="col-1">
-					<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img" />
-				</div>
-				<div className="col-2">
-					<div className="row">
-						<span className="comment-id">{comment.memId}</span>
+		<div className="d-flex justify-content-center">
+			<div className="comment-container p-3 mb-3 rounded">
+				{/* 상단 영역: 프로필 이미지와 사용자 ID, 시간, 수정/삭제 버튼 */}
+				<div className="d-flex align-items-center justify-content-between mb-1">
+					<div className="d-flex align-items-center">
+						{/* 프로필 이미지 */}
+						<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-3" style={{ width: '50px', height: '50px', borderRadius: '50%' }}/>
+
+						{/* 사용자 ID와 시간 */}
+						<span className="comment-id">{comment.memId}</span>&nbsp;&nbsp;
+						<span className="comment-date ms-2">
+							{new Date(comment.created).toLocaleDateString()} {new Date(comment.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+						</span>
 					</div>
-					<div className="row">
-						<span>{new Date(comment.created).toISOString().slice(0, 16).replace('T', ' ')}</span>
-					</div>
+					
+					{/* 수정/삭제 버튼 */}
+					{(memId === comment.memId || role === "ADMIN") && (
+						<div>
+							<button className="btn btn-sm btn-link" onClick={() => setShow(!show)}>
+								수정
+							</button>
+							<button className="btn btn-sm btn-link text-danger" onClick={deleteComment}>
+								삭제
+							</button>
+						</div>
+					)}
 				</div>
 
-				<div className="col-3 d-flex justify-content-end">
-				{
-					(memId === comment.memId || role === "ADMIN") &&
-					<>
-						<button className="btn btn-outline-secondary" onClick={() => setShow(!show)}>
-							<i className="fas fa-edit"></i> 수정
+				{/* 댓글 내용 */}
+				<div className="comment-text">{content}</div>
+
+				{/* 댓글 수정 폼 */}
+				{show && (
+					<div className="mt-2">
+						<textarea
+							className="form-control"
+							rows="2"
+							value={content}
+							onChange={changeContent}
+						></textarea>
+						<button className="btn btn-dark btn-sm mt-2" onClick={updateComment}>
+							수정 완료
 						</button>
-						&nbsp; 
-						<button className="btn btn-outline-danger" onClick={deleteComment}>
-							<i className="fas fa-trash-alt"></i> 삭제
-						</button>
-					</>
-				}
-				</div>
+					</div>
+				)}
 			</div>
+		</div>
 
-			{/* 댓글 수정하는 경우 */}
-			{show ? (
-				<>
-					<div className="my-3 d-flex justify-content-center">
-						<textarea className="col-7" rows="3" value={content} onChange={changeContent}></textarea>
-					</div>
-					<div className="my-1 d-flex justify-content-center">
-						<button className="btn btn-dark" onClick={updateComment}>
-							<i className="fas fa-edit"></i> 수정 완료
-						</button>
-					</div>
-				</>
-			) : (
-				<>
-					<div className="my-4 d-flex justify-content-center">
-						<div className="col-4 comment">{content}</div>
-					</div>
-				</>
-			)}
-		</>
+
 	);
 }
 

@@ -16,7 +16,6 @@ function CommentWrite(props) {
 		if (token) {
 			const payloadBase64 = token.split('.')[1];
 			const decodedPayload = JSON.parse(atob(payloadBase64));
-			console.log("Decoded token payload:", decodedPayload); // 디코딩된 토큰 페이로드 확인
 			return decodedPayload.sub;
 		}
 		return null;
@@ -27,7 +26,7 @@ function CommentWrite(props) {
 	const changeContent = (event) => setContent(event.target.value);
 
 	const createComment = async () => {
-		if (!content.trim()) {
+		if (!content) {
 			alert("댓글 내용을 입력해 주세요.");
 			return;
 		}
@@ -43,14 +42,11 @@ function CommentWrite(props) {
 			content: content,
 		};
 	
-		console.log("Request payload:", req); // 요청 데이터 확인
-	
 		try {
 			const headers = {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			};
-			console.log("Headers:", headers); // 헤더가 올바르게 설정되었는지 확인
 	
 			// `boardno`를 URL 쿼리 파라미터로 전달
 			const resp = await axios.post(
@@ -60,7 +56,6 @@ function CommentWrite(props) {
 			);
 	
 			console.log("[CommentWrite.js] createComment() success :D");
-			console.log(resp.data);
 	
 			if (resp.data.boardno != null) {
 				alert("댓글이 등록되었습니다.");
@@ -73,24 +68,29 @@ function CommentWrite(props) {
 	};
 
 	return (
-		<>
-            <div className="my-1 d-flex justify-content-center">
-                <div className="col-1">
-                    <img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img"/>
-                </div>
-                <div className="col-4">
-                    <span className="comment-id">{memId}</span>
-                </div>
-                <div className="col-2 my-1 d-flex justify-content-end">
-                    <button className="btn btn-outline-secondary" onClick={createComment}>
-                        <i className="fas fa-comment-dots"></i> 댓글 추가
-                    </button>
-                </div>
-            </div>
-            <div className="my-3 d-flex justify-content-center">
-                <textarea className="col-7" rows="3" value={content} onChange={changeContent}></textarea>
-            </div><br/><br/>
-		</>
+		<div className="comment-section mx-auto col-6">
+			{/* 프로필 이미지와 아이디, 댓글 추가 버튼 */}
+			<div className="d-flex align-items-center justify-content-between mb-2">
+				<div className="d-flex align-items-center">
+					<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-2" style={{ width: '40px', height: '40px', borderRadius: '50%' }}/>
+					<span className="comment-id">{memId}</span>
+				</div>
+				<button className="btn btn-outline-secondary" onClick={createComment}>
+					<i className="fas fa-comment-dots"></i> 댓글 등록
+				</button>
+			</div>
+
+			{/* 댓글 입력 창 */}
+			<div className="d-flex align-items-center">
+				<input
+					type="text"
+					className="form-control"
+					value={content} onChange={changeContent} 
+					placeholder="댓글을 남겨주세요"
+					style={{ flex: 1 }}
+				/>
+			</div><br/><br/>
+		</div>
 	);
 }
 
