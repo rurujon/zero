@@ -35,10 +35,10 @@ const HeaderSample = () => {
         case 'eco-news':
           return (
             <>
-              <Link to="/naverNewsList">네이버 뉴스 api</Link>
+              <Link to="/naverNewsList">네이버 뉴스</Link>
               <Link to="/minEnv">환경부 정책</Link>
+              <Link to="/seoulNews/All">서울시 뉴스</Link>
               <Link to="/orgList">봉사단체</Link>
-              <Link to="/seoulNews/All">에코</Link>
             </>
           );
         case 'zero-news':

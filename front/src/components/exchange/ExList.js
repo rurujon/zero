@@ -112,7 +112,7 @@ function ExList() {
                             <td>{getAuthLabel(board.auth)}</td>
 
                             <td>
-                                <Link to={`/exchange/article?id=${board.exchangeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                     {board.title}
                                 </Link>
                             </td>

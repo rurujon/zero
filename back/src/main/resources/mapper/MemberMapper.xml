@@ -71,25 +71,23 @@
             SELECT * FROM member
             <where>
                 <if test="searchTerm != null and searchTerm != ''">
-                    AND (memId LIKE '%'||#{searchTerm}||'%' OR memName LIKE '%'||#{searchTerm}||'%' OR email LIKE '%'||#{searchTerm}||'%' OR tel LIKE '%'||#{searchTerm}||'%')
+                    AND (memId LIKE '%'||#{searchTerm}||'%' OR memName LIKE '%'||#{searchTerm}||'%' OR email LIKE '%'||#{searchTerm}||'%')
                 </if>
             </where>
             ORDER BY memId
         ) m
-    ) WHERE rn BETWEEN (#{page} - 1) * #{limit} + 1 AND #{page} * #{limit}
+    )
+    WHERE rn BETWEEN (#{page} - 1) * #{limit} + 1 AND #{page} * #{limit}
 </select>
 
-    <select id="countMembers" parameterType="map" resultType="int">
+<select id="countMembers" parameterType="map" resultType="int">
     SELECT COUNT(*) FROM member
     <where>
         <if test="searchTerm != null and searchTerm != ''">
-            AND (memId LIKE '%'||#{searchTerm}||'%'
-            OR memName LIKE '%'||#{searchTerm}||'%'
-            OR email LIKE '%'||#{searchTerm}||'%'
-            OR tel LIKE '%'||#{searchTerm}||'%')
+            AND (memId LIKE '%'||#{searchTerm}||'%' OR memName LIKE '%'||#{searchTerm}||'%' OR email LIKE '%'||#{searchTerm}||'%')
         </if>
     </where>
-    </select>
+</select>
 
 
 

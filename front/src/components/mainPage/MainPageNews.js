@@ -112,7 +112,7 @@ const MainPageNewsCopy = () => {
                             {notices.map((notice, index) => (
                                 <li key={index}>
                                     <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
-                                    <span className="board_date">{new Date(notice.created).toISOString().split('T')[0]}</span>
+                                    <span className="board_date">{new Date(notice.createdAt).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
                         </ul>

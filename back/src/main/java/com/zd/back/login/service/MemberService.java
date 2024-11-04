@@ -233,27 +233,11 @@ public List<MemberDTO> getAllUsers() {
         return passwordEncoder.matches(rawPassword, member.getPwd());
     }
 
-    public Map<String, Object> searchMembers(String searchTerm, int page, int limit) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("searchTerm", searchTerm);
-        params.put("page", page);
-        params.put("limit", limit);
-
-        List<Member> members = memberMapper.searchMembers(params);
-        int totalCount = memberMapper.countMembers(params);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("members", members);
-        result.put("totalCount", totalCount);
-        result.put("currentPage", page);
-        result.put("totalPages", (int) Math.ceil((double) totalCount / limit));
-
-        return result;
+    public List<Member> searchMembers(Map<String, Object> params) {
+        return memberMapper.searchMembers(params);
     }
 
-    public int countMembers(String searchTerm) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("searchTerm", searchTerm);
+    public int countMembers(Map<String, Object> params) {
         return memberMapper.countMembers(params);
     }
 

@@ -44,6 +44,11 @@
 }
 
 .rss-list-button {
+    
+    
+}
+
+.rss-list-button a {
     display: inline-block; /* 버튼 모양을 위한 인라인 블록 */
     padding: 10px 20px; /* 버튼 내부 여백 */
     background-color: #4CAF50; /* 버튼 배경색 */
@@ -56,9 +61,6 @@
     cursor: pointer; /* 커서를 버튼 모양으로 */
     transition: background-color 0.3s ease; /* 배경색 전환 효과 */
 	margin: 15px;
-}
-
-.rss-list-button a {
 	text-decoration: none;
 	color: white;
 }

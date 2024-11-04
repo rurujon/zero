@@ -117,13 +117,13 @@ const SeoulNews = () => {
         <div className='seoul-tab-bar'>
           <button className={`seoul_tab_btn ${selectedCategory === 'all' ? 'active' : ''}`}
            onClick={() => handleCategoryChange('all')}>전체</button>
-          <button className={`seoul_tab_btn ${selectedCategory === 'env' ? 'active' : ''}`}
+          <button className={`seoul_tab_btn ${selectedCategory === 'env' ? 'active-env' : ''}`}
            onClick={() => handleCategoryChange('env')}>기후환경</button>
-          <button className={`seoul_tab_btn ${selectedCategory === 'eco' ? 'active' : ''}`}
+          <button className={`seoul_tab_btn ${selectedCategory === 'eco' ? 'active-eco' : ''}`}
            onClick={() => handleCategoryChange('eco')}>친환경</button>
-          <button className={`seoul_tab_btn ${selectedCategory === 'air' ? 'active' : ''}`}
+          <button className={`seoul_tab_btn ${selectedCategory === 'air' ? 'active-air' : ''}`}
            onClick={() => handleCategoryChange('air')}>공기</button>
-          <button className={`seoul_tab_btn ${selectedCategory === 'green' ? 'active' : ''}`}
+          <button className={`seoul_tab_btn ${selectedCategory === 'green' ? 'active-green' : ''}`}
            onClick={() => handleCategoryChange('green')}>녹색에너지</button>
         </div>
       </div>

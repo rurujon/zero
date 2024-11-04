@@ -27,5 +27,8 @@
         SELECT  memName, tel, post, addr1, addr2FROM member
         WHERE memId = #{memId}
     </select>
-
+    
+    <select id="getExArticle" parameterType="int" resultType="com.zd.back.exchange.model.Exchange">
+        SELECT * FROM exchange WHERE exchangeId = #{exchangeId}
+    </select>
 </mapper>
