@@ -47,10 +47,11 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token","/api/naver/**","/api/seoul/**","/api/rss/**","/api/org/**","/api/smartMap/**").permitAll()
+                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token","/api/naver/**","/api/seoul/**","/api/rss/**","/api/org/**","/api/smartMap/**","/member/privacy","/member/terms").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
                 .antMatchers("/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
+                .antMatchers("/exchange/list").permitAll()
                 .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -87,3 +88,4 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 }
+//  .antMatchers("/exchange/list").permitAll()추가함 -승은 24-11-04

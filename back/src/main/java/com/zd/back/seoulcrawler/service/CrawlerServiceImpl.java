@@ -1,6 +1,7 @@
 package com.zd.back.seoulcrawler.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,10 @@ public class CrawlerServiceImpl implements CrawlerService{
         CrawlerGreen crawlerGreen = new CrawlerGreen();
         seoulNewsList.addAll(crawlerGreen.SeoulNewsCrawl(totalPage));
 
+        // publishedDate를 기준으로 정렬하고, 동일 날짜일 경우 seoulId로 정렬
+        seoulNewsList.sort(Comparator.comparing(SeoulNews::getPublishedDate)
+        .thenComparing(SeoulNews::getSeoulId));
+
         // 각 뉴스 항목을 DB에 삽입
         for (SeoulNews seoulNews : seoulNewsList) {
             int seoulId = maxNum() + 1; // 새로운 ID 할당
@@ -163,6 +168,18 @@ public class CrawlerServiceImpl implements CrawlerService{
     public List<SeoulNews> selectSeoulNewsGreen() {
         // TODO Auto-generated method stub
         return crawlerMapper.selectSeoulNewsGreen();
+    }
+
+    @Override
+    public SeoulNews findPreviousNews(int seoulId) {
+        // TODO Auto-generated method stub
+        return crawlerMapper.selectPreviousNews(seoulId);
+    }
+
+    @Override
+    public SeoulNews findNextNews(int seoulId) {
+        // TODO Auto-generated method stub
+        return crawlerMapper.selectNextNews(seoulId);
     }
 
     @Override

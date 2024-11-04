@@ -150,9 +150,9 @@ public class MemberController {
     public ResponseEntity<Map<String, Object>> searchMembers(
         @RequestParam(required = false) String searchTerm,
         @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int size) {
+        @RequestParam(defaultValue = "5") int limit) {
             // 검색 시 항상 첫 페이지부터 결과를 반환
-            Map<String, Object> result = memberService.searchMembers(searchTerm, 1, size);
+            Map<String, Object> result = memberService.searchMembers(searchTerm, 1, limit);
 
             return ResponseEntity.ok(result);
     }

@@ -12,7 +12,7 @@ import com.zd.back.exchange.model.Exchange;
 import com.zd.back.exchange.model.ExchangeResponse;
 import com.zd.back.exchange.service.ExchangeService;
 
-
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/exchange")
@@ -39,17 +39,21 @@ public class ExchangeController {
 
 
     @GetMapping("/list")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<ExchangeResponse> getExchanges(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "15") int size) {
         
+            //System.out.println("page : " + page);
+            //System.out.println("size : " + size);
+
         List<Exchange> exchanges = exchangeService.getExchanges(page, size);
         int totalElements = exchangeService.getDataCount();
        
         ExchangeResponse response = new ExchangeResponse(exchanges, totalElements);
 
         return ResponseEntity.ok(response);
-    }
+    } 
 
 
 }

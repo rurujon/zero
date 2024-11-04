@@ -22,4 +22,6 @@ public interface CrawlerService {
     List<SeoulNews> selectSeoulNewsGreen();
     int maxNum();
     Map<String,Object> selectBySeoulId(int seoulId);
+    SeoulNews findPreviousNews(int seoulId);
+    SeoulNews findNextNews(int seoulId);
 }

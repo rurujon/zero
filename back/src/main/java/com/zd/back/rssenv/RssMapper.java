@@ -17,4 +17,6 @@ public interface RssMapper {
     List<RssItem> selectMini();
     int maxRssId();
     RssItem selectByRssId(int rssId) throws Exception;
+    RssItem selectPreviousNews(int rssId);
+    RssItem selectNextNews(int rssId);
 }

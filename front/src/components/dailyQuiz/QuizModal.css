@@ -7,9 +7,10 @@
     height: 60%;
     width: 40%;
     animation: modal-bg-show 0.3s;
-    border-radius: 5%;
+    /* border-radius: 5%; */
+    border-radius: 15px;
     transform: translate(-50%, -50%);
-    background-color: rgba(0,0,0,0.02);
+    background-color: #f8f9fa;
     padding: 20px; /* 패딩 추가 */
     box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -37,7 +38,7 @@
     /* align-items: center; */
     animation: modal-bg-show 0.3s;
 
-    border-radius: 5%;
+    border-radius: 15px;
     backdrop-filter: blur(10px);
     transform: translate(-50%, -50%);
     background-color: rgba(0,0,0,0.02);
@@ -118,7 +119,7 @@
 
 
 
-    border-radius: 5%;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
 
@@ -134,8 +135,8 @@
     margin: auto;
 
     padding-bottom: 0%;
-    box-shadow: 5px 5px 2.5px rgba(0, 0, 0, 0.3);
-    border-radius: 5%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
 
     display: flex;
     flex-direction: row;
@@ -219,7 +220,7 @@
     width: 90%;
 
     align-items: center;
-    box-shadow: 5px 5px 2.5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5%;
 }
 
