@@ -29,19 +29,27 @@ const ExCreated = () => {
             alert('로그인이 필요합니다.');
             navigate('/login');
         } else {
-            axios.get(`/api/exchange/member/${memId}`)
-                .then(response => {
-                    const memberData = response.data;
-                    setPost(memberData.post);
-                    setAddr1(memberData.addr1);
-                    setLoading(false);
-                })
-                .catch(error => {
-                    console.error('회원 정보 가져오기 오류:', error);
-                    setLoading(false);
-                });
+            setLoading(false);
         }
-    }, [token, navigate, memId]);
+    }, [token, navigate]);
+
+        const handleSenderInfo = async () => {
+
+            try {
+                const response = await axios.get('/exchange/info', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const memberData = response.data;
+                console.log(memberData);
+                setSender(memberData.memName);
+                setPost(memberData.post);
+                setAddr1(memberData.addr1);
+                setAddr2(memberData.addr2);
+                setLoading(false);
+            } catch (error) {
+                console.error('회원 정보 가져오기 오류:', error);
+            }
+        };
 
     const handleTextReset = () => {
         setTitle('');
@@ -142,6 +150,27 @@ const ExCreated = () => {
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>제목:</label>
                     <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
                 </div>
+                {/* 이미지 영역*/}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                    <img 
+                        src="/exchange/ex1.png" 
+                        alt="교환 이미지 1" 
+                        style={{ width: '32%', height: 'auto', borderRadius: '8px' }}
+                    />
+                    <img 
+                        src="/exchange/ex2.png" 
+                        alt="교환 이미지 2" 
+                        style={{ width: '32%', height: 'auto', borderRadius: '8px' }}
+                    />
+                    <img 
+                        src="/exchange/ex3.png" 
+                        alt="교환 이미지 3" 
+                        style={{ width: '32%', height: 'auto', borderRadius: '8px' }}
+                    />
+                </div>
+
+                <button type='button' onClick={handleSenderInfo} style={{ margin: '5px' }}>내 정보 불러오기</button>
+
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
                     <input type="text" value={sender} onChange={(evt) => setSender(evt.target.value)} ref={senderRef}  style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
