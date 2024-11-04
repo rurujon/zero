@@ -20,7 +20,7 @@ function ExList() {
                     page: 1,
                     size: 1000
                 }
-            });
+            }); 
             setExchanges(response.data.content);
             setSearchResults(response.data.content);
             setTotalItems(response.data.totalElements);
