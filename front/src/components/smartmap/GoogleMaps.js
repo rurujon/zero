@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
 import './GoogleMaps.css';
+import axios from "axios";
 
 const mapOptions = {
   styles: [
@@ -76,6 +77,17 @@ const GoogleMaps = () => {
     }
   }, []);
 
+  const updateMap = async () => {
+    try {
+      // 크롤링을 실행하는 API 호출
+      await axios.post('/api/smartMap/save');
+      alert('완료')
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleGuChange = (event) => {
 
     const selectedValue = event.target.value; // 선택된 구의 값
@@ -140,10 +152,13 @@ const GoogleMaps = () => {
     setVisibleCount(prevCount => prevCount + 9); // 9개씩 증가
   };
 
+
+
   
 
   return (
     <div className="map-container">
+      <button onClick={updateMap}>update Map</button> {/* 크롤링 버튼 추가 */}
       <div className="map-item">
         <LoadScript googleMapsApiKey="AIzaSyAXBLeEgcEIgMJkKLamUtOFbfsEqtvHgYA">
           <select className="gu-dropdown" value={selectedGu} onChange={handleGuChange}>
