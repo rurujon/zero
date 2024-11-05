@@ -10,16 +10,11 @@ function MainPageApp() {
 
     //const location = useLocation();
 
-    const images = [
-
-      '/images/banner.jpeg',
-      '/images/banner.jpeg'
-
-    ];
+    
 
     return (
       <div>
-        <BannerSlider images={images} interval={4000} />
+        <BannerSlider/>
         <div className="main_content_02">
           <MainPageNews/>
 
