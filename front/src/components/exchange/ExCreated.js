@@ -14,7 +14,7 @@ const ExCreated = () => {
     const { token, memId } = useContext(AuthContext);
 
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n');
+    const [content, setContent] = useState('상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n');
     const [sender, setSender] = useState('제로동행');   
     const [receiver, setReceiver] = useState('');   
 
@@ -22,15 +22,15 @@ const ExCreated = () => {
     const [addr1, setAddr1] = useState('');
     const [addr2, setAddr2] = useState('');
     const [tel, setTel] = useState('');
+    const [selec, setSelec] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const [selectedImage, setSelectedImage] = useState(null);
 
     const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n';
 
     useEffect(() => {
         if (!token) { 
-            alert('로그인이 필요합니다.');
+            alert('로그인한 사용자만 게시글을 작성 할 수 있습니다.');
             navigate('/login');
         } else {
             setLoading(false);
@@ -64,14 +64,14 @@ const ExCreated = () => {
         setAddr1('');
         setAddr2('');
         setTel('');
-        setSelectedImage(null);
+        setSelec(null);
     };
 
     const handleInsertSubmit = async (evt) => {
         evt.preventDefault();
 
         if (validateForm()) {
-            const formData = new FormData();
+            const formData = new FormData();        
             formData.append('memId', memId);
             formData.append('title', title);
             formData.append('sender', sender);
@@ -81,6 +81,7 @@ const ExCreated = () => {
             formData.append('addr1', addr1);
             formData.append('addr2', addr2);
             formData.append('tel', tel);
+            formData.append('selec', selec === null ? 3 : selec);
 
             try {
                 const response = await axios.post('/exchange/created', formData);
@@ -139,16 +140,16 @@ const ExCreated = () => {
     };
 
     const handleImageClick = (imageNumber) => {
-        setSelectedImage(imageNumber);
+        setSelec(imageNumber);
         switch(imageNumber) {
             case 1:
-                setContent("1번 : 돌고래 장바구니\n\n");
+                setContent("1번 : 돌고래 장바구니 ||\n\n");
                 break;
             case 2:
-                setContent("2번 : 판다 장바구니\n\n");
+                setContent("2번 : 판다 장바구니 ||\n\n");
                 break;
             case 3:
-                setContent("3번 : 펭귄 장바구니\n\n");
+                setContent("3번 : 펭귄 장바구니 ||\n\n");
                 break;
             default:
                 setContent(defaultMessage);
@@ -186,8 +187,8 @@ const ExCreated = () => {
                             borderRadius: '8px',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            border: selectedImage === 1 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selectedImage === 1 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                            border: selec === 1 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selec === 1 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
                         }}
                     />
                     <img 
@@ -200,8 +201,8 @@ const ExCreated = () => {
                             borderRadius: '8px',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            border: selectedImage === 2 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selectedImage === 2 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                            border: selec === 2 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selec === 2 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
                         }}
                     />
                     <img 
@@ -214,8 +215,8 @@ const ExCreated = () => {
                             borderRadius: '8px',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            border: selectedImage === 3 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selectedImage === 3 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                            border: selec === 3 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selec === 3 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
                         }}
                     />
                 </div>
