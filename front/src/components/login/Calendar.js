@@ -11,21 +11,16 @@ const Calendar = ({ memId }) => {
             const response = await axios.get(`/attendance/dates`, {
                 params: { memId }
             });
-            console.log('출석 데이터:', response.data); // 응답 데이터 로그 출력
+            console.log('출석 데이터:', response.data);
             setAttendanceData(response.data.map(date => new Date(date)));
         } catch (error) {
             console.error('출석 데이터 조회 실패:', error);
         }
     };
 
-
     useEffect(() => {
         fetchAttendanceData();
-    }, [date, memId]); // 의존성 배열에 필요한 값만 포함
-
-    // useEffect(() => {
-    //     fetchAttendanceData();
-    // }, [fetchAttendanceData]);
+    }, [date, memId]);
 
     const getDaysInMonth = (year, month) => {
         return new Date(year, month + 1, 0).getDate();
@@ -52,17 +47,25 @@ const Calendar = ({ memId }) => {
             days.push(<td key={`empty-${i}`} className="empty"></td>);
         }
 
+        const today = new Date();
         for (let day = 1; day <= daysInMonth; day++) {
             const currentDate = new Date(date.getFullYear(), date.getMonth(), day);
-            const isAttended = attendanceData.some(att => {
-                // 날짜만 비교하도록 수정
-                return att.getFullYear() === currentDate.getFullYear() &&
-                       att.getMonth() === currentDate.getMonth() &&
-                       att.getDate() === currentDate.getDate();
-            });
+            const isAttended = attendanceData.some(att =>
+                att.getFullYear() === currentDate.getFullYear() &&
+                att.getMonth() === currentDate.getMonth() &&
+                att.getDate() === currentDate.getDate()
+            );
+            const isPast = currentDate < today;
+
+            let className = 'day';
+            if (isAttended) {
+                className += ' attended';
+            } else if (isPast) {
+                className += ' not-attended';
+            }
 
             days.push(
-                <td key={day} className={`day ${isAttended ? 'attended' : 'not-attended'}`}>
+                <td key={day} className={className}>
                     {day}
                 </td>
             );
@@ -70,8 +73,6 @@ const Calendar = ({ memId }) => {
 
         return days;
     };
-
-
 
     const weeks = [];
     const days = renderCalendar();
@@ -100,6 +101,16 @@ const Calendar = ({ memId }) => {
                 </thead>
                 <tbody>{weeks}</tbody>
             </table>
+            <div className="calendar-legend">
+                <div className="legend-item">
+                    <span className="legend-color attended"></span>
+                    <span className="legend-text">출석</span>
+                </div>
+                <div className="legend-item">
+                    <span className="legend-color not-attended"></span>
+                    <span className="legend-text">미출석</span>
+                </div>
+            </div>
         </div>
     );
 };
