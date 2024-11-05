@@ -15,7 +15,7 @@ const Recycling = () => {
         <div style={{display:'flex', justifyContent:'center', flexDirection:'row'}}>
           <div style={{width:'45%'}}>
             <img src='/images/zerodonghaeng/recyclepet.jpg' alt='recycle'
-            style={{height:'400px'}}/>
+            style={{height:'px'}}/>
           </div>
           <div style={{width:'45%'}}>
             <h3 className='right-align'>리사이클링의 필요성</h3>
