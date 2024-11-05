@@ -23,29 +23,32 @@ const Upcycling = () => {
 
         <br/><br/>
         <hr/>
-        <br/><br/>
 
         <h3 style={{textAlign:'center'}}>업사이클링 아이디어</h3>
         <div className="image-container">
         
-        <div className="image1">
-          <img src='/images/zerodonghaeng/Glass1.jpg' alt="Glass1" />
-        </div>
+          <div className='image1'>
+            <img src='/images/zerodonghaeng/Glass1.jpg' alt="Glass1" />
+          </div>
 
-        {/* 마우스를 올리면 image1을 숨기고 image2를 보이게 하는 중간 이미지 */}
-        <div className="upcycle">
-          <img src='/images/zerodonghaeng/upcycle.jpg' alt="Upcycle" />
-        </div>
+          {/* 마우스를 올리면 image1을 숨기고 image2를 보이게 하는 중간 이미지 */}
+          <div className='upcycle'>
+            <img src='/images/zerodonghaeng/upcycle.jpg' alt="Upcycle" />
+          </div>
 
-        {/* 호버 시 나타나는 이미지 */}
-        <div className="image2">
-          <img src='/images/zerodonghaeng/Glass2.jpg' alt="Glass2" />
-        </div>
+          {/* 호버 시 나타나는 이미지 */}
+          <div className='image2'>
+            <img src='/images/zerodonghaeng/Glass2.jpg' alt="Glass2" />
+          </div>
         
-      </div>
+        </div>
+        <br/><br/>
+
         <p>
-          업사이클링은 창의적인 접근으로 가능합니다. 예를 들어, 오래된 티셔츠로 에코백을 만들거나,
-          유리병을 화병으로 재활용하는 등의 작은 실천들이 업사이클링의 예입니다.
+          업사이클링은 창의적인 접근으로 가능합니다. <br/>
+          예를 들어, 오래된 티셔츠로 에코백을 만들거나,
+          유리병을 화병으로 재활용하는 등의 <br/>
+          작은 실천들이 업사이클링의 예입니다.
         </p>
       </div>
     );
