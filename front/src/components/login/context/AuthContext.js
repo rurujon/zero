@@ -55,7 +55,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
-            jwtDecode(newToken);
+            if (typeof newToken !== 'string') {
+                console.error('Token is not a string:', newToken);
+                throw new Error('Invalid token format');
+            }
+            const decoded = jwtDecode(newToken);
             setToken(newToken);
             setRefreshToken(newRefreshToken);
             setMemId(id);
@@ -68,6 +72,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Login failed:', error);
             logout();
+            throw error;
         }
     }, [logout]);
 

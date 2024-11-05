@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthContext } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = ({ onLoginSuccess }) => {
     const [memId, setMemId] = useState('');
     const [pwd, setPwd] = useState('');
     const { login } = useContext(AuthContext);
@@ -15,9 +15,17 @@ const LoginPage = () => {
         try {
             const response = await axios.post('/member/login', null, { params: { memId, pwd } });
             if (response.data.token && response.data.refreshToken) {
-                login(response.data.token, response.data.refreshToken, memId, response.data.role);
+                const token = response.data.token;
+                const refreshToken = response.data.refreshToken;
+                if (typeof token !== 'string' || typeof refreshToken !== 'string') {
+                    throw new Error('Invalid token format received from server');
+                }
+                await login(token, refreshToken, memId, response.data.role);
                 if (response.data.upPoint === "1") {
                     alert("출석이 인정되었습니다! +1 포인트");
+                }
+                if (onLoginSuccess) {
+                    onLoginSuccess(token, refreshToken, memId, response.data.role);
                 }
                 navigate('/mainpage');
             } else {
