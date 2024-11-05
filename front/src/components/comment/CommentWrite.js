@@ -67,12 +67,16 @@ function CommentWrite(props) {
 		}
 	};
 
+	const handleKeyDown = (event) => {
+        if (event.key === 'Enter') createComment();
+    };
+
 	return (
-		<div className="comment-section mx-auto col-6">
+		<div className="comment-section mx-auto">
 			{/* 프로필 이미지와 아이디, 댓글 추가 버튼 */}
 			<div className="d-flex align-items-center justify-content-between mb-2">
 				<div className="d-flex align-items-center">
-					<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-2" style={{ width: '40px', height: '40px', borderRadius: '50%' }}/>
+					<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-3" style={{ width: '30px', height: '30px', borderRadius: '50%' }}/>
 					<span className="comment-id">{memId}</span>
 				</div>
 				<button className="btn btn-outline-secondary" onClick={createComment}>
@@ -85,12 +89,15 @@ function CommentWrite(props) {
 				<input
 					type="text"
 					className="form-control"
-					value={content} onChange={changeContent} 
+					value={content}
+					onChange={changeContent}
 					placeholder="댓글을 남겨주세요"
 					style={{ flex: 1 }}
+					onKeyDown={handleKeyDown}
 				/>
-			</div><br/><br/>
+			</div>
 		</div>
+
 	);
 }
 

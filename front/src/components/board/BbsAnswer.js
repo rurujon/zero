@@ -127,7 +127,7 @@ function BbsAnswer() {
 			</table>
 
 			<div className="my-5 d-flex justify-content-center">
-				<button className="btn btn-outline-secondary" onClick={createBbsAnswer}>
+				<button className="btn btn-dark" onClick={createBbsAnswer}>
 					<i className="fas fa-pen"></i>등록하기
 				</button>&nbsp;
 				<button className="btn btn-outline-secondary" onClick={cancelWrite}>

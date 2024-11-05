@@ -51,6 +51,12 @@ function BbsUpdate() {
 		}
 	};
 
+	const cancelWrite = () => {
+		const confirmed = window.confirm("게시물 작성을 취소하시겠습니까?");
+		if (!confirmed) return;
+		navigate(-1);
+	};
+
 	return (
 		<div>
 			<table className="table">
@@ -77,7 +83,8 @@ function BbsUpdate() {
 			</table>
 
 			<div className="my-3 d-flex justify-content-center">
-				<button className="btn btn-dark" onClick={updateBoard}><i className="fas fa-pen"></i> 수정하기</button>
+				<button className="btn btn-dark" onClick={updateBoard}><i className="fas fa-pen"></i> 수정하기</button>&nbsp;
+				<button className="btn btn-outline-secondary" onClick={cancelWrite}><i className="fas fa-pen"></i> 취소하기</button>
 			</div>
 		</div>
 	);

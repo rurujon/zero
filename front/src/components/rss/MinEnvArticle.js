@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import './RssArticle.css'
 
 function MinEnvArticle() {
@@ -11,6 +11,9 @@ function MinEnvArticle() {
 
     const [previous, setPrevious] = useState([]);
     const [next, setNext] = useState([]);
+
+    const location = useLocation();
+    const { previousPage } = location.state || {};  // 전달된 state가 없으면 undefined 처리
 
     // Axios GET 요청을 함수로 분리
     const fetchRssItem = async (id) => {
@@ -85,7 +88,7 @@ function MinEnvArticle() {
             </div>
 
             <div className='rss-list-button'>
-                <Link to="/minEnv">목록</Link>
+                <Link to="/minEnv" state={{previousPage}}>목록</Link>
             </div>
 
             <div className='rss-list-prev-next'>

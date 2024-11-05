@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext} from 'react';
 import axios from 'axios';
+import { AuthContext } from '../login/context/AuthContext';
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 
 function ExList() {
+    const { token } = useContext(AuthContext);
+
+
     const [exchanges, setExchanges] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);

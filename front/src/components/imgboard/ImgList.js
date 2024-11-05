@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '../login/context/AuthContext';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import '../board/page.css';
+import { AuthContext } from '../login/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function ImgList() {
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
+
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0); // 총 게시물 수
@@ -16,9 +16,8 @@ function ImgList() {
 
     const [searchKey, setSearchKey] = useState('title'); // 기본 검색 항목
     const [searchValue, setSearchValue] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([]); //검색결과
 
-    // 토큰 검증을 위한 별도의 useEffect
     useEffect(() => {
         if (!token) {
             alert('로그인이 필요한 서비스입니다.');
@@ -27,60 +26,28 @@ function ImgList() {
         }
     }, [token, navigate]);
 
-    // 데이터 fetching을 위한 useEffect
-    useEffect(() => {
-        let isMounted = true;  // 컴포넌트 마운트 상태 추적
-
-        const fetchData = async () => {
-            if (!token) return;  // 토큰이 없으면 fetch 하지 않음
-            
-            try {
-                const response = await axios.get('/imgboard/list', {
-                    params: {
-                        page: currentPage,
-                        size: itemsPerPage
-                    },
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (isMounted) {  // 컴포넌트가 마운트된 상태일 때만 상태 업데이트
-                    setImgPosts(response.data.content);
-                    setSearchResults(response.data.content);
-                    setTotalItems(response.data.totalElements);
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.error('이미지를 찾을 수 없습니다.', error);
-                if (error.response?.status === 401) {
-                    alert('로그인이 필요한 서비스입니다.');
-                    navigate('/login');
-                }
+    // 전체 이미지 게시물을 가져오는 함수
+    const fetchImgPosts = async () => { 
+        try {
+            const response = await axios.get('/imgboard/list', {
+                params: { page: 1, size: 1000 },
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            setImgPosts(response.data.content);
+            setSearchResults(response.data.content); // 초기 검색 결과는 전체 게시물
+            setTotalItems(response.data.totalElements);
+        } catch (error) {
+            console.error('이미지를 찾을 수 없습니다.', error);
+            if (error.response?.status === 401) {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
             }
-        };
+        }
+    };
 
-        fetchData();
-
-        // 클린업 함수
-        return () => {
-            isMounted = false;  // 컴포넌트 언마운트 시 상태 업데이트 방지
-        };
-    }, [currentPage, token, itemsPerPage, navigate]);
-
-    // 로딩 상태 표시
-    if (loading) {
-        return (
-            <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '100vh' 
-            }}>
-                <p>데이터를 불러오는 중입니다...</p>
-            </div>
-        );
-    }
+    useEffect(() => {
+        fetchImgPosts(); // 컴포넌트가 마운트될 때 모든 데이터 로드
+    }, []);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -90,9 +57,9 @@ function ImgList() {
     const handleSearch = () => {
         const filtered = imgPosts.filter(board => {
             switch (searchKey) {
-                case 'cate':
-                    return board.imgPost.cate === searchValue;  
-                case 'memId':
+                case 'cate': 
+                    return searchValue === "" ? true : board.imgPost.cate === searchValue;  
+                    case 'memId':
                     return board.imgPost.memId.includes(searchValue);
                 case 'title':
                     return board.imgPost.title.includes(searchValue);
@@ -196,7 +163,6 @@ function ImgList() {
                             {board.images && board.images.length > 0 ? (
                                 board.images.map((img) => (
                                     <img
-                                        loading="lazy"
                                         key={img.imgId}
                                         src={`/images/imgboard/${img.saveFileName}`}
                                         alt={img.saveFileName}
@@ -215,8 +181,20 @@ function ImgList() {
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
-                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '1px' }}>
-                            <p style={{ color: '#fff' }}>인증 승인: {getAuthLabel(board.imgPost.auth)}</p>
+                        <div style={{ 
+                            border: '2px solid red', 
+                            backgroundColor: board.imgPost.auth === 0 ? '#D5D5D5' : '#47C83E', 
+                            padding: '5px', 
+                            textAlign: 'left', 
+                            marginTop: '1px',
+                            width: '50%'
+                        }}>
+                            <p style={{ 
+                                color: '#fff',
+                                margin: 0
+                            }}>
+                                인증 승인: {getAuthLabel(board.imgPost.auth)}
+                            </p>
                         </div>
                         <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
                         <p>작성자: {board.imgPost.memId}</p>

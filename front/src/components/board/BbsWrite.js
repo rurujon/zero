@@ -158,7 +158,7 @@ function BbsWrite() {
 			</table>
 
 			<div className="my-5 d-flex justify-content-center">
-				<button className="btn btn-outline-secondary" onClick={insertBoard} disabled={loading}>
+				<button className="btn btn-dark" onClick={insertBoard} disabled={loading}>
 					<i className="fas fa-pen"></i> {loading ? "등록 중..." : "등록하기"}
 				</button>&nbsp;
 				<button className="btn btn-outline-secondary" onClick={cancelWrite}>
