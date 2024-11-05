@@ -66,8 +66,12 @@ function BbsList() {
 
     return (
         <div>
-            {/* 검색 */}
-            <table className="search">
+            <div className="table-container">
+                {/* 테이블 제목과 설명 */}
+                <div className="table-header d-flex align-items-center justify-content-start">
+                    <h3 className="table-title">참여게시판</h3>
+                    <p className="table-description ms-3">여러분의 소중한 후기와 정보를 공유해 주세요.</p>
+                </div>
                 <tbody>
                     <tr className="category-filter">
                         <td>
@@ -95,20 +99,20 @@ function BbsList() {
                         </td>
                     </tr>
                 </tbody>
-            </table>
+
 
             <br />
 
             {/* 게시글 목록 */}
-            <table className="table table-hover">
+            <table className="table custom-table">
                 <thead>
                     <tr>
                         <th className="col-1">번호</th>
                         <th className="col-2">카테고리</th>
                         <th className="col-5">제목</th>
                         <th className="col-1">작성자</th>
-                        <th className="col-1">조회수</th>
-                        <th className="col-2">등록일</th>
+                        <th className="col-1">조회</th>
+                        <th className="col-2">작성일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,6 +121,7 @@ function BbsList() {
                     ))}
                 </tbody>
             </table>
+        </div>
 
             {/* 페이지네이션 */}
             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -146,9 +151,10 @@ function TableRow(props) {
 
     return (
         <tr>
-            <th>{props.cnt}</th>
+            
             {board.del === 0 ? (
                 <>
+                    <th>{board.boardno}</th>
                     <td>[{board.category}]</td>
                     <td>
                         <Arrow depth={board.depth} />
@@ -171,6 +177,7 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
+                    <td></td>
                     <td></td>
                     <td>
                         <Arrow depth={board.depth} />

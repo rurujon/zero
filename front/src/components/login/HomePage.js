@@ -49,6 +49,11 @@ const HomePage = () => {
         navigate('/register');
     };
 
+    const handleLoginSuccess = useCallback(() => {
+        setShowLogin(false);
+        setIsLoggedIn(true);
+    }, []);
+
     return (
         <div className='mini_login_wrap'>
             {!isLoggedIn ? (
@@ -78,7 +83,7 @@ const HomePage = () => {
                             }}
                         >
                             <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
-                                <LoginPage onLogin={login} />
+                                <LoginPage onLoginSuccess={handleLoginSuccess} />
                                 <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
                             </div>
                         </div>
@@ -96,11 +101,9 @@ const HomePage = () => {
                     <h4>안녕하세요, {memId}님.</h4>
                     <h4>오늘도 행복한 하루되세요.</h4>
 
-                    {/* <QuizModal /> */}
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
-                    <button onClick={''} className="btn btn-primary">일일퀴즈</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
