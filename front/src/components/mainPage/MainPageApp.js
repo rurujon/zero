@@ -3,17 +3,28 @@ import HomePage from "../login/HomePage";
 import React from "react";
 import MainPageNews from "./MainPageNews";
 import "./MainPage.css"
+import BannerSlider from "./BannerSlider";
 
 
 function MainPageApp() {
 
-  //const location = useLocation();
+    //const location = useLocation();
+
+    const images = [
+
+      '/images/banner.jpeg',
+      '/images/banner.jpeg'
+
+    ];
 
     return (
-      <div className="main_content_02">
-        <MainPageNews/>
+      <div>
+        <BannerSlider images={images} interval={4000} />
+        <div className="main_content_02">
+          <MainPageNews/>
 
-        <HomePage/>
+          <HomePage/>
+        </div>
       </div>
     );
 }

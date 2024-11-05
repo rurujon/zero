@@ -164,12 +164,12 @@ function BbsDetail() {
                         <td>[{board.category}]</td>
                     </tr>
                     <tr>
-                        <th>작성자</th>
-                        <td>{board.memId}</td>
-                    </tr>
-                    <tr>
                         <th>제목</th>
                         <td>{board.title}</td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td>{board.memId}</td>
                     </tr>
                     <tr>
                         <th>작성일</th>
