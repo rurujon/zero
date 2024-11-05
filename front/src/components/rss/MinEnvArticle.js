@@ -26,10 +26,9 @@ function MinEnvArticle() {
     // useEffect에서 분리된 fetchRssItem을 호출
     useEffect(() => {
         if (rssId) {
-            fetchRssItem(rssId); // rssId가 있을 때만 호출
-            previousNews(rssId);
+            fetchRssItem(rssId); // 데이터 가져오기
+            previousNews(rssId); // 이전/다음 뉴스 가져오기
             nextNews(rssId);
-
         }
     }, [rssId]); // rssId가 변경될 때마다 실행
 

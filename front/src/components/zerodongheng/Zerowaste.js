@@ -36,10 +36,11 @@ const Zerowaste = () => {
   //이벤트 리스너
   onEnd={(e)=> e.target.stopVideo(0)}/>  
   <br/><br/><br/>
-        <h2>제로 웨이스트의 원칙</h2>
+        <h2  className="right-align">제로 웨이스트의 원칙</h2>
         
-        <Sub1/>
-                    
+
+          <Sub1/>
+      
         <br/><br/><br/>
         <h2>제로 웨이스트 실천 방법</h2>
         <p>
