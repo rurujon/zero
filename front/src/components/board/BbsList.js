@@ -66,15 +66,12 @@ function BbsList() {
 
     return (
         <div>
-            {/* 검색 */}
-            <table className="search">
-                <thead>
-                    <tr>
-                        <th colSpan="4" className="table-header">
-                            <h3 className="table-title">&nbsp;참여게시판</h3><br/>
-                        </th>
-                    </tr>
-                </thead>
+            <div className="table-container">
+                {/* 테이블 제목과 설명 */}
+                <div className="table-header d-flex align-items-center justify-content-start">
+                    <h3 className="table-title">참여게시판</h3>
+                    <p className="table-description ms-3">여러분의 소중한 후기와 정보를 공유해 주세요.</p>
+                </div>
                 <tbody>
                     <tr className="category-filter">
                         <td>
@@ -102,12 +99,12 @@ function BbsList() {
                         </td>
                     </tr>
                 </tbody>
-            </table>
+
 
             <br />
 
             {/* 게시글 목록 */}
-            <table className="table table-hover">
+            <table className="table custom-table">
                 <thead>
                     <tr>
                         <th className="col-1">번호</th>
@@ -124,6 +121,7 @@ function BbsList() {
                     ))}
                 </tbody>
             </table>
+        </div>
 
             {/* 페이지네이션 */}
             <div className="d-flex justify-content-between align-items-center mb-2">
