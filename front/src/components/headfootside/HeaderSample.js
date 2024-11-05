@@ -69,22 +69,32 @@ const HeaderSample = () => {
     };
 
     const openQuizModal = () => {
-        if (memId) {
-            setIsQuizModalOpen(true);
-        } else {
-            alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
-            setShowLogin(true);
-        }
-    };
+      if (memId) {
+          setIsQuizModalOpen(true);
+      } else {
+          alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
+          setShowLogin(true);
+      }
+  };
 
-    const handleLoginClick = () => {
-        if (memId) {
-            logout();
-            navigate('/mainpage');
-        } else {
-            setShowLogin(true);
-        }
-    };
+  const handleLoginClick = () => {
+      if (memId) {
+          logout();
+          navigate('/mainpage');
+      } else {
+          setShowLogin(true);
+      }
+  };
+
+  const handleLoginSuccess = async (token, refreshToken, id, userRole) => {
+      try {
+          await login(token, refreshToken, id, userRole);
+          setShowLogin(false);
+      } catch (error) {
+          console.error('Login failed:', error);
+          alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      }
+  };
 
     return (
         <div className='header'>
@@ -143,10 +153,7 @@ const HeaderSample = () => {
                     }}
                 >
                     <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
-                        <LoginPage onLogin={(token, refreshToken, id, userRole) => {
-                            login(token, refreshToken, id, userRole);
-                            setShowLogin(false);
-                        }} />
+                        <LoginPage onLoginSuccess={handleLoginSuccess} />
                         <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
                     </div>
                 </div>
