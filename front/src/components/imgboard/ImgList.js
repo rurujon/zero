@@ -16,7 +16,7 @@ function ImgList() {
 
     const [searchKey, setSearchKey] = useState('title'); // 기본 검색 항목
     const [searchValue, setSearchValue] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([]); //검색결과
 
     useEffect(() => {
         if (!token) {
@@ -30,13 +30,8 @@ function ImgList() {
     const fetchImgPosts = async () => { 
         try {
             const response = await axios.get('/imgboard/list', {
-                params: {
-                    page: 1, // 첫 페이지를 기본으로 가져옴
-                    size: 1000 // 충분히 큰 수로 전체 데이터를 가져옴
-                },
-                headers: {
-                    'Authorization': `Bearer ${token}` // 토큰 추가
-                }
+                params: { page: 1, size: 1000 },
+                headers: { 'Authorization': `Bearer ${token}` }
             });
             setImgPosts(response.data.content);
             setSearchResults(response.data.content); // 초기 검색 결과는 전체 게시물
@@ -62,9 +57,9 @@ function ImgList() {
     const handleSearch = () => {
         const filtered = imgPosts.filter(board => {
             switch (searchKey) {
-                case 'cate':
-                    return board.imgPost.cate === searchValue;  
-                case 'memId':
+                case 'cate': 
+                    return searchValue === "" ? true : board.imgPost.cate === searchValue;  
+                    case 'memId':
                     return board.imgPost.memId.includes(searchValue);
                 case 'title':
                     return board.imgPost.title.includes(searchValue);
@@ -186,8 +181,20 @@ function ImgList() {
                                 <p>등록된 이미지가 없습니다.</p>
                             )}
                         </div>
-                        <div style={{ border: '2px solid red', backgroundColor: 'gray', padding: '5px', textAlign: 'center', marginTop: '1px' }}>
-                            <p style={{ color: '#fff' }}>인증 승인: {getAuthLabel(board.imgPost.auth)}</p>
+                        <div style={{ 
+                            border: '2px solid red', 
+                            backgroundColor: board.imgPost.auth === 0 ? '#D5D5D5' : '#47C83E', 
+                            padding: '5px', 
+                            textAlign: 'left', 
+                            marginTop: '1px',
+                            width: '50%'
+                        }}>
+                            <p style={{ 
+                                color: '#fff',
+                                margin: 0
+                            }}>
+                                인증 승인: {getAuthLabel(board.imgPost.auth)}
+                            </p>
                         </div>
                         <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
                         <p>작성자: {board.imgPost.memId}</p>

@@ -153,9 +153,7 @@ const ExArticle = () => {
             <div className="button-container" style={{ textAlign: 'center', marginTop: '20px' }}>
                 {((memId === article.memId && article.auth === 0) || memId === "suzi123") && (
                     <>
-                        <button className="action-button" onClick={() => window.location.href = `/exchange/updated?exchangeId=${exchangeId}`} style={{ margin: '5px' }}>
-                            수정하기
-                        </button>
+                        
                         <button className="action-button" onClick={handleDelete} style={{ margin: '5px' }}>삭제하기</button>             
                     </>
                 )}         
