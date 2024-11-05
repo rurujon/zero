@@ -74,7 +74,7 @@ function Comment(props) {
 				<div className="d-flex align-items-center justify-content-between mb-1">
 					<div className="d-flex align-items-center">
 						{/* 프로필 이미지 */}
-						<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-3" style={{ width: '50px', height: '50px', borderRadius: '50%' }}/>
+						<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-3" style={{ width: '30px', height: '30px', borderRadius: '50%' }}/>
 
 						{/* 사용자 ID와 시간 */}
 						<span className="comment-id">{comment.memId}</span>&nbsp;&nbsp;
@@ -104,7 +104,7 @@ function Comment(props) {
 					<div className="mt-2">
 						<textarea
 							className="form-control"
-							rows="2"
+							rows="1"
 							value={content}
 							onChange={changeContent}
 						></textarea>
