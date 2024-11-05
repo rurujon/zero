@@ -26,4 +26,9 @@
     <select id="getExArticle" parameterType="int" resultType="com.zd.back.exchange.model.Exchange">
         SELECT * FROM exchange WHERE exchangeId = #{exchangeId}
     </select>
+
+    
+    <delete id="deleteExchange" parameterType="int">
+        DELETE FROM exchange WHERE exchangeId = #{exchangeId}
+    </delete>
 </mapper>
