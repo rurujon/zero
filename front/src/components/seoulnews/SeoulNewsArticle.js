@@ -118,14 +118,14 @@ function SeoulNewsArticle() {
             </div>
 
             <div className='seoul-list-prev-next'>
-                <Link to={`/seoulNewsArticle/${previous.seoulId}`}>
+                <Link to={`/seoulNewsArticle/${previous.seoulId}`} onClick={() => window.scrollTo(0, 0)}>
                     <img src='/images/previous.png' className='prev-img'></img>
                     <div className='seoul-prev-text'>
                         <p>이전글</p>
                         <p>{previous.title}</p>
                     </div>
                 </Link>
-                <Link to={`/seoulNewsArticle/${next.seoulId}`}> 
+                <Link to={`/seoulNewsArticle/${next.seoulId}`} onClick={() => window.scrollTo(0, 0)}> 
                     <div className='seoul-next-text'>
                         <p>다음글</p>
                         <p>{next.title}</p>
