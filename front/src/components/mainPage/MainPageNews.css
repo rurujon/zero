@@ -84,6 +84,7 @@
     width: 100%;
     background: #f1f8f9;
     border-radius: 15px;
+    min-height: 400px;
 }
 
 .board_tab_wrap .tab_content {
