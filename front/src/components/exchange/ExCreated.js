@@ -15,7 +15,7 @@ const ExCreated = () => {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n');
-    const [sender, setSender] = useState('');   
+    const [sender, setSender] = useState('제로동행');   
     const [receiver, setReceiver] = useState('');   
 
     const [post, setPost] = useState('');
@@ -37,7 +37,7 @@ const ExCreated = () => {
         }
     }, [token, navigate]);
 
-        const handleSenderInfo = async () => {
+        const handleReceiverInfo = async () => {
 
             try {
                 const response = await axios.get('/exchange/info', {
@@ -45,7 +45,8 @@ const ExCreated = () => {
                 });
                 const memberData = response.data;
                 console.log(memberData);
-                setSender(memberData.memName);
+                setSender('제로동행');
+                setReceiver(memberData.memName);
                 setPost(memberData.post);
                 setAddr1(memberData.addr1);
                 setAddr2(memberData.addr2);
@@ -57,7 +58,6 @@ const ExCreated = () => {
 
     const handleTextReset = () => {
         setTitle('');
-        setSender('');
         setReceiver('');
         setContent(defaultMessage);
         setPost('');
@@ -220,7 +220,7 @@ const ExCreated = () => {
                     />
                 </div>
 
-                <button type='button' onClick={handleSenderInfo} style={{ margin: '5px' }}>내 정보 불러오기</button>
+                <button type='button' onClick={handleReceiverInfo} style={{ margin: '5px' }}>내 정보 불러오기</button>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
