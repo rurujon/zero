@@ -10,7 +10,6 @@ import com.zd.back.imgboard.service.ImgManagerService;
 import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +62,7 @@ public class ImgBoardController {
     public ResponseEntity<ImgBoardResponse> getImgBoards(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "8") int size) {
+           
         
         List<ImgBoard> imgBoards = imgPostService.getImgBoards(page, size);
         int totalElements = imgPostService.getDataCount();

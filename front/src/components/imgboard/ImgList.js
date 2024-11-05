@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import '../board/page.css';
+import { AuthContext } from '../login/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function ImgList() {
+    const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0); // 총 게시물 수
@@ -13,6 +18,14 @@ function ImgList() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
+    useEffect(() => {
+        if (!token) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login');
+            return;
+        }
+    }, [token, navigate]);
+
     // 전체 이미지 게시물을 가져오는 함수
     const fetchImgPosts = async () => { 
         try {
@@ -20,6 +33,9 @@ function ImgList() {
                 params: {
                     page: 1, // 첫 페이지를 기본으로 가져옴
                     size: 1000 // 충분히 큰 수로 전체 데이터를 가져옴
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}` // 토큰 추가
                 }
             });
             setImgPosts(response.data.content);
@@ -27,6 +43,10 @@ function ImgList() {
             setTotalItems(response.data.totalElements);
         } catch (error) {
             console.error('이미지를 찾을 수 없습니다.', error);
+            if (error.response?.status === 401) {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
+            }
         }
     };
 

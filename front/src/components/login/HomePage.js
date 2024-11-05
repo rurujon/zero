@@ -100,6 +100,7 @@ const HomePage = () => {
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">My정보조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
+                    <button onClick={''} className="btn btn-primary">일일퀴즈</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>

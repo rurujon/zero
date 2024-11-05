@@ -93,7 +93,14 @@ const OrgApp = () => {
                                     <p className='card_content-description'>{org.description}</p>
                                     <p className='card_content-location'>Location: {org.location}</p>
                                 </div>
-                                <a href='' className='card-btn'>기부하기</a>
+                                <a
+                                    href={org.link !== '#' ? org.link : '#'}
+                                    className="card-btn"
+                                    target={org.link !== '#' ? '_blank' : '_self'}
+                                    rel="noopener noreferrer"
+                                    >
+                                    홈페이지
+                                </a>
                             </div>
                         </li>
                     ))}

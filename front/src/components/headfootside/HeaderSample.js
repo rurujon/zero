@@ -1,93 +1,90 @@
-import React, { useState } from 'react';
-// import { BrowserRouter as Link, Navigate } from "react-router-dom";
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import QuizModal from '../dailyQuiz/QuizModal';
+import { AuthContext } from '../login/context/AuthContext';
 import './HeaderSample.css';
-import { Link, Navigate } from 'react-router-dom';
-
-
+import LoginPage from '../login/LoginPage';
 
 const HeaderSample = () => {
-
-    const [isOpen, setIsopen] = useState(false); // 모달 상태 추가
+    const { memId, logout, login } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
-    // 각 메뉴에 대한 하위 메뉴 표시 여부를 관리하는 상태 변수
+    const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('');
-  
+
     const handleMouseEnter = (menuName) => {
-      setActiveMenu(menuName);
+        setActiveMenu(menuName);
     };
-  
+
     const handleMouseLeave = () => {
-      setActiveMenu('');
+        setActiveMenu('');
     };
-  
+
     const renderSubMenu = () => {
-      switch (activeMenu) {
-        case 'zero-donghaeng':
-          return (
-            <>
-              <Link to="/zerowaste">제로웨이스트 소개</Link>
-              <Link to="/recycling">리사이클링 소개</Link>
-              <Link to="/upcycling">업사이클링 소개</Link>
-              <Link to="/zerodongheng">팀 제로동행</Link>
-            </>
-          );
-        case 'eco-news':
-          return (
-            <>
-              <Link to="/naverNewsList">네이버 뉴스</Link>
-              <Link to="/minEnv">환경부 정책</Link>
-              <Link to="/seoulNews/All">서울시 뉴스</Link>
-              <Link to="/orgList">봉사단체</Link>
-            </>
-          );
-        case 'zero-news':
-          return (
-            <>
-              <Link to="/seoulNews/eco">에코</Link>
-              <Link to="/seoulNews/env">환경</Link>
-              <Link to="/seoulNews/air">기상</Link>
-              <Link to="/seoulNews/green">그린</Link>
-            </>
-          );
-        case 'zero-activity':
-          return (
-            <>
-              <Link to="/board/list">참여게시판</Link>
-              <Link to="/imgboard/list">인증게시판</Link>
-            </>
-          );
-        case 'zero-consumer':
-          return (
-            <>
-              <Link to="/googleMap">전체 상점</Link>
-              <Link to="/sub1">추천 상품</Link>
-            </>
-          );
-        default:
-          return null;
-      }
+        switch (activeMenu) {
+            case 'zero-donghaeng':
+                return (
+                    <>
+                        <Link to="/zerowaste">제로웨이스트 소개</Link>
+                        <Link to="/recycling">리사이클링 소개</Link>
+                        <Link to="/upcycling">업사이클링 소개</Link>
+                        <Link to="/zerodongheng">팀 제로동행</Link>
+                    </>
+                );
+            case 'eco-news':
+                return (
+                    <>
+                        <Link to="/naverNewsList">네이버 뉴스</Link>
+                        <Link to="/minEnv">환경부 정책</Link>
+                        <Link to="/seoulNews/All">서울시 뉴스</Link>
+                        <Link to="/orgList">봉사단체</Link>
+                    </>
+                );
+            case 'zero-news':
+                return (
+                    <>
+                        <Link to="/seoulNews/eco">에코</Link>
+                        <Link to="/seoulNews/env">환경</Link>
+                        <Link to="/seoulNews/air">기상</Link>
+                        <Link to="/seoulNews/green">그린</Link>
+                    </>
+                );
+            case 'zero-activity':
+                return (
+                    <>
+                        <Link to="/board/list">참여게시판</Link>
+                        <Link to="/imgboard/list">인증게시판</Link>
+                    </>
+                );
+            case 'zero-consumer':
+                return (
+                    <>
+                        <Link to="/googleMap">전체 상점</Link>
+                        <Link to="/exchange/list">추천 상품</Link>
+                    </>
+                );
+            default:
+                return null;
+        }
     };
+
     const openQuizModal = () => {
-      const memId = localStorage.getItem('memId'); // localStorage에서 memId 확인
-  
-      if (memId) {
-        setIsQuizModalOpen(true); // 로그인된 경우 모달 열기
-      } else {
-        alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
-        Navigate("/login"); // 로그인 페이지로 이동
-      }
+        if (memId) {
+            setIsQuizModalOpen(true);
+        } else {
+            alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
+            setShowLogin(true);
+        }
     };
-  
 
-  
-  
-    const navItemStyle = (menu) => ({
-      backgroundColor: activeMenu === menu ? '#111' : 'transparent', // 마우스 오버 시 배경색
-      transition: 'background-color 0.3s ease', // 부드러운 전환 효과
-      cursor: 'pointer', // 커서 모양 변경
-    });
-
+    const handleLoginClick = () => {
+        if (memId) {
+            logout();
+            navigate('/mainpage');
+        } else {
+            setShowLogin(true);
+        }
+    };
 
     return (
         <div className='header'>
@@ -101,20 +98,22 @@ const HeaderSample = () => {
                         </h1>
                         <nav className="bottom-nav">
                             <ul>
-                            {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
-                                <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}>
-                                {menu.replace('-', ' ').toUpperCase()}
-                                </li>
-                            ))}
+                                {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
+                                    <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}>
+                                        {menu.replace('-', ' ').toUpperCase()}
+                                    </li>
+                                ))}
                             </ul>
-
-                            
                         </nav>
                         <div>
                             <button onClick={openQuizModal}>퀴즈 열기</button>
                             <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
-                            <Link to="/mainpage"><img src='/images/home.png'></img></Link>
-                            <Link><img src='/images/login.png'></img></Link>
+                            <Link to="/mainpage"><img src='/images/home.png' alt="홈" /></Link>
+                            <img
+                                src={memId ? '/images/login/on.png' : '/images/login/off.png'}
+                                alt={memId ? "로그아웃" : "로그인"}
+                                onClick={handleLoginClick}
+                            />
                         </div>
                     </div>
                     {activeMenu && (
@@ -128,7 +127,30 @@ const HeaderSample = () => {
                     )}
                 </nav>
             </div>
-
+            {showLogin && (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 1000
+                    }}
+                >
+                    <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.25)' }}>
+                        <LoginPage onLogin={(token, refreshToken, id, userRole) => {
+                            login(token, refreshToken, id, userRole);
+                            setShowLogin(false);
+                        }} />
+                        <button onClick={() => setShowLogin(false)} className="btn btn-secondary mt-3">닫기</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

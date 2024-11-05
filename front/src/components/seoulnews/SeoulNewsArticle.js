@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import "./SeoulArticle.css";
 
@@ -13,6 +13,8 @@ function SeoulNewsArticle() {
     const [previous, setPrevious] = useState([]);
     const [next, setNext] = useState([]);
 
+    const location = useLocation();
+    const { previousPage, previousCategory } = location.state || {};  // 전달된 state가 없으면 undefined 처리
 
     // Axios GET 요청을 함수로 분리
     const fetchSeoulNews = async (id) => {
@@ -93,7 +95,12 @@ function SeoulNewsArticle() {
             {seoulNews && (
                 <div className="seoul-article-date">
                     <div className={`Article-NewsGroup ${className}`}>
-                        <p>{text}</p>
+                        <Link 
+                            to="/seoulNews/All" 
+                            state={{ previousCategory }}
+                        >
+                            <p>{text}</p>
+                        </Link>
                     </div>
                     <p>{seoulNews.publishedDate}</p>
                 </div>
@@ -102,7 +109,12 @@ function SeoulNewsArticle() {
             <div className='post_content' dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
             <div className='seoul-list-button'>
-                <Link to="/seoulNews/All">목록</Link>
+                <Link 
+                    to="/seoulNews/All" 
+                    state={{ previousPage, previousCategory }}
+                >
+                    목록
+                </Link>
             </div>
 
             <div className='seoul-list-prev-next'>
