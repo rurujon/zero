@@ -14,7 +14,7 @@ const ExCreated = () => {
     const { token, memId } = useContext(AuthContext);
 
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState('상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n');
     const [sender, setSender] = useState('');   
     const [receiver, setReceiver] = useState('');   
 
@@ -24,34 +24,47 @@ const ExCreated = () => {
     const [tel, setTel] = useState('');
     const [loading, setLoading] = useState(true);
 
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n';
+
     useEffect(() => {
         if (!token) { 
             alert('로그인이 필요합니다.');
             navigate('/login');
         } else {
-            axios.get(`/api/exchange/member/${memId}`)
-                .then(response => {
-                    const memberData = response.data;
-                    setPost(memberData.post);
-                    setAddr1(memberData.addr1);
-                    setLoading(false);
-                })
-                .catch(error => {
-                    console.error('회원 정보 가져오기 오류:', error);
-                    setLoading(false);
-                });
+            setLoading(false);
         }
-    }, [token, navigate, memId]);
+    }, [token, navigate]);
+
+        const handleSenderInfo = async () => {
+
+            try {
+                const response = await axios.get('/exchange/info', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const memberData = response.data;
+                console.log(memberData);
+                setSender(memberData.memName);
+                setPost(memberData.post);
+                setAddr1(memberData.addr1);
+                setAddr2(memberData.addr2);
+                setLoading(false);
+            } catch (error) {
+                console.error('회원 정보 가져오기 오류:', error);
+            }
+        };
 
     const handleTextReset = () => {
         setTitle('');
         setSender('');
         setReceiver('');
-        setContent('');
+        setContent(defaultMessage);
         setPost('');
         setAddr1('');
         setAddr2('');
         setTel('');
+        setSelectedImage(null);
     };
 
     const handleInsertSubmit = async (evt) => {
@@ -125,6 +138,25 @@ const ExCreated = () => {
         }).open();
     };
 
+    const handleImageClick = (imageNumber) => {
+        setSelectedImage(imageNumber);
+        switch(imageNumber) {
+            case 1:
+                setContent("1번 : 돌고래 장바구니\n\n");
+                break;
+            case 2:
+                setContent("2번 : 판다 장바구니\n\n");
+                break;
+            case 3:
+                setContent("3번 : 펭귄 장바구니\n\n");
+                break;
+            default:
+                setContent(defaultMessage);
+                break;
+        }
+        contentRef.current?.focus();
+    };
+
     if (loading) {
         return <p>로딩 중...</p>;
     }
@@ -142,6 +174,54 @@ const ExCreated = () => {
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>제목:</label>
                     <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
                 </div>
+                {/* 이미지 영역*/}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                    <img 
+                        src="/exchange/ex1.png" 
+                        alt="교환 이미지 1" 
+                        onClick={() => handleImageClick(1)}
+                        style={{ 
+                            width: '32%', 
+                            height: 'auto', 
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            border: selectedImage === 1 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selectedImage === 1 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                        }}
+                    />
+                    <img 
+                        src="/exchange/ex2.png" 
+                        alt="교환 이미지 2" 
+                        onClick={() => handleImageClick(2)}
+                        style={{ 
+                            width: '32%', 
+                            height: 'auto', 
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            border: selectedImage === 2 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selectedImage === 2 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                        }}
+                    />
+                    <img 
+                        src="/exchange/ex3.png" 
+                        alt="교환 이미지 3" 
+                        onClick={() => handleImageClick(3)}
+                        style={{ 
+                            width: '32%', 
+                            height: 'auto', 
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            border: selectedImage === 3 ? '3px solid #007bff' : '3px solid transparent',
+                            boxShadow: selectedImage === 3 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
+                        }}
+                    />
+                </div>
+
+                <button type='button' onClick={handleSenderInfo} style={{ margin: '5px' }}>내 정보 불러오기</button>
+
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
                     <input type="text" value={sender} onChange={(evt) => setSender(evt.target.value)} ref={senderRef}  style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
@@ -173,8 +253,26 @@ const ExCreated = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>배송 메세지:</label>
-                    <textarea value={content} onChange={(evt) => setContent(evt.target.value)} ref={contentRef} style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>요청 및 <br/> 배송 메세지:</label>
+                    <textarea 
+                        value={content} 
+                        onChange={(evt) => {
+                            const newContent = evt.target.value;
+                            if (!newContent.trim()) {
+                                setContent(defaultMessage);
+                            } else if (newContent !== defaultMessage) {
+                                setContent(newContent);
+                            }
+                        }}
+                        ref={contentRef} 
+                        style={{ 
+                            flex: '1', 
+                            padding: '8px', 
+                            border: '1px solid #ccc', 
+                            minHeight: '100px',
+                            color: content === defaultMessage ? '#888' : '#000'
+                        }} 
+                    />
                 </div>
 
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>

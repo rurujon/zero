@@ -61,7 +61,7 @@ const HeaderSample = () => {
           return (
             <>
               <Link to="/googleMap">전체 상점</Link>
-              <Link to="/sub1">추천 상품</Link>
+              <Link to="/exchange/list">추천 상품</Link>
             </>
           );
         default:
