@@ -122,7 +122,7 @@ const HeaderSample = () => {
                                 <img
                                     src={logos[currentLogoIndex]}
                                     alt="로고"
-                                    style={{width: '150px', height: 'auto'}}
+                                    style={{width: '250px', height: 'auto'}}
                                 />
                             </Link>
                         </h1>
