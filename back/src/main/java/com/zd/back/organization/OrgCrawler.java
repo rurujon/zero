@@ -1,5 +1,6 @@
 package com.zd.back.organization;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,13 @@ public class OrgCrawler {
                     imageUrl = style.split("url\\('")[1].split("'")[0]; // URL 추출
                 }
 
-                String link = "";
+                // 상세 페이지 URL 추출
+                String detailPath = article.select("a.ptg__actionworks__grantees__card__list-link").attr("href");
+                String detailUrl = "https://www.patagonia.co.kr" + detailPath;
+                
+
+                // detailUrl로 추가 크롤링을 통해 link 정보 가져오기
+                String link = getAdditionalLink(detailUrl);
 
                 int orgId = 0;
 
@@ -58,4 +65,25 @@ public class OrgCrawler {
 
         return orgLists;  // 추출된 데이터를 반환
     }
+
+    // detailUrl로 추가 정보를 가져오는 함수
+    public String getAdditionalLink(String detailUrl) {
+    try {
+        // detailUrl로 연결하여 문서 로드
+        Document detailDoc = Jsoup.connect(detailUrl).get();
+
+        // 링크를 가진 <a> 태그를 선택
+        Element linkElement = detailDoc.selectFirst("a.ptg__actionworks__grantees__content__btn-website.grantees-link");
+        
+        // 링크가 있는 경우 href 속성 추출, 없으면 빈 문자열 반환
+        if (linkElement != null) {
+            return linkElement.attr("href");
+        } else {
+            return ""; // 링크가 없을 경우 빈 문자열 반환
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return ""; // 에러 발생 시 빈 문자열 반환
+    }
+}
 }
