@@ -24,20 +24,12 @@
 }
 
 .Article-NewsGroup {
-	padding: 10px;
-	border-radius: 5px;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	max-width: 100px;
-	max-height: 40px;
-	left: 0;
-	top: 0;
-	margin-bottom: 0;
+
+  border-radius: 5px;
   }
   
   .Article-NewsGroup.env {
-	background-color: #4caf50; /* 기후환경 색상 */
+	background-color: #ff9800; /* 기후환경 색상 */
   }
   
   .Article-NewsGroup.eco {
@@ -49,13 +41,27 @@
   }
   
   .Article-NewsGroup.green {
-	background-color: #ff9800; /* 그린에너지 색상 */
+	background-color: #4caf50; /* 그린에너지 색상 */
   }
   
   .Article-NewsGroup.default {
 	background-color: #9e9e9e; /* 기타 색상 */
   }
 
+  .Article-NewsGroup a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: white;
+    display: inline-block; /* 버튼 모양을 위한 인라인 블록 */
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    max-width: 100px;
+    max-height: 40px;
+    left: 0;
+    top: 0;
+    margin-bottom: 0;
+  }
 
 
 /* 서울시 홈페이지 div 구조에 맞는 css */

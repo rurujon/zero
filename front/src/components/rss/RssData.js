@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './RssData.css'
 
 function RssData() {
     const [rssItems, setRssItems] = useState([]);
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const location = useLocation();
+    const { previousPage } = location.state || {};
+
+    const [currentPage, setCurrentPage] = useState(previousPage || 1);
     const [itemsPerPage] = useState(10); // 페이지당 항목 수
 
     const pagesPerGroup = 5; // 한 번에 표시할 페이지 버튼 개수
@@ -60,7 +63,7 @@ function RssData() {
         for (let i = groupStart; i <= groupEnd; i++) {
             pageNumbers.push(
                 <button 
-                    className='rss-PageButton'
+                    className={`rss-PageButton ${currentPage === i ? 'active' : ''}`}
                     key={i}
                     onClick={() => handlePageChange(i)}
                     disabled={i === currentPage}
@@ -92,8 +95,16 @@ function RssData() {
                             <div className={`rss-NewsGroup`}>
                                 <p>환경부</p>
                             </div>
-                            <Link to={`/minEnv/${item.rssId}`}><h3 className='rss-NewsLink'>{item.title}</h3></Link>
-                            <Link to={`/minEnv/${item.rssId}`}><p className='rss-NewsDescription'>{item.description}</p></Link>
+                            <Link 
+                                to={`/minEnv/${item.rssId}`}
+                                state={{ previousPage: currentPage }}>
+                                <h3 className='rss-NewsLink'>{item.title}</h3>
+                            </Link>
+                            <Link 
+                                to={`/minEnv/${item.rssId}`}
+                                state={{ previousPage: currentPage }}>
+                                <p className='rss-NewsDescription'>{item.description}</p>
+                            </Link>
                             <span className='rss-NewsDate'>등록일 : {item.pubDate}</span>
                         </li>
                     ))}

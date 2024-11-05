@@ -1,19 +1,24 @@
 // src/components/NewsList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './SeoulNews.css';
 
 const SeoulNews = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('all'); // 카테고리 상태 추가
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [itemsPerPage] = useState(10); // 페이지당 항목 수
   const [isActive, setIsActive] = useState(false);
 
   const pagesPerGroup = 10; // 한 번에 표시할 페이지 버튼 개수
+
+  const location = useLocation();
+  const { previousPage, previousCategory } = location.state || {};
+
+  const [selectedCategory, setSelectedCategory] = useState(previousCategory || 'all');
+  const [currentPage, setCurrentPage] = useState(previousPage || 1);
 
   useEffect(() => {
     fetchNews(); // 컴포넌트가 마운트될 때 뉴스 데이터를 가져옵니다.
@@ -95,7 +100,7 @@ const SeoulNews = () => {
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button 
-          className='PageButton'
+          className={`PageButton ${currentPage === i ? 'active' : ''}`}
           key={i}
           onClick={() => handlePageChange(i)}
           disabled={i === currentPage}
@@ -144,10 +149,16 @@ const SeoulNews = () => {
               <div className={`NewsGroup ${className}`}>
                 <p>{text}</p>
               </div>
-              <Link to={`/seoulNewsArticle/${news.seoulId}`}>
+              <Link 
+                to={`/seoulNewsArticle/${news.seoulId}`} 
+                state={{ previousPage: currentPage, previousCategory : selectedCategory }}
+              >
                 <h2 className='NewsLink'>{news.title}</h2>
               </Link>
-              <Link to={`/seoulNewsArticle/${news.seoulId}`}>
+              <Link 
+                to={`/seoulNewsArticle/${news.seoulId}`} 
+                state={{ previousPage: currentPage, previousCategory : selectedCategory }}
+              >
                 <p className='NewsDescription'>{news.content}</p>
               </Link>
               <p className='NewsDate'>{news.publishedDate}</p>
