@@ -21,6 +21,7 @@ const Zerowaste = () => {
           <div>
           </div>
           
+          <br/>
 
         <YouTube
   videoId={'ir_0L0hbdRw'}
@@ -35,13 +36,19 @@ const Zerowaste = () => {
   }}
   //이벤트 리스너
   onEnd={(e)=> e.target.stopVideo(0)}/>  
-  <br/><br/><br/>
+
+  <br/><br/>
+  <hr/>
+  <br/><br/>
+  
         <h2  className="right-align">제로 웨이스트의 원칙</h2>
         
 
           <Sub1/>
       
-        <br/><br/><br/>
+          <br/><br/>
+          <hr/>
+          <br/><br/>
         <h2>제로 웨이스트 실천 방법</h2>
         <p>
           제로 웨이스트를 실천하는 것은 작은 습관에서 시작할 수 있습니다. 

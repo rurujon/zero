@@ -45,3 +45,39 @@
     text-align: right; /* 텍스트를 오른쪽 정렬 */
     margin-right: 20px; /* 오른쪽 여백 추가 (필요에 따라 조정) */
   }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .image1 {
+    width: 183px;
+    height: 386px;
+    transition: opacity 0.8s ease-in-out;
+  }
+  
+  .upcycle {
+    width: 100px;
+    height: 200px;
+    transition: opacity 0.8s ease-in-out;
+  }
+  
+  .image2 {
+    width: 183px;
+    height: 386px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+  
+  /* upcycle에 마우스 호버 시 image1을 숨기고 image2를 표시 */
+  .upcycle:hover ~ .image1 {
+    opacity: 0;
+  }
+  
+  .upcycle:hover + .image2 {
+    opacity: 1;
+  }
+  
+  
