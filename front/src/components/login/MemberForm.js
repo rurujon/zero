@@ -6,7 +6,7 @@ import ValidationMessage from './ValidationMessage';
 import { validateField } from './utils/validating';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
-import './MemberForm.css'; // 새로운 CSS 파일 import
+import './MemberForm.css';
 
 const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
   const [member, setMember] = useState({
@@ -140,10 +140,15 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setMember(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+    setMember(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+
     if (name === 'memId') {
       setIsChecked(false);
     }
+
     if (name === 'tel' && isEditing) {
       if (value !== initialData.tel) {
         setIsPhoneVerificationRequired(true);
@@ -153,11 +158,13 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         setIsVerified(true);
       }
     }
+
     if (isEditing && name === 'pwd' && value.trim() === '') {
       setErrors(prev => ({...prev, pwd: undefined }));
     } else {
       const errorMessage = validateField(name, value);
       setErrors(prev => ({ ...prev, [name]: errorMessage || undefined }));
+
       if (!isEditing && (name === 'pwd' || name === 'pwdConfirm')) {
         if (name === 'pwd' && member.pwdConfirm && value !== member.pwdConfirm) {
           setErrors(prev => ({...prev, pwdConfirm: '비밀번호가 일치하지 않습니다.' }));
@@ -168,6 +175,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         }
       }
     }
+
     adjustWindowSize(window, {...member, [name]: type === 'checkbox' ? checked : value }, true, []);
   };
 
@@ -276,271 +284,280 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="member-form-container mt-5">
       <h2 className="text-center mb-4">{isEditing ? '회원정보 수정' : '회원가입'}</h2>
       {serverError && <div className="alert alert-danger">{serverError}</div>}
       {isLoading && <div className="alert alert-info">처리 중입니다...</div>}
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label className="form-label">아이디</Form.Label>
-          <Form.Control
-            type="text"
-            name="memId"
-            value={member.memId || ''}
-            onChange={handleInputChange}
-            readOnly={isEditing}
-            required
-          />
-          {!isEditing && (
-            <Button onClick={checkDuplicateId} className="btn btn-primary btn-sm mt-2">
-              중복 확인
-            </Button>
-          )}
-          {isChecked && (
-            <div>
-              {isDuplicate ? (
-                <span style={{ color:'red' }}>이미 사용 중인 아이디입니다.</span>
-              ) : (
-                <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
-              )}
-            </div>
-          )}
-          <ValidationMessage message={errors.memId} />
+        <Form.Group className="member-form-group">
+          <Form.Label className="member-form-label">아이디</Form.Label>
+          <div className="member-form-input-container">
+            <Form.Control
+              className="member-form-control"
+              type="text"
+              name="memId"
+              value={member.memId || ''}
+              onChange={handleInputChange}
+              readOnly={isEditing}
+              required
+            />
+            {!isEditing && (
+              <Button onClick={checkDuplicateId} className="btn btn-primary btn-sm mt-2">
+                ID중복 확인
+              </Button>
+            )}
+            {isChecked && (
+              <div>
+                {isDuplicate ? (
+                  <span style={{ color:'red' }}>이미 사용 중인 아이디입니다.</span>
+                ) : (
+                  <span style={{ color: 'green' }}>사용 가능한 아이디입니다.</span>
+                )}
+              </div>
+            )}
+            <ValidationMessage message={errors.memId} />
+          </div>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label className="form-label">비밀번호</Form.Label>
-          <Form.Control
-            type="password"
-            name="pwd"
-            placeholder={isEditing ? "비밀번호 (변경시에만 입력)" : "비밀번호"}
-            value={member.pwd || ''}
-            onChange={handleInputChange}
-            required={!isEditing}
-          />
-          <ValidationMessage message={errors.pwd} />
+        <Form.Group className="member-form-group">
+          <Form.Label className="member-form-label">비밀번호</Form.Label>
+          <div className="member-form-input-container">
+            <Form.Control
+              className="member-form-control"
+              type="password"
+              name="pwd"
+              placeholder={isEditing ? "비밀번호 (변경시에만 입력)" : "비밀번호"}
+              value={member.pwd || ''}
+              onChange={handleInputChange}
+              required={!isEditing}
+            />
+            <ValidationMessage message={errors.pwd} />
+          </div>
         </Form.Group>
 
         {!isEditing && (
-          <Form.Group className="mb-3">
-            <Form.Label className="form-label">비밀번호 재확인</Form.Label>
+          <Form.Group className="member-form-group">
+            <Form.Label className="member-form-label">비밀번호 재확인</Form.Label>
+            <div className="member-form-input-container">
             <Form.Control
-              type="password"
-              name="pwdConfirm"
-              placeholder="비밀번호 재확인"
-              value={member.pwdConfirm || ''}
-              onChange={handleInputChange}
-              required
-            />
-            <ValidationMessage message={errors.pwdConfirm} />
-          </Form.Group>
-        )}
+  className="member-form-control"
+  type="password"
+  name="pwdConfirm"
+  placeholder="비밀번호 재확인"
+  value={member.pwdConfirm || ''}
+  onChange={handleInputChange}
+  required
+/>
+<ValidationMessage message={errors.pwdConfirm} />
+</div>
+</Form.Group>
+)}
 
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">이름</Form.Label>
-  <div className="col-sm-10">
-    <Form.Control
-      type="text"
-      name="memName"
-      value={member.memName || ''}
-      onChange={handleInputChange}
-      required
-    />
-    <ValidationMessage message={errors.memName} />
-  </div>
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">이름</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="text"
+  name="memName"
+  value={member.memName || ''}
+  onChange={handleInputChange}
+  required
+/>
+<ValidationMessage message={errors.memName} />
+</div>
 </Form.Group>
 
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">이메일</Form.Label>
-  <div className="col-sm-10">
-    <Form.Control
-      type="email"
-      name="email"
-      value={member.email || ''}
-      onChange={handleInputChange}
-      required
-    />
-    {!isEditing && (
-      <Button onClick={checkDuplicateEmail} className="btn btn-primary btn-sm mt-2">
-        중복 확인
-      </Button>
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">이메일</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="email"
+  name="email"
+  value={member.email || ''}
+  onChange={handleInputChange}
+  required
+/>
+{!isEditing && (
+  <Button onClick={checkDuplicateEmail} className="btn btn-primary btn-sm mt-2">
+    Email중복 확인
+  </Button>
+)}
+{isEmailChecked && (
+  <div>
+    {isEmailDuplicate ? (
+      <span style={{ color: 'red' }}>이미 사용 중인 이메일입니다.</span>
+    ) : (
+      <span style={{ color: 'green' }}>사용 가능한 이메일입니다.</span>
     )}
-    {isEmailChecked && (
-      <div>
-        {isEmailDuplicate ? (
-          <span style={{ color: 'red' }}>이미 사용 중인 이메일입니다.</span>
-        ) : (
-          <span style={{ color: 'green' }}>사용 가능한 이메일입니다.</span>
-        )}
-      </div>
-    )}
-    <ValidationMessage message={errors.email} />
   </div>
+)}
+<ValidationMessage message={errors.email} />
+</div>
 </Form.Group>
 
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">핸드폰 번호</Form.Label>
-  <div className="col-sm-10">
-    <Form.Control
-      type="tel"
-      name="tel"
-      value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
-      placeholder={isEditing ? '(변경시에만 재인증)' : ''}
-      onChange={(e) => {
-        if (isEditing) {
-          if (isPhoneVerificationRequired) {
-            setPhoneNumber(e.target.value);
-          } else {
-            handleInputChange(e);
-          }
-        } else {
-          setPhoneNumber(e.target.value);
-          handleInputChange(e);
-        }
-      }}
-      readOnly={isEditing && !isPhoneVerificationRequired}
-    />
-    {isEditing && !isPhoneVerificationRequired && (
-      <Button onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">
-        핸드폰 재인증
-      </Button>
-    )}
-    {(isPhoneVerificationRequired || !isEditing) && (
-      <Button onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">
-        인증번호 발송
-      </Button>
-    )}
-    <ValidationMessage message={errors.tel} />
-  </div>
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">핸드폰 번호</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="tel"
+  name="tel"
+  value={isEditing ? (isPhoneVerificationRequired ? phoneNumber : member.tel) : phoneNumber}
+  placeholder={isEditing ? '(변경시에만 재인증)' : ''}
+  onChange={(e) => {
+    if (isEditing) {
+      if (isPhoneVerificationRequired) {
+        setPhoneNumber(e.target.value);
+      } else {
+        handleInputChange(e);
+      }
+    } else {
+      setPhoneNumber(e.target.value);
+      handleInputChange(e);
+    }
+  }}
+  readOnly={isEditing && !isPhoneVerificationRequired}
+/>
+{isEditing && !isPhoneVerificationRequired && (
+  <Button onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">
+    핸드폰 재인증
+  </Button>
+)}
+{(isPhoneVerificationRequired || !isEditing) && (
+  <Button onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">
+    인증번호 발송
+  </Button>
+)}
+<ValidationMessage message={errors.tel} />
+</div>
 </Form.Group>
 
 {(isPhoneVerificationRequired || !isEditing) && (
-  <Form.Group className="mb-3">
-    <Form.Label className="form-label">인증번호</Form.Label>
-    <div className="col-sm-10">
-      <Form.Control
-        type="text"
-        value={verificationCode}
-        onChange={(e) => setVerificationCode(e.target.value)}
-      />
-      <Button
-        onClick={handleVerifyCode}
-        className="btn btn-secondary btn-sm mt-2"
-        disabled={isVerified}
-      >
-        인증하기
-      </Button>
-    </div>
-  </Form.Group>
-)}
-
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">우편번호</Form.Label>
+<Form.Group className="member-form-group">
+  <Form.Label className="member-form-label">인증번호</Form.Label>
   <div className="col-sm-10">
     <Form.Control
+      className="member-form-control"
       type="text"
-      id="post"
-      name="post"
-      value={member.post || ''}
-      onChange={handleInputChange}
-      readOnly
-      required
+      value={verificationCode}
+      onChange={(e) => setVerificationCode(e.target.value)}
     />
-    <Button onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2">
-      우편번호 찾기
+    <Button
+      onClick={handleVerifyCode}
+      className="btn btn-secondary btn-sm mt-2"
+      disabled={isVerified}
+    >
+      인증하기
     </Button>
   </div>
 </Form.Group>
+)}
 
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">주소</Form.Label>
-  <div className="col-sm-10">
-    <Form.Control
-      type="text"
-      id="addr1"
-      name="addr1"
-      value={member.addr1 || ''}
-      onChange={handleInputChange}
-      required
-    />
-  </div>
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">우편번호</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="text"
+  id="post"
+  name="post"
+  value={member.post || ''}
+  onChange={handleInputChange}
+  readOnly
+  required
+/>
+<Button onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2">
+  우편번호 찾기
+</Button>
+</div>
 </Form.Group>
 
-<Form.Group className="mb-3">
-  <Form.Label className="form-label">상세주소</Form.Label>
-  <div className="col-sm-10">
-    <Form.Control
-      type="text"
-      id="addr2"
-      name="addr2"
-      value={member.addr2 || ''}
-      onChange={handleInputChange}
-      required
-    />
-  </div>
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">주소</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="text"
+  id="addr1"
+  name="addr1"
+  value={member.addr1 || ''}
+  onChange={handleInputChange}
+  required
+/>
+</div>
+</Form.Group>
+
+<Form.Group className="member-form-group">
+<Form.Label className="member-form-label">상세주소</Form.Label>
+<div className="col-sm-10">
+<Form.Control
+  className="member-form-control"
+  type="text"
+  id="addr2"
+  name="addr2"
+  value={member.addr2 || ''}
+  onChange={handleInputChange}
+  required
+/>
+</div>
 </Form.Group>
 
 {!isEditing && (
-  <>
-    <Form.Group className="mb-3">
-      <Form.Label className="form-label">이용약관</Form.Label>
-      <div className="col-sm-10">
-        <Form.Control
-          as="textarea"
-          value={termsContent}
-          readOnly
-          rows="6"
-          style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
-        />
-        <Form.Check
-          className="mb-3"
-          type="checkbox"
-          name="termsAccepted"
-          checked={member.termsAccepted}
-          onChange={handleInputChange}
-          label="이용약관에 동의합니다."
-        />
-        {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
-      </div>
-    </Form.Group>
-
-    <Form.Group className="mb-3">
-      <Form.Label className="form-label">개인정보 처리방침</Form.Label>
-      <div className="col-sm-10">
-        <Form.Control
-          as="textarea"
-          value={privacyContent}
-          readOnly
-          rows="6"
-          style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
-        />
-        <Form.Check
-          className="mb-3"
-          type="checkbox"
-          name="privacyAccepted"
-          checked={member.privacyAccepted}
-          onChange={handleInputChange}
-          label="개인정보 처리방침에 동의합니다."
-        />
-        {errors.privacyAccepted && <ValidationMessage message={errors.privacyAccepted} />}
-      </div>
-    </Form.Group>
-  </>
+<>
+  <Form.Group className="member-form-group">
+    <Form.Label className="member-form-label">이용약관</Form.Label>
+    <div className="col-sm-10">
+      <Form.Control
+        as="textarea"
+        value={termsContent}
+        readOnly
+        rows="6"
+        style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+      />
+      <Form.Check
+        className="mb-3"
+        type="checkbox"
+        name="termsAccepted"
+        checked={member.termsAccepted}
+        onChange={handleInputChange}
+        label="이용약관에 동의합니다."
+      />
+      {errors.termsAccepted && <ValidationMessage message={errors.termsAccepted} />}
+    </div>
+  </Form.Group>
+  <Form.Group className="member-form-group">
+    <Form.Label className="member-form-label">개인정보처리방침</Form.Label>
+    <div className="col-sm-10">
+      <Form.Control
+        as="textarea"
+        value={privacyContent}
+        readOnly
+        rows="6"
+        style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}
+      />
+      <Form.Check
+        className="mb-3"
+        type="checkbox"
+        name="privacyAccepted"
+        checked={member.privacyAccepted}
+        onChange={handleInputChange}
+        label="개인정보 처리방침에 동의합니다."
+      />
+      {errors.privacyAccepted && <ValidationMessage message={errors.privacyAccepted} />}
+    </div>
+  </Form.Group>
+</>
 )}
 
-<div className="mt-3">
-  <Button type="submit" className="btn btn-primary btn-sm" style={{ marginBottom: '20px' }}>
-    {isEditing ? '수정완료' : '입력완료'}
-  </Button>
-  &nbsp;
-  <Button
-    type="button"
-    className="btn btn-outline-primary btn-sm"
-    onClick={onCancel}
-    style={{ marginBottom: '20px' }}
-  >
-    {isEditing ? '수정취소' : '가입취소'}
-  </Button>
+<div className="member-form-btn-group">
+<Button type="submit" className="btn btn-primary btn-sm">
+  {isEditing ? '수정완료' : '입력완료'}
+</Button>
+<Button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel}>
+  {isEditing ? '수정취소' : '가입취소'}
+</Button>
 </div>
 </Form>
 </Container>

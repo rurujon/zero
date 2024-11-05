@@ -8,12 +8,14 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
 import './FindModal.css'
+import QuizModal from '../dailyQuiz/QuizModal';
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showFindIdModal, setShowFindIdModal] = useState(false);
     const [showFindPasswordModal, setShowFindPasswordModal] = useState(false);
     const [showPointInfoModal, setShowPointInfoModal] = useState(false);
+    const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
 
     const { token, logout, login, memId, role } = useContext(AuthContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +39,16 @@ const HomePage = () => {
             setIsLoggedIn(false);
         }
     }, [token, handleLogout]);
+
+    //11-05 퀴즈모달 추가
+    const openQuizModal = () => {
+        if (memId) {
+            setIsQuizModalOpen(true);
+        } else {
+            alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
+            setShowLogin(true);
+        }
+    };
 
     const handleMemberInfo = () => {
         window.open('/member-info', 'MemberInfo', 'width=600,height=400,resizable=yes');
@@ -105,7 +117,8 @@ const HomePage = () => {
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">MyInfo조회</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
-                    <button onClick={handlePointInfo} className="btn btn-primary">일일QUIZ</button>&nbsp;
+                    <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
+                    <button onClick={openQuizModal} className="btn btn-primary">일일QUIZ</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>

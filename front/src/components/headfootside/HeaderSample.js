@@ -8,7 +8,6 @@ import LoginPage from '../login/LoginPage';
 const HeaderSample = () => {
     const { memId, logout, login } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('');
     const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
@@ -84,14 +83,6 @@ const HeaderSample = () => {
         }
     };
 
-    const openQuizModal = () => {
-      if (memId) {
-          setIsQuizModalOpen(true);
-      } else {
-          alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
-          setShowLogin(true);
-      }
-  };
 
   const handleLoginClick = () => {
       if (memId) {
@@ -122,7 +113,7 @@ const HeaderSample = () => {
                                 <img
                                     src={logos[currentLogoIndex]}
                                     alt="로고"
-                                    style={{width: '150px', height: 'auto'}}
+                                    style={{width: '250px', height: 'auto'}}
                                 />
                             </Link>
                         </h1>
@@ -136,8 +127,6 @@ const HeaderSample = () => {
                             </ul>
                         </nav>
                         <div>
-                            <button onClick={openQuizModal}>퀴즈 열기</button>
-                            <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
                             <Link to="/mainpage"><img src='/images/home.png' alt="홈" /></Link>
                             <img
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}

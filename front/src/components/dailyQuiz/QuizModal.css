@@ -30,7 +30,8 @@
 /* 모달이 열릴 때의 스타일 */
 .ReactModal__Body--open {
     z-index: 100; /* Swiper보다 높은 z-index 값을 설정 */
-  }
+      
+}
 .expl{
     display: flex;
     flex-direction: column;
