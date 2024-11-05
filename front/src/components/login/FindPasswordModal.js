@@ -24,7 +24,7 @@ const FindPasswordModal = ({ show, onHide }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide}>
+        <Modal show={show} onHide={onHide} className='find-pwd-modal'>
             <Modal.Header closeButton>
                 <Modal.Title>비밀번호 찾기</Modal.Title>
             </Modal.Header>

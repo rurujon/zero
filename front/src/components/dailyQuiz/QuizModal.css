@@ -1,3 +1,12 @@
+.ReactModal__Overlay {
+    z-index: 11; /* 모달 오버레이 z-index */
+}
+
+.ReactModal__Content {
+    z-index: 12; /* 모달 내용 z-index */
+    position: fixed; /* 모달을 고정하기 위해 fixed 설정 */
+}
+
 .modal {
     display: flex;
     flex-direction: column;
@@ -15,6 +24,13 @@
     box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
+    z-index: 1001; /* 모달의 z-index 설정 */
+}
+
+/* 모달이 열릴 때의 스타일 */
+.ReactModal__Body--open {
+    z-index: 100; /* Swiper보다 높은 z-index 값을 설정 */
+      
 }
 .expl{
     display: flex;
@@ -43,6 +59,7 @@
     transform: translate(-50%, -50%);
     background-color: rgba(0,0,0,0.02);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001; /* 작은 모달의 z-index 설정 */
 }
 
 .modal .bg {
