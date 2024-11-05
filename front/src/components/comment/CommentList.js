@@ -37,7 +37,7 @@ function CommentList(props) {
 	return (
 		<>
 			<div className="my-1 d-flex justify-content-center">
-				<h5><i className="fas fa-paperclip"></i>댓글 [{totalCnt}]</h5>
+				<br/><i className="fas fa-paperclip"></i><b>댓글 {totalCnt}</b>
 			</div>
 
 			{commentList.length === 0 ? (
@@ -46,8 +46,10 @@ function CommentList(props) {
 				</div>
 			) : (
 				commentList.map((comment, idx) => (
-					<div className="my-5" key={idx}>
-						<Comment obj={comment} />
+					<div className="my-3 d-flex justify-content-center" key={idx}>
+						<div className="comment-box">
+							<Comment obj={comment} />
+						</div>
 					</div>
 				))
 			)}
@@ -55,7 +57,7 @@ function CommentList(props) {
 			{totalCnt > commentList.length && (
 				<div className="my-3 d-flex justify-content-center">
 					<button onClick={loadMoreComments} className="more-button">
-					더보기 <span className="more-button-icon">⌵</span>
+						더보기 <span className="more-button-icon">⌵</span>
 					</button>
 				</div>
 			)}

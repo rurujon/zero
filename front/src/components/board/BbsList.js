@@ -68,6 +68,13 @@ function BbsList() {
         <div>
             {/* 검색 */}
             <table className="search">
+                <thead>
+                    <tr>
+                        <th colSpan="4" className="table-header">
+                            <h3 className="table-title">&nbsp;참여게시판</h3><br/>
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr className="category-filter">
                         <td>
@@ -107,8 +114,8 @@ function BbsList() {
                         <th className="col-2">카테고리</th>
                         <th className="col-5">제목</th>
                         <th className="col-1">작성자</th>
-                        <th className="col-1">조회수</th>
-                        <th className="col-2">등록일</th>
+                        <th className="col-1">조회</th>
+                        <th className="col-2">작성일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,9 +153,10 @@ function TableRow(props) {
 
     return (
         <tr>
-            <th>{props.cnt}</th>
+            
             {board.del === 0 ? (
                 <>
+                    <th>{board.boardno}</th>
                     <td>[{board.category}]</td>
                     <td>
                         <Arrow depth={board.depth} />
@@ -171,6 +179,7 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
+                    <td></td>
                     <td></td>
                     <td>
                         <Arrow depth={board.depth} />

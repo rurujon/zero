@@ -106,6 +106,7 @@ function BbsDetail() {
         memId: board.memId,
         title: board.title,
         content: board.content,
+        category: board.category,
         urlFile: board.urlFile
     };
 
@@ -159,7 +160,11 @@ function BbsDetail() {
             <table className="table table-striped">
                 <tbody>
                     <tr>
-                        <th className="col-3">작성자</th>
+                        <th className="col-2">카테고리</th>
+                        <td>[{board.category}]</td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
                         <td>{board.memId}</td>
                     </tr>
                     <tr>
