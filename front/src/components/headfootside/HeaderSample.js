@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import QuizModal from '../dailyQuiz/QuizModal';
 import { AuthContext } from '../login/context/AuthContext';
@@ -11,6 +11,22 @@ const HeaderSample = () => {
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [activeMenu, setActiveMenu] = useState('');
+    const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+
+    const logos = [
+        '/images/login/klogo.png',
+        '/images/login/elogo.png'
+    ];
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentLogoIndex((prevIndex) => (prevIndex + 1) % logos.length);
+        }, 3000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+
 
     const handleMouseEnter = (menuName) => {
         setActiveMenu(menuName);
@@ -101,9 +117,13 @@ const HeaderSample = () => {
             <div className='header-background header-background_one'>
                 <nav className="header-content" onMouseLeave={handleMouseLeave}>
                     <div className="top-nav">
-                        <h1>
+                    <h1>
                             <Link to="/mainpage">
-                                여기다 로고
+                                <img
+                                    src={logos[currentLogoIndex]}
+                                    alt="로고"
+                                    style={{width: '150px', height: 'auto'}}
+                                />
                             </Link>
                         </h1>
                         <nav className="bottom-nav">

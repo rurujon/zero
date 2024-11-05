@@ -1,6 +1,6 @@
 .header {
     position: relative;
-    overflow: visible; 
+    overflow: visible;
     display: flex; /* 자식 요소를 flexbox로 설정 */
     justify-content: center; /* 자식 요소를 수평 가운데 정렬 */
     width: 100%; /* 너비를 100%로 설정 */
@@ -23,7 +23,7 @@
 }
 
 .header-background_one {
-    background-color: rgba(24, 130, 165, 0.178);
+    background-color: #2DB400;
 }
 
 .header-background_two {
@@ -155,7 +155,7 @@
         flex-direction: column; /* 세로로 정렬 */
         align-items: center; /* 가운데 정렬 */
     }
-    
+
     .top-nav ul, .bottom-nav li {
         margin: 10px 0; /* 세로 간격 조정 */
     }
