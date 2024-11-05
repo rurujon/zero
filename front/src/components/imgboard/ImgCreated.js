@@ -38,27 +38,26 @@ const ImgCreated = () => {
     useEffect(() => {
         if (updatedMode) {
             const fetchArticle = async () => {
-
                 setLoading(true);
                 try {
                     const response = await axios.get('/imgboard/updated', {
-                        params: { imgPostId }
+                        params: { imgPostId },
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
                     });
                     
                     const { imgPost, images: existingImages } = response.data;
-                    const { memId: postMemId, title, content, cate, auth} = imgPost;
+                    const { memId: postMemId, title, content, cate, auth } = imgPost;
 
                     if (postMemId !== memId && role !== 'ADMIN') {
                         alert("본인이 작성한 게시물만 수정할 수 있습니다.");
                         navigate('/imgboard/list');
-
                         return;
-
-                    }else if (auth === 1) {
+                    } else if (auth === 1) {
                         alert("인증된 게시물은 수정할 수 없습니다");
                         navigate(`/imgboard/article?imgPostId=${imgPostId}`);
                         return;
-
                     }
 
                     setTitle(title);
@@ -67,17 +66,22 @@ const ImgCreated = () => {
 
                     const newPreviews = existingImages.map(img => `/images/imgboard/${img.saveFileName}`);
                     setImagePreviews(newPreviews);
-                    setLoading(false);
                     
                 } catch (error) {
-                    alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
+                    if (error.response?.status === 401) {
+                        alert('로그인이 필요한 서비스입니다.');
+                        navigate('/login');
+                    } else {
+                        alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
+                    }
+                } finally {
                     setLoading(false);
                 }
             };
 
             fetchArticle();
         }
-    }, [imgPostId, updatedMode, memId, role, navigate]);
+    }, [imgPostId, updatedMode, memId, role, navigate, token]);
 
     const handleTextReset = () => {
         setCate('');
@@ -136,12 +140,20 @@ const ImgCreated = () => {
 
             try {
                 const response = await axios.post('/imgboard/created', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    headers: { 
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
                 alert(response.data);
                 window.location.href = '/imgboard/list';
             } catch (error) {
-                alert('게시물 등록 중 오류가 발생했습니다: ' + error.message);
+                if (error.response?.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    navigate('/login');
+                } else {
+                    alert('게시물 등록 중 오류가 발생했습니다: ' + error.message);
+                }
             }
         }
     };
@@ -149,8 +161,6 @@ const ImgCreated = () => {
     const handleUpdateSubmit = async (evt) => {
         evt.preventDefault();
         const nonEmptyImages = images.filter(img => img !== null);
-
-        // 기존 이미지 존재 확인
         const existingImagesCount = imagePreviews.filter(preview => preview !== null).length;
 
         if (validateForm(nonEmptyImages, existingImagesCount)) {
@@ -160,15 +170,22 @@ const ImgCreated = () => {
             formData.append('title', title);
             formData.append('content', content);
 
-            // 이미지 파일을 포함하지 않고 업데이트 요청
             try {
                 const response = await axios.post('/imgboard/updated', formData, {
-                    params: { imgPostId }
+                    params: { imgPostId },
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
                 alert(response.data);
                 window.location.href = '/imgboard/list';
             } catch (error) {
-                alert('게시물 수정 중 오류가 발생했습니다: ' + error.message);
+                if (error.response?.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    navigate('/login');
+                } else {
+                    alert('게시물 수정 중 오류가 발생했습니다: ' + error.message);
+                }
             }
         }
     };
@@ -232,6 +249,7 @@ const ImgCreated = () => {
                     <button type='button' onClick={handleTextReset} style={{ margin: '5px' }}>다시작성</button>
                 </div>
     
+             { !updatedMode && 
                 <div style={{ marginBottom: '15px' }}>
                     <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>이미지 선택:</label>
                     {images.map((image, index) => (
@@ -255,7 +273,7 @@ const ImgCreated = () => {
                             )}
                         </div>
                     ))}
-                </div>
+                </div> }
     
                 {updatedMode && (
                     <div style={{ marginBottom: '15px' }}>
