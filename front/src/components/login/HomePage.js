@@ -7,6 +7,7 @@ import { AuthContext } from './context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
+import './FindModal.css'
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -93,8 +94,8 @@ const HomePage = () => {
                         <button type="button" className="btn btn-link" onClick={() => setShowFindPasswordModal(true)}>비밀번호 찾기</button>
                         <button type="button" className="btn btn-link" onClick={handleRegister}>회원가입</button>
                     </div>
-                    <FindIdModal show={showFindIdModal} onHide={() => setShowFindIdModal(false)} />
-                    <FindPasswordModal show={showFindPasswordModal} onHide={() => setShowFindPasswordModal(false)} />
+                    <FindIdModal show={showFindIdModal} onHide={() => setShowFindIdModal(false)}/>
+                    <FindPasswordModal show={showFindPasswordModal} onHide={() => setShowFindPasswordModal(false)}/>
                 </div>
             ) : (
                 <div>

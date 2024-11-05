@@ -23,7 +23,7 @@ const FindIdModal = ({ show, onHide }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide}>
+        <Modal show={show} onHide={onHide} className='find-id-modal'>
             <Modal.Header closeButton>
                 <Modal.Title>아이디 찾기</Modal.Title>
             </Modal.Header>

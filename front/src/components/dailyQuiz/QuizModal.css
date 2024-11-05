@@ -1,9 +1,9 @@
 .ReactModal__Overlay {
-    z-index: 1000; /* 모달 오버레이 z-index */
+    z-index: 11; /* 모달 오버레이 z-index */
 }
 
 .ReactModal__Content {
-    z-index: 1001; /* 모달 내용 z-index */
+    z-index: 12; /* 모달 내용 z-index */
     position: fixed; /* 모달을 고정하기 위해 fixed 설정 */
 }
 
