@@ -42,7 +42,8 @@ const HomePage = () => {
 
     //11-05 퀴즈모달 추가
     const openQuizModal = () => {
-        if (memId) {
+        if (token) {
+            alert('🙌환영합니다🙌')
             setIsQuizModalOpen(true);
         } else {
             alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
@@ -70,7 +71,7 @@ const HomePage = () => {
     return (
         <div className='mini_login_wrap'>
             {!isLoggedIn ? (
-                <div>
+                <div style={{ height : 160, alignItems : 'center' }}>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
 
                     <button
@@ -115,10 +116,10 @@ const HomePage = () => {
                     <h4>오늘도 행복한 하루되세요.</h4>
 
                     <p>역할: {role}</p>
-                    <button onClick={handleMemberInfo} className="btn btn-info">MyInfo조회</button>&nbsp;
-                    <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
+                    <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
+                    <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
                     <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
-                    <button onClick={openQuizModal} className="btn btn-primary">일일QUIZ</button>&nbsp;
+                    <button onClick={openQuizModal} className="btn btn-primary">오늘의 퀴즈</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>

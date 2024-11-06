@@ -59,6 +59,22 @@ const GoogleMaps = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    fetchStore();
+  }, []);
+
+  const updateMap = async () => {
+    try {
+      // 크롤링을 실행하는 API 호출
+      await axios.post('/api/smartMap/save');
+      alert('완료')
+      fetchStore();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchStore = async () => {
+
     fetch('/api/smartMap/load')
       .then(response => response.json())
       .then(data => setStores(data))
@@ -75,18 +91,8 @@ const GoogleMaps = () => {
         }
       );
     }
-  }, []);
-
-  const updateMap = async () => {
-    try {
-      // 크롤링을 실행하는 API 호출
-      await axios.post('/api/smartMap/save');
-      alert('완료')
-
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    
+  }
 
   const handleGuChange = (event) => {
 
@@ -158,7 +164,7 @@ const GoogleMaps = () => {
 
   return (
     <div className="map-container">
-      <button onClick={updateMap}>update Map</button> {/* 크롤링 버튼 추가 */}
+      
       <div className="map-item">
         <LoadScript googleMapsApiKey="AIzaSyAXBLeEgcEIgMJkKLamUtOFbfsEqtvHgYA">
           <select className="gu-dropdown" value={selectedGu} onChange={handleGuChange}>
@@ -252,6 +258,8 @@ const GoogleMaps = () => {
               </button>
           ))}
           </div>
+
+          <button onClick={updateMap}>update Map</button> {/* 크롤링 버튼 추가 */}
           <div className="store-list">
             {filteredStores.slice(0, visibleCount).map((store, index) => (
               <div key={index} className="store-card" onClick={() => handleMarkerClick(store)}>

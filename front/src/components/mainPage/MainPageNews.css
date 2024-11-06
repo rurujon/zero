@@ -9,6 +9,7 @@
     min-width: 250px; /* 최소 너비 설정 (필요에 따라 조정) */
     width: 100%;
     max-width: 700px; /* 최대 너비 설정 (필요에 따라 조정) */
+    height: 500px;
 }
 
 .board_view_btn {

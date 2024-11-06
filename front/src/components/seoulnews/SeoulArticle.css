@@ -87,7 +87,11 @@ table {
 
 .post_content img {max-width:100%;height:auto !important;}
 
-.post_content p {line-height:160%; margin-bottom:5px; text-align: center;}
+.post_content p {line-height:160%; margin-bottom:5px;}
+
+.indent20 {
+  text-align: left;
+}
 
 
 .seoul-list-button {
