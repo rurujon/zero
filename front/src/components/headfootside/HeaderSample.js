@@ -117,6 +117,7 @@ const HeaderSample = () => {
                                 />
                             </Link>
                         </h1>
+                        <div>
                         <nav className="bottom-nav">
                             <ul>
                                 {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
@@ -126,12 +127,16 @@ const HeaderSample = () => {
                                 ))}
                             </ul>
                         </nav>
+                        </div>
                         <div>
                             <Link to="/mainpage"><img src='/images/home.png' alt="홈" /></Link>
+                        </div>
+                        <div>
                             <img
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
+                                style={{width: '64px', height: '64px', cursor: 'pointer'}}
                             />
                         </div>
                     </div>

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom'; 
+import { AuthContext } from '../login/context/AuthContext';
 
 const ExArticle = () => {
-    const [memId, setMemId] = useState(localStorage.getItem('memId')); 
+    const { token, memId } = useContext(AuthContext);
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const exchangeId = queryParams.get('exchangeId');
@@ -12,12 +14,16 @@ const ExArticle = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();   
 
+
     useEffect(() => {
-        if (!memId) {
-            alert("로그인 한 사용자만 게시글을 조회할 수 있습니다 !");
-            navigate("/");
-        } 
-    }, [memId, navigate]);
+        if (!token) { 
+            alert('로그인한 사용자만 게시글을 조회 할 수 있습니다.');
+            navigate('/login');
+        } else {
+            setLoading(false);
+        }
+    }, [token, navigate]);
+
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -95,6 +101,7 @@ const ExArticle = () => {
     return (
         <div className="article-container" style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>
             <h2 className="article-title" style={{ textAlign: 'center' }}>{article.title}</h2>
+            
             <div className="article-meta-container">
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>승인여부:</label>
@@ -105,48 +112,60 @@ const ExArticle = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>작성일:</label>
+                    <span style={{ flex: '1', padding: '8px' }}>{new Date(article.created).toLocaleDateString()}</span>
+                </div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>사용자 ID:</label>
                     <span style={{ flex: '1', padding: '8px' }}>{article.memId}</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.sender}</span>
-                </div>
+                {/* 배송정보와 이미지를 감싸는 컨테이너 */}
+                <div style={{ display: 'flex', gap: '20px' }}>
+                    {/* 배송정보 */}
+                    <div style={{ 
+                        flex: '1',
+                        border: '1px solid #cce5ff', 
+                        borderRadius: '8px', 
+                        padding: '15px', 
+                        marginBottom: '15px' 
+                    }}>
+                        <h3 style={{ marginBottom: '15px', color: '#0056b3' }}>배송 정보</h3>
+                        <div style={{ whiteSpace: 'pre-line' }}>
+                            <strong>보내는 분:</strong> {article.sender}
+                            {'\n'}
+                            <strong>받는 분:</strong> {article.receiver}
+                            {'\n'}
+                            <strong>우편번호:</strong> {article.post}
+                            {'\n'}
+                            <strong>주소:</strong> {article.addr1}
+                            {'\n'}
+                            <strong>상세주소:</strong> {article.addr2}
+                            {'\n'}
+                            <strong>전화번호:</strong> {article.tel}
+                            {'\n\n'}
+                            <strong>배송 메세지:</strong>
+                            {'\n'}
+                            {article.content}
+                        </div>
+                    </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>받는 분:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.receiver}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>우편번호:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.post}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>주소:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.addr1}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>상세주소:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.addr2}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>전화번호:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.tel}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>작성일:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{new Date(article.created).toLocaleDateString()}</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>배송 메세지:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.content}</span>
+                    {/* 선택된 이미지 */}
+                    {article.selec && (
+                        <div style={{ flex: '0 0 40%' }}>
+                            <img 
+                                src={`/exchange/ex${article.selec}.png`}
+                                alt={`선택된 교환 이미지 ${article.selec}`}
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    borderRadius: '8px',
+                                    border: '3px solid #007bff'
+                                }}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 

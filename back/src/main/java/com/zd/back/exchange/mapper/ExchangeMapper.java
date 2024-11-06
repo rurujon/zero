@@ -11,5 +11,6 @@ public interface ExchangeMapper {
     List<Exchange> getExchanges(int pageStart, int pageEnd);
     int getDataCount();
     Exchange getExArticle(int exchangeId);
+    void deleteExchange(int exchangeId);
 
 }
