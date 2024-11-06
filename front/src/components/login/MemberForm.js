@@ -291,7 +291,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="member-form-group">
           <Form.Label className="member-form-label">아이디</Form.Label>
-          <div className="member-form-input-container">
+          <div className="col-sm-10">
             <Form.Control
               className="member-form-control"
               type="text"
@@ -321,7 +321,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
         <Form.Group className="member-form-group">
           <Form.Label className="member-form-label">비밀번호</Form.Label>
-          <div className="member-form-input-container">
+          <div className="col-sm-10">
             <Form.Control
               className="member-form-control"
               type="password"
@@ -338,7 +338,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         {!isEditing && (
           <Form.Group className="member-form-group">
             <Form.Label className="member-form-label">비밀번호 재확인</Form.Label>
-            <div className="member-form-input-container">
+            <div className="col-sm-10">
             <Form.Control
   className="member-form-control"
   type="password"

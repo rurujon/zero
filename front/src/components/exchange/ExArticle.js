@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import { AuthContext } from '../login/context/AuthContext';
+import '../board/bbs.css';
+import '../board/page.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const ExArticle = () => {
     const { token } = useContext(AuthContext);
@@ -18,7 +21,7 @@ const ExArticle = () => {
     // token에서 memId와 role 가져오기
     const getTokenInfo = (token) => {
         if (token) { 
-            const payloadBase64 = token.split('.')[1]; //토큰의 2번째 인덱스 가져옴
+            const payloadBase64 = token.split('.')[1]; 
             const decodedPayload = JSON.parse(atob(payloadBase64));
             return {
                 memId: decodedPayload.sub,
@@ -125,87 +128,89 @@ const ExArticle = () => {
         return <p>게시물을 찾을 수 없습니다.</p>; 
     }
 
-    return (
-        <div className="article-container" style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>
-            <h2 className="article-title" style={{ textAlign: 'center' }}>{article.title}</h2>
-            
-            <div className="article-meta-container">
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>승인여부:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{getAuthLabel(article.auth)}</span>
-                    {role === 'ADMIN' && article.auth === 0 && (
-                        <button type='button' onClick={handleAuth}>인증승인</button>
-                    )}
+return (
+    <div className="container" style={{ maxWidth: "900px" }}>
+        <div className="card mb-4">
+            <div className="card-body">
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">제목</div>
+                    <div className="col-10 py-2 d-flex justify-content-between align-items-center">
+                        <span>{article.title}</span>
+                        {(role === 'ADMIN' || (memId === article.memId && article.auth === 0)) && (
+                            <button className="btn btn-outline-danger" onClick={handleDelete}>
+                                <i className="fas fa-trash-alt"></i> 삭제
+                            </button>
+                        )}
+                    </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>작성일:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{new Date(article.created).toLocaleDateString()}</span>
+              
+
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">작성자</div>
+                    <div className="col-10 py-2">{article.memId}</div>
+                </div>
+
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">작성일</div>
+                    <div className="col-10 py-2">{new Date(article.created).toLocaleDateString()}</div>
                 </div>
                 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>사용자 ID:</label>
-                    <span style={{ flex: '1', padding: '8px' }}>{article.memId}</span>
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">승인여부</div>
+                    <div className="col-10 py-2 d-flex align-items-center">
+                        {getAuthLabel(article.auth)}
+                        {role === 'ADMIN' && article.auth === 0 && (
+                            <button className="btn btn-outline-primary ms-3" onClick={handleAuth}>
+                                <i className="fas fa-check"></i> 인증승인
+                            </button>
+                        )}
+                    </div>
                 </div>
 
-                {/* 배송정보와 이미지를 감싸는 컨테이너 */}
-                <div style={{ display: 'flex', gap: '20px' }}>
-                    {/* 배송정보 */}
-                    <div style={{ 
-                        flex: '1',
-                        border: '1px solid #cce5ff', 
-                        borderRadius: '8px', 
-                        padding: '15px', 
-                        marginBottom: '15px' 
-                    }}>
-                        <h3 style={{ marginBottom: '15px', color: '#0056b3' }}>배송 정보</h3>
-                        <div style={{ whiteSpace: 'pre-line' }}>
-                            <strong>보내는 분:</strong> {article.sender}
-                            {'\n'}
-                            <strong>받는 분:</strong> {article.receiver}
-                            {'\n'}
-                            <strong>우편번호:</strong> {article.post}
-                            {'\n'}
-                            <strong>주소:</strong> {article.addr1}
-                            {'\n'}
-                            <strong>상세주소:</strong> {article.addr2}
-                            {'\n'}
-                            <strong>전화번호:</strong> {article.tel}
-                            {'\n\n'}
-                            <strong>배송 메세지:</strong>
-                            {'\n'}
-                            {article.content}
-                        </div>
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">배송 정보</div>
+                    <div className="col-10 py-2">
+                        <div className="mb-2"><strong>보내는 분:</strong> {article.sender}</div>
+                        <div className="mb-2"><strong>받는 분:</strong> {article.receiver}</div>
+                        <div className="mb-2"><strong>우편번호:</strong> {article.post}</div>
+                        <div className="mb-2"><strong>주소:</strong> {article.addr1}</div>
+                        <div className="mb-2"><strong>상세주소:</strong> {article.addr2}</div>
+                        <div className="mb-2"><strong>전화번호:</strong> {article.tel}</div>
                     </div>
+                </div>
 
-                    {/* 선택된 이미지 */}
-                    {article.selec && (
-                        <div style={{ flex: '0 0 40%' }}>
+                <div className="row mb-3">
+                    <div className="col-2 bg-light py-2">배송 메시지</div>
+                    <div className="col-10 py-2" style={{ whiteSpace: "pre-line" }}>
+                        {article.content}
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-2 bg-light py-2">선택한 상품</div>
+                    <div className="col-10 py-2">
+                        {article.selec && (
                             <img 
                                 src={`/exchange/ex${article.selec}.png`}
                                 alt={`선택된 교환 이미지 ${article.selec}`}
-                                style={{ 
-                                    width: '100%', 
-                                    height: 'auto', 
-                                    borderRadius: '8px',
-                                    border: '3px solid #007bff'
-                                }}
+                                style={{ maxWidth: "50%" }}
+                                className="mt-2"
                             />
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
-
-            <div className="button-container" style={{ textAlign: 'center', marginTop: '20px' }}>
-                {(role === 'ADMIN' || (memId === article.memId && article.auth === 0)) && (
-                    <button className="action-button" onClick={handleDelete} style={{ margin: '5px' }}>삭제하기</button>             
-                )}         
-                <button className="action-button" onClick={() => window.location.href = '/exchange/list'} style={{ margin: '5px' }}>
-                    목록가기
-                </button>
-            </div>
         </div>
+
+        <div className="my-3 d-flex justify-content-center">
+            <button className="btn btn-outline-secondary" onClick={() => navigate('/exchange/list')}>
+                <i className="fas fa-list"></i> 목록
+            </button>
+        </div>
+    </div>
     );
+
 };
 
 export default ExArticle;

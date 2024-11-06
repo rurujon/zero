@@ -31,8 +31,8 @@ const ImgArticle = () => {
 
     useEffect(() => {
         if (!token) {
-            alert('로그인 한 사용자만 게시글을 조회할 수 있습니다.');
-            navigate('/login');
+            alert('로그인이 필요합니다.');
+            navigate('/mainpage');
             return;
         }
     }, [token, navigate]);
@@ -70,8 +70,8 @@ const ImgArticle = () => {
             navigate('/imgboard/list');
         } catch (error) {
             if (error.response?.status === 401) {
-                alert('로그인이 필요한 서비스입니다.');
-                navigate('/login');
+                alert('로그인이 필요합니다.');
+                navigate('/mainpage');
             } else {
                 const errorMessage = error.response?.data || '알 수 없는 오류가 발생했습니다.';
                 alert('게시물 삭제에 실패했습니다: ' + errorMessage);
@@ -122,8 +122,8 @@ const ImgArticle = () => {
             window.location.reload();
         } catch (error) {
             if (error.response?.status === 401) {
-                alert('로그인이 필요한 서비스입니다.');
-                navigate('/login');
+                alert('로그인이 필요합니다.');
+                navigate('/mainpage');
             } else {
                 const errorMessage = error.response?.data || '알 수 없는 오류가 발생했습니다.';
                 alert('인증 승인에 실패했습니다: ' + errorMessage);
