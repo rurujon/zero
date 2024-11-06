@@ -33,18 +33,18 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             checkQH(); // 모달이 열릴 때 퀴즈 참여 여부 확인
         }
     }, [isOpen, member]);
-    
-    //퀴즈풀었는지 유무 
+
+    //퀴즈풀었는지 유무
     const checkQH = async () => {
         try {
             // 서버에 POST 요청을 보내어 퀴즈풀었는지 유무 반환
             const response = await axios.post("/checkQH", null, {
                 params: {
                     memId: member.memId
-                    
+
                 }
             });
-    
+
             // 응답 데이터에서 메시지를 확인
             if (response.data.message === 'done') {
                 // 오늘 퀴즈에 참여한 경우 모달을 false로 설정
@@ -72,7 +72,7 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     //문제의 정답 O,X
     const [answer, setAnswer] = useState("null");
 
-    
+
 
     useEffect(() => {
         // 모달이 열릴 때 memId가 없으면 로그인 페이지로 이동
@@ -86,7 +86,7 @@ const QuizModal = ({isOpen, setIsOpen}) => {
 
 
 
-    
+
     return (
         <>
             {/* <div>
@@ -94,18 +94,18 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             </div> */}
 
             <div className='bg'></div>
-            
-            <Modal 
+
+            <Modal
                 isOpen={isOpen}
                 contentLabel = "QOX"
-                className={result ==='ON' ? 'modal' : 'smallModal'}
+                className={result ==='ON' ? 'Qmodal' : 'smallModal'}
             >
-                
+
 
             {
                 result === "ON" ? (
                     <Quiz setIsOpen={setIsOpen} setResult={setResult} setAnswer={setAnswer} setExplanation={setExplanation} setQuizId={setQuizId}/>
-                    
+
                 ) : <QuizResult setIsOpen={setIsOpen} answer={answer} result={result} explanation={explanation} member={member} quizId={quizId}/>
             }
             </Modal>

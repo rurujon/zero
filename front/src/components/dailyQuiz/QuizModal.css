@@ -7,7 +7,7 @@
     position: fixed; /* 모달을 고정하기 위해 fixed 설정 */
 }
 
-.modal {
+.Qmodal {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -30,7 +30,7 @@
 /* 모달이 열릴 때의 스타일 */
 .ReactModal__Body--open {
     z-index: 100; /* Swiper보다 높은 z-index 값을 설정 */
-      
+
 }
 .expl{
     display: flex;
@@ -46,7 +46,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-/* 
+/*
     height: 300px;
     width: 200px; */
     height: 50%;
@@ -70,7 +70,7 @@
     /* position: absolute; */
     margin-right: 10px;
     margin-top: 10px;
-    
+
 }
 
 
@@ -132,7 +132,7 @@
 
     width: 100%;
     height: 45%;
-    
+
 
 
 
@@ -191,16 +191,16 @@
         box-sizing: border-box;
         padding: 20px 45px;
         border-radius: 999px;
-      
+
         position: relative;
         overflow: hidden;
-        
+
         color: black;
-        
+
         background: none;
-        
+
         border: 1px solid currentColor;
-      
+
 
 }
 
@@ -216,7 +216,7 @@
 
     height: 70%;
     width: 100%;
-    
+
 
 }
 
