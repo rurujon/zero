@@ -22,6 +22,7 @@
     width: 500px;
     height: 90px;
     margin-bottom: 10px;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
 }
 
 .main-right-banner1 img {
@@ -34,6 +35,7 @@
     width: 500px;
     height: 90px;
     margin-bottom: 10px;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
 }
 
 .main-right-banner2 img {
@@ -46,6 +48,7 @@
     width: 500px;
     height: 90px;
     margin-bottom: 10px;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
 }
 .main-right-banner3 img {
     width: 100%;
