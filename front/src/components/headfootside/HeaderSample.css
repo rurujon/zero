@@ -42,7 +42,7 @@
     align-items: center;
     flex-wrap: nowrap; /* 줄바꿈 방지 */
     width: 100%;
-    
+
 }
 
 .top-nav > div:nth-child(2) {
@@ -140,7 +140,8 @@
 }
 
 .sub-menu-content a:hover {
-    color: skyblue; /* 하늘색으로 변경 */
+    color: #000000; /* 하늘색으로 변경 */
+    font-weight: bold; /* 글자 두껍게 */
     transition: color 0.3s ease;
 }
 
