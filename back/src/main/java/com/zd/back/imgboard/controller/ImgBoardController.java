@@ -166,7 +166,7 @@ public class ImgBoardController {
 
         }catch(Exception e){
 
-            return ResponseEntity.status(500).body("게시물 삭제 중 오류가 발생했습니다: " + e.getMessage()); 
+            return ResponseEntity.status(500).body("승인 처리 중 오류가 발생했습니다: " + e.getMessage()); 
         }
 
     }

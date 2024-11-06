@@ -6,31 +6,28 @@ import org.springframework.http.HttpStatus;
 import com.zd.back.login.security.JwtUtil;
 import com.zd.back.login.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zd.back.exchange.model.Exchange;
 import com.zd.back.exchange.model.ExchangeResponse;
 import com.zd.back.exchange.service.ExchangeService;
+
 import com.zd.back.login.model.Member;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/exchange")
+@RequiredArgsConstructor  //의존성 주입 위함 
 public class ExchangeController {
 
-    @Autowired
-    private ExchangeService exchangeService;
+    private final ExchangeService exchangeService;
+    private final MemberService memberService;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    
     @PostMapping("/created")
     public ResponseEntity<String> createdExchange(@ModelAttribute Exchange exchange) {
         try {
@@ -80,7 +77,6 @@ public class ExchangeController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<ExchangeResponse> getExchanges(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "15") int size) {
@@ -111,6 +107,7 @@ public class ExchangeController {
         return ResponseEntity.ok(exchange);
     }
 
+
     @DeleteMapping("/deleted")
     public ResponseEntity<String> deleteExchange(@RequestParam int exchangeId) {
         try {
@@ -121,5 +118,14 @@ public class ExchangeController {
                                .body("게시물 삭제 중 오류가 발생했습니다.");
         }
     }
-
+    @PostMapping("/auth") //승인
+    public ResponseEntity<String> getAuthorized(@RequestParam int exchangeId) {
+        try {
+            exchangeService.updateAuth(exchangeId);
+            return ResponseEntity.ok("교환 게시물이 승인되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("승인 처리 중 오류가 발생했습니다.");
+        }
+    }
 }

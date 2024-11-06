@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
 
 const ExArticle = () => {
-    const { token, memId } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -15,32 +15,53 @@ const ExArticle = () => {
     const navigate = useNavigate();   
 
 
+    // token에서 memId와 role 가져오기
+    const getTokenInfo = (token) => {
+        if (token) { 
+            const payloadBase64 = token.split('.')[1]; //토큰의 2번째 인덱스 가져옴
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return {
+                memId: decodedPayload.sub,
+                role: decodedPayload.role
+            };
+        }
+        return { memId: null, role: null };
+    };
+    
+    const { memId, role } = getTokenInfo(token);
+
     useEffect(() => {
         if (!token) { 
             alert('로그인한 사용자만 게시글을 조회 할 수 있습니다.');
             navigate('/login');
-        } else {
-            setLoading(false);
+            return;
         }
-    }, [token, navigate]);
 
-
-    useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const response = await axios.get('/exchange/article', {
                     params: { exchangeId }
                 });
-                setArticle(response.data);  
+                setArticle(response.data);
+                
+                // 권한 체크
+                const { memId, role } = getTokenInfo(token);
+                if (role !== 'ADMIN' && response.data.memId !== memId) {
+                    alert('본인이 작성한 게시물만 조회할 수 있습니다');
+                    navigate('/exchange/list');
+                    return;
+                }
+                
                 setLoading(false);
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
                 setLoading(false);
+                navigate('/exchange/list');
             }
         };
 
         fetchArticle();
-    }, [exchangeId]);
+    }, [token, exchangeId, navigate]);
 
 
 
@@ -80,7 +101,13 @@ const ExArticle = () => {
                 params: { exchangeId }
             });
             alert(response.data);
-            window.location.reload(); 
+            
+            // 게시글 데이터 다시 불러오기
+            const updatedArticle = await axios.get('/exchange/article', {
+                params: { exchangeId }
+            });
+            setArticle(updatedArticle.data);
+            
         } catch (error) {
             console.error('인증 승인 시 오류가 발생했습니다.', error);
             const errorMessage = error.response && error.response.data 
@@ -106,7 +133,7 @@ const ExArticle = () => {
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                     <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>승인여부:</label>
                     <span style={{ flex: '1', padding: '8px' }}>{getAuthLabel(article.auth)}</span>
-                    {memId === "suzi123" && article.auth === 0 && (
+                    {role === 'ADMIN' && article.auth === 0 && (
                         <button type='button' onClick={handleAuth}>인증승인</button>
                     )}
                 </div>
@@ -170,11 +197,8 @@ const ExArticle = () => {
             </div>
 
             <div className="button-container" style={{ textAlign: 'center', marginTop: '20px' }}>
-                {((memId === article.memId && article.auth === 0) || memId === "suzi123") && (
-                    <>
-                        
-                        <button className="action-button" onClick={handleDelete} style={{ margin: '5px' }}>삭제하기</button>             
-                    </>
+                {(role === 'ADMIN' || (memId === article.memId && article.auth === 0)) && (
+                    <button className="action-button" onClick={handleDelete} style={{ margin: '5px' }}>삭제하기</button>             
                 )}         
                 <button className="action-button" onClick={() => window.location.href = '/exchange/list'} style={{ margin: '5px' }}>
                     목록가기

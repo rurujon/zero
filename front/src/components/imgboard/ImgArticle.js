@@ -138,7 +138,7 @@ const ImgArticle = () => {
             <div className="article-meta-container">
                 <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}
                 
-                {role === 'ROLE_ADMIN' && article?.imgPost.auth === 0 && (
+                {role === 'ADMIN' && article?.imgPost.auth === 0 && (
                     <button type='button' onClick={handleAuth}>인증승인</button>
                 )}
                 
@@ -159,7 +159,7 @@ const ImgArticle = () => {
                 </div>
             </div>
             <div className="button-container">
-                {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ROLE_ADMIN') && (
+                {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
                     <>
                         <button className="action-button" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
                             수정하기
