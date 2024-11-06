@@ -9,4 +9,6 @@ public class BbsListRequest {
     private String search;
     private int page;
     private String category;
+    private String memId;
+    
 }

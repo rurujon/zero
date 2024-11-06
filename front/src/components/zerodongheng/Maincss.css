@@ -5,10 +5,18 @@
     /* background-color: #f8f9fa; */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
+    background-color: #f1f9eb;  /* 부드러운 배경색 */
 
   }
   
+  .zero-waste-intro .highlight-box {
+    padding: 1.5em;
+    background-color: #f1f9eb;
+    border: 1px solid #8fc7a5;
+    border-radius: 10px;
+    margin-bottom: 1em;
+  }
+
   .zero-waste-intro h2 {
     color: #333;
     font-size: 2em;
@@ -41,6 +49,11 @@
     color: #2c3e50;
   }
   
+  .zero-waste-intro .left-align {
+    text-align: left; /* 텍스트를 오른쪽 정렬 */
+    margin-right: 20px; /* 오른쪽 여백 추가 (필요에 따라 조정) */
+  }
+
   .zero-waste-intro .right-align {
     text-align: right; /* 텍스트를 오른쪽 정렬 */
     margin-right: 20px; /* 오른쪽 여백 추가 (필요에 따라 조정) */
@@ -97,3 +110,88 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.0);
 }
   
+/* 'Recycling' 컴포넌트에 대한 새로운 스타일 */
+
+/* 전체 레이아웃 */
+.recycling-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f1f9eb;  /* 부드러운 배경색 */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.recycling-container h2 {
+  color: #333;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 리사이클링 텍스트 스타일 */
+.recycling-container p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #666;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+/* 리사이클링 관련 이미지와 텍스트 배치 */
+.recycling-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.recycling-content img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.recycling-info {
+  width: 55%;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recycling-info h3 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.recycling-info ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.recycling-info li {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.recycling-info li strong {
+  color: #4CAF50;  /* 강조된 텍스트에 그린 색상 */
+}
+
+/* 리사이클링 방법 텍스트 */
+.recycling-method h3 {
+  font-size: 1.8em;
+  color: #333;
+  margin-top: 30px;
+}
+
+.recycling-method p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #666;
+  text-align: justify;
+}

@@ -40,9 +40,8 @@ public class BoardController {
 
     @PostMapping("/write")
     @Transactional
-    public ResponseEntity<?> writeBoard(
-            @ModelAttribute Board board) throws Exception {
-        // 게시글 등록
+    public ResponseEntity<?> writeBoard(@ModelAttribute Board board) throws Exception {
+        
         boardService.writeBoard(board);
 
         Map<String, Object> map = new HashMap<>();
@@ -67,12 +66,13 @@ public class BoardController {
         }
     }
 
-
 	@GetMapping("/list")
-	public ResponseEntity<BbsListResponse> getBoardList(@ModelAttribute BbsListRequest req){
-
-		return ResponseEntity.ok(boardService.getBoardList(req));
-	}
+    public ResponseEntity<BbsListResponse> getBoardList(@ModelAttribute BbsListRequest req, 
+                                                        @RequestParam(value = "memId", required = false) String memId) {
+        // 요청 객체에 memId 설정
+        req.setMemId(memId);  
+        return ResponseEntity.ok(boardService.getBoardList(req));
+    }
 
     @GetMapping("/{boardno}")
 	public ResponseEntity<BbsResponse> getBoard(@PathVariable int boardno, @RequestParam String readerId) throws Exception {

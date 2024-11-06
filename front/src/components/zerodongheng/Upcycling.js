@@ -3,7 +3,7 @@ import './Maincss.css'
 const Upcycling = () => {
     return (
         <div className="zero-waste-intro">
-        <h2>업사이클링이란?</h2>
+        <h2 style={{textAlign:'center', marginBottom:'20px'}}>업사이클링이란?</h2>
         <p>
           업사이클링은 기존에 버려지거나 쓸모없어진 물건을 창의적으로 재활용하여 새로운 가치를 만들어내는 과정입니다. 
           자원 낭비를 줄이고 환경을 보호하는 중요한 활동으로, 일상 속에서 쉽게 실천할 수 있습니다.
