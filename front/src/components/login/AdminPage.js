@@ -169,7 +169,46 @@ const AdminPage = () => {
 
     return (
         <div className="container mt-5">
-            <h2>회원 목록</h2>
+            {/* 공지사항 관리 */}
+            <h3 className="mt-4">공지사항 관리</h3>
+
+            {/* 공지사항 작성 버튼 */}
+            <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성</Button>
+
+            {/* 공지사항 목록 */}
+            <Table striped bordered hover className="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {notices.map(notice => (
+                        <tr key={notice.noticeId}>
+                            <td>{notice.title}</td>
+                            <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
+                            <td>{notice.views}</td>
+                            <td>
+                                <Button variant="info" size="sm" onClick={() => openNoticeModal('edit', notice)} className="me-2">수정</Button>
+                                <Button variant="danger" size="sm" onClick={() => handleDeleteNotice(notice.noticeId)}>삭제</Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+            {/* 공지사항 페이징 */}
+            <Pagination>
+                {[...Array(noticeTotalPages).keys()].map(number => (
+                    <Pagination.Item key={number + 1} active={number + 1 === noticeCurrentPage} onClick={() => setNoticeCurrentPage(number + 1)}>
+                        {number + 1}
+                    </Pagination.Item>
+                ))}
+            </Pagination>
+
+            <h2>회원관리 목록</h2>
             <Form onSubmit={handleSearch} className="mb-3">
                 <Form.Group>
                     <Form.Control type="text" placeholder="ID,이름,이메일 중 하나 입력하여 검색가능" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
@@ -219,45 +258,9 @@ const AdminPage = () => {
                 ))}
             </Pagination>
 
-            {/* 공지사항 관리 */}
-            <h3 className="mt-4">공지사항 관리</h3>
 
-            {/* 공지사항 작성 버튼 */}
-            <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성</Button>
 
-            {/* 공지사항 목록 */}
-            <Table striped bordered hover className="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>조회수</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {notices.map(notice => (
-                        <tr key={notice.noticeId}>
-                            <td>{notice.title}</td>
-                            <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
-                            <td>{notice.views}</td>
-                            <td>
-                                <Button variant="info" size="sm" onClick={() => openNoticeModal('edit', notice)} className="me-2">수정</Button>
-                                <Button variant="danger" size="sm" onClick={() => handleDeleteNotice(notice.noticeId)}>삭제</Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
 
-            {/* 공지사항 페이징 */}
-            <Pagination>
-                {[...Array(noticeTotalPages).keys()].map(number => (
-                    <Pagination.Item key={number + 1} active={number + 1 === noticeCurrentPage} onClick={() => setNoticeCurrentPage(number + 1)}>
-                        {number + 1}
-                    </Pagination.Item>
-                ))}
-            </Pagination>
 
             {/* 포인트 관리 모달 */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>

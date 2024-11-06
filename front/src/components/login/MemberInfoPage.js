@@ -229,6 +229,7 @@ const MemberInfoPage = () => {
         {/* 달력을 항상 오른쪽에 표시 */}
         {!isEditing && (
           <div className="col-md-6">
+            <h2>월별 출석현황</h2>
             <Calendar memId={member.memId} />
           </div>
         )}
