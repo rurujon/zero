@@ -42,7 +42,8 @@ const HomePage = () => {
 
     //11-05 퀴즈모달 추가
     const openQuizModal = () => {
-        if (memId) {
+        if (token) {
+            alert('🙌환영합니다🙌')
             setIsQuizModalOpen(true);
         } else {
             alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
