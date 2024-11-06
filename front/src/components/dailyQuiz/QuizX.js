@@ -24,9 +24,9 @@ return (
     <div className="expl">
         <div className="minimodal-header">
 
-        <fieldset>
+
         <div>
-            <legend>오답입니다!</legend>
+            <span> ❌오답입니다!❌ </span>
         </div>
         <div>
         <fieldset>
@@ -34,7 +34,7 @@ return (
             <h2>{explanation}</h2>
         </fieldset>
         </div>
-        </fieldset>
+
         </div>
         <button onClick={insertQH} className="point-button">나가기</button>
     </div>

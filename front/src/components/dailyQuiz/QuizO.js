@@ -42,8 +42,10 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
         <>
             <div className="expl">
                 <div className="minimodal-headerr">
-                    <fieldset style={{border:'none'}}>
-                        <legend>정답입니다!</legend>
+                    <fieldset style={{border:'none',textAlign:'center'}}>
+                        <legend>
+                            <span>⭕정답입니다!⭕</span>
+                        </legend>
                         <fieldset>
                             <legend>해설</legend>
                             <h2>{explanation}</h2>

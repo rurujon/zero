@@ -26,7 +26,9 @@ const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) =>
             </div>
 
             <QuizItem setQuiz={setQuiz} quiz={quiz}/>
-            <QuizOX setResult={setResult}/>   
+
+            {/* 조건부 렌더링: quiz가 있을 때만 <QuizOX>를 렌더링 */}
+            {quiz && <QuizOX setResult={setResult} />} 
                          
         </>
     );
