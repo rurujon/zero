@@ -53,6 +53,8 @@ public class SecurityConfig {
                 .antMatchers("/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
                 .antMatchers("/exchange/list").permitAll()
+                .antMatchers("/imgboard/list").permitAll()
+                .antMatchers("/imgboard/created", "/imgboard/update", "/imgboard/delete").authenticated()
                 .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -90,3 +92,4 @@ public class SecurityConfig {
     }
 }
 //  .antMatchers("/exchange/list").permitAll()추가함 -승은 24-11-04
+// .antMatchers("/imgboard/list").permitAll()..... 추가함 -승은 24-11-06

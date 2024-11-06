@@ -70,7 +70,7 @@ const HomePage = () => {
     return (
         <div className='mini_login_wrap'>
             {!isLoggedIn ? (
-                <div>
+                <div style={{ height : 190 }}>
                     <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
 
                     <button
