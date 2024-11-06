@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
 import './FindModal.css'
 import QuizModal from '../dailyQuiz/QuizModal';
+import { adjustWindowSize } from './utils/Sizing';
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -42,7 +43,8 @@ const HomePage = () => {
 
     //11-05 퀴즈모달 추가
     const openQuizModal = () => {
-        if (memId) {
+        if (token) {
+            alert('🙌환영합니다🙌')
             setIsQuizModalOpen(true);
         } else {
             alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
@@ -51,8 +53,9 @@ const HomePage = () => {
     };
 
     const handleMemberInfo = () => {
-        window.open('/member-info', 'MemberInfo', 'width=600,height=400,resizable=yes');
-    };
+        // 새 창을 열어 회원정보 페이지로 이동
+        window.open('/member-info', 'MemberInfo', 'width=1000,height=800,resizable=yes');
+      };
 
     const handlePointInfo = () => {
         setShowPointInfoModal(true);
@@ -115,10 +118,10 @@ const HomePage = () => {
                     <h4>오늘도 행복한 하루되세요.</h4>
 
                     <p>역할: {role}</p>
-                    <button onClick={handleMemberInfo} className="btn btn-info">MyInfo조회</button>&nbsp;
-                    <button onClick={handlePointInfo} className="btn btn-success">POINT조회</button>&nbsp;
+                    <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
+                    <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
                     <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
-                    <button onClick={openQuizModal} className="btn btn-primary">일일QUIZ</button>&nbsp;
+                    <button onClick={openQuizModal} className="btn btn-primary">오늘의 퀴즈</button>&nbsp;
                     <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
                     {role === 'ADMIN' && (
                         <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>

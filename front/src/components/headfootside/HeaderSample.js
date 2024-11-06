@@ -75,7 +75,7 @@ const HeaderSample = () => {
                 return (
                     <>
                         <Link to="/googleMap">전체 상점</Link>
-                        <Link to="/exchange/list">추천 상품</Link>
+                        <Link to="/exchange/list">포인트 교환 신청</Link>
                     </>
                 );
             default:
@@ -136,7 +136,7 @@ const HeaderSample = () => {
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
-                                style={{width: '77px', height: '77x', cursor: 'pointer'}}
+                                style={{width: '78px', height: '78px', cursor: 'pointer'}}
                             />
                         </div>
                     </div>

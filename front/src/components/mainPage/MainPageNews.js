@@ -35,7 +35,7 @@ const MainPageNewsCopy = () => {
         const fetchNotices = async () => {
             try {
                 const response = await axios.get('/api/notices', {
-                    params: { page: 1, size: 5 } // 최근 5개의 공지사항만 가져옵니다.
+                    params: { page: 1, size: 6 } // 최근 6개의 공지사항만 가져옵니다.
                 });
                 const validatedNotices = response.data.notices.map(notice => ({
                     ...notice,
@@ -125,11 +125,12 @@ const MainPageNewsCopy = () => {
                         <ul className="board_list">
                             {naverNews.map((news, index) => (
                                 <li key={index}>
-                                    <a href={news.link}>{news.title}</a>
+                                    <a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a>
                                     <span className="board_date">{new Date(news.pubDate).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
                         </ul>
+                        <Link to="/naverNewsList" className="more-link">더 보기</Link>
                     </div>
                 )}
                 {activeTab === 'tab3' && (
@@ -143,6 +144,7 @@ const MainPageNewsCopy = () => {
                                 </li>
                             ))}
                         </ul>
+                        <Link to="/seoulNews/All" className="more-link">더 보기</Link>
                     </div>
                 )}
                 {activeTab === 'tab4' && (
@@ -156,6 +158,7 @@ const MainPageNewsCopy = () => {
                                 </li>
                             ))}
                         </ul>
+                        <Link to="/minEnv" className="more-link">더 보기</Link>
                     </div>
                 )}
             </div>

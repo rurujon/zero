@@ -38,4 +38,8 @@ public class ExchangeService {
     public void deleteExchange(int exchangeId) {
         exchangeMapper.deleteExchange(exchangeId);
     }
+
+    public void updateAuth(int exchangeId) {
+        exchangeMapper.updateAuth(exchangeId);
+    }
 }
