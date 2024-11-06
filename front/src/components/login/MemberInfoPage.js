@@ -16,23 +16,27 @@ const MemberInfoPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { token, logout } = useContext(AuthContext);
 
-  const fetchMemberInfo = useCallback(() => {
-    axios
-      .get('/member/info', { headers: { Authorization: `Bearer ${token}` } })
-      .then((response) => {
-        setMember(response.data);
-        adjustWindowSize(window, response.data);
-      })
-      .catch((error) => {
-        console.error('회원 정보 조회 실패:', error);
-      });
-  }, [token]);
+  // fetchMemberInfo 함수 정의
+// fetchMemberInfo 함수 정의
+const fetchMemberInfo = useCallback(() => {
+  return axios
+    .get('/member/info', { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+      setMember(response.data);  // 회원 정보 상태 업데이트
+      return response.data; // 데이터를 반환하여 이후 처리 가능하게 함
+    })
+    .catch((error) => {
+      console.error('회원 정보 조회 실패:', error);
+      // 필요 시 사용자에게 오류 메시지 표시 가능
+    });
+}, [token]);
 
-  useEffect(() => {
-    if (token) {
-      fetchMemberInfo();
-    }
-  }, [fetchMemberInfo, token]);
+// useEffect를 통해 fetchMemberInfo 호출
+useEffect(() => {
+  if (token) {
+      fetchMemberInfo();  // 이미 비동기로 처리되므로 추가적인 then() 필요 없음
+  }
+}, [fetchMemberInfo, token]);
 
   const handleDeleteRequest = () => {
     setShowConfirmDialog(true);
