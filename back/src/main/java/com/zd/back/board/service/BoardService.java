@@ -44,14 +44,20 @@ public class BoardService {
     
 	/* 게시글 조회 */
 	public BbsListResponse getBoardList(BbsListRequest req) {
+		// BbsListRequest에서 memId를 포함하여 BoardParam 객체 생성
 		BoardParam param = new BoardParam(req);
 		param.setBoardParam(req.getPage(), 15);
-
+		
+		// memId 추가
+		param.setMemId(req.getMemId()); 
+	
+		// memId가 포함된 BoardParam을 사용하여 조회
 		List<Board> bbsList = boardMapper.getBbsSearchPageList(param);
-		int pageCnt = boardMapper.getBbsCount(new BoardParam(req));
-
+		int pageCnt = boardMapper.getBbsCount(param);
+	
 		return new BbsListResponse(bbsList, pageCnt);
 	}
+	
 
 	/* 조회수 수정 */
 	public BbsResponse getBoard(int boardno, String readerId) throws Exception {
