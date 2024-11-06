@@ -216,7 +216,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
         };
         const response = await axios.post(url, data, { withCredentials: true });
         if (response.status === 200) {
-          const successMessage = isEditing ? '회원정보가 성공적으로 수정되었습니다.' : '회원가입이 성공적으로 완료되었습니다.';
+          const successMessage = isEditing ? '정보수정완료' : '회원가입완료';
           alert(successMessage);
           if (isEditing) {
             onSubmit(member);
@@ -421,12 +421,12 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
   readOnly={isEditing && !isPhoneVerificationRequired}
 />
 {isEditing && !isPhoneVerificationRequired && (
-  <Button onClick={handlePhoneReauthentication} className="btn btn-secondary btn-sm mt-2">
+  <Button onClick={handlePhoneReauthentication} className="btn btn-primary btn-sm mt-2">
     핸드폰 재인증
   </Button>
 )}
 {(isPhoneVerificationRequired || !isEditing) && (
-  <Button onClick={handleSendVerification} className="btn btn-secondary btn-sm mt-2">
+  <Button onClick={handleSendVerification} className="btn btn-primary btn-sm mt-2">
     인증번호 발송
   </Button>
 )}
@@ -446,7 +446,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     />
     <Button
       onClick={handleVerifyCode}
-      className="btn btn-secondary btn-sm mt-2"
+      className="btn btn-primary btn-sm mt-2"
       disabled={isVerified}
     >
       인증하기
@@ -468,7 +468,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
   readOnly
   required
 />
-<Button onClick={handleDaumPost} className="btn btn-secondary btn-sm mt-2">
+<Button onClick={handleDaumPost} className="btn btn-primary btn-sm mt-2">
   우편번호 찾기
 </Button>
 </div>
@@ -555,7 +555,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 <Button type="submit" className="btn btn-primary btn-sm">
   {isEditing ? '수정완료' : '입력완료'}
 </Button>
-<Button type="button" className="btn btn-outline-primary btn-sm" onClick={onCancel}>
+<Button type="button" className="btn btn-outline-secondary btn-sm" onClick={onCancel}>
   {isEditing ? '수정취소' : '가입취소'}
 </Button>
 </div>
