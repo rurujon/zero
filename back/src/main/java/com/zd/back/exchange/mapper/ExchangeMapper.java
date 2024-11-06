@@ -12,5 +12,5 @@ public interface ExchangeMapper {
     int getDataCount();
     Exchange getExArticle(int exchangeId);
     void deleteExchange(int exchangeId);
-
+    void updateAuth(int exchangeId);
 }

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css'
 import './FindModal.css'
 import QuizModal from '../dailyQuiz/QuizModal';
+import { adjustWindowSize } from './utils/Sizing';
 
 const HomePage = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -52,8 +53,9 @@ const HomePage = () => {
     };
 
     const handleMemberInfo = () => {
-        window.open('/member-info', 'MemberInfo', 'width=600,height=400,resizable=yes');
-    };
+        // 새 창을 열어 회원정보 페이지로 이동
+        window.open('/member-info', 'MemberInfo', 'width=1000,height=800,resizable=yes');
+      };
 
     const handlePointInfo = () => {
         setShowPointInfoModal(true);
