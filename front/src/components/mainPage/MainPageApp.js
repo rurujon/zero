@@ -21,13 +21,13 @@ function MainPageApp() {
           <div className="main-right-wrap">
             <HomePage/>
             <div className="main-right-banner1">
-              대충 배너 이미지
+              <img src="images/bannerImage1.jpg"></img>
             </div>
             <div className="main-right-banner2">
-              대충 배너 이미지
+              <img src="images/bannerImage1.jpg"></img>
             </div>
             <div className="main-right-banner3">
-              대충 배너 이미지
+              <img src="images/bannerImage1.jpg"></img>
             </div>
           </div>
         </div>
