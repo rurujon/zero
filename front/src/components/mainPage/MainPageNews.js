@@ -125,7 +125,7 @@ const MainPageNewsCopy = () => {
                         <ul className="board_list">
                             {naverNews.map((news, index) => (
                                 <li key={index}>
-                                    <a href={news.link}>{news.title}</a>
+                                    <a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a>
                                     <span className="board_date">{new Date(news.pubDate).toISOString().split('T')[0]}</span>
                                 </li>
                             ))}
