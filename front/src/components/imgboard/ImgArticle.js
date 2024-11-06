@@ -16,7 +16,7 @@ const ImgArticle = () => {
 
     useEffect(() => {
         if (!token) {
-            alert('로그인이 필요한 서비스입니다.');
+            alert('로그인 한 사용자만 게시글을 조회할 수 있습니다.');
             navigate('/login');
             return;
         }
@@ -35,12 +35,7 @@ const ImgArticle = () => {
                 setLoading(false);
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
-                if (error.response?.status === 401) {
-                    alert('로그인이 필요한 서비스입니다.');
-                    navigate('/login');
-                } else {
-                    alert('게시물을 불러오는 중 오류가 발생했습니다.');
-                }
+                alert('게시물을 불러오는 중 오류가 발생했습니다.');
                 setLoading(false);
             }
         };

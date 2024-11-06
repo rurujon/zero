@@ -3,11 +3,9 @@ import axios from 'axios';
 import Pagination from "react-js-pagination";
 import '../board/page.css';
 import { AuthContext } from '../login/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 function ImgList() {
     const { token } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,13 +16,6 @@ function ImgList() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]); //검색결과
 
-    useEffect(() => {
-        if (!token) {
-            alert('로그인이 필요한 서비스입니다.');
-            navigate('/login');
-            return;
-        }
-    }, [token, navigate]);
 
     // 전체 이미지 게시물을 가져오는 함수
     const fetchImgPosts = async () => { 
@@ -38,10 +29,7 @@ function ImgList() {
             setTotalItems(response.data.totalElements);
         } catch (error) {
             console.error('이미지를 찾을 수 없습니다.', error);
-            if (error.response?.status === 401) {
-                alert('로그인이 필요한 서비스입니다.');
-                navigate('/login');
-            }
+    
         }
     };
 
