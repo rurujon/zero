@@ -65,10 +65,18 @@ function ExList() {
         const startIndex = (currentPage - 1) * itemsPerPage;
         return searchResults.slice(startIndex, startIndex + itemsPerPage);
     };
-
+    
     const getAuthLabel = (auth) => {
-        return auth === 1 ? '승인완료' : '미승인';
+        switch (auth) {
+            case 1:
+                return '승인완료';
+            case 0:
+                return '미승인';
+            default:
+                return '알 수 없음';
+        }
     };
+
 
     return (
         <div>
