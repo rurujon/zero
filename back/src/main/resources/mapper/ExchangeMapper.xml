@@ -20,7 +20,7 @@
         SELECT exchangeId, memId, title, created, auth 
         FROM exchange 
         WHERE exchangeId BETWEEN #{pageStart} AND #{pageEnd}
-        ORDER BY exchangeId 
+        ORDER BY exchangeId desc
     </select>
 
     <select id="getDataCount" resultType="int">
