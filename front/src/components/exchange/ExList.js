@@ -1,13 +1,15 @@
 import React, { useEffect, useState,useContext} from 'react';
 import axios from 'axios';
-import { AuthContext } from '../login/context/AuthContext';
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
+import '../board/bbs.css';
+import '../board/page.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 
 function ExList() {
-    const { token } = useContext(AuthContext);
-
-
+    
     const [exchanges, setExchanges] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
@@ -80,71 +82,106 @@ function ExList() {
 
     return (
         <div>
-            <h2>교환 게시판 리스트</h2>
-            <p>
-                <button type='button' onClick={() => window.location.href = '/exchange/created'}>
-                    인증 글쓰기
-                </button>
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                <select value={searchKey} onChange={(e) => {
-                    setSearchKey(e.target.value);
-                    setSearchValue('');
-                }} style={{ marginRight: '10px' }}>
-                    <option value="memId">작성자</option>
-                    <option value="title">제목</option>
-                </select>
-                <input
-                    type="text"
-                    placeholder="검색어 입력"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    style={{ marginRight: '10px', padding: '5px' }}
-                />
-                <button type="button" onClick={handleSearch}>
-                    검색
-                </button>
+
+
+            <div className="table-container">
+                {/* 테이블 제목과 설명 */}
+                <div className="table-header d-flex align-items-center justify-content-start">
+                    <h3 className="table-title">교환신청 게시판</h3>
+                    <p className="table-description ms-3">포인트를 장바구니로 교환해보세요.</p>
+                </div>
+
+                {/* 검색 필터 */}
+                <div className="filter-container">
+                    <table>
+                        <tbody>
+                            <tr className="category-filter">
+                                <td>
+                                    <select 
+                                        value={searchKey} 
+                                        onChange={(e) => {
+                                            setSearchKey(e.target.value);
+                                            setSearchValue('');
+                                        }} 
+                                        className="form-control"
+                                        style={{ border: 0 }}
+                                    >
+                                        <option value="memId">작성자</option>
+                                        <option value="title">제목</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        placeholder="검색어" 
+                                        value={searchValue}
+                                        onChange={(e) => setSearchValue(e.target.value)}
+                                    />
+                                </td>
+                                <td>
+                                    <button type="button" className="btn btn-outline-secondary" onClick={handleSearch}>
+                                        <i className="fas fa-search"></i> 검색
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
+
+                {/* 게시글 목록 */}
+                <table className="table custom-table">
+                    <thead>
+                        <tr>
+                            <th className="col-1">번호</th>
+                            <th className="col-2">인증 승인</th>
+                            <th></th>
+                            <th className="col-5">제목</th>
+                            <th className="col-2">작성자</th>
+                            <th className="col-2">등록일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {getPaginatedResults().map((board, index) => (
+                            <tr key={`${board.exchangeId}_${index}`}>
+                                <td className="table-cell-bold">{board.exchangeId}</td>
+                                <td>{getAuthLabel(board.auth)}</td>
+                                <td><i className="bi bi-lock-fill"></i></td>
+                                <td>
+                                    <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} 
+                                          style={{ textDecoration: 'none', color: 'inherit' }}
+                                          className="underline bbs-title">
+                                        {board.title}
+                                    </Link>
+                                </td>
+                                <td>{board.memId}</td>
+                                <td>{new Date(board.created).toLocaleDateString()}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            {/* 게시글 목록 */}
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th className="col-1">번호</th>
-                        <th className="col-2">인증 승인</th>
-                        <th className="col-5">제목</th>
-                        <th className="col-2">작성자</th>
-                        <th className="col-2">등록일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {getPaginatedResults().map((board, index) => (
-                        <tr key={`${board.exchangeId}_${index}`}>
-                            <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                            <td>{getAuthLabel(board.auth)}</td>
-
-                            <td>
-                                <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    {board.title}
-                                </Link>
-                            </td>
-                            <td>{board.memId}</td>
-                            <td>{new Date(board.created).toLocaleDateString()}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* 페이지네이션 */}
-            <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={itemsPerPage}
-                totalItemsCount={totalItems}
-                pageRangeDisplayed={5}
-                onChange={handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-            />
+            {/* 페이지네이션 및 글쓰기 버튼 */}
+            <div className="d-flex justify-content-between align-items-center mb-2">
+                <div className="mx-auto">
+                    <Pagination
+                        className="pagination"
+                        activePage={currentPage}
+                        itemsCountPerPage={itemsPerPage}
+                        totalItemsCount={totalItems}
+                        pageRangeDisplayed={5}
+                        prevPageText={"‹"}
+                        nextPageText={"›"}
+                        onChange={handlePageChange}
+                    />
+                </div>
+                <Link className="btn btn-outline-secondary" to="/exchange/created">
+                    <i className="fas fa-pen"></i> 인증 글쓰기
+                </Link>
+            </div>
         </div>
     );
 }
