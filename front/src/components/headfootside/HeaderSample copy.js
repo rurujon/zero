@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import QuizModal from '../dailyQuiz/QuizModal';
 import { AuthContext } from '../login/context/AuthContext';
-import './HeaderSample.css';
+import './HeaderSample copy.css';
 import LoginPage from '../login/LoginPage';
 
-const HeaderSample = () => {
+const HeaderSample2 = () => {
     const { memId, logout, login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [showLogin, setShowLogin] = useState(false);
@@ -34,32 +34,51 @@ const HeaderSample = () => {
     };
 
     const renderSubMenu = () => {
-
-        return (
-            <>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-donghaeng')}>
-                    <Link to="/zerowaste">제로웨이스트 소개</Link>
-                    <Link to="/recycling">리사이클링 소개</Link>
-                    <Link to="/upcycling">업사이클링 소개</Link>
-                    <Link to="/zerodongheng">팀 제로동행</Link>
-                </div>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('eco-news')}>
-                    <Link to="/naverNewsList">네이버 뉴스</Link>
-                    <Link to="/minEnv">환경부 정책</Link>
-                    <Link to="/seoulNews/All">서울시 뉴스</Link>
-                    <Link to="/orgList">봉사단체</Link>
-                </div>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-activity')}>
-                    <Link to="/board/list">참여게시판</Link>
-                    <Link to="/imgboard/list">인증게시판</Link>
-                </div>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-consumer')}>
-                    <Link to="/googleMap">전체 상점</Link>
-                    <Link to="/exchange/list">포인트 교환 신청</Link>
-                </div>
-            </>
-        );
-        
+        switch (activeMenu) {
+            case 'zero-donghaeng':
+                return (
+                    <>
+                        <Link to="/zerowaste">제로웨이스트 소개</Link>
+                        <Link to="/recycling">리사이클링 소개</Link>
+                        <Link to="/upcycling">업사이클링 소개</Link>
+                        <Link to="/zerodongheng">팀 제로동행</Link>
+                    </>
+                );
+            case 'eco-news':
+                return (
+                    <>
+                        <Link to="/naverNewsList">네이버 뉴스</Link>
+                        <Link to="/minEnv">환경부 정책</Link>
+                        <Link to="/seoulNews/All">서울시 뉴스</Link>
+                        <Link to="/orgList">봉사단체</Link>
+                    </>
+                );
+            case 'zero-news':
+                return (
+                    <>
+                        <Link to="/seoulNews/eco">에코</Link>
+                        <Link to="/seoulNews/env">환경</Link>
+                        <Link to="/seoulNews/air">기상</Link>
+                        <Link to="/seoulNews/green">그린</Link>
+                    </>
+                );
+            case 'zero-activity':
+                return (
+                    <>
+                        <Link to="/board/list">참여게시판</Link>
+                        <Link to="/imgboard/list">인증게시판</Link>
+                    </>
+                );
+            case 'zero-consumer':
+                return (
+                    <>
+                        <Link to="/googleMap">전체 상점</Link>
+                        <Link to="/exchange/list">포인트 교환 신청</Link>
+                    </>
+                );
+            default:
+                return null;
+        }
     };
 
 
@@ -98,14 +117,16 @@ const HeaderSample = () => {
                         </h1>
                         <div>
                             <nav className="bottom-nav">
-                                <ul>
-                                    {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
-                                        <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}
-                                        className={activeMenu === menu ? 'active' : ''}>
-                                            {menu.replace('-', ' ').toUpperCase()}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className='header-menu-bar'>
+                                <Link to="#">제로행동</Link>
+                                    <div className="header-submenu">
+                                        
+                                        <div><Link to="/zerowaste">제로웨이스트 소개</Link></div>
+                                        <div><Link to="/recycling">리사이클링 소개</Link></div>
+                                        <div><Link to="/upcycling">업사이클링 소개</Link></div>
+                                        <div><Link to="/zerodongheng">팀 제로동행</Link></div>
+                                    </div>
+                                </div>
                             </nav>
                         </div>
 
@@ -116,7 +137,7 @@ const HeaderSample = () => {
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
-                                style={{width: '78px', height: '78px', cursor: 'pointer'}}
+                                style={{width: '77px', height: '77x', cursor: 'pointer'}}
                             />
                         </div>
                     </div>
@@ -156,4 +177,4 @@ const HeaderSample = () => {
     );
 };
 
-export default HeaderSample;
+export default HeaderSample2;

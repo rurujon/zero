@@ -8,7 +8,7 @@ const Zerowaste = () => {
 
 
     return (
-        <div className="zero-waste-intro" >
+        <div className="zero-waste-intro"  >
           <h2>제로 웨이스트란?</h2>
 
             <div>
