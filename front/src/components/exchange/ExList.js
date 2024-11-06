@@ -120,7 +120,7 @@ function ExList() {
                 <tbody>
                     {getPaginatedResults().map((board, index) => (
                         <tr key={`${board.exchangeId}_${index}`}>
-                            <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                            <td>{board.exchangeId}</td>
                             <td>{getAuthLabel(board.auth)}</td>
 
                             <td>
