@@ -10,8 +10,8 @@
     </select>
 
     <insert id="createdExchange" parameterType="com.zd.back.exchange.model.Exchange">
-        INSERT INTO exchange (exchangeId, memId, title, sender, receiver, content, addr1, addr2, post, tel,created)
-        VALUES (#{exchangeId}, #{memId}, #{title}, #{sender}, #{receiver}, #{content}, #{addr1}, #{addr2}, #{post}, #{tel}, SYSDATE)
+        INSERT INTO exchange (exchangeId, memId, title, sender, receiver, content, addr1, addr2, post, tel,created,selec)
+        VALUES (#{exchangeId}, #{memId}, #{title}, #{sender}, #{receiver}, #{content}, #{addr1}, #{addr2}, #{post}, #{tel}, SYSDATE,#{selec})
     </insert>
 
     <select id="getExchanges" resultType="com.zd.back.exchange.model.Exchange">
@@ -22,13 +22,13 @@
         SELECT COUNT(*) FROM exchange
     </select>
 
-<!--  우편주소 및 전화번호 가져오기 위함 -->
-    <select id="selectMemberById" parameterType="string" resultType="com.zd.back.login.model.Member">
-        SELECT  memName, tel, post, addr1, addr2FROM member
-        WHERE memId = #{memId}
-    </select>
-    
+
     <select id="getExArticle" parameterType="int" resultType="com.zd.back.exchange.model.Exchange">
         SELECT * FROM exchange WHERE exchangeId = #{exchangeId}
     </select>
+
+    
+    <delete id="deleteExchange" parameterType="int">
+        DELETE FROM exchange WHERE exchangeId = #{exchangeId}
+    </delete>
 </mapper>

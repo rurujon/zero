@@ -66,43 +66,48 @@ function BbsList() {
 
     return (
         <div>
-            <div className="table-container">
-                {/* 테이블 제목과 설명 */}
-                <div className="table-header d-flex align-items-center justify-content-start">
-                    <h3 className="table-title">참여게시판</h3>
-                    <p className="table-description ms-3">여러분의 소중한 후기와 정보를 공유해 주세요.</p>
-                </div>
-                <tbody>
-                    <tr className="category-filter">
-                        <td>
-                            <select value={category} onChange={changeCategory} className="form-control" style={{border: 0} }>
-                                <option value="">전체 카테고리</option>
-                                <option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
-                                <option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
-                                <option value="대체용품 사용후기">대체용품 사용후기</option>
-                                <option value="기타">기타</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select className="form-control" value={choiceVal} onChange={changeChoice} style={{border: 0}}>
-                                <option>검색 옵션 선택</option>
-                                <option value="title">제목</option>
-                                <option value="content">내용</option>
-                                <option value="writer">작성자</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
-                        </td>
-                        <td>
-                            <button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
-                        </td>
-                    </tr>
-                </tbody>
-
-
+        <div className="table-container">
+            {/* 테이블 제목과 설명 */}
+            <div className="table-header d-flex align-items-center justify-content-start">
+                <h3 className="table-title">참여게시판</h3>
+                <p className="table-description ms-3">여러분의 소중한 후기와 정보를 공유해 주세요.</p>
+            </div>
+    
+            {/* 검색 필터 */}
+            <div className="filter-container">
+                <table>
+                    <tbody>
+                        <tr className="category-filter">
+                            <td>
+                                <select value={category} onChange={changeCategory} className="form-control" style={{ border: 0 }}>
+                                    <option value="">전체 카테고리</option>
+                                    <option value="제로웨이스트 실천 팁">제로웨이스트 실천 팁</option>
+                                    <option value="재활용 정보 및 가이드">재활용 정보 및 가이드</option>
+                                    <option value="대체용품 사용후기">대체용품 사용후기</option>
+                                    <option value="기타">기타</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select className="form-control" value={choiceVal} onChange={changeChoice} style={{ border: 0 }}>
+                                    <option>검색 옵션 선택</option>
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                    <option value="writer">작성자</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
+                            </td>
+                            <td>
+                                <button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
             <br />
-
+    
             {/* 게시글 목록 */}
             <table className="table custom-table">
                 <thead>
@@ -122,26 +127,27 @@ function BbsList() {
                 </tbody>
             </table>
         </div>
-
-            {/* 페이지네이션 */}
-            <div className="d-flex justify-content-between align-items-center mb-2">
-                <div className="mx-auto">
-                    <Pagination
-                        className="pagination"
-                        activePage={page}
-                        itemsCountPerPage={15}
-                        totalItemsCount={totalCnt}
-                        pageRangeDisplayed={5}
-                        prevPageText={"‹"}
-                        nextPageText={"›"}
-                        onChange={changePage}
-                    />
-                </div>
-                <Link className="btn btn-outline-secondary" to="/board/write">
-                    <i className="fas fa-pen"></i> 글쓰기
-                </Link>
+    
+        {/* 페이지네이션 및 글쓰기 버튼 */}
+        <div className="d-flex justify-content-between align-items-center mb-2">
+            <div className="mx-auto">
+                <Pagination
+                    className="pagination"
+                    activePage={page}
+                    itemsCountPerPage={15}
+                    totalItemsCount={totalCnt}
+                    pageRangeDisplayed={5}
+                    prevPageText={"‹"}
+                    nextPageText={"›"}
+                    onChange={changePage}
+                />
             </div>
+            <Link className="btn btn-outline-secondary" to="/board/write">
+                <i className="fas fa-pen"></i> 글쓰기
+            </Link>
         </div>
+    </div>
+    
     );
 }
 
@@ -151,10 +157,9 @@ function TableRow(props) {
 
     return (
         <tr>
-            
             {board.del === 0 ? (
                 <>
-                    <th>{board.boardno}</th>
+                    <td className="table-cell-bold">{board.boardno}</td>
                     <td>[{board.category}]</td>
                     <td>
                         <Arrow depth={board.depth} />
@@ -164,10 +169,9 @@ function TableRow(props) {
                                 {board.urlFile && board.urlFile !== '' && (
                                     <span style={{ marginLeft: '5px' }}>🧷</span>
                                 )}
-                                {/* 댓글 수 표시 */}
                                 {board.commentCount > 0 && (
-									<span style={{ marginLeft: '10px', color: '#ff6347', fontWeight: 'bold' }}>[{board.commentCount}]</span>
-								)}
+                                    <span style={{ marginLeft: '10px', color: '#ff6347', fontWeight: 'bold' }}>[{board.commentCount}]</span>
+                                )}
                             </span>
                         </Link>
                     </td>
@@ -177,18 +181,14 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td colSpan="6" className="deleted-post">
                         <Arrow depth={board.depth} />
                         <span className="del-span">⚠️ 삭제된 게시물입니다.</span>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                 </>
             )}
         </tr>
+
     );
 }
 

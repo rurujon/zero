@@ -34,4 +34,8 @@ public class ExchangeService {
     public Exchange getExArticle(int exchangeId) {
         return exchangeMapper.getExArticle(exchangeId);
     }
+
+    public void deleteExchange(int exchangeId) {
+        exchangeMapper.deleteExchange(exchangeId);
+    }
 }

@@ -111,5 +111,15 @@ public class ExchangeController {
         return ResponseEntity.ok(exchange);
     }
 
+    @DeleteMapping("/deleted")
+    public ResponseEntity<String> deleteExchange(@RequestParam int exchangeId) {
+        try {
+            exchangeService.deleteExchange(exchangeId);
+            return ResponseEntity.ok("게시물이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("게시물 삭제 중 오류가 발생했습니다.");
+        }
+    }
 
 }
