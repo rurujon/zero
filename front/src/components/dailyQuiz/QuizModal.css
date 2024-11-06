@@ -62,11 +62,11 @@
     z-index: 1001; /* 작은 모달의 z-index 설정 */
 }
 
-.modal .bg {
+.Qmodal .bg {
     background-color: rgba(78, 10, 235, 0.895);
 }
 
-.modal button{
+.Qmodal button{
     /* position: absolute; */
     margin-right: 10px;
     margin-top: 10px;
@@ -80,13 +80,13 @@
     text-align: center; /* 텍스트 중앙 정렬 */
 }
 
-.modal-header {
+.Qmodal-header {
     display: flex;
     justify-content: flex-end; /* 오른쪽 정렬 */
     margin-bottom: 10px; /* 헤더와 내용 사이 공간 추가 */
 }
 
-.modal button.close {
+.Qmodal button.close {
     background-color: #ff4f4f; /* 버튼 색상 */
     color: white;
     border: none;
@@ -98,7 +98,7 @@
 
 }
 
-.modal button.close:hover {
+.Qmodal button.close:hover {
     background-color: #ff1f1f; /* 마우스 오버 시 색상 변경 */
 }
 
@@ -120,7 +120,7 @@
     background-color: #45a049; /* 마우스 오버 시 색상 변경 */
 }
 
-.modal h2{
+.Qmodal h2{
     display:flex;
     justify-content:center;
     align-content:center;
@@ -128,7 +128,7 @@
     text-shadow: 2px 2px 4px white;
 }
 
-.modal .OX{
+.Qmodal .OX{
 
     width: 100%;
     height: 45%;
@@ -143,7 +143,7 @@
 
 }
 
-.modal .OX .oxBox{
+.Qmodal .OX .oxBox{
     background-color: rgba(0,0,0,0.02);
 
     width: 80%;
@@ -159,7 +159,7 @@
     flex-direction: row;
 }
 
-.modal .OX .oxBox .btn{
+.Qmodal .OX .oxBox .btn{
     /* background-color: black; */
 
     width: 45%;
@@ -174,7 +174,7 @@
 }
 
 
-.modal .OX .oxBox button {
+.Qmodal .OX .oxBox button {
     /*
     background-color: #8B0000;
     color: white;
@@ -204,11 +204,11 @@
 
 }
 
-.modal .OX .oxBox button:hover {
+.Qmodal .OX .oxBox button:hover {
     background-color: #a52a2a;
     transition: background-color 0.3s ease;
 }
-.modal .Quiz {
+.Qmodal .Quiz {
 
     margin-top: 10px;
 
@@ -222,7 +222,7 @@
 
 
 
-.modal .Quiz .box{
+.Qmodal .Quiz .box{
     background-color: rgba(0,0,0,0.02);
 
 
@@ -241,7 +241,7 @@
     border-radius: 5%;
 }
 
-.modal .Quiz span{
+.Qmodal .Quiz span{
 
     width: 90%;
     height: 80%;

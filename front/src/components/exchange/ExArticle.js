@@ -95,7 +95,24 @@ const ExArticle = () => {
         }
     };
 
+//여기부터 조준영 11-06/19:32 추가
+//포인트 상승
+const uppoint = async () => {
+    try {
+        const response = await axios.post('http://localhost:8080/api/point/update', {
+            memId: article.memId,
+            oper: '-',  // 또는 '-'
+            updown: 300, // 추가하거나 차감할 포인트 수
+            reason:  "포인트 리워드"// 변경 사유
+        });
+        console.log('포인트 업데이트 성공:', response.data);
+        
 
+    } catch (error) {
+        console.error('포인트 업데이트 실패:', error.response ? error.response.data : error.message);
+    }
+};
+//여기까지 조준영 11-06/19:32 추가
                    
  /*  ##### 인증 승인 auth 부분  */
     const handleAuth = async () => {
@@ -104,7 +121,7 @@ const ExArticle = () => {
                 params: { exchangeId }
             });
             alert(response.data);
-            
+            uppoint();
             // 게시글 데이터 다시 불러오기
             const updatedArticle = await axios.get('/exchange/article', {
                 params: { exchangeId }
