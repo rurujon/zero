@@ -46,9 +46,7 @@
 }
 
 .top-nav > div:nth-child(2) {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-5%);
 }
 
 .top-nav h1 {

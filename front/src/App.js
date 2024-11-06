@@ -8,6 +8,7 @@ import AxiosInterceptor from './components/login/utils/AxiosInterceptor';
 import HttpHeadersProvider from './components/context/HttpHeadersProvider';
 import routes from './routes';
 import HeaderSample from './components/headfootside/HeaderSample';
+import { useEffect } from 'react';
 
 function AppContent() {
 
@@ -20,6 +21,12 @@ function AppContent() {
   // 숨길 경로 목록. 특정 경로의 웹페이지에서 헤더와 푸터, 사이드바를 보기 싫을 때 이 배열에 경로저장해주세요.
   const hiddenPaths = ['/member-info','/'];
   const isHiddenPage = hiddenPaths.includes(location.pathname); // 현재 경로가 숨길 경로 목록에 있는지 확인
+
+  useEffect(() => {
+    // 페이지 변경 시 scrollTop을 0으로 설정하여 맨 위로 스크롤
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location]);
 
   return (
     
