@@ -128,15 +128,15 @@ const HeaderSample = () => {
                             </ul>
                         </nav>
                         </div>
+
                         <div>
                             <Link to="/mainpage"><img src='/images/home.png' alt="홈" /></Link>
-                        </div>
-                        <div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <img
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
-                                style={{width: '64px', height: '64px', cursor: 'pointer'}}
+                                style={{width: '75px', height: '75x', cursor: 'pointer'}}
                             />
                         </div>
                     </div>
