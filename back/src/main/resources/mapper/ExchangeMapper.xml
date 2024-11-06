@@ -15,10 +15,14 @@
     </insert>
 
 
+
     <select id="getExchanges" resultType="com.zd.back.exchange.model.Exchange">
-        SELECT exchangeId, memId, title, created ,auth FROM exchange WHERE exchangeId BETWEEN #{pageStart} AND #{pageEnd}
+        SELECT exchangeId, memId, title, created, auth 
+        FROM exchange 
+        WHERE exchangeId BETWEEN #{pageStart} AND #{pageEnd}
+        ORDER BY exchangeId desc
     </select>
-    
+
     <select id="getDataCount" resultType="int">
         SELECT COUNT(*) FROM exchange
     </select>
