@@ -3,7 +3,7 @@ export const adjustWindowSize = (windowRef, memberData, isEditing, additionalCon
     const maxFieldLength = Math.max(...Object.values(memberData).map(value => String(value).length));
 
     // 기본 너비와 높이 설정
-    let width = Math.max(400, maxFieldLength * 10 + 250);  // 최소 400px
+    let width = Math.max(400, maxFieldLength * 10 + 260);  // 최소 400px
     let height = isEditing ? 400 + (Object.keys(memberData).length * 40) : 300;
 
     // 추가 컨텐츠에 대한 높이 계산
