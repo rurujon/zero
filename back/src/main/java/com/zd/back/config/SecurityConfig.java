@@ -49,6 +49,7 @@ public class SecurityConfig {
             .authorizeRequests()
                 .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token","/api/naver/**","/api/seoul/**","/api/rss/**","/api/org/**","/api/smartMap/**","/member/privacy","/member/terms","/member/check-id","/member/check-email").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
+                .antMatchers("/quiz.action","/index").permitAll()
                 .antMatchers("/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
                 .antMatchers("/exchange/list").permitAll()

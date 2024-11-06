@@ -56,19 +56,21 @@ public class QuizController {
             }
     }
 
-    @GetMapping(value="/quiz")
+    @GetMapping(value="/quiz.action")
     public ModelAndView test() throws Exception{
         ModelAndView mav = new ModelAndView();
-
-        ReadJSON rj = new ReadJSON();
-
-        JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\zerowaste");
-
-        Map<Integer , String[]> map = rj.unzipArray(array);
-
-        quizService.insertquiz(map);
-
-        mav.setViewName("index");
+        try {
+            System.out.println("Returning quiz view");
+            ReadJSON rj = new ReadJSON();
+            JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\zerowaste");
+            Map<Integer, String[]> map = rj.unzipArray(array);
+            quizService.insertquiz(map);
+            mav.setViewName("JY/quiz");
+        } catch (Exception e) {
+            System.err.println("Error occurred in /quiz: " + e.getMessage());
+            e.printStackTrace();  // 추가로 예외 스택 추적을 출력
+            mav.setViewName("error");  // 오류 페이지로 이동
+        }
         return mav;
     }
     
