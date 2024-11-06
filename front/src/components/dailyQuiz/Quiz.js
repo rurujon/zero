@@ -8,7 +8,6 @@ const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) =>
     
     useEffect(()=> {
         if(quiz){
-            alert(quiz.id)
             setQuizId(quiz.id)
             setAnswer(quiz.answer)
         
