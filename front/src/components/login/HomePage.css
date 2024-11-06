@@ -1,5 +1,6 @@
 .mini_login_wrap {
     flex: 1 1 calc(30% - 20px); /* 자유롭게 크기 조정 */
+    margin-top: 10px;
     margin-bottom: 10px; /* 요소 간 간격 추가 */
     background-color: #ffffff; /* 배경색 설정 (선택 사항) */
     border-radius: 5px; /* 모서리 둥글게 */
@@ -18,6 +19,7 @@
 }
 
 .mini_login_wrap h5 {
+    margin-top: 10px;
     margin-bottom: 20px; /* 제목과 버튼 간격 */
 }
 
