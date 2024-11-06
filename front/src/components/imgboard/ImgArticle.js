@@ -68,7 +68,37 @@ const ImgArticle = () => {
             }
         }
     };
+    
+    if (!article || !article.imgPost) {
+        return <p>게시물을 찾을 수 없습니다.</p>;
+    }
 
+    const point = article.imgPost.cate === 'tum' ?  10 
+                :article.imgPost.cate === 'buy' ?  20
+                :article.imgPost.cate === 'group' ? 30 : 0;
+
+    const reason = article.imgPost.cate ==='tum' ? '텀블러 이용'
+    :article.imgPost.cate === 'buy' ?  '물품 구매'
+    :article.imgPost.cate === 'group' ?  '단체활동 참여'
+    : '';
+    
+    //포인트 상승
+    const uppoint = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/point/update', {
+                memId: article.imgPost.memId,
+                oper: '+',  // 또는 '-'
+                updown: point, // 추가하거나 차감할 포인트 수
+                reason:  reason// 변경 사유
+            });
+            alert('point: '+point)
+            alert('reason: '+article?.imgPost?.cate)
+            console.log('포인트 업데이트 성공:', response.data);
+
+        } catch (error) {
+            console.error('포인트 업데이트 실패:', error.response ? error.response.data : error.message);
+        }
+    };
     const handleAuth = async () => {
         try {
             const response = await axios.post('/imgboard/auth', null, {
@@ -77,6 +107,7 @@ const ImgArticle = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            uppoint();
             alert(response.data);
             window.location.reload();
         } catch (error) {
