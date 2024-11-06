@@ -18,7 +18,18 @@ function MainPageApp() {
         <div className="main_content_02">
           <MainPageNews/>
 
-          <HomePage/>
+          <div className="main-right-wrap">
+            <HomePage/>
+            <div className="main-right-banner1">
+              대충 배너 이미지
+            </div>
+            <div className="main-right-banner2">
+              대충 배너 이미지
+            </div>
+            <div className="main-right-banner3">
+              대충 배너 이미지
+            </div>
+          </div>
         </div>
       </div>
     );
