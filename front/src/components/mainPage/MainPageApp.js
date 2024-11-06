@@ -18,7 +18,18 @@ function MainPageApp() {
         <div className="main_content_02">
           <MainPageNews/>
 
-          <HomePage/>
+          <div className="main-right-wrap">
+            <HomePage/>
+            <div className="main-right-banner1">
+              <img src="images/bannerImage1.jpg"></img>
+            </div>
+            <div className="main-right-banner2">
+              <img src="images/bannerImage1.jpg"></img>
+            </div>
+            <div className="main-right-banner3">
+              <img src="images/bannerImage1.jpg"></img>
+            </div>
+          </div>
         </div>
       </div>
     );

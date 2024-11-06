@@ -63,6 +63,8 @@ public class QuizController {
             System.out.println("Returning quiz view");
             ReadJSON rj = new ReadJSON();
             JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\zerowaste");
+            // JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\upcycling");
+            // JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\recycling");
             Map<Integer, String[]> map = rj.unzipArray(array);
             quizService.insertquiz(map);
             mav.setViewName("JY/quiz");

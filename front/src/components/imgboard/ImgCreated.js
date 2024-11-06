@@ -10,9 +10,23 @@ const ImgCreated = () => {
     const imgPostId = queryParams.get('imgPostId'); // updated 시 받는 imgPostId
     const updatedMode = Boolean(imgPostId); // imgPostId가 있으면 updatedMode
 
-    // AuthContext에서 token, memId, role 가져오기
-    const { token, memId, role } = useContext(AuthContext);
+    // AuthContext에서 token만 가져오기
+    const { token } = useContext(AuthContext);
 
+    // token에서 memId와 role 가져오기
+    const getTokenInfo = (token) => {
+        if (token) {
+            const payloadBase64 = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return {
+                memId: decodedPayload.sub,
+                role: decodedPayload.role
+            };
+        }
+        return { memId: null, role: null };
+    };
+
+    const { memId, role } = getTokenInfo(token);
 
     const [cate, setCate] = useState('');
     const [title, setTitle] = useState('');
@@ -68,12 +82,9 @@ const ImgCreated = () => {
                     setImagePreviews(newPreviews);
                     
                 } catch (error) {
-                    if (error.response?.status === 401) {
-                        alert('로그인이 필요한 서비스입니다.');
-                        navigate('/login');
-                    } else {
+                  
                         alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
-                    }
+                    
                 } finally {
                     setLoading(false);
                 }
