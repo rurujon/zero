@@ -35,6 +35,7 @@ import NoticeDetail from "./components/notice/NoticeDetail";
 
 import Cover from "./components/mainPage/Cover";
 
+import Zerodongheng from './components/zerodongheng/Zerodongheng';
 import Recycling from "./components/zerodongheng/Recycling";
 import Upcycling from "./components/zerodongheng/Upcycling";
 import Zerowaste from "./components/zerodongheng/Zerowaste";
@@ -92,6 +93,7 @@ export const routes = [
 
     //zerodongheng
     
+    { path: '/zerodongheng', element: <Zerodongheng /> },
     { path: '/zerowaste', element: <Zerowaste /> },
     { path: '/recycling', element: <Recycling /> },
     { path: '/upcycling', element: <Upcycling /> },

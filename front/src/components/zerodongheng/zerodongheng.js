@@ -1,11 +1,11 @@
 import React from 'react';
 import "./Maincss.css"
-const zerodongheng = () => {
+const Zerodongheng = () => {
     return (
-        <div>
+        <div className="zero-waste-intro">
             <h1>zerodonghaeng</h1>
         </div>
     );
 };
 
-export default zerodongheng;
+export default Zerodongheng;

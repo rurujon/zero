@@ -35,7 +35,7 @@ public class QuizServiceImp implements QuizService {
             
             //int id = Integer.parseInt(map.get(i).toString());
             
-            int id = maxNum();
+            int id = maxNum()+1;
 
             String [] qae = (String[]) map.get(i);
     
