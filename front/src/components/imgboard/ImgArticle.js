@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ImgArticle = () => {
-    const { token, memId, role } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const imgPostId = queryParams.get('imgPostId');
@@ -13,6 +13,21 @@ const ImgArticle = () => {
 
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    // token에서 memId와 role 가져오기
+    const getTokenInfo = (token) => {
+        if (token) { 
+            const payloadBase64 = token.split('.')[1]; //토큰의 2번째 인덱스 가져옴
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return {
+                memId: decodedPayload.sub,
+                role: decodedPayload.role
+            };
+        }
+        return { memId: null, role: null };
+    };
+
+    const { memId, role } = getTokenInfo(token);
 
     useEffect(() => {
         if (!token) {
@@ -123,7 +138,7 @@ const ImgArticle = () => {
             <div className="article-meta-container">
                 <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}
                 
-                {role === 'ADMIN' && article?.imgPost.auth === 0 && (
+                {role === 'ROLE_ADMIN' && article?.imgPost.auth === 0 && (
                     <button type='button' onClick={handleAuth}>인증승인</button>
                 )}
                 
@@ -144,7 +159,7 @@ const ImgArticle = () => {
                 </div>
             </div>
             <div className="button-container">
-                {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
+                {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ROLE_ADMIN') && (
                     <>
                         <button className="action-button" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
                             수정하기
