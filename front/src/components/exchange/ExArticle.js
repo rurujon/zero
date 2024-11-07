@@ -36,7 +36,7 @@ const ExArticle = () => {
     useEffect(() => {
         if (!token) { 
             alert('로그인한 사용자만 게시글을 조회 할 수 있습니다.');
-            navigate('/login');
+            navigate('/mainpage');
             return;
         }
 

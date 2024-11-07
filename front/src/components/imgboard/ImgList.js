@@ -5,8 +5,8 @@ import '../board/page.css';
 import { AuthContext } from '../login/context/AuthContext';
 
 function ImgList() {
-    const { token } = useContext(AuthContext);
 
+    const { token } = useContext(AuthContext);
     const [imgPosts, setImgPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0); // 총 게시물 수
@@ -16,9 +16,9 @@ function ImgList() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]); //검색결과
 
-
     // 전체 이미지 게시물을 가져오는 함수
     const fetchImgPosts = async () => { 
+
         try {
             const response = await axios.get('/imgboard/list', {
                 params: { page: 1, size: 1000 },
