@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
 import './GoogleMaps.css';
 import axios from "axios";
+import { AuthContext } from "../login/context/AuthContext";
 
 const mapOptions = {
   styles: [
@@ -55,6 +56,8 @@ const GoogleMaps = () => {
   const [selectedGu, setSelectedGu] = useState('전체'); // 기본적으로 전체 선택
   const [mapLoaded, setMapLoaded] = useState(false); // 맵 로딩 상태
   const [visibleCount, setVisibleCount] = useState(9); // 보여줄 스토어 개수
+
+  const { role } = useContext(AuthContext);
   
   const mapRef = useRef(null);
 
@@ -259,7 +262,9 @@ const GoogleMaps = () => {
           ))}
           </div>
 
-          <button onClick={updateMap}>update Map</button> {/* 크롤링 버튼 추가 */}
+          {role === 'ADMIN' && (
+                        <button onClick={updateMap}>Crawl News</button>
+                    )}
           <div className="store-list">
             {filteredStores.slice(0, visibleCount).map((store, index) => (
               <div key={index} className="store-card" onClick={() => handleMarkerClick(store)}>

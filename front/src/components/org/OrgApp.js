@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import "./Card.css"
+import { AuthContext } from '../login/context/AuthContext';
 
 const OrgApp = () => {
     const [orgList, setOrgList] = useState([]);
     const [globalOrgList, setGlobalOrgList] = useState([]);
     const [visibleCount, setVisibleCount] = useState(15); // 처음에 보이는 항목 수
+
+    const { role } = useContext(AuthContext);
 
     const fetchOrgData = async () => {
         try {
@@ -53,7 +56,9 @@ const OrgApp = () => {
         
         <section className='list'>
             <div className="list_container">
-                <button onClick={handleCrawl}>Update org Data</button> {/* 업데이트 버튼 */}
+                {role === 'ADMIN' && (
+                        <button onClick={handleCrawl}>Crawl News</button>
+                    )}
 
                 <h2 className='title'>국제 환경 보호 단체</h2>
                 <ul className="card">
