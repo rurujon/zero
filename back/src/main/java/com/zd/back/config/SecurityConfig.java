@@ -1,44 +1,46 @@
 package com.zd.back.config;
 
-import java.util.Arrays;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import com.zd.back.login.security.JwtFilter;
 import com.zd.back.login.service.LogoutService;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
 @EnableTransactionManagement
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Autowired
-    private JwtFilter jwtFilter;
+    private final JwtFilter jwtFilter;
+    private final LogoutService logoutService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private LogoutService logoutService;
+    public SecurityConfig(JwtFilter jwtFilter, LogoutService logoutService, UserDetailsService userDetailsService) {
+        this.jwtFilter = jwtFilter;
+        this.logoutService = logoutService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,9 +49,9 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token","/api/naver/**","/api/seoul/**","/api/rss/**","/api/org/**","/api/smartMap/**","/member/privacy","/member/terms","/member/check-id","/member/check-email").permitAll()
+                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**", "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy", "/member/terms", "/member/check-id", "/member/check-email").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
-                .antMatchers("/quiz.action","/index").permitAll()
+                .antMatchers("/quiz.action", "/index").permitAll()
                 .antMatchers("/api/notices/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
                 .antMatchers("/exchange/list").permitAll()
@@ -58,12 +60,24 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout()
+                .logoutUrl("/member/logout")
+                .addLogoutHandler(logoutService)
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().write("{\"message\": \"로그아웃 성공\"}");
+                })
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+            .and()
             .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.getWriter().write("{\"error\": \"인증 정보가 없습니다.\"}");
-                });
+                })
+            .and()
+            .userDetailsService(userDetailsService);
 
         return http.build();
     }
@@ -90,6 +104,9 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
-//  .antMatchers("/exchange/list").permitAll()추가함 -승은 24-11-04
-// .antMatchers("/imgboard/list").permitAll()..... 추가함 -승은 24-11-06

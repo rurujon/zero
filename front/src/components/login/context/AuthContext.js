@@ -10,17 +10,25 @@ export const AuthProvider = ({ children }) => {
     const [memId, setMemId] = useState(localStorage.getItem('memId'));
     const [role, setRole] = useState(localStorage.getItem('role'));
 
-    const logout = useCallback(() => {
-        setToken(null);
-        setRefreshToken(null);
-        setMemId(null);
-        setRole(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('memId');
-        localStorage.removeItem('role');
-        delete axios.defaults.headers.common['Authorization'];
-    }, []);
+    const logout = useCallback(async () => {
+        try {
+            await axios.post('/member/logout', null, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            setToken(null);
+            setRefreshToken(null);
+            setMemId(null);
+            setRole(null);
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('memId');
+            localStorage.removeItem('role');
+            delete axios.defaults.headers.common['Authorization'];
+        }
+    }, [token]);
 
     const refreshAccessToken = useCallback(async () => {
         try {
