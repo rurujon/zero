@@ -220,6 +220,15 @@ const GoogleMaps = () => {
                               인스타: <a href={selectedStore.instaUrl} target="_blank" rel="noopener noreferrer">{selectedStore.instaUrl}</a>
                             </p>
                           )}
+                          <p> 
+                            <a 
+                              href={`https://www.google.com/maps?q=${encodeURIComponent(selectedStore.addrNew)}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                            >
+                              구글맵에서 위치 보기
+                            </a>
+                          </p>
                         </div>
                       </InfoWindow>
                     )}

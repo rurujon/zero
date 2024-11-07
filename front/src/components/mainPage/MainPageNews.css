@@ -61,6 +61,7 @@
     border: none;
     cursor: pointer;
     outline: none;
+    border-radius: 20px;
 }
 
 .board_tab_wrap ul.tabs li button:hover {
@@ -73,6 +74,7 @@
 .board_tab_wrap ul.tabs li.active a:hover {
     border-radius: 25px;
     background: #42940C;
+    
 }
 
 .board_tab_wrap ul.tabs li.active a {
