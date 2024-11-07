@@ -33,15 +33,27 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
         getUserInfo();
     }, []);
 
-    return (
+    return ( 
         <div className="paystep-container">
+            <label>회원 구분</label>
+            <hr />
             <div className="input-group">
-                <label>회원 구분</label>
-                <div>
-                    <input type="radio" name="memberType" value="회원" checked={isMember} disabled />
+                <div className="member-type-group">
+                    <input 
+                        type="radio" 
+                        name="memberType" 
+                        value="회원" 
+                        checked={isMember} 
+                        disabled 
+                    />
                     <label>회원</label>
-
-                    <input type="radio" name="memberType" value="비회원" checked={!isMember} disabled />
+                    <input 
+                        type="radio" 
+                        name="memberType" 
+                        value="비회원" 
+                        checked={!isMember} 
+                        disabled 
+                    />
                     <label>비회원</label>
                 </div>
             </div>
@@ -54,7 +66,6 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
                     value={memberInfo.memName} 
                     onChange={handleChange} 
                     placeholder="이름" 
-                    disabled={isMember} 
                 />
             </div>
 
@@ -63,8 +74,7 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
                 <input 
                     type="text" 
                     value={memberInfo.tel} 
-                    onChange={(e) => setMemberInfo({ ...memberInfo, tel: e.target.value })}
-                    disabled={isMember} 
+                    onChange={(e) => setMemberInfo({ ...memberInfo, tel: e.target.value })} 
                 />
             </div>
 
@@ -73,8 +83,7 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
                 <input 
                     type="text" 
                     value={memberInfo.email} 
-                    onChange={(e) => setMemberInfo({ ...memberInfo, email: e.target.value })}
-                    disabled={isMember} 
+                    onChange={(e) => setMemberInfo({ ...memberInfo, email: e.target.value })} 
                 />
             </div>
 

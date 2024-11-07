@@ -83,7 +83,7 @@ const ImgCreated = () => {
                     
                 } catch (error) {
                   
-                    console.log('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
+                        alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
                     
                 } finally {
                     setLoading(false);
@@ -161,7 +161,7 @@ const ImgCreated = () => {
             } catch (error) {
                 if (error.response?.status === 401) {
                     alert('로그인이 필요한 서비스입니다.');
-                    navigate('/mainpage');
+                    navigate('/login');
                 } else {
                     alert('게시물 등록 중 오류가 발생했습니다: ' + error.message);
                 }
@@ -193,7 +193,7 @@ const ImgCreated = () => {
             } catch (error) {
                 if (error.response?.status === 401) {
                     alert('로그인이 필요한 서비스입니다.');
-                    navigate('/mainpage');
+                    navigate('/login');
                 } else {
                     alert('게시물 수정 중 오류가 발생했습니다: ' + error.message);
                 }
@@ -204,16 +204,13 @@ const ImgCreated = () => {
     //유효성 검사
     const validateForm = (nonEmptyImages, existingImagesCount) => {
         if (cate === "") {
-            alert("인증 유형을 선택하세요.");
             return false;
         }
         if (!title) {
-            alert("제목을 필수로 입력해야합니다.");
             titleRef.current.focus();
             return false;
         }
         if (!content) {
-            alert("내용을 필수로 입력해야합니다.");
             contentRef.current.focus();
             return false;
         }
@@ -238,7 +235,7 @@ const ImgCreated = () => {
     
                 <div style={{ marginBottom: '15px' }}>
                     <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>인증유형:</label>
-                    <select value={cate} onChange={(evt) => setCate(evt.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }}>
+                    <select value={cate} onChange={(evt) => setCate(evt.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required>
                         <option value="">인증 유형을 선택하세요</option>
                         <option value="tum">텀블러 이용</option>
                         <option value="buy">물품 구매</option>
@@ -248,12 +245,12 @@ const ImgCreated = () => {
     
                 <div style={{ marginBottom: '15px' }}>
                     <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>제목:</label>
-                    <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} />
+                    <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required />
                 </div>
     
                 <div style={{ marginBottom: '15px' }}>
                     <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>내용:</label>
-                    <textarea value={content} onChange={(evt) => setContent(evt.target.value)} ref={contentRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} />
+                    <textarea value={content} onChange={(evt) => setContent(evt.target.value)} ref={contentRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required />
                 </div>
     
                 <div style={{ marginBottom: '15px' }}>
