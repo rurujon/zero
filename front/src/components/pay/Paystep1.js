@@ -25,52 +25,60 @@ const Paystep1 = ({ amountChange, setStep }) => {
 
     return (
         <div className="paystep-container">
+            <fieldset>
+           <legend> <label>후원 금액</label></legend>
             <div className="amount-select">
                 <input 
                     type="radio" 
                     name="donationAmount" 
                     value="20000" 
+                    id="20000"
                     onChange={radioChange} 
                     disabled={donateInput !== ''} 
+                    
                 />
-                <label>2만원</label>
-
+                <label for="20000">2만원</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
                     name="donationAmount" 
-                    value="30000" 
+                    value="30000"
+                    id="30000" 
                     onChange={radioChange} 
                     disabled={donateInput !== ''} 
+                    
                 />
-                <label>3만원</label>
-
+                <label for="30000">3만원</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
                     name="donationAmount" 
                     value="50000" 
+                    id="50000"
                     onChange={radioChange} 
                     disabled={donateInput !== ''} 
                 />
-                <label>5만원</label>
-
+                <label for="50000">5만원</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
                     name="donationAmount" 
                     value="100000" 
+                    id="100000"
                     onChange={radioChange} 
                     disabled={donateInput !== ''} 
                 />
-                <label>10만원</label>
-
+                <label for="100000">10만원</label>
+        <br/>
                 <input 
                     type="number" 
                     value={donateInput} 
                     onChange={inputChange} 
                     disabled={selectedAmount !== null} 
-                    placeholder="직접 입력"
+                    placeholder="직접 입력(최소100원)"
                 />
             </div>
-
+            </fieldset>
             <button onClick={nextStep} className="next-step-btn">다음단계</button>
         </div>
     );

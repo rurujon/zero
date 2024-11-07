@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.zd.back.JY.domain.payment.PaymentMapper">
     <select id="maxNum" resultType="int">
-        SELECT NVL(MAX(PAYMENTid), 0) FROM payment
+        SELECT NVL(MAX(paymentId), 0) FROM payment
     </select>
 
     <insert id="insertpayment" parameterType="com.zd.back.JY.domain.payment.PaymentDTO">

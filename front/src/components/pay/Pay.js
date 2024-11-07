@@ -47,6 +47,7 @@ const Pay = () => {
     
     IMP.request_pay(
       {
+        // pg: "html5_inicis",
         pg: "html5_inicis",
         pay_method: "card",
         merchant_uid: merchantUid,
