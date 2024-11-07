@@ -35,7 +35,7 @@ const ExArticle = () => {
 
     useEffect(() => {
         if (!token) { 
-            alert('로그인한 사용자만 게시글을 조회 할 수 있습니다.');
+            alert('로그인이 필요합니다.');
             navigate('/mainpage');
             return;
         }
@@ -162,7 +162,6 @@ return (
                     </div>
                 </div>
 
-              
 
                 <div className="row mb-3">
                     <div className="col-2 bg-light py-2">작성자</div>
