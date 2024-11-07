@@ -54,6 +54,7 @@ const SeoulNews = () => {
       await axios.post('/api/seoul/seoulNews/updateAll');
       // 크롤링이 완료된 후 뉴스 리스트를 다시 가져옵니다.
       fetchNews();
+      alert("업데이트 완료.")
     } catch (err) {
       setError(err);
     }

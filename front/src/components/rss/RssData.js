@@ -41,6 +41,7 @@ function RssData() {
         try {
             await axios.post('/api/rss/env'); // 데이터 업데이트 요청
             fetchRssData(); // 업데이트 후 데이터 다시 fetch
+            alert("업데이트 완료.")
         } catch (error) {
             console.error('Error updating RSS data:', error);
         }
