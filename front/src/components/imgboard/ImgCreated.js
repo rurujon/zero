@@ -83,7 +83,7 @@ const ImgCreated = () => {
                     
                 } catch (error) {
                   
-                        alert('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
+                    console.log('게시물 데이터를 불러오는 중 오류가 발생했습니다.');
                     
                 } finally {
                     setLoading(false);
@@ -161,7 +161,7 @@ const ImgCreated = () => {
             } catch (error) {
                 if (error.response?.status === 401) {
                     alert('로그인이 필요한 서비스입니다.');
-                    navigate('/login');
+                    navigate('/mainpage');
                 } else {
                     alert('게시물 등록 중 오류가 발생했습니다: ' + error.message);
                 }
@@ -193,7 +193,7 @@ const ImgCreated = () => {
             } catch (error) {
                 if (error.response?.status === 401) {
                     alert('로그인이 필요한 서비스입니다.');
-                    navigate('/login');
+                    navigate('/mainpage');
                 } else {
                     alert('게시물 수정 중 오류가 발생했습니다: ' + error.message);
                 }

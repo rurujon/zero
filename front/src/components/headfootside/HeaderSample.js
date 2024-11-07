@@ -24,7 +24,7 @@ const HeaderSample = () => {
 
         return () => clearInterval(intervalId);
     }, []);
-    
+
     const handleMouseEnter = (menuName) => {
         setActiveMenu(menuName);
     };
@@ -59,7 +59,7 @@ const HeaderSample = () => {
                 </div>
             </>
         );
-        
+
     };
 
 
@@ -92,7 +92,7 @@ const HeaderSample = () => {
                                 <img
                                     src={logos[currentLogoIndex]}
                                     alt="로고"
-                                    style={{width: '250px', height: 'auto'}}
+                                    style={{width: '220px', height: 'auto'}}
                                 />
                             </Link>
                         </h1>

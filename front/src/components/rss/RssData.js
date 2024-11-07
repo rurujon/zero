@@ -6,6 +6,9 @@ import { AuthContext } from '../login/context/AuthContext';
 
 function RssData() {
     const [rssItems, setRssItems] = useState([]);
+    const [filteredRssItems, setFilteredRssItems] = useState([]); // 검색된 결과 상태 추가
+    const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 추가
+    const [searchCriteria, setSearchCriteria] = useState('title'); // 검색 기준 상태 추가 (title, description, both)
 
     const { role } = useContext(AuthContext);
 
@@ -22,6 +25,7 @@ function RssData() {
         try {
             const response = await axios.get('/api/rss/env/list');
             setRssItems(response.data); // 데이터 저장
+            setFilteredRssItems(response.data);
         } catch (error) {
             console.error('Error fetching RSS data:', error);
         }
@@ -42,13 +46,40 @@ function RssData() {
         }
     };
 
+    const handleSearch = () => {
+        if (searchQuery.trim() === '') {
+            // 검색어가 비어있으면 전체 리스트로 복원
+            setFilteredRssItems(rssItems);
+            return;
+        }
+
+        const filteredResults = rssItems.filter(item => {
+            const titleMatch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+            const descriptionMatch = item.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+            switch (searchCriteria) {
+                case 'title':
+                    return titleMatch;
+                case 'description':
+                    return descriptionMatch;
+                case 'both':
+                    return titleMatch || descriptionMatch;
+                default:
+                    return false;
+            }
+        });
+        
+        setFilteredRssItems(filteredResults);
+        setCurrentPage(1); // 검색 후 1페이지로 이동
+    };
+
     // 현재 페이지에 해당하는 항목들만 가져옴
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = rssItems.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredRssItems.slice(indexOfFirstItem, indexOfLastItem);
 
     // 전체 페이지 수 계산
-    const totalPages = Math.ceil(rssItems.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredRssItems.length / itemsPerPage);
 
     // 현재 페이지 그룹의 시작 및 끝 페이지 계산
     const currentGroup = Math.ceil(currentPage / pagesPerGroup);
@@ -88,10 +119,28 @@ function RssData() {
                     )}
             </div>
 
-            <div>
+            <div className='rss-search-line'>
                 <ul>
-                    <li>게시글 : {rssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
+                    <li>게시글 : {filteredRssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
                 </ul>
+                {/* 검색 기능 UI */}
+                <div className='rss-SearchContainer'>
+                    <select 
+                        value={searchCriteria}
+                        onChange={(e) => setSearchCriteria(e.target.value)}
+                    >
+                        <option value='title'>제목</option>
+                        <option value='description'>내용</option>
+                        <option value='both'>제목 + 내용</option>
+                    </select>
+                    <input 
+                        type='text'
+                        placeholder='검색어 입력'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>검색</button>
+                </div>
             </div>
             <div className='rss-NewsListContainer'>
                 <ul>

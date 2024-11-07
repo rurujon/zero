@@ -73,7 +73,21 @@
   }
 
   .seoul-search-line {
-    align-items: left;
+    width: 100%;
+    max-width: 1000px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .seoul-search-line ul {
+    margin: 0;
+  }
+
+  .search-box {
+    
+    
   }
 
   /* NewsStyles.css */
