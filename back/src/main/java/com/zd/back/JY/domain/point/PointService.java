@@ -82,7 +82,6 @@ public class PointService {
                     throw new IllegalStateException("포인트가 부족합니다.");
                 }
                 dto.setUsedPoint(dto.getUsedPoint() - updown);
-                dto.setMaxPoint(dto.getMaxPoint() - updown);
             } else {
                 throw new IllegalArgumentException("잘못된 연산자입니다.");
             }

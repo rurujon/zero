@@ -102,7 +102,8 @@ public class ExchangeController {
     } 
 
     @GetMapping("/article")
-    public ResponseEntity<Exchange> getExArticle(@RequestParam int exchangeId) {
+    public ResponseEntity<Exchange> getExArticle(@RequestParam int exchangeId
+                                                ) {
         Exchange exchange = exchangeService.getExArticle(exchangeId);
         return ResponseEntity.ok(exchange);
     }

@@ -24,5 +24,7 @@ public class Exchange {
     private Integer selec; //선택한 장바구니 : 기본이 3펭귄
                           // null 값 허용 위해 Integer 타입으로 선언
 
+                    
+
 }
 
