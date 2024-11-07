@@ -71,10 +71,11 @@
 }
 
 .board_tab_wrap ul.tabs li.active,
-.board_tab_wrap ul.tabs li.active a:hover {
+.board_tab_wrap ul.tabs li.active a:hover,
+.board_tab_wrap ul.tabs li.active button{
     border-radius: 25px;
     background: #42940C;
-    
+    color: #fff;
 }
 
 .board_tab_wrap ul.tabs li.active a {
