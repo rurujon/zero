@@ -62,8 +62,7 @@ const PointInfoModal = ({ show, onHide, memId }) => {
                     <p className="text-danger">{error}</p>
                 ) : pointInfo ? (
                     <div>
-                        <p>현재 포인트: {pointInfo.maxPoint - pointInfo.usedPoint}</p>
-                        <p>누적 포인트: {pointInfo.maxPoint}</p>
+                        <p>현재 포인트: {pointInfo.usedPoint}</p>
                         <p>회원등급: {pointInfo.grade} {gradeEmojis[pointInfo.grade]}</p>
                         <h5>포인트 히스토리</h5>
                         <Table striped bordered hover>
