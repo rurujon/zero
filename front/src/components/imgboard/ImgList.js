@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
-import '../board/page.css';
+import './ImgList.css';
+
 import { AuthContext } from '../login/context/AuthContext';
 
 function ImgList() {
