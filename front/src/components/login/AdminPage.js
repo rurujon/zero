@@ -170,7 +170,7 @@ const AdminPage = () => {
     return (
         <div className="container mt-5">
             {/* 공지사항 관리 */}
-            <h3 className="mt-4">공지사항 관리</h3>
+            <h2 className="mt-4">공지사항 관리</h2>
 
             {/* 공지사항 작성 버튼 */}
             <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성</Button>
@@ -208,7 +208,7 @@ const AdminPage = () => {
                 ))}
             </Pagination>
 
-            <h2>회원관리 목록</h2>
+            <h2 className="mt-4">회원관리 목록</h2>
             <Form onSubmit={handleSearch} className="mb-3">
                 <Form.Group>
                     <Form.Control type="text" placeholder="ID,이름,이메일 중 하나 입력하여 검색가능" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
