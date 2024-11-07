@@ -1,109 +1,86 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import Paystep3 from './Paystep3';
+import axios from 'axios';
+import './Pay.css';
 
-const Paystep2 = ({setStep,memberInfo, setMemberInfo}) => {
+const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
+    const [isMember, setIsMember] = useState(false);
 
-    // const [member, setMember] = useState(null);     //회원 데이터 저장
-    const [isMember, setIsMember] = useState(false);//회원여부
-    
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setMemberInfo(prevState => ({
-            ...prevState,
-            [name]: value // 동적으로 상태 업데이트
-        }));
+        setMemberInfo(prevState => ({ ...prevState, [name]: value }));
     };
 
+    const nextStep = () => {
+        setStep(3);
+    };
 
+    const prevStep = () => {
+        setStep(1);
+    };
 
-    const nextstep = () =>{
-        setStep(3)
-    }
-    const prestep = () =>{
-        setStep(1)
-    }
-
-    const getUserInfo  = () => {
+    const getUserInfo = () => {
         axios.get('/member/info')
-        .then(response => {
-            if(response && response.data)
-            setMemberInfo(response.data);
-
-            setIsMember(true); // 회원으로 설정
-
-        })
-        .catch(error => {
-            console.error('회원 정보 조회 실패: ', error)
-        })
-    }
+            .then(response => {
+                if(response && response.data) setMemberInfo(response.data);
+                setIsMember(true);
+            })
+            .catch(error => {
+                console.error('회원 정보 조회 실패: ', error);
+            });
+    };
 
     useEffect(() => {
         getUserInfo();
     }, []);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%', width:'80%'  }}>
-            <div style={{width:'80%', height:'50%'}}>
-                <div style={{ backgroundColor: "brown", display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <label style={{ marginRight: '10px', marginLeft:'10px' }}>회원 구분*</label>
+        <div className="paystep-container">
+            <div className="input-group">
+                <label>회원 구분</label>
+                <div>
+                    <input type="radio" name="memberType" value="회원" checked={isMember} disabled />
+                    <label>회원</label>
 
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexGrow: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-
-                            <input type='radio' name='memberType' value="회원" title="회원" checked={isMember} disabled={isMember}/>
-                            <label>회원</label>
-                        </div>
-                        <div>
-                            <input type='radio' name='memberType' value="비회원" title="비회원" checked={!isMember} disabled={!isMember}/>
-                            <label>비회원</label>
-                        </div>
-                    </div>
-
+                    <input type="radio" name="memberType" value="비회원" checked={!isMember} disabled />
+                    <label>비회원</label>
                 </div>
+            </div>
 
-                <div style={{backgroundColor:"pink" , display: 'flex'   , flexDirection: 'row', alignItems: 'center' }}>
-                    <label style={{ marginRight: '10px', marginLeft:'10px' }}>후원회원명*</label>
-                    <div>
-                        <input 
-                        type="text"
-                        name="memName"
-                        value={memberInfo.memName}
-                        onChange={handleChange}
-                        placeholder="이름" 
-                        disabled={isMember}
-                            style={{ margin: 'auto' }}/>
-                    </div>
-                </div>
+            <div className="input-group">
+                <label>후원자 이름</label>
+                <input 
+                    type="text" 
+                    name="memName" 
+                    value={memberInfo.memName} 
+                    onChange={handleChange} 
+                    placeholder="이름" 
+                    disabled={isMember} 
+                />
+            </div>
 
-                <div style={{backgroundColor:"blue" , display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <label style={{ marginRight: '10px', marginLeft:'10px' }}>전화번호*</label>
-                    <div>
-                        <input type='text' 
-                            value={memberInfo.tel} 
-                            onChange={(e) => setMemberInfo({ ...memberInfo, tel: e.target.value })} 
-                            disabled={isMember} 
-                            style={{ margin: 'auto' }}/>
-                    </div>
-                </div>
+            <div className="input-group">
+                <label>전화번호</label>
+                <input 
+                    type="text" 
+                    value={memberInfo.tel} 
+                    onChange={(e) => setMemberInfo({ ...memberInfo, tel: e.target.value })}
+                    disabled={isMember} 
+                />
+            </div>
 
-                <div style={{backgroundColor:"yellow" , display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <label style={{ marginRight: '10px', marginLeft:'10px' }}>이메일*</label>
-                    <div>
-                        <input type='text' 
-                            value={memberInfo.email} 
-                            onChange={(e) => setMemberInfo({ ...memberInfo, email: e.target.value })} 
-                            disabled={isMember} 
-                            style={{ margin: 'auto' }}/>
-                    </div>
-                </div>
+            <div className="input-group">
+                <label>이메일</label>
+                <input 
+                    type="text" 
+                    value={memberInfo.email} 
+                    onChange={(e) => setMemberInfo({ ...memberInfo, email: e.target.value })}
+                    disabled={isMember} 
+                />
+            </div>
 
-                    <button onClick={prestep}>이전단계</button>
-                    <button onClick={nextstep}>다음단계</button>
-                </div>
-
+            <button onClick={prevStep} className="prev-step-btn">이전단계</button>
+            <button onClick={nextStep} className="next-step-btn">다음단계</button>
         </div>
-        
     );
 };
 
