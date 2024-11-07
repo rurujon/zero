@@ -116,7 +116,7 @@ const HeaderSample = () => {
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
-                                style={{width: '78px', height: '78px', cursor: 'pointer'}}
+                                style={{width: '64px', height: '64px', cursor: 'pointer'}}
                             />
                         </div>
                     </div>

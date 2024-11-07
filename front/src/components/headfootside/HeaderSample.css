@@ -25,7 +25,7 @@
 }
 
 .header-content {
-    max-width: 81vw;
+    max-width: 85vw;
     width: 100%;
     margin: 0 auto;
     height: 100%;
@@ -69,8 +69,8 @@
 
 .top-nav > div img,
 .login-button {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
 }
 .bottom-nav {
@@ -87,23 +87,27 @@
 }
 
 .bottom-nav li {
-    margin: 5px 10px;
+    margin: 3px 10px;
     text-align: left;
     flex-grow: 1;
-    width: 200px;
+    width: 210px;
     transition: all 0.3s ease;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    font-size: 21px;
+    font-weight: bold;
+    color: #ffffff;
 }
 
 .bottom-nav li:hover {
     font-size: 1.2rem;
-    color: #e6500bc5; /* 원하는 색상 */
-    border-bottom: 2px solid #e6500bc5;
+    color: #000000; /* 원하는 색상 */
+    border-bottom: 2px solid #000000;
 }
 
 .bottom-nav li.active {
     font-size: 1.2rem;
-    color: #e6500bc5; /* 유지할 색상 */
-    border-bottom: 2px solid #e6500bc5;
+    color: #000000; /* 유지할 색상 */
+    border-bottom: 2px solid #000000;
 }
 
 .submenu-layer {
@@ -123,6 +127,7 @@
     margin: 0 auto;
     padding: 10px;
     transform: translateX(+3%);
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
 }
 
 .sub-menu-content a {
