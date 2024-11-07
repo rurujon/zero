@@ -23,14 +23,24 @@ const SeoulNews = () => {
   const [selectedCategory, setSelectedCategory] = useState(previousCategory || 'all');
   const [currentPage, setCurrentPage] = useState(previousPage || 1);
 
+  // 추가된 searchQuery 상태
+  const [searchQuery, setSearchQuery] = useState(''); // 제목 및 내용 검색을 위한 상태 추가
+  const [filteredNewsList, setFilteredNewsList] = useState([]); // 검색된 뉴스 리스트 상태
+
+  // 검색 기준을 추가하는 상태
+  const [searchCriteria, setSearchCriteria] = useState('both'); // 'title', 'content', 'both'로 검색 기준 설정
+
   useEffect(() => {
     fetchNews(); // 컴포넌트가 마운트될 때 뉴스 데이터를 가져옵니다.
+    
   }, []);
 
   const fetchNews = async () => {
     try {
       const response = await axios.get('/api/seoul/seoulNews/all');
       setNewsList(response.data);
+      // 초기 상태로 전체 뉴스 리스트를 표시하도록 설정
+    setFilteredNewsList(response.data);
     } catch (err) {
       setError(err);
     } finally {
@@ -53,12 +63,44 @@ const SeoulNews = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1); // 카테고리 변경 시 첫 페이지로 이동
+    filterNews(category, searchQuery); // 카테고리 변경 시 필터링
   };
 
-  // 카테고리에 따라 뉴스 항목 필터링
-  const filteredNewsList = selectedCategory === 'all' 
-  ? newsList 
-  : newsList.filter(news => news.seoulNewsGroup === selectedCategory);
+  const handleSearch = () => {
+    filterNews(selectedCategory, searchQuery, searchCriteria); // 검색 기준을 포함하여 필터링
+  };
+
+  // 카테고리 및 검색어로 뉴스 필터링 함수
+  const filterNews = (category, query, criteria) => {
+    let filtered = category === 'all'
+      ? newsList
+      : newsList.filter(news => news.seoulNewsGroup === category);
+
+    // 검색 기준에 맞는 필터링 추가
+    if (criteria === 'title') {
+      filtered = filtered.filter(news => 
+        news.title.toLowerCase().includes(query.toLowerCase())
+      );
+    } else if (criteria === 'content') {
+      filtered = filtered.filter(news => 
+        news.content.toLowerCase().includes(query.toLowerCase())
+      );
+    } else if (criteria === 'both') {
+      filtered = filtered.filter(news => 
+        news.title.toLowerCase().includes(query.toLowerCase()) ||
+        news.content.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    setFilteredNewsList(filtered); // 필터링된 뉴스 리스트 설정
+    setCurrentPage(1); // 검색 후 첫 페이지로 이동
+  };
+
+  // 검색 기준 선택 시 처리
+  const handleCriteriaChange = (e) => {
+    setSearchCriteria(e.target.value); // select로 선택된 값에 따라 검색 기준 설정
+    filterNews(selectedCategory, searchQuery, e.target.value); // 기준 변경 시 필터링
+  };
 
   // 페이징 처리
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -142,6 +184,24 @@ const SeoulNews = () => {
         <ul>
           <li>게시글 : {filteredNewsList.length}, 페이지 : {currentPage} / {totalPages}</li>
         </ul>
+        {/* 검색 기능 추가 부분 */}
+        <div className="search-box">
+          {/* 검색 기준 선택을 위한 select 추가 */}
+          <select value={searchCriteria} onChange={handleCriteriaChange}>
+            <option value="both">제목 + 내용</option>
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="제목 또는 내용을 검색하세요"
+            value={searchQuery} // 검색어 바인딩
+            onChange={(e) => setSearchQuery(e.target.value)} // 검색어 변경 시 상태 업데이트
+          />
+          <button onClick={handleSearch}>검색</button> {/* 버튼 클릭 시 검색 */}
+          
+        </div>
       </div>
       <ul className='NewsListContainer'>
         {currentItems.map((news) => {

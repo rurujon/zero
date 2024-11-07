@@ -193,3 +193,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .rss-search-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1000px;
+  }
