@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class PointDTO {
     private int pointId;
-    private int maxPoint;
-    private int usedPoint;
+    private int maxPoint;   
+    private int usedPoint;  
     private String memId;
     private String grade;
 }

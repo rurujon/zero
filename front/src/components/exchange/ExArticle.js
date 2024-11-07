@@ -35,7 +35,7 @@ const ExArticle = () => {
 
     useEffect(() => {
         if (!token) { 
-            alert('로그인한 사용자만 게시글을 조회 할 수 있습니다.');
+            alert('로그인이 필요합니다.');
             navigate('/mainpage');
             return;
         }
@@ -95,24 +95,24 @@ const ExArticle = () => {
         }
     };
 
-// //여기부터 조준영 11-06/19:32 추가
-// //포인트 상승
-// const uppoint = async () => {
-//     try {
-//         const response = await axios.post('http://localhost:8080/api/point/update', {
-//             memId: article.memId,
-//             oper: '-',  // 또는 '-'
-//             updown: 300, // 추가하거나 차감할 포인트 수
-//             reason:  "포인트 리워드"// 변경 사유
-//         });
-//         console.log('포인트 업데이트 성공:', response.data);
-        
+//여기부터 조준영 11-06/19:32 추가
+//포인트 상승
+const uppoint = async () => {
+    try {
+        const response = await axios.post('http://localhost:8080/api/point/update', {
+            memId: article.memId,
+            oper: '-',  // 또는 '-'
+            updown: 300, // 추가하거나 차감할 포인트 수
+            reason:  "포인트 리워드"// 변경 사유
+        });
+        console.log('포인트 업데이트 성공:', response.data);
+        alert("포인트 업데이트 성공 ")
 
-//     } catch (error) {
-//         console.error('포인트 업데이트 실패:', error.response ? error.response.data : error.message);
-//     }
-// };
-// //여기까지 조준영 11-06/19:32 추가
+    } catch (error) {
+        console.error('포인트 업데이트 실패:', error.response ? error.response.data : error.message);
+    }
+};
+//여기까지 조준영 11-06/19:32 추가
                    
  /*  ##### 인증 승인 auth 부분  */
     const handleAuth = async () => {
@@ -121,7 +121,8 @@ const ExArticle = () => {
                 params: { exchangeId }
             });
             alert(response.data);
-            // uppoint();
+            uppoint();
+
             // 게시글 데이터 다시 불러오기
             const updatedArticle = await axios.get('/exchange/article', {
                 params: { exchangeId }
@@ -161,7 +162,6 @@ return (
                     </div>
                 </div>
 
-              
 
                 <div className="row mb-3">
                     <div className="col-2 bg-light py-2">작성자</div>

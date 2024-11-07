@@ -26,12 +26,12 @@ const ExCreated = () => {
     const [loading, setLoading] = useState(true);
 
 
-    const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n\n';
+    const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n';
 
     useEffect(() => {
         if (!token) { 
             alert('로그인한 사용자만 게시글을 작성 할 수 있습니다.');
-            navigate('/login');
+            navigate('/mainpage');
         } else {
             setLoading(false);
         }
