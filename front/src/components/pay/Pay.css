@@ -10,16 +10,20 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
+    padding: 1px;
 }
 
 .paystep-container {
     width: 80%;
     max-width: 600px;
     margin: 20px auto;
+    border: 1px solid black;
+    padding: 20px;
 }
 
 .amount-select {
     margin-bottom: 20px;
+    border-radius: 1px;
 }
 
 .amount-select label {
@@ -27,7 +31,9 @@ body {
 }
 
 .input-group {
+    
     margin-bottom: 15px;
+
 }
 
 .input-group label {

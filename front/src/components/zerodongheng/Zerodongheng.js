@@ -1,6 +1,14 @@
 import React from 'react';
 import "./Maincss.css"
+import { useNavigate } from 'react-router-dom';
 const Zerodongheng = () => {
+
+    const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 초기화
+
+    const handleDonateClick = () => {
+        navigate('/donate'); // 버튼 클릭 시 /donate 페이지로 이동
+    };
+
     return (
         <div className="zero-waste-intro" >
           <h2 style={{textAlign:'center'}}>제로 동행(Zero together)</h2>
@@ -10,7 +18,9 @@ const Zerodongheng = () => {
                     "제로웨이스트와 업사이클링 문화 확산으로
                     사용자의 노력에 가치를 더하다.""
                 </p>
-                <button class="btn btn-outline-dark" type="submit">발전을 위한 후원하기</button>
+                <button className="btn btn-outline-dark" type="submit" onClick={handleDonateClick}>
+                    발전을 위한 후원하기
+                </button>
             </div>
 
             <hr/>

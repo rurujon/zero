@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectAll" resultType="com.zd.back.rssenv.RssItem">
-        SELECT * FROM rssItems
+        SELECT * FROM rssItems order by rssId DESC
     </select>
 
     <select id="selectMini" resultType="com.zd.back.rssenv.RssItem">

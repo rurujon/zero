@@ -27,50 +27,54 @@ public class PayService {
         return paymentMapper.maxNum();
     }
 
-    public void insertpayment(Map<Object, Object> response){
+    public void insertpayment(Map<Object, Object> response) {
         System.out.println("service 호출 완료");
         PaymentDTO dto = new PaymentDTO();
-        
-         // 가격
-        int amount = 0; // 기본값 설정
+    
+        // 가격 처리
+        int amount = 0;
         Object obj = response.get("amount");
         System.out.println("받은 amount 값: " + obj);
-
+    
         if (obj == null) {
             System.err.println("amount 값이 null입니다.");
             return; // 또는 적절한 예외 처리
         }
+    
         try {
             if (obj instanceof Integer) {
                 amount = (Integer) obj;
-                System.out.println("Integer 값: " + amount);
             } else if (obj instanceof Long) {
                 amount = ((Long) obj).intValue(); // Long을 int로 변환
-                System.out.println("Long 값: " + amount);
+            } else if (obj instanceof String) {
+                amount = Integer.parseInt((String) obj); // String을 int로 변환
             } else {
-                amount = Integer.parseInt(obj.toString());
-                System.out.println("obj는 Integer가 아닙니다." + amount);
+                System.err.println("지원되지 않는 타입입니다: " + obj.getClass());
+                return;
             }
+            System.out.println("처리된 amount 값: " + amount);
         } catch (NumberFormatException e) {
             System.err.println("NumberFormatException 발생: amount 값이 숫자로 변환할 수 없습니다. 받은 값: " + obj);
             e.printStackTrace();
-            return; // 또는 적절한 예외 처리
+            return;
         }
-
-
-        dto.setPaymentId(paymentMapper.maxNum()+1);
-        dto.setOrderId(response.get("orderId").toString()); //포트원 거래내역 = 주문거래내역
-        dto.setPgTid(response.get("pgTid").toString());     //pg사 거래id
-        dto.setPaymentMethod(response.get("paymentMethod").toString());//결제수단
-        dto.setAmount(amount);   //가격
-        dto.setBuyerId(response.get("buyerId").toString());       //구매자ID
-        dto.setBuyerName(response.get("memName").toString()); //구매자 이름
-        dto.setBuyerEmail(response.get("buyerEmail").toString());  //구매자 email
-        dto.setBuyerTel(response.get("buyerTel").toString());  //구매자 전화번호
-        dto.setStatus(response.get("status").toString());    //성공여부
-        dto.setFailReason(response.get("failReason").toString());//실패사유
+    
+        // 나머지 값 처리 (null 체크 추가)
+        dto.setPaymentId(paymentMapper.maxNum() + 1);
+        dto.setOrderId(response.get("orderId") != null ? response.get("orderId").toString() : "기본값");
+        dto.setPgTid(response.get("pgTid") != null ? response.get("pgTid").toString() : "기본값");
+        dto.setPaymentMethod(response.get("paymentMethod") != null ? response.get("paymentMethod").toString() : "기본값");
+        dto.setAmount(amount);
+        dto.setBuyerId(response.get("buyerId") != null ? response.get("buyerId").toString() : "기본값");
+        dto.setBuyerName(response.get("memName") != null ? response.get("memName").toString() : "기본값");
+        dto.setBuyerEmail(response.get("buyerEmail") != null ? response.get("buyerEmail").toString() : "기본값");
+        dto.setBuyerTel(response.get("buyerTel") != null ? response.get("buyerTel").toString() : "기본값");
+        dto.setStatus(response.get("status") != null ? response.get("status").toString() : "기본값");
+        dto.setFailReason(response.get("failReason") != null ? response.get("failReason").toString() : "기본값");
         dto.setCreatedAt(LocalDateTime.now());
-
+    
+        // 데이터베이스에 삽입
         paymentMapper.insertpayment(dto);
     }
+    
 }
