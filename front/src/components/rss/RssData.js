@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import './RssData.css'
+import { AuthContext } from '../login/context/AuthContext';
 
 function RssData() {
     const [rssItems, setRssItems] = useState([]);
+
+    const { role } = useContext(AuthContext);
 
     const location = useLocation();
     const { previousPage } = location.state || {};
@@ -80,7 +83,9 @@ function RssData() {
         <div className='RSS-container'>
             <div className='RSS-main-title'>
                 <h1>RSS Feed</h1>
-                <button onClick={handleUpdate}>Update RSS Data</button> {/* 업데이트 버튼 */}
+                {role === 'ADMIN' && (
+                        <button onClick={handleUpdate}>Crawl News</button>
+                    )}
             </div>
 
             <div>

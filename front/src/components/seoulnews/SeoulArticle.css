@@ -89,6 +89,13 @@ table {
 
 .post_content p {line-height:160%; margin-bottom:5px;}
 
+.post_content p img {
+  display: block;
+  margin: auto;
+}
+
+
+
 .indent20 {
   text-align: left;
 }

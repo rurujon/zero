@@ -1,82 +1,57 @@
 package com.zd.back.login.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.zd.back.login.service.MemberService;
-import com.zd.back.login.model.Member;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+    private final TokenProvider tokenProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private MemberService memberService;
+    public JwtFilter(TokenProvider tokenProvider, RedisTemplate<String, String> redisTemplate) {
+        this.tokenProvider = tokenProvider;
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        String jwt = resolveToken(request);
 
-        final String authorizationHeader = request.getHeader("Authorization");
-
-        String memId = null;
-        String jwt = null;
-
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            try {
-                memId = jwtUtil.extractMemId(jwt);
-                logger.info("Extracted memId from JWT: {}", memId);
-            } catch (Exception e) {
-                logger.error("Failed to extract memId from JWT", e);
-            }
-        } else {
-            logger.debug("No JWT token found in request headers");
-        }
-
-        if (memId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            try {
-                Member member = memberService.getMemberById(memId);
-                if (member != null && jwtUtil.validateToken(jwt)) {
-                    UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                            .username(member.getMemId())
-                            .password(member.getPwd())
-                            .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRole().name())))
-                            .build();
-
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                    logger.info("Authentication set for user: {}", memId);
-                } else {
-                    logger.warn("Token validation failed for user: {}", memId);
-                }
-            } catch (Exception e) {
-                logger.error("Failed to set authentication", e);
+        if (jwt != null && tokenProvider.validateToken(jwt)) {
+            // Check if the token is in the blacklist
+            String isLogout = redisTemplate.opsForValue().get("blacklist:" + jwt);
+            if (ObjectUtils.isEmpty(isLogout)) {
+                Authentication authentication = tokenProvider.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                // If the token is blacklisted, clear the security context
+                SecurityContextHolder.clearContext();
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("{\"error\": \"This token has been logged out.\"}");
+                return;
             }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }

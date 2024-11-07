@@ -5,6 +5,7 @@ import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.model.Role;
+import com.zd.back.login.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,14 +14,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.zd.back.login.model.MemberDTO;
-import java.util.stream.Collectors;
 
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.data.redis.core.RedisTemplate; // RedisTemplate 임포트
+import java.util.concurrent.TimeUnit; // TimeUnit 임포트
 
 @Service
 public class MemberService {
@@ -40,7 +45,13 @@ public class MemberService {
     private AttendanceService attendanceService;
 
     @Autowired
-    private TokenBlacklistService tokenBlacklistService;
+    private BlacklistService blacklistService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate; // RedisTemplate 주입
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -84,23 +95,23 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-public List<MemberDTO> getAllUsers() {
-    try {
-        List<Member> members = memberMapper.selectAllMembers();
-        return members.stream().map(member -> {
-            MemberDTO dto = new MemberDTO();
-            dto.setMemId(member.getMemId());
-            dto.setMemName(member.getMemName());
-            dto.setEmail(member.getEmail());
-            dto.setTel(member.getTel());
-            dto.setRole(member.getRole().name());
-            return dto;
-        }).collect(Collectors.toList());
-    } catch (Exception e) {
-        logger.error("사용자 목록 조회 중 오류 발생", e);
-        throw new RuntimeException("사용자 목록 조회 중 오류가 발생했습니다.", e);
+    public List<MemberDTO> getAllUsers() {
+        try {
+            List<Member> members = memberMapper.selectAllMembers();
+            return members.stream().map(member -> {
+                MemberDTO dto = new MemberDTO();
+                dto.setMemId(member.getMemId());
+                dto.setMemName(member.getMemName());
+                dto.setEmail(member.getEmail());
+                dto.setTel(member.getTel());
+                dto.setRole(member.getRole().name());
+                return dto;
+            }).collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("사용자 목록 조회 중 오류 발생", e);
+            throw new RuntimeException("사용자 목록 조회 중 오류가 발생했습니다.", e);
+        }
     }
-}
 
     @Transactional
     public void updateMemberRole(String memId, Role role) {
@@ -121,6 +132,7 @@ public List<MemberDTO> getAllUsers() {
         result.put("role", Role.GUEST.name());
 
         Member member = memberMapper.selectMemberById(memId);
+
         if (member == null || !passwordEncoder.matches(rawPassword, member.getPwd())) {
             return result;
         }
@@ -132,7 +144,6 @@ public List<MemberDTO> getAllUsers() {
             // 출석 체크
             if (attendanceService.checkToday(memId) == 0) {
                 attendanceService.insertAtt(memId); // 출석 체크
-
                 // 오늘 처음 로그인하는 경우에만 포인트 추가
                 pointService.addAttendancePoint(memId);
                 result.put("isFirstLoginToday", true);
@@ -143,6 +154,7 @@ public List<MemberDTO> getAllUsers() {
         } catch (Exception e) {
             logger.error("출석 체크 또는 포인트 추가 중 오류 발생", e);
         }
+
         return result;
     }
 
@@ -195,6 +207,7 @@ public List<MemberDTO> getAllUsers() {
     @Transactional
     public boolean resetPassword(String memId, String email) {
         Member member = memberMapper.selectMemberById(memId);
+
         if (member != null && member.getEmail().equals(email)) {
             String tempPassword = generateTempPassword();
             String encryptedPassword = passwordEncoder.encode(tempPassword);
@@ -203,6 +216,7 @@ public List<MemberDTO> getAllUsers() {
             sendPasswordResetEmail(email, tempPassword);
             return true;
         }
+
         return false;
     }
 
@@ -215,6 +229,7 @@ public List<MemberDTO> getAllUsers() {
         message.setTo(email);
         message.setSubject("비밀번호 재설정");
         message.setText("임시 비밀번호: " + tempPassword);
+
         try {
             emailSender.send(message);
             logger.info("비밀번호 재설정 이메일 전송 성공: {}", email);
@@ -226,10 +241,12 @@ public List<MemberDTO> getAllUsers() {
 
     public boolean validateLogin(String memId, String rawPassword) {
         Member member = memberMapper.selectMemberById(memId);
+
         if (member == null) {
             logger.info("회원 정보를 찾을 수 없음: {}", memId);
             return false;
         }
+
         return passwordEncoder.matches(rawPassword, member.getPwd());
     }
 
@@ -241,8 +258,12 @@ public List<MemberDTO> getAllUsers() {
         return memberMapper.countMembers(params);
     }
 
-    @Transactional
-    public void logout(String token) {
-        tokenBlacklistService.addToBlacklist(token);
-    }
+   @Transactional
+   public void logout(String token) {
+       long expirationTime = jwtUtil.getExpirationDateFromToken(token).getTime();
+       long ttl = expirationTime - System.currentTimeMillis();
+       if (ttl > 0) {
+           redisTemplate.opsForValue().set(token, "blacklisted", ttl, TimeUnit.MILLISECONDS);
+       }
+   }
 }

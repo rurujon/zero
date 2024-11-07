@@ -3,6 +3,7 @@ package com.zd.back.login.controller;
 import com.zd.back.JY.domain.point.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.model.Role;
+import com.zd.back.login.service.LogoutService;
 import com.zd.back.login.service.MemberService;
 import com.zd.back.login.security.JwtUtil;
 import org.slf4j.Logger;
@@ -35,6 +36,9 @@ public class MemberController {
 
     @Autowired
     private PointService pointService;
+
+    @Autowired
+    private LogoutService logoutService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -279,11 +283,11 @@ public class MemberController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            memberService.logout(token);
-            return ResponseEntity.ok("로그아웃 성공");
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            String jwtToken = token.substring(7);
+            logoutService.logout(null, null, null); // HttpServletRequest, HttpServletResponse, Authentication 객체는 null로 전달
+            return ResponseEntity.ok().body("로그아웃 성공");
         }
         return ResponseEntity.badRequest().body("유효하지 않은 토큰");
     }

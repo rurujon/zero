@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { AuthContext } from "../login/context/AuthContext";
 
 const NewsContainer = styled.div`
   max-width: 1000px;
@@ -231,6 +232,8 @@ const NewsList = () => {
   const [pageGroup, setPageGroup] = useState(1);
   const itemsPerPage = 5;
 
+  const { role } = useContext(AuthContext);
+
   const fetchNewsData = () => {
     axios
       .get("/api/naver/news")
@@ -307,7 +310,9 @@ const NewsList = () => {
   return (
     <NewsContainer>
       <NewsHeader>Naver NEWS</NewsHeader>
-      <button onClick={updateNewsData}>Crawl News</button> {/* 크롤링 버튼 추가 */}
+      {role === 'ADMIN' && (
+                        <button onClick={updateNewsData}>Crawl News</button>
+                    )}
       {error && <p>{error}</p>}
 
       <div>

@@ -1,13 +1,16 @@
 // src/components/NewsList.js
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import './SeoulNews.css';
+import { AuthContext } from '../login/context/AuthContext';
 
 const SeoulNews = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { role } = useContext(AuthContext);
 
   const [itemsPerPage] = useState(10); // 페이지당 항목 수
   const [isActive, setIsActive] = useState(false);
@@ -132,9 +135,9 @@ const SeoulNews = () => {
            onClick={() => handleCategoryChange('green')}>녹색에너지</button>
         </div>
       </div>
-      
-      <button onClick={handleCrawl}>Crawl News</button> {/* 크롤링 버튼 추가 */}
-
+      {role === 'ADMIN' && (
+                        <button onClick={handleCrawl}>Crawl News</button>
+                    )}
       <div className='seoul-search-line'>
         <ul>
           <li>게시글 : {filteredNewsList.length}, 페이지 : {currentPage} / {totalPages}</li>
