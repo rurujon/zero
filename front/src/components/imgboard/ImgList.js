@@ -20,10 +20,12 @@ function ImgList() {
     const fetchImgPosts = async () => { 
 
         try {
-            const response = await axios.get('/imgboard/list', {
+            const config = {
                 params: { page: 1, size: 1000 },
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            };
+            
+            const response = await axios.get('/imgboard/list', config);
             setImgPosts(response.data.content);
             setSearchResults(response.data.content); // 초기 검색 결과는 전체 게시물
             setTotalItems(response.data.totalElements);
