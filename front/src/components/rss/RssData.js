@@ -113,25 +113,25 @@ function RssData() {
     return (
         <div className='RSS-container'>
             <div className='RSS-main-title'>
-                <h1>RSS Feed</h1>
+                <h1>환경부</h1>
                 {role === 'ADMIN' && (
                         <button onClick={handleUpdate}>Crawl News</button>
                     )}
             </div>
 
             <div className='rss-search-line'>
-                <ul>
-                    <li>게시글 : {filteredRssItems.length}, 페이지 : {currentPage} / {totalPages}</li>
-                </ul>
+                
+                <p>게시글 : {filteredRssItems.length}, 페이지 : {currentPage} / {totalPages}</p>
+                
                 {/* 검색 기능 UI */}
                 <div className='rss-SearchContainer'>
                     <select 
                         value={searchCriteria}
                         onChange={(e) => setSearchCriteria(e.target.value)}
                     >
+                        <option value='both'>제목 + 내용</option>
                         <option value='title'>제목</option>
                         <option value='description'>내용</option>
-                        <option value='both'>제목 + 내용</option>
                     </select>
                     <input 
                         type='text'

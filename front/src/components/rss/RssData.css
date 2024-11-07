@@ -200,4 +200,18 @@
     justify-content: space-between;
     width: 100%;
     max-width: 1000px;
+    margin-bottom: 10px;
+  }
+
+  .rss-search-line p{
+    margin: 0;
+  }
+
+  .rss-search-line select {
+    height: 30px;
+    margin: 0 5px 0;
+  }
+
+  .rss-search-line input {
+    margin: 0 5px 0;
   }

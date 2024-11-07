@@ -195,7 +195,7 @@ const SeoulNews = () => {
 
           <input
             type="text"
-            placeholder="제목 또는 내용을 검색하세요"
+            placeholder="검색어 입력"
             value={searchQuery} // 검색어 바인딩
             onChange={(e) => setSearchQuery(e.target.value)} // 검색어 변경 시 상태 업데이트
           />
