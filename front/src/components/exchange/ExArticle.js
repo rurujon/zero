@@ -198,7 +198,7 @@ return (
                 </div>
 
                 <div className="row mb-3">
-                    <div className="col-2 bg-light py-2">배송 메시지</div>
+                    <div className="col-2 bg-light py-2">요청 및 <br/> 배송 메세지</div>
                     <div className="col-10 py-2" style={{ whiteSpace: "pre-line" }}>
                         {article.content}
                     </div>

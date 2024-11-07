@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Table, Pagination } from 'react-bootstrap';
+import './NoticeList.css'
 
 const NoticeList = () => {
     const [notices, setNotices] = useState([]);
@@ -27,7 +28,7 @@ const NoticeList = () => {
     }, [fetchNotices]);
 
     return (
-        <div className="container mt-5">
+        <div className="notice-list">
             <h2>공지사항</h2>
             <Table striped bordered hover>
                 <thead>
