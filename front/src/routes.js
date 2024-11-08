@@ -42,6 +42,7 @@ import Zerowaste from "./components/zerodongheng/Zerowaste";
 import ExCreated from "./components/exchange/ExCreated";
 import ExList from "./components/exchange/ExList";
 import ExArticle from "./components/exchange/ExArticle";
+import DonateHistory from "./components/login/DonateHistory";
 
 //링크 경로를 기록하는 파일입니다.
 //공용 파일이니 보기 쉽도록 App.js와 같은 위치에 만들었습니다.
@@ -86,13 +87,13 @@ export const routes = [
 
     { path:'/googleMap', element:<GoogleMaps/>},   //구글맵 api
 
-
-    { path: '/donate', element: <Pay/> },   //결제(후원) 경로
+    //결제(후원) 경로
+    {path:'/donatehistory', element: <DonateHistory/>},
+    { path: '/donate', element: <Pay/> },   
     { path: '/success', element: <SuccessPage /> },
     { path: '/failure', element: <FailurePage /> },
 
     //zerodongheng
-    
     { path: '/zerodongheng', element: <Zerodongheng /> },
     { path: '/zerowaste', element: <Zerowaste /> },
     { path: '/recycling', element: <Recycling /> },
