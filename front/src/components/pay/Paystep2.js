@@ -20,7 +20,7 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo, isMember, setIsMember })
       
 
       {/* 비회원인 경우에는 사용자가 직접 입력 */}
-      {!isMember && (
+
         <>
           <div className="input-group">
             <label>후원자 성함</label>
@@ -53,7 +53,7 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo, isMember, setIsMember })
             />
           </div>
         </>
-      )}
+
 
       <button onClick={prevStep} className="prev-step-btn">이전단계</button>
       <button onClick={nextStep} className="next-step-btn">다음단계</button>

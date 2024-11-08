@@ -23,7 +23,7 @@ const Paystep3 = ({ setStep, requestPay, amount, memberInfo, isMember }) => {
         <div className="paystep-container">
             <div className="payment-info">
                 <h3>결제 정보</h3>
-                <h3>{isMember}</h3>
+
                 <ul>
                     <li>회원 ID: {memberInfo.memId}</li>
                     <li>후원금액: {amount} 원</li>
