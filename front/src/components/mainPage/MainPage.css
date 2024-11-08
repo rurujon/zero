@@ -28,7 +28,7 @@
 .main-right-banner1 img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
+    object-fit: fill; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
 }
 
 .main-right-banner2 {
@@ -41,7 +41,7 @@
 .main-right-banner2 img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
+    object-fit: fill; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
 }
 
 .main-right-banner3 {
@@ -53,5 +53,5 @@
 .main-right-banner3 img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
+    object-fit: fill; /* 이미지 비율을 유지하면서 div 내에 맞춤 */
 }
