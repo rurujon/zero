@@ -88,7 +88,7 @@ function ExList() {
                 {/* 테이블 제목과 설명 */}
                 <div className="table-header d-flex align-items-center justify-content-start">
                     <h3 className="table-title">교환신청 게시판</h3>
-                    <p className="table-description ms-3">포인트를 장바구니로 교환해보세요.</p>
+                    <p className="table-description ms-3">300 포인트를 장바구니로 교환해보세요.</p>
                 </div>
 
                 {/* 검색 필터 */}
