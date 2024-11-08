@@ -5,16 +5,20 @@ const Paystep1 = ({ amountChange, setStep }) => {
     const [donateInput, setDonateInput] = useState('');
     const [selectedAmount, setSelectedAmount] = useState(null);
 
-    const [showWarning, setShowWarning] = useState(false); // 경고 메시지를 관리하는 상태
+    const [showWarningA, setShowWarningA] = useState(false); // 경고 메시지를 관리하는 상태
+    const [showWarningB, setShowWarningB] = useState(false); // 경고 메시지를 관리하는 상태
 
     const nextStep = () => {
         // 직접 입력이 선택된 경우 금액이 100원 이상인지 확인
         if (selectedAmount === 'custom' && (donateInput === '' || parseInt(donateInput) < 100)) {
-            setShowWarning(true); // 경고 메시지 표시
+            setShowWarningB(true); // 경고 메시지 표시
+            setShowWarningA(false); // 기존 경고 메시지 삭제
         } else if (!donateInput && !selectedAmount) {
-            setShowWarning(true); // 금액이 설정되지 않으면 경고 메시지 표시
+            setShowWarningA(true); // 금액이 설정되지 않으면 경고 메시지 표시
+            setShowWarningB(false); // 기존 경고 메시지 삭제
         } else {
-            setShowWarning(false);
+            setShowWarningA(false);
+            setShowWarningB(false);
             setStep(2); // 금액이 설정되면 다음 단계로 이동
         }
     };
@@ -89,6 +93,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     checked={selectedAmount === "custom"}
                 />
                 <label htmlFor="custom">직접 입력 </label>
+                &nbsp;&nbsp;
                 <input
                     type="number"
                     value={donateInput}
@@ -97,9 +102,14 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     disabled={selectedAmount !== 'custom'} // 'custom'일 때만 활성화
                 />
             </div>
-            {showWarning && (
+            {showWarningA && (
                 <p className="warning-text" style={{ color: 'red' }}>
                     결제 금액을 선택해주세요.
+                </p>
+            )}
+            {showWarningB && (
+                <p className="warning-text" style={{ color: 'red' }}>
+                    100원 이상의 금액을 입력해주세요.
                 </p>
             )}
             </fieldset>
