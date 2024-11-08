@@ -51,7 +51,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     // disabled={donateInput !== ''} 
                     
                 />
-                <label for="20000">2만원</label>
+                <label for="20000">20,000 원</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
@@ -62,7 +62,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     // disabled={donateInput !== ''} 
                     
                 />
-                <label for="30000">3만원</label>
+                <label for="30000">30,000 원</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
@@ -72,7 +72,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     onChange={radioChange} 
                     // disabled={donateInput !== ''} 
                 />
-                <label for="50000">5만원</label>
+                <label for="50000">50,000 원</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input 
                     type="radio" 
@@ -82,7 +82,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     onChange={radioChange} 
                     // disabled={donateInput !== ''} 
                 />
-                <label for="100000">10만원</label>
+                <label for="100000">100,000 원</label>
         <br/>
                 <input
                     type="radio"
