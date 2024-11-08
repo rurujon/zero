@@ -179,11 +179,11 @@ function TableRow(props) {
                 <>
                     <td className="table-cell-bold">{board.boardno}</td>
                     <td>[{board.category}]</td>
-                    <td>
+                    <td style={{ textAlign: 'left' }}>&emsp;&emsp;&emsp;
                         <Arrow depth={board.depth} />
                         <Link to={{ pathname: `/board/${board.boardno}`, search: `?page=${page}` }} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <span className="underline bbs-title">
-                                &nbsp;{board.title}
+                                {board.title}
                                 {board.urlFile && board.urlFile !== '' && (
                                     <span style={{ marginLeft: '5px' }}>🧷</span>
                                 )}
@@ -207,9 +207,9 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
-                    <td colSpan="6" className="deleted-post">
-                        <Arrow depth={board.depth} />
-                        <span className="del-span">⚠️ 삭제된 게시물입니다.</span>
+                    <td colSpan="3" className="deleted-post">&emsp;&emsp;&emsp;
+                        {/* <Arrow depth={board.depth} /> */}
+                        <span className="del-span" >⚠️ 삭제된 게시물입니다.</span>
                     </td>
                 </>
             )}
