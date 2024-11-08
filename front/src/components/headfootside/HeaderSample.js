@@ -37,7 +37,7 @@ const HeaderSample = () => {
 
         return (
             <>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero togather')}>
+                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero together')}>
                     <Link to="/zerowaste">제로웨이스트 소개</Link>
                     <Link to="/recycling">리사이클링 소개</Link>
                     <Link to="/upcycling">업사이클링 소개</Link>
@@ -99,7 +99,7 @@ const HeaderSample = () => {
                         <div>
                             <nav className="bottom-nav">
                                 <ul>
-                                    {['zero togather', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
+                                    {['zero together', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
                                         <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}
                                         className={activeMenu === menu ? 'active' : ''}>
                                             {menu.replace('-', ' ').toUpperCase()}
