@@ -3,6 +3,9 @@ import axios from 'axios';
 import { AuthContext } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Table, Form, Button, Pagination, Modal } from 'react-bootstrap';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const AdminPage = () => {
     const { token } = useContext(AuthContext);
@@ -126,6 +129,10 @@ const AdminPage = () => {
             alert('포인트 관리 중 오류가 발생했습니다.');
         }
     };
+    //공지사항 본문 에디트 추가
+    const handleContentChange = (content) => {
+        setCurrentNotice({...currentNotice, content: content});
+    };
 
     // 공지사항 모달 열기
     const openNoticeModal = (operation, notice = { title: '', content: '' }) => {
@@ -133,6 +140,8 @@ const AdminPage = () => {
         setCurrentNotice(notice);
         setShowNoticeModal(true);
     };
+
+
 
     // 공지사항 저장 처리 함수
     const handleSaveNotice = async () => {
@@ -304,41 +313,48 @@ const AdminPage = () => {
             </Modal.Footer>
         </Modal>
 
-        {/* 공지사항 관리 모달 */}
+        {/* 공지사항 모달 */}
         <Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)}>
-            <Modal.Header closeButton>
-                <Modal.Title>{noticeOperation === 'create' ? '새 공지사항 작성' : '공지사항 수정'}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3">
-                        <Form.Label>제목</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={currentNotice.title}
-                            onChange={(e) => setCurrentNotice({ ...currentNotice, title: e.target.value })}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>내용</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            value={currentNotice.content}
-                            onChange={(e) => setCurrentNotice({ ...currentNotice, content: e.target.value })}
-                        />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowNoticeModal(false)}>
-                    취소
-                </Button>
-                <Button variant="primary" onClick={handleSaveNotice}>
-                    저장
-                </Button>
-            </Modal.Footer>
-        </Modal>
+                <Modal.Header closeButton>
+                    <Modal.Title>{noticeOperation === 'create' ? '새 공지사항 작성' : '공지사항 수정'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>제목</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={currentNotice.title}
+                                onChange={(e) => setCurrentNotice({...currentNotice, title: e.target.value})}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>내용</Form.Label>
+                            <ReactQuill
+                                value={currentNotice.content}
+                                onChange={handleContentChange}
+                                modules={{
+                                    toolbar: [
+                                        [{ 'header': [1, 2, false] }],
+                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                                        ['link', 'image'],
+                                        ['clean']
+                                    ],
+                                }}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowNoticeModal(false)}>
+                        취소
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveNotice}>
+                        저장
+                    </Button>
+                </Modal.Footer>
+            </Modal>
     </div>
 );
 };
