@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class QuizServiceImp implements QuizService {
@@ -23,10 +24,12 @@ public class QuizServiceImp implements QuizService {
     }
 
     
-
-    public boolean checkToday(String memId){
+    @Transactional(readOnly = true)
+    public int checkToday(String memId){
+        
         return quizHistoryMapper.checkToday(memId);
     }
+
     public void insertquiz(Map map){
 
         QuizDTO dto;
@@ -61,7 +64,8 @@ public class QuizServiceImp implements QuizService {
 
 
     @Override
-    public void insertQH(Map<Object, Object> response) {
+    public void insertQH(Map<String, Object> response) {
+        System.out.println("받은데이터: " + response);
         QuizHistoryDTO dto;
         String memId = response.get("memId").toString();
         String quizResult = response.get("quizResult").toString();

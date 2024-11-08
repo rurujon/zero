@@ -7,6 +7,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
 
     //정답: 5포인트 상승
     const uppoint = async () => {
+        console.log("포인트 변동 시작")
         try {
             const response = await axios.post('http://localhost:8080/api/point/update', {
                 memId: member.memId,
@@ -16,7 +17,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
             });
             console.log('포인트 업데이트 성공:', response.data);
 
-            await insertQH();
+            insertQH();
 
             setIsOpen(false)    //퀴즈 정답 후 모달 닫기
         } catch (error) {
@@ -26,16 +27,19 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
 
     // 문제 결과를 전송
     const insertQH = async () => {
+        console.log("퀴즈기록추가 시작")
         try{
             await axios.post('http://localhost:8080/insertQH', {
                 memId: member.memId,
                 quizid: quizId,
                 quizResult: "정답"
             });
+            console.log("퀴즈기록 추가 완료")
             alert("🙌내일 또 만나요🙌")
         }catch(error){
             console.error('퀴즈 히스토리 입력 실패:', error.response ? error.response.data : error.message);
         }
+        setIsOpen(false)
     }
 
     return (

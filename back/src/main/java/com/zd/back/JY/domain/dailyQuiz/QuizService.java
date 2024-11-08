@@ -10,6 +10,6 @@ public interface QuizService {
     public void insertquiz(Map map);
     public QuizDTO getRandomQuiz();
     public int QHMaxNum();
-    public void insertQH(Map<Object, Object> map);
-    public boolean checkToday(String memId);
+    public void insertQH(Map<String, Object> map);
+    public int checkToday(String memId);
 }

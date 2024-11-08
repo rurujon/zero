@@ -39,6 +39,7 @@ public class AttendanceController {
     @PostMapping("/check")
     public ResponseEntity<?> checkAttendance(@RequestParam String memId) {
         try {
+            System.out.println(attendanceService.checkToday(memId));;
             attendanceService.insertAtt(memId);
             Map<String, String> response = new HashMap<>();
             response.put("message", "출석 체크 성공");
