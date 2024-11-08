@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import './ImgList.css';
+import '../board/bbs.css';
+import '../board/page.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { AuthContext } from '../login/context/AuthContext';
 
@@ -96,119 +99,144 @@ function ImgList() {
 
     return (
         <div>
-            <h2>인증게시판 리스트</h2>
-            <p>
-                <button type='button' onClick={() => window.location.href = '/imgboard/created'}>
-                    인증 글쓰기
-                </button>
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-                <select value={searchKey} onChange={(e) => {
-                    setSearchKey(e.target.value);
-                    setSearchValue(''); // 검색값 초기화
-                }} style={{ marginRight: '10px' }}>
-                    <option value="cate">인증유형</option>
-                    <option value="memId">작성자</option>
-                    <option value="title">제목</option>
-                </select>
-                {searchKey === 'cate' && (
-                    <select onChange={(e) => setSearchValue(e.target.value)} style={{ marginRight: '10px' }}>
-                        <option value="">인증유형 선택</option>
-                        <option value='tum'>텀블러 이용</option>
-                        <option value='buy'>물품 구매</option>
-                        <option value='group'>단체활동 참여</option>
-                    </select>
-                )}
-                {searchKey !== 'cate' && (
-                    <input
-                        type="text"
-                        placeholder="검색어 입력"
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        style={{ marginRight: '10px', padding: '5px' }}
-                    />
-                )}
-                <button type="button" onClick={handleSearch}>
-                    검색
-                </button>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
-                {getPaginatedResults().map((board, index) => (
-                    <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
-                        border: '2px solid red', 
-                        margin: '15px',
-                        padding: '10px', 
-                        borderRadius: '5px', 
-                        backgroundColor: '#f0f0f0', 
-                        width: '22%'
-                    }}>
-                        <div style={{ 
-                            width: '200px', 
-                            height: '150px', 
-                            overflow: 'hidden',
-                            borderRadius: '5px',
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center' 
-                        }}>
-                            {board.images && board.images.length > 0 ? (
-                                board.images.map((img) => (
-                                    <img
-                                        key={img.imgId}
-                                        src={`/images/imgboard/${img.saveFileName}`}
-                                        alt={img.saveFileName}
-                                        style={{ 
-                                            width: '100%',           
-                                            height: '100%',          
-                                            maxHeight: '200px',    
-                                            margin: '5px',
-                                            display: 'block',
-                                            objectFit: 'cover',      
-                                            verticalAlign: 'top'
-                                        }}
-                                    />
-                                ))
-                            ) : (
-                                <p>등록된 이미지가 없습니다.</p>
-                            )}
-                        </div>
-                        <div style={{ 
+            <div className="table-container">
+                {/* 테이블 제목과 설명 */}
+                <div className="table-header d-flex align-items-center justify-content-start">
+                    <h3 className="table-title">인증게시판</h3>
+                    <p className="table-description ms-3">환경 보호 활동을 인증하고 포인트를 획득하세요.</p>
+                </div>
+
+                {/* 검색 필터 */}
+                <div className="filter-container">
+                    <table>
+                        <tbody>
+                            <tr className="category-filter">
+                                <td>
+                                    <select 
+                                        value={searchKey} 
+                                        onChange={(e) => {
+                                            setSearchKey(e.target.value);
+                                            setSearchValue('');
+                                        }} 
+                                        className="form-control"
+                                        style={{ border: 0 }}
+                                    >
+                                        <option value="cate">인증유형</option>
+                                        <option value="memId">작성자</option>
+                                        <option value="title">제목</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    {searchKey === 'cate' ? (
+                                        <select 
+                                            className="form-control"
+                                            onChange={(e) => setSearchValue(e.target.value)}
+                                        >
+                                            <option value="">인증유형 선택</option>
+                                            <option value='tum'>텀블러 이용</option>
+                                            <option value='buy'>물품 구매</option>
+                                            <option value='group'>단체활동 참여</option>
+                                        </select>
+                                    ) : (
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="검색어" 
+                                            value={searchValue}
+                                            onChange={(e) => setSearchValue(e.target.value)}
+                                        />
+                                    )}
+                                </td>
+                                <td>
+                                    <button type="button" className="btn btn-outline-secondary" onClick={handleSearch}>
+                                        <i className="fas fa-search"></i> 검색
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
+                    {getPaginatedResults().map((board, index) => (
+                        <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
                             border: '2px solid red', 
-                            backgroundColor: board.imgPost.auth === 0 ? '#D5D5D5' : '#47C83E', 
-                            padding: '5px', 
-                            textAlign: 'left', 
-                            marginTop: '1px',
-                            width: '50%'
+                            margin: '15px',
+                            padding: '10px', 
+                            borderRadius: '5px', 
+                            backgroundColor: '#f0f0f0', 
+                            width: '22%'
                         }}>
-                            <p style={{ 
-                                color: '#fff',
-                                margin: 0
+                            <div style={{ 
+                                width: '200px', 
+                                height: '150px', 
+                                overflow: 'hidden',
+                                borderRadius: '5px',
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center' 
                             }}>
-                                인증 승인: {getAuthLabel(board.imgPost.auth)}
+                                {board.images && board.images.length > 0 ? (
+                                    board.images.map((img) => (
+                                        <img
+                                            key={img.imgId}
+                                            src={`/images/imgboard/${img.saveFileName}`}
+                                            alt={img.saveFileName}
+                                            style={{ 
+                                                width: '100%',           
+                                                height: '100%',          
+                                                maxHeight: '200px',    
+                                                margin: '5px',
+                                                display: 'block',
+                                                objectFit: 'cover',      
+                                                verticalAlign: 'top'
+                                            }}
+                                        />
+                                    ))
+                                ) : (
+                                    <p>등록된 이미지가 없습니다.</p>
+                                )}
+                            </div>
+                            <div style={{ 
+                                border: '2px solid red', 
+                                backgroundColor: board.imgPost.auth === 0 ? '#D5D5D5' : '#47C83E', 
+                                padding: '5px', 
+                                textAlign: 'left', 
+                                marginTop: '1px',
+                                width: '50%'
+                            }}>
+                                <p style={{ 
+                                    color: '#fff',
+                                    margin: 0
+                                }}>
+                                    인증 승인: {getAuthLabel(board.imgPost.auth)}
+                                </p>
+                            </div>
+                            <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
+                            <p>작성자: {board.imgPost.memId}</p>
+                            <p>
+                                제목: 
+                                <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
+                                    {board.imgPost.title}
+                                </a>
                             </p>
+                            <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
                         </div>
-                        <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
-                        <p>작성자: {board.imgPost.memId}</p>
-                        <p>
-                            제목: 
-                            <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
-                                {board.imgPost.title}
-                            </a>
-                        </p>
-                        <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <Pagination
+                            className="pagination"
+                            activePage={currentPage}
+                            itemsCountPerPage={itemsPerPage}
+                            totalItemsCount={totalItems}
+                            pageRangeDisplayed={5}
+                            prevPageText={"‹"}
+                            nextPageText={"›"}
+                            onChange={handlePageChange}
+                 />
             </div>
-            <Pagination
-                        className="pagination"
-                        activePage={currentPage}
-                        itemsCountPerPage={itemsPerPage}
-                        totalItemsCount={totalItems}
-                        pageRangeDisplayed={5}
-                        prevPageText={"‹"}
-                        nextPageText={"›"}
-                        onChange={handlePageChange}
-             />
         </div>
     );
 }
