@@ -8,7 +8,10 @@ const Paystep1 = ({ amountChange, setStep }) => {
     const [showWarning, setShowWarning] = useState(false); // 경고 메시지를 관리하는 상태
 
     const nextStep = () => {
-        if (!donateInput && !selectedAmount) {
+        // 직접 입력이 선택된 경우 금액이 100원 이상인지 확인
+        if (selectedAmount === 'custom' && (donateInput === '' || parseInt(donateInput) < 100)) {
+            setShowWarning(true); // 경고 메시지 표시
+        } else if (!donateInput && !selectedAmount) {
             setShowWarning(true); // 금액이 설정되지 않으면 경고 메시지 표시
         } else {
             setShowWarning(false);
