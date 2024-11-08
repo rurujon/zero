@@ -87,15 +87,17 @@ const HomePage = () => {
 
             <button
                 onClick={() => setShowLogin(true)}
-                className="btn btn-primary btn-lg"
-                style={{
-                    backgroundColor: '#03c75a',
-                    borderColor: '#03c75a',
-                    marginBottom: '20px',
-                    fontWeight: 'bold',
-                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
-                }}
-            >
+                    className="btn btn-primary btn-lg"
+                    style={{
+                        backgroundColor: '#03c75a',
+                        borderColor: '#03c75a',
+                        marginBottom: '20px',
+                        fontWeight: 'bold',
+                        textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
+                        boxShadow: '0 6px 10px rgba(0, 0, 0, 0.5)',
+                        transition: 'box-shadow 0.3s ease-in-out'
+                    }}
+                >
                 ZERO TOGATHER 로그인
             </button>
                     {showLogin && (
