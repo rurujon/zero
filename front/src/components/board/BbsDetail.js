@@ -4,6 +4,8 @@ import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { AuthContext } from '../login/context/AuthContext';
 import CommentWrite from "../comment/CommentWrite";
 import CommentList from "../comment/CommentList";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function BbsDetail() {
     const [board, setBoard] = useState({});
@@ -72,14 +74,14 @@ function BbsDetail() {
     
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const parts = content.split(urlRegex);
+    
         return parts.map((part, index) => (
-            urlRegex.test(part) ? (
-                <a key={index} href={part} target="_blank" rel="noopener noreferrer">{part}</a>
-            ) : (
-                part
-            )
-        ));
+            urlRegex.test(part)
+                ? `<a key=${index} href="${part}" target="_blank" rel="noopener noreferrer">${part}</a>`
+                : part
+        )).join('');
     };
+    
 
     const getMaxBoardNo = async () => {
         try {
@@ -119,7 +121,6 @@ function BbsDetail() {
         <div>
             <div className="my-3 d-flex justify-content-between">
                 <div>
-                    {/* 최대 boardno일 때 다음글 버튼 렌더링 X, 첫 게시글은 이전글 버튼 렌더링 X */}
                     {parseInt(boardno) > 1 && (
                         <button 
                             className="btn btn-outline-secondary" 
@@ -138,7 +139,6 @@ function BbsDetail() {
                     )}
                 </div>
 
-                {/* 답글쓰기, 수정, 삭제 버튼 */}
                 <div>
                     <Link className="btn btn-outline-secondary" to={{ pathname: `/board/answer/${board.boardno}` }} state={{ parentBbs }}>
                         <i className="fas fa-pen"></i> 답글쓰기
@@ -180,22 +180,24 @@ function BbsDetail() {
                         <td>{board.hitcount}</td>
                     </tr>
                     <tr>
-                        <th>내용</th>
-                        <td>
-                            {board.urlFile && (
-                                <div>
-                                    <img 
-                                        src={board.urlFile} 
-                                        alt="첨부된 이미지" 
-                                        style={{ maxWidth: "50%", marginTop: "20px" }}
-                                    />
-                                </div>
-                            )}
-                            <span style={{ whiteSpace: "pre-line" }}>
-                                <br/>{renderContentWithLinks(board.content)}<br/>
-                            </span>
-                        </td>
-                    </tr>
+    <th>내용</th>
+    <td style={{ textAlign: 'left'}}>
+        {board.urlFile && (
+            <div>
+                <img 
+                    src={board.urlFile} 
+                    alt="첨부된 이미지" 
+                    style={{ maxWidth: "40%", marginTop: "20px", marginLeft: "20px", marginBottom: "20px"}}
+                />
+            </div>
+        )}
+        <div 
+            dangerouslySetInnerHTML={{ __html: renderContentWithLinks(board.content) }} 
+            style={{ marginTop: "20px", marginLeft: "20px", marginBottom: "20px" }} 
+        />
+    </td>
+</tr>
+
                 </tbody>
             </table>
 
@@ -205,10 +207,7 @@ function BbsDetail() {
                 </button>
             </div><br/><br/>
 
-            {/* 댓글 작성 컴포넌트 */}
             {memId && <CommentWrite boardno={boardno} />}
-
-            {/* 댓글 리스트 컴포넌트 */}
             <CommentList boardno={boardno} />
         </div>
     );

@@ -136,10 +136,10 @@ const HomePage = () => {
                 style={{
 
                     fontWeight: 'bold',
-                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
                 }}
             >
-                안녕하세요 {memId}님, 오늘도 행복한 하루되세요
+                안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
             </h5>
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
