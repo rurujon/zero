@@ -23,19 +23,35 @@ const ExCreated = () => {
     const [addr2, setAddr2] = useState('');
     const [tel, setTel] = useState('');
     const [selec, setSelec] = useState(null);
-    const [loading, setLoading] = useState(true);
-
 
     const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n';
 
     useEffect(() => {
-        if (!token) { 
-            alert('로그인이 필요합니다.');
-            navigate('/mainpage');
-        } else {
-            setLoading(false);
-        }
-    }, [token, navigate]);
+        const checkUserPoint = async () => {
+            if (!token) { 
+                alert('로그인이 필요합니다.');
+                navigate('/mainpage');
+                return;
+            }
+
+            try {
+                const response = await axios.get(`/api/point/info/${memId}`);
+                const pointInfo = response.data;
+                
+                if (pointInfo.usedPoint < 300) {
+                    alert('포인트가 300 이상일 때 신청 가능합니다.');
+                    navigate('/exchange/list');
+                    return;
+                }
+                
+            } catch (error) {
+                console.error('포인트 정보 조회 중 오류:', error);
+                navigate('/mainpage');
+            }
+        };
+
+        checkUserPoint();
+    }, [token, navigate, memId]);
 
         const handleReceiverInfo = async () => {
 
@@ -50,7 +66,7 @@ const ExCreated = () => {
                 setPost(memberData.post);
                 setAddr1(memberData.addr1);
                 setAddr2(memberData.addr2);
-                setLoading(false);
+      
             } catch (error) {
                 console.error('회원 정보 가져오기 오류:', error);
             }
@@ -155,9 +171,6 @@ const ExCreated = () => {
         contentRef.current?.focus();
     };
 
-    if (loading) {
-        return <p>로딩 중...</p>;
-    }
 
     return (
         <div style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>

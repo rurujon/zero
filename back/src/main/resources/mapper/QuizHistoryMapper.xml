@@ -19,10 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (#{quizHistoryId}, #{quizResult}, sysdate, #{memId}, #{quizid})
     </insert>
 
-    <select id="checkToday" parameterType="String" resultType="boolean">
-        SELECT * FROM QUIZHISTORY
-        WHERE TRUNC(quizDate) = TRUNC(SYSDATE)
-        AND memId = #{memId}
+    <select id="checkToday" parameterType="String" 
+    resultType="int">
+            SELECT COUNT(*)
+            FROM QUIZHISTORY
+            WHERE TRUNC(quizDate) = TRUNC(SYSDATE)
+            AND memId = #{memId}
     </select>
 
 </mapper>

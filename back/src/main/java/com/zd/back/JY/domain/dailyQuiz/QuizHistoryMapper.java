@@ -14,5 +14,5 @@ public interface QuizHistoryMapper{
     @Transactional
     public void insertQH(QuizHistoryDTO dto);  //결과, sysdate, memid
 
-    public boolean checkToday(String memId);
+    public int checkToday(String memId);
 }

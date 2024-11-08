@@ -11,7 +11,7 @@ const QuizItem = ({setQuiz, quiz}) => {
             // quiz가 로딩된 후 answer을 설정
             if (response.data) {
                 setQuiz(response.data);
-                console.log('response.data넘어옴 ----------------'+response.data);
+                console.log('response.data넘어옴 ----------------'+JSON.stringify(response.data));
                 
             }
         })
