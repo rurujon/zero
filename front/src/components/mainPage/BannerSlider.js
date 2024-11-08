@@ -9,8 +9,8 @@ import './BannerSlider.css'; // 추가적인 스타일이 필요한 경우 사�
 
 const BannerSlider = () => {
   const images = [
-    'https://promotion.daum-kg.net/seoulgamtan/images/visual.jpg?v=1',
-    '/images/zerowastebanner.png',
+    '/images/visual.jpg',
+    '/images/zerowastebanner.jpg',
     '/images/koicachallenge.jpg'
   ];
 

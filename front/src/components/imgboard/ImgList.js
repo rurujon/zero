@@ -162,21 +162,23 @@ function ImgList() {
                 <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
                     {getPaginatedResults().map((board, index) => (
                         <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
-                            border: '2px solid red', 
+                            border: '2px solid #D3D3D3', 
                             margin: '15px',
                             padding: '10px', 
                             borderRadius: '5px', 
-                            backgroundColor: '#f0f0f0', 
-                            width: '22%'
+                            backgroundColor: '#F6F6F6', 
+                            width: '22%',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                         }}>
                             <div style={{ 
-                                width: '200px', 
+                                width: '260px', 
                                 height: '150px', 
                                 overflow: 'hidden',
                                 borderRadius: '5px',
                                 display: 'flex', 
                                 alignItems: 'center', 
-                                justifyContent: 'center' 
+                                justifyContent: 'center',
+                                border: '1px solid #E8E8E8'
                             }}>
                                 {board.images && board.images.length > 0 ? (
                                     board.images.map((img) => (
@@ -188,10 +190,11 @@ function ImgList() {
                                                 width: '100%',           
                                                 height: '100%',          
                                                 maxHeight: '200px',    
-                                                margin: '5px',
+                                                margin: 0,             
                                                 display: 'block',
                                                 objectFit: 'cover',      
-                                                verticalAlign: 'top'
+                                                verticalAlign: 'top',
+                                                borderRadius: '5px'
                                             }}
                                         />
                                     ))
@@ -199,13 +202,14 @@ function ImgList() {
                                     <p>등록된 이미지가 없습니다.</p>
                                 )}
                             </div>
+                            <p></p>
                             <div style={{ 
-                                border: '2px solid red', 
-                                backgroundColor: board.imgPost.auth === 0 ? '#D5D5D5' : '#47C83E', 
+                                border: '2px solid green',
+                                backgroundColor: board.imgPost.auth === 0 ? '#F6F6F6' : '#47C83E', 
                                 padding: '5px', 
                                 textAlign: 'left', 
                                 marginTop: '1px',
-                                width: '50%'
+                                width: '260px'
                             }}>
                                 <p style={{ 
                                     color: '#fff',
