@@ -24,6 +24,9 @@ const ExCreated = () => {
     const [tel, setTel] = useState('');
     const [selec, setSelec] = useState(null);
 
+    const [loading, setLoading] = useState(true);
+
+
     const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n';
 
     useEffect(() => {
@@ -43,7 +46,8 @@ const ExCreated = () => {
                     navigate('/exchange/list');
                     return;
                 }
-                
+                setLoading(false);
+
             } catch (error) {
                 console.error('포인트 정보 조회 중 오류:', error);
                 navigate('/mainpage');
@@ -171,6 +175,18 @@ const ExCreated = () => {
         contentRef.current?.focus();
     };
 
+    if (loading) {
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <h4 style={{color: 'gray'}}>교환신청 게시판으로 돌아갑니다.</h4>
+                </div>
+        );
+    }
 
     return (
         <div style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>

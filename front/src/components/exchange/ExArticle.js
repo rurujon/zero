@@ -47,14 +47,6 @@ const ExArticle = () => {
                 });
                 setArticle(response.data);
                 
-                // 권한 체크
-                const { memId, role } = getTokenInfo(token);
-                if (role !== 'ADMIN' && response.data.memId !== memId) {
-                    alert('본인이 작성한 게시물만 조회할 수 있습니다');
-                    navigate('/exchange/list');
-                    return;
-                }
-                
                 setLoading(false);
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
@@ -139,11 +131,29 @@ const uppoint = async () => {
     };
     
     if (loading) {
-        return <p>로딩 중...</p>;
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <p>로딩 중...</p>
+            </div>
+        );
     }
 
     if (!article) {
-        return <p>게시물을 찾을 수 없습니다.</p>; 
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <p>게시물을 찾을 수 없습니다.</p>
+            </div>
+        );
     }
 
 return (
