@@ -27,19 +27,19 @@ public class AttendanceService {
     }
 
     @Transactional
-public void insertAtt(String memId) throws Exception {
-    if (checkToday(memId) == 0) {
-        try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("memId", memId);
-            mapper.insertAtt(map); // 출석 기록 추가
-        } catch (Exception e) {
-            throw new Exception("출석 처리 중 오류 발생: " + e.getMessage(), e);
+    public void insertAtt(String memId) throws Exception {
+        if (checkToday(memId) == 0) {
+            try {
+                Map<String, Object> map = new HashMap<>();
+                map.put("memId", memId);
+                mapper.insertAtt(map); // 출석 기록 추가
+                } catch (Exception e) {
+                    throw new Exception("출석 처리 중 오류 발생: " + e.getMessage(), e);
+                }
+            } else {
+                logger.info("이미 오늘 출석한 회원: {}", memId);
         }
-    } else {
-        logger.info("이미 오늘 출석한 회원: {}", memId);
     }
-}
 
     @Transactional(readOnly = true)
     public int checkToday(String memId) {

@@ -22,8 +22,16 @@
     padding: 10px;
     margin: 10px;
     width: 31%; /* 카드의 너비 설정 */
-    height: 300px;
+    height: 100%;
+    min-height: 400px;
+
     cursor: pointer; /* 클릭 가능하다는 느낌을 주기 위함 */
+  }
+
+  .store-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
   }
   
   .store-card:hover {
@@ -128,4 +136,9 @@
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease; /* 호버 효과를 위한 부드러운 전환 */
+}
+
+.info-window h2 {
+  font-size: 24px;
+  font-weight: bold;
 }
