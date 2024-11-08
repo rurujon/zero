@@ -254,6 +254,8 @@ const NewsList = () => {
       .post("http://localhost:8080/api/naver/news/update") // DB 갱신
       .then((response) => {
         setError(null); // 에러 초기화
+        alert('갱신 완료');
+        fetchNewsData();
       })
       .catch((error) => {
         setError("뉴스 DB를 갱신하는 데 실패했습니다.");
@@ -327,7 +329,9 @@ const NewsList = () => {
               <NewsItem key={index} onClick={() => window.open(news.link, '_blank')}>
                 <NewsLink as="span">{news.title}</NewsLink>
                 <NewsDescription>{news.description}</NewsDescription>
-                <NewsDate>{new Date(news.pubDate).toLocaleString()}</NewsDate>
+                <NewsDate>
+                  {news.pubDate} {/* 서버에서 반환된 문자열 그대로 출력 */}
+                </NewsDate>
               </NewsItem>
             ))}
           </NewsListContainer>

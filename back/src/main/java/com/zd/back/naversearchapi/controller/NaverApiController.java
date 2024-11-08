@@ -27,18 +27,18 @@ public class NaverApiController {
 
     //뉴스 갱신
     @PostMapping("/news/update")
-    public ResponseEntity<Map<Integer,Map<String,String>>> getNaverNews() {
+    public ResponseEntity<Map<Integer,Map<String,Object>>> getNaverNews() {
         try {
 
             // Service 계층에 API 호출 및 데이터 처리 위임
-            Map<Integer, Map<String, String>> newsMap = searchApiService.updateNaverNews();
+            Map<Integer, Map<String, Object>> newsMap = searchApiService.updateNaverNews();
             
             return ResponseEntity.ok(newsMap);
 
         } catch (Exception e) {
-            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> errorMap = new HashMap<>();
             errorMap.put("error", "API 요청 실패: " + e.getMessage());
-            Map<Integer, Map<String, String>> responseMap = new HashMap<>();
+            Map<Integer, Map<String, Object>> responseMap = new HashMap<>();
             responseMap.put(-1, errorMap);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMap);
         }

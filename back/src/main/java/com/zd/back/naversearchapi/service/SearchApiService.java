@@ -15,5 +15,5 @@ public interface SearchApiService {
     List<News> getAllNews();  // DB에 저장된 모든 뉴스를 가져오는 메서드
     public List<News> searchNews(String keyword);
     List<News> miniNews();
-    Map<Integer, Map<String, String>> updateNaverNews() throws Exception;
+    Map<Integer, Map<String, Object>> updateNaverNews() throws Exception;
 }
