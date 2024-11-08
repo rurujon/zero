@@ -68,7 +68,7 @@ public class SearchApiServiceImpl implements SearchApiService{
     }
 
     @Override
-    public Map<Integer, Map<String, String>> updateNaverNews() throws Exception {
+    public Map<Integer, Map<String, Object>> updateNaverNews() throws Exception {
         // 검색어 설정
         String mainKeyword = "환경 보호";
 
@@ -76,7 +76,7 @@ public class SearchApiServiceImpl implements SearchApiService{
         String encodedQuery = mainKeyword;
 
         // API 요청 URL 설정
-        String apiURL = "https://openapi.naver.com/v1/search/news?query=" + encodedQuery + "&display=50&sort=date";
+        String apiURL = "https://openapi.naver.com/v1/search/news?query=" + encodedQuery + "&display=100&sort=date";
 
         // HTTP 헤더 설정
         HttpHeaders headers = new HttpHeaders();
@@ -96,24 +96,21 @@ public class SearchApiServiceImpl implements SearchApiService{
 
         // JSON 데이터 Map 형식 변환
         ReadNaverJSON readNaverJSON = new ReadNaverJSON();
-        Map<Integer, Map<String, String>> newsMap = readNaverJSON.unzipArray(naverNewsArray);
-
-        // 뉴스 데이터를 pubDate 기준으로 정렬
-        List<Map<String, String>> sortedNews = newsMap.values().stream()
-            .sorted((news1, news2) -> news2.get("pubDate").compareTo(news1.get("pubDate")))
-            .collect(Collectors.toList());
+        Map<Integer, Map<String, Object>> newsMap = readNaverJSON.unzipArray(naverNewsArray);
 
         // Map 데이터를 News 객체로 변환하여 DB에 저장
-        for (Map<String, String> newsData : sortedNews) {
-            String cleanedTitle = cleanText(newsData.get("title"));
-            String cleanedDescription = cleanText(newsData.get("description"));
+        for (Map<String, Object> newsData : newsMap.values()) {
+            String cleanedTitle = cleanText((String)newsData.get("title"));
+            String cleanedDescription = cleanText((String)newsData.get("description"));
 
+            // pubDate는 java.sql.Date로 변환된 값이므로 바로 사용할 수 있음
+            java.sql.Date pubDate = (java.sql.Date) newsData.get("pubDate");
 
             News news = new News();
             news.setTitle(cleanedTitle);
-            news.setLink(newsData.get("link"));
+            news.setLink((String)newsData.get("link"));
             news.setDescription(cleanedDescription);
-            news.setPubDate(newsData.get("pubDate"));
+            news.setPubDate(pubDate);
 
             insertNews(news); // 뉴스 저장 로직 호출
         }

@@ -21,12 +21,12 @@ function MainPageApp() {
               <img src="images/airEnv.gif"></img></a>
             </div>
             <div className="main-right-banner2">
-              <a href="https://ecolife.me.go.kr/ecolife/" target="_blank">
-              <img src="images/greenNuri.png"></img></a>
+              <a href="http://192.168.16.4:3000/" target="_blank">
+              <img src="images/logo_gray.png" style={{width:'500px', height:'50px'}}></img></a>
             </div>
             <div className="main-right-banner3">
-              <a href="https://cpoint.or.kr/" target="_blank">
-              <img src="images/point.gif"></img></a>
+              <a href="http://192.168.16.23:3000/" target="_blank">
+              <img src="images/marry.png"></img></a>
             </div>
           </div>
         </div>
