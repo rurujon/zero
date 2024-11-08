@@ -159,6 +159,8 @@ function ImgList() {
                 </div>
 
                 <br />
+                
+                {/* 게시물 */}
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
                     {getPaginatedResults().map((board, index) => (
@@ -206,7 +208,7 @@ function ImgList() {
                             </div>
                             <p></p>
                             <div style={{ 
-                                border: board.imgPost.auth === 0 ? '3px solid black' : '3px solid #1DDB16',
+                                border: board.imgPost.auth === 0 ? '3px solid black' : '3px solid #0BC904',
                                 borderRadius: '5px', 
                                 backgroundColor: board.imgPost.auth === 0 ? '#F6F6F6' : '#03c75a',
                                 padding: '5px', 
@@ -219,7 +221,7 @@ function ImgList() {
                                     color: board.imgPost.auth === 0 ? 'black' : '#fff',
                                     margin: 0
                                 }}>
-                                 {getAuthLabel(board.imgPost.auth)}
+                             <b>   {getAuthLabel(board.imgPost.auth)}</b> 
                                 </p>
                             </div>
                             <p></p>
@@ -236,9 +238,9 @@ function ImgList() {
                                     <tr style={{ border: 'none' }}>
                                         <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
                                         <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
-                                            <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
-                                                {board.imgPost.title}
-                                            </a>
+                                        <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                             <b> {board.imgPost.title}</b>  
+                                            </Link>
                                         </td>
                                     </tr>
                                     <tr style={{ border: 'none' }}>
