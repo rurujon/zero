@@ -36,8 +36,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{failReason},
         #{createdAt}
     )
-</insert>
+    </insert>
 
 
+    <select id='getDonateHistory' parameterType="String" resultType="com.zd.back.JY.domain.payment.PaymentDTO">
+    select CREATEDAT, BUYERNAME, AMOUNT, PAYMENTMETHOD, ORDERID, PAYMENTID
+    from payment
+    where BUYERID=#{BUYERID} AND STATUS='성공'
+    order by CREATEDAT desc
+    </select>
 
 </mapper>
