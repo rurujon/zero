@@ -49,15 +49,18 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/member/register", "/member/login", "/member/find-id", "/member/find-password", "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**", "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy", "/member/terms", "/member/check-id", "/member/check-email").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
-                .antMatchers("/quiz.action", "/index").permitAll()
-                .antMatchers("/api/notices/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/board/**", "/comment/**").permitAll()
-                .antMatchers("/exchange/list").permitAll()
-                .antMatchers("/imgboard/list").permitAll()
-                .antMatchers("/imgboard/created", "/imgboard/update", "/imgboard/delete").authenticated()
-                .anyRequest().authenticated()
+        .antMatchers(
+            "/member/register", "/member/login", "/member/find-id", "/member/find-password",
+            "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**",
+            "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy",
+            "/member/terms", "/member/check-id", "/member/check-email",
+            "/quiz.action", "/index", "/checkQH", "/getQuiz", "/insertQH",
+            "/exchange/list", "/imgboard/list"
+        ).permitAll()
+        .antMatchers(HttpMethod.GET, "/api/notices/**", "/board/**", "/comment/**").permitAll()
+        .antMatchers("/api/notices/**","member/delete/**").hasRole("ADMIN")
+        .antMatchers("/imgboard/created", "/imgboard/update", "/imgboard/delete").authenticated()
+        .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
@@ -91,6 +94,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://192.168.16.20:3000"); // +클라이언트의 실제 주소를 추가
+        configuration.addAllowedOrigin("http://192.168.16.15:3000"); // +클라이언트의 실제 주소를 추가
+
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

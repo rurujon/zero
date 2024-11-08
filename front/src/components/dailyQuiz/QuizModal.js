@@ -6,14 +6,13 @@ import QuizResult from './QuizResult';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
-import { adjustWindowSize } from '../login/utils/Sizing';
 Modal.setAppElement('#root');
 
 
 const QuizModal = ({isOpen, setIsOpen}) => {
     const [member, setMember] = useState(null);
     const [quizId, setQuizId] = useState(null);
-    const {token} = useContext(AuthContext);
+    const {token, setToken} = useContext(AuthContext);
 
     //회원 토큰 조회
     const fetchMemberInfo = useCallback(() => {
@@ -28,12 +27,20 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             });
     }, [token]);
 
+    // useEffect(() => {
+    //     // 예시: 로컬 스토리지에서 토큰을 가져와서 상태에 설정
+    //     const storedToken = localStorage.getItem('authToken');
+    //     if (storedToken) {
+    //         setToken(storedToken);
+    //     }
+    // }, []);
+
     useEffect(() => {
         if (isOpen && member) {
             checkQH(); // 모달이 열릴 때 퀴즈 참여 여부 확인
         }
     }, [isOpen, member]);
-
+    
     //퀴즈풀었는지 유무
     const checkQH = async () => {
         try {
@@ -41,18 +48,18 @@ const QuizModal = ({isOpen, setIsOpen}) => {
             const response = await axios.post("/checkQH", null, {
                 params: {
                     memId: member.memId
-
                 }
             });
-
             // 응답 데이터에서 메시지를 확인
             if (response.data.message === 'done') {
                 // 오늘 퀴즈에 참여한 경우 모달을 false로 설정
                 alert("오늘의 퀴즈는 하루에 한번만 가능합니다")
                 setIsOpen(false);
+            }else if(response.data.message === 'yet'){
             }
         } catch (error) {
             // 에러 발생 시 콘솔에 에러 메시지 출력
+            alert(member.memId)
             console.error("퀴즈 히스토리 호출 실패", error.response ? error.response.data : error.message);
         }
     };
@@ -77,9 +84,12 @@ const QuizModal = ({isOpen, setIsOpen}) => {
     useEffect(() => {
         // 모달이 열릴 때 memId가 없으면 로그인 페이지로 이동
         if (isOpen && !member) {
-            alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
-            navigate("/login");
-            setIsOpen(false); // 모달 닫기
+            if (!token) {
+                alert("로그인 한 사용자만 일일퀴즈가 가능합니다!");
+                navigate("/login");
+            } else {
+                fetchMemberInfo(); // 토큰이 있으면 회원 정보 가져오기
+            }
         }
 
     }, [isOpen, member, navigate, setIsOpen]);
