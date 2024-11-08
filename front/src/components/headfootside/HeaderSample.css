@@ -205,3 +205,11 @@
         margin: 5px 0;
     }
 }
+
+.small-menu{
+    transition: all .4s ease;
+}
+
+.small-menu:hover{
+    transform: scale(1.05);
+}
