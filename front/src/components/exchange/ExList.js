@@ -1,15 +1,17 @@
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 import '../board/bbs.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { AuthContext } from '../login/context/AuthContext';
 
 
 
 function ExList() {
-    
+    const { token } = useContext(AuthContext);
+
     const [exchanges, setExchanges] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
@@ -38,6 +40,24 @@ function ExList() {
     useEffect(() => {
         fetchExchanges();
     }, []);
+
+    // token에서 memId와 role 가져오기
+    const getTokenInfo = (token) => {
+        if (token) { 
+            const payloadBase64 = token.split('.')[1]; 
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return {
+                memId: decodedPayload.sub,
+                role: decodedPayload.role
+            };
+        }
+        return { memId: null, role: null };
+    };
+    
+    const { memId, role } = getTokenInfo(token);
+
+
+
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -150,11 +170,23 @@ function ExList() {
                                 <td>{getAuthLabel(board.auth)}</td>
                                 <td><i className="bi bi-lock-fill"></i></td>
                                 <td>
-                                    <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} 
-                                          style={{ textDecoration: 'none', color: 'inherit' }}
-                                          className="underline bbs-title">
-                                        {board.title}
-                                    </Link>
+                                    {role === 'ADMIN' || memId === board.memId ? (
+                                        <Link 
+                                            to={`/exchange/article?exchangeId=${board.exchangeId}`} 
+                                            style={{ textDecoration: 'none', color: 'inherit' }}
+                                            className="underline bbs-title"
+                                        >
+                                            {board.title}
+                                        </Link>
+                                    ) : (
+                                        <span 
+                                            onClick={() => alert("작성자만 조회 가능합니다.")}
+                                            style={{ cursor: 'pointer' }}
+                                            className="underline bbs-title"
+                                        >
+                                            {board.title}
+                                        </span>
+                                    )}
                                 </td>
                                 <td>{board.memId}</td>
                                 <td>{new Date(board.created).toLocaleDateString()}</td>
