@@ -79,15 +79,20 @@
     justify-content: space-between;
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
   }
 
   .seoul-search-line ul {
     margin: 0;
   }
 
-  .search-box {
-    
-    
+  .search-box select {
+    height: 30px;
+    margin: 0 5px 0;
+  }
+
+  .search-box input {
+    margin: 0 5px 0;
   }
 
   /* NewsStyles.css */
@@ -166,6 +171,7 @@
   color: #2c3e50;
   text-decoration: none;
   font-weight: bold;
+  font-size: 25px;
 }
 
 .NewsLink:hover {

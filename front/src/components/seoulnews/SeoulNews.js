@@ -54,6 +54,7 @@ const SeoulNews = () => {
       await axios.post('/api/seoul/seoulNews/updateAll');
       // 크롤링이 완료된 후 뉴스 리스트를 다시 가져옵니다.
       fetchNews();
+      alert("업데이트 완료.")
     } catch (err) {
       setError(err);
     }
@@ -195,7 +196,7 @@ const SeoulNews = () => {
 
           <input
             type="text"
-            placeholder="제목 또는 내용을 검색하세요"
+            placeholder="검색어 입력"
             value={searchQuery} // 검색어 바인딩
             onChange={(e) => setSearchQuery(e.target.value)} // 검색어 변경 시 상태 업데이트
           />

@@ -63,3 +63,7 @@
     border-right: none;
     border-left: none;
 }
+
+.del-span {
+    color: gray;
+}
