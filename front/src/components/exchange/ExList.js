@@ -211,7 +211,7 @@ function ExList() {
                     />
                 </div>
                 <Link className="btn btn-outline-secondary" to="/exchange/created">
-                    <i className="fas fa-pen"></i> 인증 글쓰기
+                    <i className="fas fa-pen"></i>글쓰기
                 </Link>
             </div>
         </div>

@@ -7,6 +7,7 @@ import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { AuthContext } from '../login/context/AuthContext';
+import { Link } from 'react-router-dom';
 
 function ImgList() {
 
@@ -232,7 +233,11 @@ function ImgList() {
                         </div>
                     ))}
                 </div>
-                <Pagination
+
+                {/* 페이지네이션 및 글쓰기 버튼 */}
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="mx-auto">
+                        <Pagination
                             className="pagination"
                             activePage={currentPage}
                             itemsCountPerPage={itemsPerPage}
@@ -241,7 +246,12 @@ function ImgList() {
                             prevPageText={"‹"}
                             nextPageText={"›"}
                             onChange={handlePageChange}
-                 />
+                        />
+                    </div>
+                    <Link className="btn btn-outline-secondary" to="/imgboard/created">
+                        <i className="fas fa-pen"></i> 글쓰기
+                    </Link>
+                </div>
             </div>
         </div>
     );
