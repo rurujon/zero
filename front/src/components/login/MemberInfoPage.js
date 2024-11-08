@@ -7,8 +7,10 @@ import { AuthContext } from './context/AuthContext';
 import Calendar from './Calendar';
 import 'react-calendar/dist/Calendar.css';
 import './MemberInfoPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const MemberInfoPage = () => {
+  const navigate = useNavigate();
   const [member, setMember] = useState(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -68,6 +70,8 @@ const MemberInfoPage = () => {
   const handleDeleteConfirmation = (e) => {
     setDeleteConfirmation(e.target.value);
   };
+
+
 
   const handleFinalDelete = () => {
     if (deleteConfirmation.toLowerCase() === '탈퇴') {
@@ -165,6 +169,10 @@ const MemberInfoPage = () => {
               <button className="btn btn-primary btn-sm" onClick={handleEditClick}>
                 정보 수정
               </button>&nbsp;
+              <button className="btn btn-primary btn-sm"
+              onClick={() => navigate('/donatehistory')} >
+                후원 내역
+                </button>&nbsp;
               <button
                 className="btn btn-outline-secondary btn-sm"
                 onClick={handleDeleteRequest}

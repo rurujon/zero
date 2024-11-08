@@ -3,6 +3,7 @@ package com.zd.back.JY.domain.payment;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +78,7 @@ public class PayService {
         paymentMapper.insertpayment(dto);
     }
     
+    public List<PaymentDTO> getDonateHistory(String buyerId) {
+        return paymentMapper.getDonateHistory(buyerId);
+    }
 }
