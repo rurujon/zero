@@ -17,13 +17,16 @@ function MainPageApp() {
           <div className="main-right-wrap">
             <HomePage/>
             <div className="main-right-banner1">
-              <img src="images/bannerImage1.jpg"></img>
+              <a href="https://www.kcen.kr/USR_main2016.jsp??=MAIN/index" target="_blank">
+              <img src="images/airEnv.gif"></img></a>
             </div>
             <div className="main-right-banner2">
-              <img src="images/bannerImage1.jpg"></img>
+              <a href="https://ecolife.me.go.kr/ecolife/" target="_blank">
+              <img src="images/greenNuri.png"></img></a>
             </div>
             <div className="main-right-banner3">
-              <img src="images/bannerImage1.jpg"></img>
+              <a href="https://cpoint.or.kr/" target="_blank">
+              <img src="images/point.gif"></img></a>
             </div>
           </div>
         </div>

@@ -126,7 +126,7 @@
     max-width: 1320px;
     margin: 0 auto;
     padding: 10px;
-    transform: translateX(+3%);
+    transform: translateX(+4%);
     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
 }
 
@@ -135,7 +135,7 @@
     padding: 5px;
     color: white;
     text-decoration: none;
-    width: 200px;
+    width: 210px;
     text-align: left;
 }
 
