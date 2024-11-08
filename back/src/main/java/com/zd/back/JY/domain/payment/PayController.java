@@ -48,8 +48,9 @@ public class PayController {
             // 후원 내역을 서비스에서 받아옴
             List<PaymentDTO> donateHistory = payService.getDonateHistory(buyerId);
 
-            if (donateHistory.isEmpty()) {
-                return ResponseEntity.status(404).body("히스토리가 없음");
+            if (donateHistory == null || donateHistory.isEmpty()) {
+                // 후원 기록이 없으면 빈 리스트를 반환
+                return ResponseEntity.ok(donateHistory);
             }
 
             return ResponseEntity.ok(donateHistory);  // 후원 내역 반환
@@ -59,4 +60,5 @@ public class PayController {
             return ResponseEntity.status(500).body("후원내역 불러오기 실패: " + e.getMessage());
         }
     }
+
 }
