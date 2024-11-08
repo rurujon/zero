@@ -11,12 +11,9 @@ const Pay = () => {
   const [amount, setAmount] = useState("");
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
-  const {token, setToken} = useContext(AuthContext);
-  const amountChange = (event) => {
-    setAmount(event.target.value);
-  };
-
+  const { token, setToken } = useContext(AuthContext);
   const [memId] = useState(localStorage.getItem('memId'));
+
   const [memberInfo, setMemberInfo] = useState({
     memId: 'nobody',
     memName: '익명',
@@ -48,23 +45,34 @@ const Pay = () => {
     };
   }, []);
 
-    //회원 토큰 조회
-    const fetchMemberInfo = useCallback(() => {
+  // 회원 정보 조회 (fetchMemberInfo) 함수 호출
+  const fetchMemberInfo = useCallback(() => {
+    if (token) {
       axios.get('/member/info', {
-          headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` }
       })
-          .then(response => {
-              memberInfo(response.data);
-              setIsMember(true)
-          })
-          .catch(error => {
-              console.error('회원 정보 조회 실패:', error);
-          });
+      .then(response => {
+        setMemberInfo(response.data); // 회원 정보 상태 업데이트
+        setIsMember(true); // 회원이면 isMember를 true로 설정
+      })
+      .catch(error => {
+        console.error('회원 정보 조회 실패:', error);
+        setIsMember(false); // 회원 정보 조회 실패시 isMember를 false로 설정
+      });
+    } else {
+      setIsMember(false); // 토큰이 없으면 비회원 처리
+    }
   }, [token]);
 
+  useEffect(() => {
+    fetchMemberInfo(); // 컴포넌트가 렌더링될 때 회원 정보 조회
+  }, [fetchMemberInfo]);
 
+  const amountChange = (event) => {
+    setAmount(event.target.value);
+  };
 
-  //결제창 불러오기
+  // 결제창 불러오기
   const requestPay = () => {
     if (!IMP) {
       console.error("IMP 객체가 로드되지 않았습니다.");
@@ -127,6 +135,7 @@ const Pay = () => {
 
   return (
     <div className="pay-container">
+      <h3>{isMember ? '회원' : '비회원'}</h3>
       {renderStep()}
     </div>
   );

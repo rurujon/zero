@@ -38,24 +38,24 @@ const HeaderSample = () => {
         return (
             <>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero together')}>
-                    <Link to="/zerowaste">제로웨이스트 소개</Link>
-                    <Link to="/recycling">리사이클링 소개</Link>
-                    <Link to="/upcycling">업사이클링 소개</Link>
-                    <Link to="/zerodongheng">팀 제로동행</Link>
+                    <Link to="/zerowaste"><div className='small-menu'>제로웨이스트 소개</div></Link>
+                    <Link to="/recycling"><div className='small-menu'>리사이클링 소개</div></Link>
+                    <Link to="/upcycling"><div className='small-menu'>업사이클링 소개</div></Link>
+                    <Link to="/zerodongheng"><div className='small-menu'>팀 제로동행</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('eco-news')}>
-                    <Link to="/naverNewsList">네이버 뉴스</Link>
-                    <Link to="/minEnv">환경부 정책</Link>
-                    <Link to="/seoulNews/All">서울시 뉴스</Link>
-                    <Link to="/orgList">봉사단체</Link>
+                    <Link to="/naverNewsList"><div className='small-menu'>네이버 뉴스</div></Link>
+                    <Link to="/minEnv"><div className='small-menu'>환경부 정책</div></Link>
+                    <Link to="/seoulNews/All"><div className='small-menu'>서울시 뉴스</div></Link>
+                    <Link to="/orgList"><div className='small-menu'>봉사단체</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-activity')}>
-                    <Link to="/board/list">참여게시판</Link>
-                    <Link to="/imgboard/list">인증게시판</Link>
+                    <Link to="/board/list"><div className='small-menu'>참여게시판</div></Link>
+                    <Link to="/imgboard/list"><div className='small-menu'>인증게시판</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-consumer')}>
-                    <Link to="/googleMap">전체 상점</Link>
-                    <Link to="/exchange/list">포인트 교환 신청</Link>
+                    <Link to="/googleMap"><div className='small-menu'>서울시 제로웨이스트 상점</div></Link>
+                    <Link to="/exchange/list"><div className='small-menu'>친환경 장바구니 신청</div></Link>
                 </div>
             </>
         );

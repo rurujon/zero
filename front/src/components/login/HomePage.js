@@ -129,15 +129,16 @@ const HomePage = () => {
             ) : (
                 <div>
                     <h5
-                        className="login-text"
-                        style={{
-                            fontWeight: 'bold',
-                            textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
-                        }}
-                    >
-                        안녕하세요 {memId}님, 오늘도 행복한 하루되세요
-                    </h5>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                className="login-text"
+                style={{
+
+                    fontWeight: 'bold',
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                }}
+            >
+                안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
+            </h5>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                         <img
                             src={role === 'ADMIN' ? '/images/login/admin.png' : '/images/login/user.png'}
                             alt={role === 'ADMIN' ? '관리자' : '사용자'}
