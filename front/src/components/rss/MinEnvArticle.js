@@ -92,21 +92,33 @@ function MinEnvArticle() {
             </div>
 
             <div className='rss-list-prev-next'>
-                <Link to={`/minEnv/${previous.rssId}`}>
-                    <img src='/images/previous.png' className='prev-img'></img>
+                {previous ? (
+                    <Link to={`/minEnv/${previous.rssId}`}>
+                        <img src='/images/left2.png' className='prev-img'></img>
+                        <div className='rss-prev-text'>
+                            <p style={{fontWeight : 'bold'}}>이전글</p>
+                            <p>{previous.title}</p>
+                        </div>
+                    </Link>
+                ) : (
                     <div className='rss-prev-text'>
-                        <p>이전글</p>
-                        <p>{previous.title}</p>
+                        <p></p>
                     </div>
-                </Link>
-                <Link to={`/minEnv/${next.rssId}`}> 
+                )}
+
+                {next ? (
+                    <Link to={`/minEnv/${next.rssId}`}>
+                        <div className='rss-next-text'>
+                            <p style={{fontWeight : 'bold'}}>다음글</p>
+                            <p>{next.title}</p>
+                        </div>
+                        <img src='/images/right2.png' className='next-img'></img>
+                    </Link>
+                ) : (
                     <div className='rss-next-text'>
-                        <p>다음글</p>
-                        <p>{next.title}</p>
+                        <p></p>
                     </div>
-                    <img src='/images/next.png' className='next-img'></img>
-                    
-                </Link>
+                )}
             </div>
             
         </div>

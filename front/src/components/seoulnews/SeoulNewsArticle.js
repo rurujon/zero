@@ -118,23 +118,37 @@ function SeoulNewsArticle() {
             </div>
 
             <div className='seoul-list-prev-next'>
-                <Link to={`/seoulNewsArticle/${previous.seoulId}`}>
-                    <img src='/images/previous.png' className='prev-img'></img>
+                {previous && (
+                    <Link to={`/seoulNewsArticle/${previous.seoulId}`}>
+                        <img src='/images/left2.png' className='prev-img'></img>
+                        <div className='seoul-prev-text'>
+                            <p style={{fontWeight : 'bold'}}>이전글</p>
+                            <p>{previous.title}</p>
+                        </div>
+                    </Link>
+                )}
+                {!previous && (
                     <div className='seoul-prev-text'>
-                        <p>이전글</p>
-                        <p>{previous.title}</p>
+                        <p></p>
                     </div>
-                </Link>
-                <Link to={`/seoulNewsArticle/${next.seoulId}`}> 
+                )}
+
+                {next && (
+                    <Link to={`/seoulNewsArticle/${next.seoulId}`}>
+                        <div className='seoul-next-text'>
+                            <p style={{fontWeight : 'bold'}}>다음글</p>
+                            <p>{next.title}</p>
+                        </div>
+                        <img src='/images/right2.png' className='next-img'></img>
+                    </Link>
+                )}
+                {!next && (
                     <div className='seoul-next-text'>
-                        <p>다음글</p>
-                        <p>{next.title}</p>
+                        <p></p>
                     </div>
-                    <img src='/images/next.png' className='next-img'></img>
-                    
-                </Link>
+                )}
             </div>
-        
+                    
         </div>
     );
 }
