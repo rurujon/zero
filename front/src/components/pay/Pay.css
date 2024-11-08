@@ -10,16 +10,20 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    padding: 1px;
-}
-
-.paystep-container {
+  }
+  
+  /* Step 컨테이너 - flexbox 사용 */
+  .step-container {
+    display: flex;
+    justify-content: space-between;  /* 각 step을 고르게 분배 */
     width: 80%;
-    max-width: 600px;
+    max-width: 600px;  /* 원하는 최대 너비 */
     margin: 20px auto;
-    border: 1px solid black;
-    padding: 20px;
-}
+    border: solid 1px;
+    border-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 0%;
+  }
 
 .amount-select {
     margin-bottom: 20px;
@@ -73,8 +77,23 @@ button:hover {
 }
 
 .payment-info {
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
+.pay-container .step {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pay-container .step.active {
+    background-color: #4CAF50; /* 강조된 색상 */
+    color: white;
+    font-weight: bold;
+  }
+  
