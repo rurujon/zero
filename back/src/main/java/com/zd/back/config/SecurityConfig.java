@@ -54,7 +54,7 @@ public class SecurityConfig {
             "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**",
             "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy",
             "/member/terms", "/member/check-id", "/member/check-email",
-            "/quiz.action", "/index", "/checkQH", "/getQuiz", "/insertQH",
+            "/quiz.action", "/index", "/checkQH", "/getQuiz", "/insertQH", "/member/info",
             "/exchange/list", "/imgboard/list"
         ).permitAll()
         .antMatchers(HttpMethod.GET, "/api/notices/**", "/board/**", "/comment/**").permitAll()
@@ -96,11 +96,12 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("http://192.168.16.20:3000"); // +클라이언트의 실제 주소를 추가
         configuration.addAllowedOrigin("http://192.168.16.15:3000"); // +클라이언트의 실제 주소를 추가
+        configuration.addAllowedOrigin("http://192.168.1.47:3000"); // +클라이언트의 실제 주소를 추가
 
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
-
+        configuration.addAllowedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
