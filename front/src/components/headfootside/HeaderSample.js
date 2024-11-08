@@ -54,8 +54,8 @@ const HeaderSample = () => {
                     <Link to="/imgboard/list"><div className='small-menu'>인증게시판</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-consumer')}>
-                    <Link to="/googleMap"><div className='small-menu'>전체 상점</div></Link>
-                    <Link to="/exchange/list"><div className='small-menu'>포인트 교환 신청</div></Link>
+                    <Link to="/googleMap"><div className='small-menu'>서울시 제로웨이스트 상점</div></Link>
+                    <Link to="/exchange/list"><div className='small-menu'>친환경 장바구니 신청</div></Link>
                 </div>
             </>
         );
