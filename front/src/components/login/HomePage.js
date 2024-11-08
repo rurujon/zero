@@ -72,21 +72,32 @@ const HomePage = () => {
 
     return (
         <div className='mini_login_wrap'>
-            {!isLoggedIn ? (
-                <div style={{ height : 160, alignItems : 'center' }}>
-                    <h5>제로동행을 더 안전하고 편리하게 이용하세요</h5>
+    {!isLoggedIn ? (
+        <div style={{ height: 160, alignItems: 'center' }}>
+            <h5
+                className="login-text"
+                style={{
 
-                    <button
-                        onClick={() => setShowLogin(true)}
-                        className="btn btn-primary btn-lg"
-                        style={{
-                            backgroundColor: '#03c75a',
-                            marginBottom: '20px',
-                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // 텍스트 그림자 추가
-                        }}
-                        >
-                        ZERO TOGATHER 로그인
-                    </button>
+                    fontWeight: 'bold',
+                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
+                }}
+            >
+                제로동행을 더 안전하고 편리하게 이용하세요
+            </h5>
+
+            <button
+                onClick={() => setShowLogin(true)}
+                className="btn btn-primary btn-lg"
+                style={{
+                    backgroundColor: '#03c75a',
+                    borderColor: '#03c75a',
+                    marginBottom: '20px',
+                    fontWeight: 'bold',
+                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
+                }}
+            >
+                ZERO TOGATHER 로그인
+            </button>
                     {showLogin && (
                         <div
                             style={{
@@ -118,9 +129,16 @@ const HomePage = () => {
                 </div>
             ) : (
                 <div>
-                    <h4>안녕하세요, {memId}님.</h4>
-                    <h4>오늘도 행복한 하루되세요.</h4>
+                    <h5
+                className="login-text"
+                style={{
 
+                    fontWeight: 'bold',
+                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
+                }}
+            >
+                안녕하세요 {memId}님, 오늘도 행복한 하루되세요
+            </h5>
                     <p>역할: {role}</p>
                     <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
