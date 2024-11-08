@@ -6,12 +6,14 @@ const QuizX = ({setIsOpen, explanation,member, result, quizId}) => {
 
 // 문제 결과를 전송
 const insertQH = async () => {
+    console.log("퀴즈기록추가 시작")
     try{
         await axios.post('http://localhost:8080/insertQH', {
             memId: member.memId,
             quizid: quizId,
             quizResult: "오답"
         });
+        console.log("퀴즈기록추가 완료")
         alert("🙌내일 또 만나요🙌")
     }catch(error){
         console.error('퀴즈 히스토리 입력 실패:', error.response ? error.response.data : error.message);

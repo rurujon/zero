@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-@CrossOrigin(origins = "http://localhost:3000") // 클라이언트의 주소
 @Controller
 public class QuizController {
     
@@ -34,11 +33,13 @@ public class QuizController {
     @PostMapping("/checkQH")
         public ResponseEntity<?> checkAttendance(@RequestParam String memId) {
             try {
+                System.out.println(memId);
+                
                 // 해당 회원의 오늘 퀴즈 참여 여부를 체크
-                boolean check = quizService.checkToday(memId);
-                System.out.println(check);
+                int check = quizService.checkToday(memId);
+                System.out.println("몇개 나오나: "+check);
                 // 오늘 퀴즈에 참여한 경우
-                if (check) {
+                if (check!=0) {
                     Map<String, String> response = new HashMap<>();
                     response.put("message", "done");
                     return ResponseEntity.ok().body(response);
@@ -51,7 +52,7 @@ public class QuizController {
             } catch (Exception e) {
                 // 예외 발생 시 에러 메시지 반환
                 Map<String, String> errorResponse = new HashMap<>();
-                errorResponse.put("error", e.getMessage());
+                errorResponse.put("error", "왜 이따구야");
                 return ResponseEntity.badRequest().body(errorResponse);
             }
     }
@@ -92,7 +93,7 @@ public class QuizController {
     }
     
     @PostMapping("/insertQH")
-    public ResponseEntity<String> insertQuizHistory(@RequestBody Map<Object, Object> request) {
+    public ResponseEntity<String> insertQuizHistory(@RequestBody Map<String, Object> request) {
         try {
             // 요청 데이터 로그 출력
             System.out.println("Received request: " + request);
