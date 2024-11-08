@@ -208,9 +208,9 @@ function ImgList() {
                             </div>
                             <p></p>
                             <div style={{ 
-                                border: board.imgPost.auth === 0 ? '3px solid black' : '3px solid #0BC904',
+                                border: board.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
                                 borderRadius: '5px', 
-                                backgroundColor: board.imgPost.auth === 0 ? '#F6F6F6' : '#03c75a',
+                                backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
                                 padding: '5px', 
                                 textAlign: 'center',
                                 marginTop: '1px',
@@ -218,10 +218,10 @@ function ImgList() {
                                 margin: '0 auto'
                             }}>
                                 <p style={{ 
-                                    color: board.imgPost.auth === 0 ? 'black' : '#fff',
+                                    color:  '#fff' ,
                                     margin: 0
                                 }}>
-                             <b>   {getAuthLabel(board.imgPost.auth)}</b> 
+                               {getAuthLabel(board.imgPost.auth)}
                                 </p>
                             </div>
                             <p></p>
