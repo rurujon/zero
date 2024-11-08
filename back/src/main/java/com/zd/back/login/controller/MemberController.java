@@ -108,35 +108,54 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
-        try {
-            Map<String, Object> result = memberService.validateLoginAndPerformActions(memId, pwd);
-            boolean isValid = (boolean) result.get("isValid");
+public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
+    try {
+        Map<String, Object> result = memberService.validateLoginAndPerformActions(memId, pwd);
+        boolean isValid = (boolean) result.get("isValid");
 
-            if (isValid) {
-                String token = jwtUtil.generateToken(memId, (String) result.get("role"));
-                String refreshToken = jwtUtil.generateRefreshToken(memId);
-                Map<String, String> response = new HashMap<>();
-                response.put("token", token);
-                response.put("refreshToken", refreshToken);
-                response.put("role", (String) result.get("role"));
+        if (isValid) {
+            String token = jwtUtil.generateToken(memId, (String) result.get("role"));
+            String refreshToken = jwtUtil.generateRefreshToken(memId);
+            Map<String, String> response = new HashMap<>();
+            response.put("token", token);
+            response.put("refreshToken", refreshToken);
+            response.put("role", (String) result.get("role"));
 
-                if ((boolean) result.get("isFirstLoginToday")) {
-                    response.put("upPoint", "1");
-                }
-
-                return ResponseEntity.ok(response);
+            if ((boolean) result.get("isFirstLoginToday")) {
+                response.put("upPoint", "1");
             }
+
+            return ResponseEntity.ok(response);
+        } else {
+            String errorReason = (String) result.get("errorReason");
             Map<String, String> failureResponse = new HashMap<>();
-            failureResponse.put("error", "로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
+
+            switch (errorReason) {
+                case "INVALID_CREDENTIALS":
+                    failureResponse.put("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
+                    break;
+                case "ACCOUNT_LOCKED":
+                    failureResponse.put("error", "계정이 잠겼습니다. 관리자에게 문의하세요.");
+                    break;
+                case "ACCOUNT_DISABLED":
+                    failureResponse.put("error", "비활성화된 계정입니다. 관리자에게 문의하세요.");
+                    break;
+                case "ACCOUNT_EXPIRED":
+                    failureResponse.put("error", "계정이 만료되었습니다. 관리자에게 문의하세요.");
+                    break;
+                default:
+                    failureResponse.put("error", "로그인에 실패했습니다. 다시 시도해주세요.");
+            }
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failureResponse);
-        } catch (Exception e) {
-            logger.error("로그인 중 오류 발생", e);
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "로그인 처리 중 오류가 발생했습니다: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
+    } catch (Exception e) {
+        logger.error("로그인 중 오류 발생", e);
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "로그인 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
+}
 
     // 관리자 전용: 모든 사용자 목록 조회
     @GetMapping("/admin/users")

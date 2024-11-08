@@ -79,7 +79,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                 />
             </div>
             </fieldset>
-            <button onClick={nextStep} className="next-step-btn">다음단계</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick={nextStep} className="next-step-btn">다음단계</button>
         </div>
     );
 };

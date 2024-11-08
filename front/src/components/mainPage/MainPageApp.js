@@ -8,10 +8,6 @@ import BannerSlider from "./BannerSlider";
 
 function MainPageApp() {
 
-    //const location = useLocation();
-
-    
-
     return (
       <div>
         <BannerSlider/>

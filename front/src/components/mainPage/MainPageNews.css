@@ -61,18 +61,21 @@
     border: none;
     cursor: pointer;
     outline: none;
+    border-radius: 20px;
 }
 
 .board_tab_wrap ul.tabs li button:hover {
-    background: #42940C;
+    background: #03c75a;
     border-radius: 20px;
     color: #fff;
 }
 
 .board_tab_wrap ul.tabs li.active,
-.board_tab_wrap ul.tabs li.active a:hover {
+.board_tab_wrap ul.tabs li.active a:hover,
+.board_tab_wrap ul.tabs li.active button{
     border-radius: 25px;
-    background: #42940C;
+    background: #03c75a;
+    color: #fff;
 }
 
 .board_tab_wrap ul.tabs li.active a {

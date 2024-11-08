@@ -78,7 +78,7 @@ function Comment(props) {
 						{/* 프로필 이미지 */}
 						<img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img me-3" style={{ width: '30px', height: '30px', borderRadius: '50%' }}/>
 						{/* 사용자 ID와 시간 */}
-						<span className="comment-id">{comment.memId}</span>&nbsp;&nbsp;
+						<span className="comment-id" style={{fontWeight:600}}>{comment.memId}</span>&nbsp;&nbsp;
 						<span className="comment-date ms-2">
 							{new Date(comment.created).toLocaleDateString()} {new Date(comment.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
 						</span>
@@ -105,9 +105,11 @@ function Comment(props) {
 							value={content}
 							onChange={changeContent}
 						></textarea>
-						<button className="btn btn-dark btn-sm mt-2" onClick={updateComment}>
-							수정 완료
-						</button>
+						<div className="d-flex justify-content-end">
+							<button className="btn btn-dark btn-sm mt-2" onClick={updateComment}>
+								수정 완료
+							</button>&nbsp;
+						</div>
 					</div>
 				) : (
 					<div className="comment-text">

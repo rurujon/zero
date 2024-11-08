@@ -79,8 +79,12 @@ const HomePage = () => {
                     <button
                         onClick={() => setShowLogin(true)}
                         className="btn btn-primary btn-lg"
-                        style={{ marginBottom: '20px' }}
-                    >
+                        style={{
+                            backgroundColor: '#03c75a',
+                            marginBottom: '20px',
+                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', // 텍스트 그림자 추가
+                        }}
+                        >
                         ZERO TOGATHER 로그인
                     </button>
                     {showLogin && (

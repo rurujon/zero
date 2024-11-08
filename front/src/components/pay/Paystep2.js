@@ -37,24 +37,36 @@ const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
         <div className="paystep-container">
             <label>회원 구분</label>
             <hr />
-            <div className="input-group">
+            <div className="input-group" style={{display:'flex', justifyContent:'left', flexDirection:'column', }}>
                 <div className="member-type-group">
-                    <input 
-                        type="radio" 
-                        name="memberType" 
-                        value="회원" 
-                        checked={isMember} 
-                        disabled 
-                    />
-                    <label>회원</label>
-                    <input 
-                        type="radio" 
-                        name="memberType" 
-                        value="비회원" 
-                        checked={!isMember} 
-                        disabled 
-                    />
-                    <label>비회원</label>
+                    <div style={{height:'70px'}}>
+
+                        <div style={{display:'flex', justifyContent:'left', flexDirection:'row', width:'100%'}}>
+                            <input 
+                                type="radio" 
+                                name="memberType" 
+                                value="회원" 
+                                checked={isMember} 
+                                disabled 
+                                style={{width:'10%', marginTop:"0", height : '20px'}}
+                            />
+                            <label>회원</label>
+                        </div>
+                        <div style={{display:'flex', justifyContent:'left', flexDirection:'row', width:'100%'}}>
+                            <input 
+                                type="radio" 
+                                name="memberType" 
+                                value="비회원" 
+                                checked={!isMember} 
+                                disabled 
+                                style={{width:'10%', marginTop:"0",
+                                     height : '20px',
+                                    }}
+                            />
+                            <label style={{width:'50%'}}>비회원</label>
+                        </div>
+
+                    </div>   
                 </div>
             </div>
 
