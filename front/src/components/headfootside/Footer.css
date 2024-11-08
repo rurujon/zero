@@ -4,17 +4,6 @@
   font-family: Open Sans;
 }
 
-section {
-  width: 100%;
-  display: inline-block;
-  background: #333;
-  height: 50vh;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
 .footer-distributed{
 	background: #03c75a;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
@@ -157,24 +146,6 @@ section {
 	margin-top: 25px;
 }
 
-.footer-distributed .footer-icons a{
-	display: inline-block;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-	background-color:  #33383b;
-	border-radius: 2px;
-
-	font-size: 20px;
-	color: #ffffff;
-	text-align: center;
-	line-height: 35px;
-
-	margin-right: 3px;
-	margin-bottom: 5px;
-}
-
-/* If you don't want the footer to be responsive, remove these media queries */
 
 @media (max-width: 880px) {
 
