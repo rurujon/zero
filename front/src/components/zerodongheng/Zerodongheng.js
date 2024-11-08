@@ -11,9 +11,9 @@ const Zerodongheng = () => {
 
     return (
         <div className="zero-waste-intro" >
-          <h2 style={{textAlign:'center'}}>제로 동행(Zero together)</h2>
+          <h2 style={{textAlign:'center', margin:'20px 0 40px 0'}}>제로 동행(Zero together)</h2>
 
-            <div className="highlight-box">
+            <div className="highlight-box" style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
                 <p style={{textAlign:'center', fontSize:'21px', padding:'auto'}}>
                     "제로웨이스트와 업사이클링 문화 확산으로
                     사용자의 노력에 가치를 더하다.""
