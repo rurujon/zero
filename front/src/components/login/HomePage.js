@@ -41,7 +41,6 @@ const HomePage = () => {
         }
     }, [token, handleLogout]);
 
-    //11-05 퀴즈모달 추가
     const openQuizModal = () => {
         if (token) {
             alert('🙌환영합니다🙌')
@@ -53,9 +52,8 @@ const HomePage = () => {
     };
 
     const handleMemberInfo = () => {
-        // 새 창을 열어 회원정보 페이지로 이동
         window.open('/member-info', 'MemberInfo', 'width=1000,height=800,resizable=yes');
-      };
+    };
 
     const handlePointInfo = () => {
         setShowPointInfoModal(true);
@@ -72,34 +70,33 @@ const HomePage = () => {
 
     return (
         <div className='mini_login_wrap'>
-    {!isLoggedIn ? (
-        <div style={{ height: 160, alignItems: 'center' }}>
-            <h5
-                className="login-text"
-                style={{
+            {!isLoggedIn ? (
+                <div style={{ height: 160, alignItems: 'center' }}>
+                    <h5
+                        className="login-text"
+                        style={{
+                            fontWeight: 'bold',
+                            textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
+                        }}
+                    >
+                        제로동행을 더 안전하고 편리하게 이용하세요
+                    </h5>
 
-                    fontWeight: 'bold',
-                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
-                }}
-            >
-                제로동행을 더 안전하고 편리하게 이용하세요
-            </h5>
-
-            <button
-                onClick={() => setShowLogin(true)}
-                    className="btn btn-primary btn-lg"
-                    style={{
-                        backgroundColor: '#03c75a',
-                        borderColor: '#03c75a',
-                        marginBottom: '20px',
-                        fontWeight: 'bold',
-                        textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
-                        boxShadow: '0 6px 10px rgba(0, 0, 0, 0.5)',
-                        transition: 'box-shadow 0.3s ease-in-out'
-                    }}
-                >
-                ZERO TOGATHER 로그인
-            </button>
+                    <button
+                        onClick={() => setShowLogin(true)}
+                        className="btn btn-primary btn-lg"
+                        style={{
+                            backgroundColor: '#03c75a',
+                            borderColor: '#03c75a',
+                            marginBottom: '20px',
+                            fontWeight: 'bold',
+                            textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
+                            boxShadow: '0 6px 10px rgba(0, 0, 0, 0.5)',
+                            transition: 'box-shadow 0.3s ease-in-out'
+                        }}
+                    >
+                        ZERO TOGATHER 로그인
+                    </button>
                     {showLogin && (
                         <div
                             style={{
@@ -136,12 +133,19 @@ const HomePage = () => {
                 style={{
 
                     fontWeight: 'bold',
-                    textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)'
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
                 }}
             >
-                안녕하세요 {memId}님, 오늘도 행복한 하루되세요
+                안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
             </h5>
-                    <p>역할: {role}</p>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <img
+                            src={role === 'ADMIN' ? '/images/login/admin.png' : '/images/login/user.png'}
+                            alt={role === 'ADMIN' ? '관리자' : '사용자'}
+                            style={{ width: '50px', height: '50px', marginRight: '10px' }}
+                        />
+                        {/* <p style={{ margin: 0 }}>역할: {role}</p> */}
+                    </div>
                     <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
                     <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
                     <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />

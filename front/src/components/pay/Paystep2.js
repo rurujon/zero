@@ -1,108 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './Pay.css';
+import React, { useEffect } from 'react';
 
-const Paystep2 = ({ setStep, memberInfo, setMemberInfo }) => {
-    const [isMember, setIsMember] = useState(false);
+const Paystep2 = ({ setStep, memberInfo, setMemberInfo, isMember, setIsMember }) => {
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setMemberInfo(prevState => ({ ...prevState, [name]: value }));
-    };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setMemberInfo(prevState => ({ ...prevState, [name]: value }));
+  };
 
-    const nextStep = () => {
-        setStep(3);
-    };
+  const nextStep = () => {
+    setStep(3);
+  };
 
-    const prevStep = () => {
-        setStep(1);
-    };
+  const prevStep = () => {
+    setStep(1);
+  };
 
-    const getUserInfo = () => {
-        axios.get('/member/info')
-            .then(response => {
-                if(response && response.data) setMemberInfo(response.data);
-                setIsMember(true);
-            })
-            .catch(error => {
-                console.error('회원 정보 조회 실패: ', error);
-            });
-    };
+  return ( 
+    <div className="paystep-container">
+      
 
-    useEffect(() => {
-        getUserInfo();
-    }, []);
+      {/* 비회원인 경우에는 사용자가 직접 입력 */}
 
-    return ( 
-        <div className="paystep-container">
-            <label>회원 구분</label>
-            <hr />
-            <div className="input-group" style={{display:'flex', justifyContent:'left', flexDirection:'column', }}>
-                <div className="member-type-group">
-                    <div style={{height:'70px'}}>
+        <>
+          <div className="input-group">
+            <label>후원자 성함</label>
+            <input 
+              type="text" 
+              name="memName" 
+              value={memberInfo.memName} 
+              onChange={handleChange} 
+              placeholder="이름" 
+            />
+          </div>
+          
+          <div className="input-group">
+            <label>전화번호</label>
+            <input 
+              type="text" 
+              name="tel" 
+              value={memberInfo.tel} 
+              onChange={handleChange} 
+            />
+          </div>
 
-                        <div style={{display:'flex', justifyContent:'left', flexDirection:'row', width:'100%'}}>
-                            <input 
-                                type="radio" 
-                                name="memberType" 
-                                value="회원" 
-                                checked={isMember} 
-                                disabled 
-                                style={{width:'10%', marginTop:"0", height : '20px'}}
-                            />
-                            <label>회원</label>
-                        </div>
-                        <div style={{display:'flex', justifyContent:'left', flexDirection:'row', width:'100%'}}>
-                            <input 
-                                type="radio" 
-                                name="memberType" 
-                                value="비회원" 
-                                checked={!isMember} 
-                                disabled 
-                                style={{width:'10%', marginTop:"0",
-                                     height : '20px',
-                                    }}
-                            />
-                            <label style={{width:'50%'}}>비회원</label>
-                        </div>
+          <div className="input-group">
+            <label>이메일</label>
+            <input 
+              type="email" 
+              name="email" 
+              value={memberInfo.email} 
+              onChange={handleChange} 
+            />
+          </div>
+        </>
 
-                    </div>   
-                </div>
-            </div>
 
-            <div className="input-group">
-                <label>후원자 이름</label>
-                <input 
-                    type="text" 
-                    name="memName" 
-                    value={memberInfo.memName} 
-                    onChange={handleChange} 
-                    placeholder="이름" 
-                />
-            </div>
-
-            <div className="input-group">
-                <label>전화번호</label>
-                <input 
-                    type="text" 
-                    value={memberInfo.tel} 
-                    onChange={(e) => setMemberInfo({ ...memberInfo, tel: e.target.value })} 
-                />
-            </div>
-
-            <div className="input-group">
-                <label>이메일</label>
-                <input 
-                    type="text" 
-                    value={memberInfo.email} 
-                    onChange={(e) => setMemberInfo({ ...memberInfo, email: e.target.value })} 
-                />
-            </div>
-
-            <button onClick={prevStep} className="prev-step-btn">이전단계</button>
-            <button onClick={nextStep} className="next-step-btn">다음단계</button>
-        </div>
-    );
+      <button onClick={prevStep} className="prev-step-btn">이전단계</button>
+      <button onClick={nextStep} className="next-step-btn">다음단계</button>
+    </div>
+  );
 };
 
 export default Paystep2;

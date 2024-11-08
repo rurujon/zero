@@ -90,9 +90,9 @@ function ImgList() {
     const getAuthLabel = (auth) => {
         switch (auth) {
             case 1:
-                return '승인완료';
+                return '인증 승인완료';
             case 0:
-                return '미승인';
+                return '인증 미승인';
             default:
                 return '알 수 없음';
         }
@@ -159,6 +159,8 @@ function ImgList() {
                 </div>
 
                 <br />
+                
+                {/* 게시물 */}
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
                     {getPaginatedResults().map((board, index) => (
@@ -169,7 +171,8 @@ function ImgList() {
                             borderRadius: '5px', 
                             backgroundColor: '#F6F6F6', 
                             width: '22%',
-                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+
                         }}>
                             <div style={{ 
                                 width: '260px', 
@@ -205,31 +208,51 @@ function ImgList() {
                             </div>
                             <p></p>
                             <div style={{ 
-                                border: board.imgPost.auth === 0 ? '3px solid black' : '3px solid #1DDB16',
+                                border: board.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
                                 borderRadius: '5px', 
-                                backgroundColor: board.imgPost.auth === 0 ? '#F6F6F6' : '#03c75a',
+                                backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
                                 padding: '5px', 
-                                textAlign: 'left', 
+                                textAlign: 'center',
                                 marginTop: '1px',
-                                width: '260px'
+                                width: '260px',
+                                margin: '0 auto'
                             }}>
                                 <p style={{ 
-                                    color: board.imgPost.auth === 0 ? 'black' : '#fff',
+                                    color:  '#fff' ,
                                     margin: 0
                                 }}>
-                                    인증 승인: {getAuthLabel(board.imgPost.auth)}
+                               {getAuthLabel(board.imgPost.auth)}
                                 </p>
                             </div>
                             <p></p>
-                            <p>인증유형: {getCateLabel(board.imgPost.cate)}</p>
-                            <p>작성자: {board.imgPost.memId}</p>
-                            <p>
-                                제목: 
-                                <a href={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`}>
-                                    {board.imgPost.title}
-                                </a>
-                            </p>
-                            <p>작성일: {new Date(board.imgPost.created).toLocaleDateString()}</p>
+                            <table style={{ 
+                                width: '100%', 
+                                borderCollapse: 'collapse',
+                                border: 'none'  
+                            }}>
+                                <tbody>
+                                    <tr style={{ border: 'none' }}>  
+                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성자</td>
+                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{board.imgPost.memId}</td>
+                                    </tr>
+                                    <tr style={{ border: 'none' }}>
+                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
+                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
+                                        <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                             <b> {board.imgPost.title}</b>  
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                    <tr style={{ border: 'none' }}>
+                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>인증유형</td>
+                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{getCateLabel(board.imgPost.cate)}</td>
+                                    </tr>
+                                    <tr style={{ border: 'none' }}>
+                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성일</td>
+                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{new Date(board.imgPost.created).toLocaleDateString()}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     ))}
                 </div>

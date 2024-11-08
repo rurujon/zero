@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useEffect, useState, useContext, useCallback } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { HttpHeadersContext } from "../context/HttpHeadersProvider";
 import { AuthContext } from '../login/context/AuthContext';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function BbsWrite() {
 	const { headers } = useContext(HttpHeadersContext);
@@ -10,7 +12,7 @@ function BbsWrite() {
 	const { token } = useContext(AuthContext);
 	
 	const [title, setTitle] = useState("");
-	const [content, setContent] = useState("");
+	const [content, setContent] = useState(""); // ReactQuill을 위한 content 상태
 	const [category, setCategory] = useState("");
 	const [file, setFile] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -28,7 +30,7 @@ function BbsWrite() {
 	const memId = getMemIdFromToken(token);
 
 	const changeTitle = (event) => setTitle(event.target.value);
-	const changeContent = (event) => setContent(event.target.value);
+	const changeContent = (value) => setContent(value); // ReactQuill에서는 event가 아닌 value를 사용
 	const changeCategory = (event) => setCategory(event.target.value);
 	const handleFileChange = (event) => setFile(event.target.files[0]);
 
@@ -84,7 +86,7 @@ function BbsWrite() {
 		formData.append("memId", memId || '');  // 토큰에서 가져온 memId 사용
 		formData.append("category", category);
 		formData.append("title", title);
-		formData.append("content", content);
+		formData.append("content", content); // content에 ReactQuill의 값 추가
 
 		setLoading(true);
 		try {
@@ -116,7 +118,7 @@ function BbsWrite() {
 
 	return (
 		<div>
-			<table className="table">
+			<table className="custom-table">
 				<tbody>
 					<tr>
 						<th className="table-primary">작성자</th>
@@ -144,9 +146,22 @@ function BbsWrite() {
 					</tr>
 					<tr>
 						<th className="table-primary">내용</th>
-						<td>
-							<textarea className="form-control" value={content} onChange={changeContent} rows="10"></textarea>
-						</td>
+						<td style={{ padding: '0', verticalAlign: 'top', height: '400px' }}> {/* 테이블 셀 높이 조정 */}
+    <ReactQuill
+        value={content}
+        onChange={changeContent}
+        modules={{
+            toolbar: [
+                [{ 'header': [1, 2, false] }],
+                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                ['clean']
+            ],
+        }}
+        style={{ height: '350px', overflowY: 'auto' }} // 편집기 높이 조정
+    />
+</td>
+
 					</tr>
 					<tr>
 						<th className="table-primary">파일 업로드</th>

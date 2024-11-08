@@ -25,7 +25,7 @@
 }
 
 .header-content {
-    max-width: 83vw;
+    max-width: 85vw;
     width: 100%;
     margin: 0 auto;
     height: 100%;
@@ -204,4 +204,12 @@
     .bottom-nav li {
         margin: 5px 0;
     }
+}
+
+.small-menu{
+    transition: all .4s ease;
+}
+
+.small-menu:hover{
+    transform: scale(1.05);
 }
