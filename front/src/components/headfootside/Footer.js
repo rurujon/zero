@@ -18,13 +18,13 @@ const Footer = () => {
           <a href="#">Faq</a>
           <a href="#">Contact</a>
         </p>
-        <p className="footer-company-name">ZERO DONGHAENG © 2024</p>
+        <p className="footer-company-name">ZERO TOGETHER © 2024</p>
       </div>
 
       <div className="footer-center">
         <div>
           <FontAwesomeIcon icon={faLocationDot} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
-          <p><span>Samwon Tower, 124 Teheran-ro</span>Gangnam-gu, Seoul</p>
+          <p><span>Samwon Tower 406</span>124 Teheran-ro, Gangnam-gu, Seoul</p>
         </div><br/>
         <div>
           <FontAwesomeIcon icon={faPhone} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
@@ -38,7 +38,7 @@ const Footer = () => {
 
       <div className="footer-right">
         <p className="footer-company-about">
-          <span>About the Zero Donghaeng</span>
+          <span>About the Zero Togather</span>
           Your guide to sustainable living, offering tips, resources, and community insights on zero waste.
         </p>
         {/* <div className="footer-icons">

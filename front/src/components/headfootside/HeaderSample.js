@@ -37,7 +37,7 @@ const HeaderSample = () => {
 
         return (
             <>
-                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-donghaeng')}>
+                <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero togather')}>
                     <Link to="/zerowaste">제로웨이스트 소개</Link>
                     <Link to="/recycling">리사이클링 소개</Link>
                     <Link to="/upcycling">업사이클링 소개</Link>
@@ -99,7 +99,7 @@ const HeaderSample = () => {
                         <div>
                             <nav className="bottom-nav">
                                 <ul>
-                                    {['zero-donghaeng', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
+                                    {['zero togather', 'eco-news', 'zero-activity', 'zero-consumer'].map(menu => (
                                         <li key={menu} onMouseEnter={() => handleMouseEnter(menu)}
                                         className={activeMenu === menu ? 'active' : ''}>
                                             {menu.replace('-', ' ').toUpperCase()}
@@ -116,7 +116,7 @@ const HeaderSample = () => {
                                 src={memId ? '/images/login/on.png' : '/images/login/off.png'}
                                 alt={memId ? "로그아웃" : "로그인"}
                                 onClick={handleLoginClick}
-                                style={{width: '64px', height: '64px', cursor: 'pointer'}}
+                                style={{width: '50px', height: '50px', cursor: 'pointer'}}
                             />
                         </div>
                     </div>
