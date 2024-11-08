@@ -202,22 +202,22 @@ const GoogleMaps = () => {
                       <InfoWindow onCloseClick={() => setSelectedStore(null)}>
                         <div className="info-window">
                           <h2>{selectedStore.name}</h2>
-                          <p>전화번호: {selectedStore.telNo}</p>
-                          <p>주소: {selectedStore.addrNew}</p>
-                          <p>운영시간: {selectedStore.openingHours}</p>
-                          <p>판매물품: {selectedStore.sales}</p>
+                          <p>전화번호 : {selectedStore.telNo}</p>
+                          <p>주소 : {selectedStore.addrNew}</p>
+                          <p>운영시간 : {selectedStore.openingHours}</p>
+                          <p>판매물품 : {selectedStore.sales}</p>
                           
                           {/* 홈페이지 링크 */}
                           {selectedStore.link && selectedStore.link !== "null" && (
                             <p>
-                              홈페이지: <a href={selectedStore.link} target="_blank" rel="noopener noreferrer">{selectedStore.link}</a>
+                              홈페이지 : <a href={selectedStore.link} target="_blank" rel="noopener noreferrer">{selectedStore.link}</a>
                             </p>
                           )}
 
                           {/* 인스타그램 링크 */}
                           {selectedStore.instaUrl && selectedStore.instaUrl !== "null" && (
                             <p>
-                              인스타: <a href={selectedStore.instaUrl} target="_blank" rel="noopener noreferrer">{selectedStore.instaUrl}</a>
+                              인스타 : <a href={selectedStore.instaUrl} target="_blank" rel="noopener noreferrer">{selectedStore.instaUrl}</a>
                             </p>
                           )}
                           <p> 
@@ -278,8 +278,19 @@ const GoogleMaps = () => {
             {filteredStores.slice(0, visibleCount).map((store, index) => (
               <div key={index} className="store-card" onClick={() => handleMarkerClick(store)}>
                 <h2>{store.name}</h2>
-                <p>주소: {store.addrNew}</p>
-                <p>전화번호: {store.telNo}</p>
+                <p>주소 : {store.addrNew}</p>
+                <p>전화번호 : {store.telNo}</p>
+                {store.openingHours && store.openingHours !== "null" && (
+                  <p>
+                    운영시간 : {store.openingHours}
+                  </p>
+                )}
+
+                {store.sales && store.sales !== "null" && (
+                  <p>
+                    판매물품 : {store.sales}
+                  </p>
+                )}
               </div>
             ))}
           </div>
