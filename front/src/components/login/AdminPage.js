@@ -87,17 +87,22 @@ const AdminPage = () => {
 
     // 회원 삭제 처리 함수
     const handleDeleteMember = async (memId) => {
-        if (window.confirm('정말로 이 회원을 삭제하시겠습니까?')) {
-            try {
-                await axios.delete(`/member/admin/${memId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                fetchMembers();
-            } catch (error) {
-                console.error('Error deleting member:', error);
+        if (window.confirm('이 회원을 정말로 삭제하시겠습니까?')) {
+          try {
+            const response = await axios.delete(`/member/admin/${memId}`, {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response.status === 200) {
+              alert('회원이 성공적으로 삭제되었습니다.');
+              fetchMembers(); // 회원 목록 새로고침
             }
+          } catch (error) {
+            console.error('회원 삭제 중 오류 발생:', error);
+            alert('회원 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.');
+          }
         }
-    };
+      };
 
     // 포인트 관리 모달 열기
     const openPointModal = (member) => {
