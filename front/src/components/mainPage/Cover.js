@@ -47,8 +47,8 @@ const Cover = () => {
         src={videos[currentVideo]} // 현재 비디오 소스
       />
       <div className="cover-content">
-        <h1>WELCOM TO ZERO TOGATHER</h1>
-        <h1>FOR SAVE THE EARTH</h1>
+        <h1>WELCOME TO ZERO TOGETHER</h1>
+        <h1>TO SAVE THE EARTH</h1>
         <button onClick={handleEnter}>&nbsp;입&nbsp;장&nbsp;하&nbsp;기&nbsp;</button>
       </div>
     </div>
