@@ -81,7 +81,7 @@ const HomePage = () => {
                     >
                         제로동행을 더 안전하고 편리하게 이용하세요
                     </h5>
-    
+
                     <button
                         onClick={() => setShowLogin(true)}
                         className="btn btn-primary btn-lg"
@@ -144,25 +144,25 @@ const HomePage = () => {
                             alt={role === 'ADMIN' ? '관리자' : '사용자'}
                             style={{ width: '80px', height: '80px', marginRight: '10px' }} // 이미지 높이를 두 줄 크기로 설정
                         />
-                        
+
                         {/* 버튼 그룹 */}
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <div style={{ display: 'flex', marginBottom: '5px' }}>
-                                <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
+                                <button onClick={handleMemberInfo} className="btn btn-info">&nbsp;회원정보&nbsp;</button>&nbsp;
                                 <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>
                             </div>
                             <div style={{ display: 'flex' }}>
-                                <button onClick={openQuizModal} className="btn btn-primary">오늘의 퀴즈</button>&nbsp;
-                                <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
+                                <button onClick={openQuizModal} className="btn btn-primary">오늘의퀴즈</button>&nbsp;
+                                <button onClick={handleLogout} className="btn btn-danger">&nbsp;로그아웃&nbsp;</button>&nbsp;
                                 {/* 관리자 페이지 버튼 */}
                                 {role === 'ADMIN' && (
-                                    <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
+                                    <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자모드</button>
                                 )}
                             </div>
                         </div>
                     </div>
 
-    
+
                     {/* 모달 */}
                     <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
                     {showPointInfoModal && (
@@ -176,7 +176,7 @@ const HomePage = () => {
             )}
         </div>
     );
-    
+
 };
 
 export default HomePage;
