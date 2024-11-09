@@ -37,6 +37,7 @@ const FindIdModal = ({ show, onHide }) => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        <hr/>
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         아이디 찾기

@@ -47,6 +47,7 @@ const FindPasswordModal = ({ show, onHide }) => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        <hr/>
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         비밀번호 찾기
