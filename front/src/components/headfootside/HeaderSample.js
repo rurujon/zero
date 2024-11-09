@@ -88,7 +88,7 @@ const HeaderSample = () => {
                 <nav className="header-content" onMouseLeave={handleMouseLeave}>
                     <div className="top-nav">
                         <h1>
-                            <Link to="/mainpage">
+                            <Link to="/">
                                 <img
                                     src={logos[currentLogoIndex]}
                                     alt="로고"

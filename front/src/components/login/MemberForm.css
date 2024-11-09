@@ -48,8 +48,8 @@
 
 .member-form-btn-group .btn {
   margin: 0 5px;
-  padding: 12px;
-  font-size: calc(1.2 * 16px);
+  padding: 11px; /* 기존의 padding에서 10% 감소 */
+  font-size: calc(1.08 * 16px); /* 기존의 font-size에서 10% 감소 */
   width: calc(1.2 * auto);
 }
 

@@ -26,24 +26,36 @@
 .mini_login_wrap .button-group {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 4px;
 }
 
 .mini_login_wrap .button-group .btn-link {
-    padding: 0;
+    padding: 6px 10px; /* 패딩 증가 */
+    font-size: 13px; /* 글자 크기 증가 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: #03c75a; /* 버튼 텍스트 색상 변경 */
+    border: 1px solid #03c75a; /* 테두리 추가 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+.mini_login_wrap .button-group .btn-link:hover {
+    background-color: #03c75a; /* 호버 시 배경색 변경 */
+    color: white; /* 호버 시 텍스트 색상 변경 */
 }
 
 .mini_login_wrap .button-group button {
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); /* 버튼에 그림자 효과 추가 */
-    transition: box-shadow 0.3s ease; /* 부드러운 그림자 변화 효과 */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .mini_login_wrap .button-group button:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 강화 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
 }
 
 .mini_login_wrap .button-group button span {
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); /* 버튼 텍스트에 그림자 추가 */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .mini_login_wrap .modal {
@@ -65,6 +77,7 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
+
 .btn {
     color: #ffffff !important;
     background-color: #03c75a;

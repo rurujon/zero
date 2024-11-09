@@ -88,7 +88,7 @@ const HomePage = () => {
                         style={{
                             backgroundColor: '#03c75a',
                             borderColor: '#03c75a',
-                            marginBottom: '20px',
+                            marginBottom: '15px',
                             fontWeight: 'bold',
                             textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
                             boxShadow: '0 6px 10px rgba(0, 0, 0, 0.5)',

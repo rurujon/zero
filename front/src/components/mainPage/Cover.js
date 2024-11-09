@@ -31,7 +31,7 @@ const Cover = () => {
   useEffect(() => {
     const videoElement = document.getElementById('background-video');
     videoElement.addEventListener('ended', handleVideoEnd);
-    
+
     return () => {
       videoElement.removeEventListener('ended', handleVideoEnd);
     };
@@ -47,8 +47,8 @@ const Cover = () => {
         src={videos[currentVideo]} // 현재 비디오 소스
       />
       <div className="cover-content">
-        <h1>Welcome to Our Website</h1>
-        <button onClick={handleEnter}>홈페이지 바로가기</button>
+        <h1>WELCOM TO ZERO TOGATHER</h1>
+        <button onClick={handleEnter}>&nbsp;입&nbsp;장&nbsp;하&nbsp;기&nbsp;</button>
       </div>
     </div>
   );

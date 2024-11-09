@@ -44,7 +44,7 @@ const RegisterPage = () => {
     };
 
     const handleRegisterCancel = () => {
-        navigate('/');
+        navigate('/mainpage');
     };
 
     return (
