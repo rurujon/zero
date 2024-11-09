@@ -13,7 +13,7 @@
 }
 
 .member-form-label {
-  background-color: #2DB400;
+  background-color: #03c75a;
   color: white;
   padding: 5px 10px;
   border-radius: 15px;
@@ -23,19 +23,19 @@
 }
 
 .member-form-control {
-  border-color: #2DB400;
+  border-color: #03c75a;
   width: 100%;
   box-sizing: border-box;
 }
 
 .member-form-control:focus {
-  border-color: #2DB400;
+  border-color: #03c75a;
   box-shadow: 0 0 0 0.2rem rgba(45, 180, 0, 0.25);
 }
 
 .member-form-check-input:checked {
-  background-color: #2DB400;
-  border-color: #2DB400;
+  background-color: #03c75a;
+  border-color: #03c75a;
 }
 
 .member-form-btn-group {

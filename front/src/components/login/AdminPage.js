@@ -187,7 +187,7 @@ const AdminPage = () => {
             <h2 className="mt-4">공지사항 관리</h2>
 
             {/* 공지사항 작성 버튼 */}
-            <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성</Button>
+            <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성하기</Button>
 
             {/* 공지사항 목록 */}
             <Table striped bordered hover className="table table-bordered">

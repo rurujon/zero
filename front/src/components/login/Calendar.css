@@ -65,7 +65,7 @@
 }
 
 .calendar .attended {
-    background-color: #4CAF50;
+    background-color: #03c75a;
     color: white;
     font-weight: bold;
 }
@@ -103,7 +103,7 @@
 }
 
 .legend-color.attended {
-    background-color: #4CAF50;
+    background-color: #03c75a;
 }
 
 .legend-color.not-attended {
