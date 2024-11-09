@@ -193,10 +193,10 @@ const AdminPage = () => {
             <Table striped bordered hover className="table table-bordered">
                 <thead>
                     <tr>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>조회수</th>
-                        <th>관리</th>
+                        <th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+                        <th>작&nbsp;&nbsp;성&nbsp;&nbsp;일</th>
+                        <th>조&nbsp;&nbsp;회&nbsp;&nbsp;수</th>
+                        <th>수&nbsp;&nbsp;정 / 삭&nbsp;&nbsp;제</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -224,21 +224,28 @@ const AdminPage = () => {
 
             <h2 className="mt-4">회원관리 목록</h2>
             <Form onSubmit={handleSearch} className="mb-3">
-                <Form.Group>
-                    <Form.Control type="text" placeholder="ID,이름,이메일 중 하나 입력하여 검색가능" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                </Form.Group>
-                <Button type="submit" className="mt-2">검색</Button>
+                <div className="d-flex">
+                    <Form.Control
+                        type="text"
+                        placeholder="ID, 이름, 이메일 중 하나 입력하여 검색 가능"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="me-2"
+                        style={{ width: '75%' }}
+                    />
+                    <Button type="submit" style={{ width: '25%' }}>검색</Button>
+                </div>
             </Form>
 
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>이름</th>
-                        <th>이메일</th>
+                        <th>회원&nbsp;&nbsp;ID</th>
+                        <th>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</th>
+                        <th>이&nbsp;&nbsp;메&nbsp;&nbsp;일</th>
                         <th>전화번호</th>
-                        <th>역할</th>
-                        <th>관리</th>
+                        <th>역할변경</th>
+                        <th>포인트 조정 / 회원삭제</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -249,14 +256,18 @@ const AdminPage = () => {
                             <td>{member.email}</td>
                             <td>{member.tel}</td>
                             <td>
-                                <Form.Select value={member.role} onChange={(e) => handleRoleChange(member.memId, e.target.value)}>
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
+                                <Form.Select
+                                    value={member.role}
+                                    onChange={(e) => handleRoleChange(member.memId, e.target.value)}
+                                    className="text-center"
+                                >
+                                <option value="USER">USER</option>
+                                <option value="ADMIN">ADMIN</option>
                                 </Form.Select>
                             </td>
                             <td>
-                                <Button variant="info" size="sm" onClick={() => openPointModal(member)} className="me-2">포인트 관리</Button>
-                                <Button variant="danger" size="sm" onClick={() => handleDeleteMember(member.memId)}>삭제</Button>
+                                <Button variant="info" size="sm" onClick={() => openPointModal(member)} className="me-2">포인트조정</Button>
+                                <Button variant="danger" size="sm" onClick={() => handleDeleteMember(member.memId)}>계정삭제</Button>
                             </td>
                         </tr>
                     ))}
@@ -272,33 +283,31 @@ const AdminPage = () => {
                 ))}
             </Pagination>
 
-
-
-
-
             {/* 포인트 관리 모달 */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton>
-                <Modal.Title>포인트 관리</Modal.Title>
+                <Modal.Title>포인트 조정</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group>
-                        <Form.Label>포인트 수정</Form.Label>
+                        <Form.Label>조정 포인트</Form.Label>
                         <Form.Control
                             type="number"
                             value={pointAmount}
                             onChange={(e) => setPointAmount(e.target.value)}
+                            placeholder='숫자를 입력하세요'
                         />
                     </Form.Group>
+                    <br/>
                     <Form.Group>
-                        <Form.Label>작업</Form.Label>
+                        <Form.Label>적용유형</Form.Label>
                         <Form.Select
                             value={pointOperation}
                             onChange={(e) => setPointOperation(e.target.value)}
                         >
-                            <option value="add">추가</option>
-                            <option value="subtract">차감</option>
+                            <option value="add">포인트추가</option>
+                            <option value="subtract">포인트차감</option>
                         </Form.Select>
                     </Form.Group>
                 </Form>
