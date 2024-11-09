@@ -290,7 +290,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
       {isLoading && <div className="alert alert-info">처리 중입니다...</div>}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="member-form-group">
-          <Form.Label className="member-form-label">아이디</Form.Label>
+          <Form.Label className="member-form-label">아&nbsp;&nbsp;이&nbsp;&nbsp;디</Form.Label>
           <div className="col-sm-10">
             <Form.Control
               className="member-form-control"
@@ -354,7 +354,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 )}
 
 <Form.Group className="member-form-group">
-<Form.Label className="member-form-label">이름</Form.Label>
+<Form.Label className="member-form-label">이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</Form.Label>
 <div className="col-sm-10">
 <Form.Control
   className="member-form-control"
@@ -369,7 +369,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 </Form.Group>
 
 <Form.Group className="member-form-group">
-<Form.Label className="member-form-label">이메일</Form.Label>
+<Form.Label className="member-form-label">이&nbsp;&nbsp;메&nbsp;&nbsp;일</Form.Label>
 <div className="col-sm-10">
 <Form.Control
   className="member-form-control"
@@ -475,7 +475,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 </Form.Group>
 
 <Form.Group className="member-form-group">
-<Form.Label className="member-form-label">주소</Form.Label>
+<Form.Label className="member-form-label">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</Form.Label>
 <div className="col-sm-10">
 <Form.Control
   className="member-form-control"
