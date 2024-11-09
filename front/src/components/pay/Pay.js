@@ -123,6 +123,11 @@ const Pay = () => {
     );
   };
 
+  // 동적 클래스명 설정
+  const stepClass = (stepNumber) => {
+    return step === stepNumber ? 'step active' : 'step';
+  };
+
   const renderStep = () => {
     if (step === 1) {
         return <Paystep1 amountChange={amountChange} setStep={setStep} />;
@@ -136,9 +141,17 @@ const Pay = () => {
   return (
     <div className="pay-container">
       <h3>{isMember ? '회원' : '비회원'}</h3>
-      {renderStep()}
+      <div className="step-container">
+        <div className={stepClass(1)} style={{flex: 1,}}>step1</div>
+        <div className={stepClass(2)} style={{flex: 1}}>step2</div>
+        <div className={stepClass(3)} style={{flex: 1}}>step3</div>
+      </div>
+      <div style={{marginTop:'20px', width:'65%', }}>
+        {renderStep()}
+      </div>
     </div>
   );
+  
 };
 
 export default Pay;

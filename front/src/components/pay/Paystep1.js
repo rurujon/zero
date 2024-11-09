@@ -39,7 +39,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
 
     return (
         <div className="paystep-container">
-            <fieldset>
+
            <legend> <label>후원 금액</label></legend>
             <div className="amount-select">
                 <input 
@@ -112,7 +112,7 @@ const Paystep1 = ({ amountChange, setStep }) => {
                     100원 이상의 금액을 입력해주세요.
                 </p>
             )}
-            </fieldset>
+
             
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onClick={nextStep} className="next-step-btn">다음단계</button>
         </div>

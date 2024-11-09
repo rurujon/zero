@@ -87,10 +87,10 @@ function BbsList() {
                 </div>
     
                 {/* 검색 필터 */}
-                <div className="filter-container">
+                <div>
                     <table>
                         <tbody>
-                            <tr className="category-filter">
+                            <tr>
                                 <td>
                                     <select value={category} onChange={changeCategory} className="form-control" style={{ border: 0 }}>
                                         <option value="">전체 카테고리</option>
@@ -109,15 +109,15 @@ function BbsList() {
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
+                                    <input type="text" style={{border:'none'}} className="form-control" placeholder="검색어" value={searchVal} onChange={changeSearch} onKeyDown={handleKeyDown} />
                                 </td>
-                                <td>
-                                    <button type="button" className="btn btn-outline-secondary" onClick={search}><i className="fas fa-search"></i> 검색</button>
+                                <td style={{border:'none'}}>
+                                    <button type="button" style={{marginLeft:'-10px', marginRight:'-60px'}} className="btn btn-outline-secondary" onClick={search}><span style={{padding:'0 20px'}}>검색</span></button>
                                 </td>
-                                <td>
+                                <td style={{border:'none'}}>
                                     {/* 전체보기 버튼 */}
-                                    <button type="button" className="btn btn-outline-success" onClick={showAllPosts}>
-                                        전체보기
+                                    <button type="button" className="btn btn-outline-success" onClick={showAllPosts} style={{marginRight:'-30px'}}>
+                                        <span style={{padding:'0 10px'}}>전체보기</span>
                                     </button>
                                 </td>
                             </tr>
@@ -179,11 +179,11 @@ function TableRow(props) {
                 <>
                     <td className="table-cell-bold">{board.boardno}</td>
                     <td>[{board.category}]</td>
-                    <td>
+                    <td style={{ textAlign: 'left' }}>&emsp;&emsp;&emsp;
                         <Arrow depth={board.depth} />
                         <Link to={{ pathname: `/board/${board.boardno}`, search: `?page=${page}` }} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <span className="underline bbs-title">
-                                &nbsp;{board.title}
+                                {board.title}
                                 {board.urlFile && board.urlFile !== '' && (
                                     <span style={{ marginLeft: '5px' }}>🧷</span>
                                 )}
@@ -207,9 +207,9 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
-                    <td colSpan="6" className="deleted-post">
-                        <Arrow depth={board.depth} />
-                        <span className="del-span">⚠️ 삭제된 게시물입니다.</span>
+                    <td colSpan="3" className="deleted-post">&emsp;&emsp;&emsp;
+                        {/* <Arrow depth={board.depth} /> */}
+                        <span className="del-span" >⚠️ 삭제된 게시물입니다.</span>
                     </td>
                 </>
             )}

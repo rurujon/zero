@@ -81,7 +81,7 @@ const HomePage = () => {
                     >
                         제로동행을 더 안전하고 편리하게 이용하세요
                     </h5>
-
+    
                     <button
                         onClick={() => setShowLogin(true)}
                         className="btn btn-primary btn-lg"
@@ -129,31 +129,42 @@ const HomePage = () => {
             ) : (
                 <div>
                     <h5
-                className="login-text"
-                style={{
-
-                    fontWeight: 'bold',
-                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
-                }}
-            >
-                안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
-            </h5>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        className="login-text"
+                        style={{
+                            fontWeight: 'bold',
+                            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                        }}
+                    >
+                        안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
+                    </h5>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        {/* 이미지 */}
                         <img
                             src={role === 'ADMIN' ? '/images/login/admin.png' : '/images/login/user.png'}
                             alt={role === 'ADMIN' ? '관리자' : '사용자'}
-                            style={{ width: '50px', height: '50px', marginRight: '10px' }}
+                            style={{ width: '80px', height: '80px', marginRight: '10px' }} // 이미지 높이를 두 줄 크기로 설정
                         />
-                        {/* <p style={{ margin: 0 }}>역할: {role}</p> */}
+                        
+                        {/* 버튼 그룹 */}
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ display: 'flex', marginBottom: '5px' }}>
+                                <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
+                                <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>
+                            </div>
+                            <div style={{ display: 'flex' }}>
+                                <button onClick={openQuizModal} className="btn btn-primary">오늘의 퀴즈</button>&nbsp;
+                                <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
+                                {/* 관리자 페이지 버튼 */}
+                                {role === 'ADMIN' && (
+                                    <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <button onClick={handleMemberInfo} className="btn btn-info">회원정보</button>&nbsp;
-                    <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
+
+    
+                    {/* 모달 */}
                     <QuizModal isOpen={isQuizModalOpen} setIsOpen={setIsQuizModalOpen} />
-                    <button onClick={openQuizModal} className="btn btn-primary">오늘의 퀴즈</button>&nbsp;
-                    <button onClick={handleLogout} className="btn btn-danger">로그아웃</button>&nbsp;
-                    {role === 'ADMIN' && (
-                        <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자 페이지</button>
-                    )}
                     {showPointInfoModal && (
                         <PointInfoModal
                             show={showPointInfoModal}
@@ -165,6 +176,7 @@ const HomePage = () => {
             )}
         </div>
     );
+    
 };
 
 export default HomePage;
