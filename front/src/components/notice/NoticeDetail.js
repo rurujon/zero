@@ -28,9 +28,11 @@ const NoticeDetail = () => {
     return (
         <div className="notice-detail container mt-5"> {/* 공지사항 상세 페이지의 스타일 적용 */}
             <h2 className="title" style={{marginBottom: '30px'}}>{notice.title}</h2> {/* 제목에서 밑줄 제거 */}
-            <p className="label">작성자: {notice.author}</p> {/* 라벨 스타일 적용 */}
-            <p className="label">작성일: {new Date(notice.createdAt).toLocaleString()}</p>
-            <p className="label">조회수: {notice.views}</p>
+            <div className='notice-r'>
+            <span className="label">작성자: {notice.author}</span> {/* 라벨 스타일 적용 */}
+            <span className="label">작성일: {new Date(notice.createdAt).toLocaleString()}</span> {/*.*/}
+            <span className="label">조회수: {notice.views}</span>
+            </div>
             <hr />
             <div className="content-box" dangerouslySetInnerHTML={{ __html: notice.content }} /> {/* 내용 박스 스타일 적용 */}
             <Button onClick={() => navigate('/notices')} className="mt-3">목록으로</Button>
