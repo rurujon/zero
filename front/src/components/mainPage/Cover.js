@@ -48,6 +48,7 @@ const Cover = () => {
       />
       <div className="cover-content">
         <h1>WELCOM TO ZERO TOGATHER</h1>
+        <h1>FOR SAVE THE EARTH</h1>
         <button onClick={handleEnter}>&nbsp;입&nbsp;장&nbsp;하&nbsp;기&nbsp;</button>
       </div>
     </div>
