@@ -20,16 +20,15 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-/*     //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21 -- /images/imgboard/ 변경 확인함 --24/11/01
+     //getAllImgBoardWithFirstImage  --SeounEun . date:24/10/21 -- /images/imgboard/ 변경 확인함 --24/11/01
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/imgboard/**")  // 제공할 URL 패턴
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/imgboard/");  // 실제 파일 경로
         registry.addResourceHandler("/images/notices/**")
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/notices/");
-    } */
-
-    @Override  
+    } 
+ /*    @Override   -- 이미지 게시판 push pull 생략위해 test해봄 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/imgboard/**")
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/imgboard/")
@@ -37,7 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .resourceChain(true);
         registry.addResourceHandler("/images/notices/**")
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/notices/")
-                .addResourceLocations("file:///C:/VSCode/zero/front/public/images/notices/");
-    }
+                
+    } */
 
 }
