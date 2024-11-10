@@ -3,6 +3,7 @@ import { AuthContext } from '../login/context/AuthContext';
 import './ImgArticle.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import "react-quill/dist/quill.snow.css";
 
 const ImgArticle = () => {
     const { token } = useContext(AuthContext);
@@ -164,44 +165,71 @@ const ImgArticle = () => {
     }
 
     return (
-        <div className="article-container">
-            <h2 className="article-title">{article.imgPost.title}</h2>
-            <div className="article-meta-container">
-                <p className="article-meta"><strong>승인여부:</strong> {getAuthLabel(article.imgPost.auth)}
-                
-                {role === 'ADMIN' && article?.imgPost.auth === 0 && (
-                    <button type='button' onClick={handleAuth}>인증승인</button>
-                )}
-                
-                </p>
-                <hr className="divider" />
-                <p className="article-meta"><strong>사용자 ID:</strong> {article.imgPost.memId}</p>
-                <hr className="divider" />
-                <p className="article-meta"><strong>인증 유형:</strong> {getCateLabel(article.imgPost.cate)}</p>
-                <hr className="divider" />
-                <p className="article-meta"><strong>작성일:</strong> {new Date(article.imgPost.created).toLocaleDateString()}</p>
-            </div>
-            <div className="article-content">
-                <p>{article.imgPost.content}</p>
-                <div className="image-gallery">
-                    {article.images && article.images.map(img => (
-                        <img key={img.imgId} src={`/images/imgboard/${img.saveFileName}`} alt='게시물 이미지' className="article-image" />
-                    ))}
+        <div className="container">
+            <div className="article-container" >
+                <div className="my-3 d-flex justify-content-between">
+                    <h2 className="article-title">{article.imgPost.title}</h2>
+                    {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
+                        <div>
+                            <button className="btn btn-outline-secondary me-2" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
+                                <i className="fas fa-edit"></i> 수정
+                            </button>
+                            <button className="btn btn-outline-danger" onClick={handleDelete}>
+                                <i className="fas fa-trash-alt"></i> 삭제
+                            </button>
+                        </div>
+                    )}
                 </div>
-            </div>
-            <div className="button-container">
-                {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
-                    <>
-                        <button className="action-button" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
-                            수정하기
-                        </button>
-                        <button className="action-button" onClick={handleDelete}>삭제하기</button>
-                    </>
-                )}
-             
-                <button className="action-button" onClick={() => navigate('/imgboard/list')}>
-                    목록가기
-                </button>
+
+                <table className="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th className="col-2">승인여부</th>
+                            <td>
+                                {getAuthLabel(article.imgPost.auth)}
+                                {role === 'ADMIN' && article?.imgPost.auth === 0 && (
+                                    <button className="btn btn-outline-primary ms-3" onClick={handleAuth}>
+                                        <i className="fas fa-check"></i> 인증승인
+                                    </button>
+                                )}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>사용자 ID</th>
+                            <td>{article.imgPost.memId}</td>
+                        </tr>
+                        <tr>
+                            <th>인증 유형</th>
+                            <td>{getCateLabel(article.imgPost.cate)}</td>
+                        </tr>
+                        <tr>
+                            <th>작성일</th>
+                            <td>{new Date(article.imgPost.created).toLocaleDateString()}</td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <p>{article.imgPost.content}</p>
+                                <div className="image-gallery">
+                                    {article.images && article.images.map(img => (
+                                        <img 
+                                            key={img.imgId} 
+                                            src={`/images/imgboard/${img.saveFileName}`} 
+                                            alt='게시물 이미지' 
+                                            style={{ maxWidth: "40%", marginTop: "20px", marginBottom: "20px" }}
+                                        />
+                                    ))}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div className="my-3 d-flex justify-content-center">
+                    <button className="btn btn-outline-secondary" onClick={() => navigate('/imgboard/list')}>
+                        <i className="fas fa-list"></i> 목록
+                    </button>
+                </div>
             </div>
         </div>
     );

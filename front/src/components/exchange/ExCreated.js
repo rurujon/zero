@@ -189,125 +189,134 @@ const ExCreated = () => {
     }
 
     return (
-        <div style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', width: '800px', margin: 'auto' }}>
-            <h1 style={{ textAlign: 'center' }}>교환 게시물 등록</h1>
-            <form onSubmit={handleInsertSubmit} method='post'>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>사용자 ID:</label>
-                    <input type="text" value={memId} readOnly style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
-                </div>
+        <div className="container" style={{ maxWidth: "900px" }}>
+            <div className="card mb-4">
+                <div className="card-body">
+                    <form onSubmit={handleInsertSubmit} method='post'>
+                        <div className="row mb-3" style={{ borderTop: '1px solid #dee2e6', borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">사용자 ID</div>
+                            <div className="col-10 py-2">
+                                <input type="text" value={memId} readOnly className="form-control" />
+                            </div>
+                        </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>제목:</label>
-                    <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} required/>
-                </div>
-                {/* 이미지 영역*/}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-                    <img 
-                        src="/exchange/ex1.png" 
-                        alt="교환 이미지 1" 
-                        onClick={() => handleImageClick(1)}
-                        style={{ 
-                            width: '32%', 
-                            height: 'auto', 
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            border: selec === 1 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selec === 1 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
-                        }}
-                    />
-                    <img 
-                        src="/exchange/ex2.png" 
-                        alt="교환 이미지 2" 
-                        onClick={() => handleImageClick(2)}
-                        style={{ 
-                            width: '32%', 
-                            height: 'auto', 
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            border: selec === 2 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selec === 2 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
-                        }}
-                    />
-                    <img 
-                        src="/exchange/ex3.png" 
-                        alt="교환 이미지 3" 
-                        onClick={() => handleImageClick(3)}
-                        style={{ 
-                            width: '32%', 
-                            height: 'auto', 
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            border: selec === 3 ? '3px solid #007bff' : '3px solid transparent',
-                            boxShadow: selec === 3 ? '0 0 10px rgba(0,123,255,0.5)' : 'none'
-                        }}
-                    />
-                </div>
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">제목</div>
+                            <div className="col-10 py-2">
+                                <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} className="form-control" required/>
+                            </div>
+                        </div>
 
-                <button type='button' onClick={handleReceiverInfo} style={{ margin: '5px' }}>내 정보 불러오기</button>
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">상품 선택</div>
+                            <div className="col-10 py-2">
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <img 
+                                        src="/exchange/ex1.png" 
+                                        alt="교환 이미지 1" 
+                                        onClick={() => handleImageClick(1)}
+                                        style={{ 
+                                            width: '32%', 
+                                            cursor: 'pointer',
+                                            border: selec === 1 ? '3px solid #007bff' : '1px solid #dee2e6',
+                                            borderRadius: '5px'
+                                        }}
+                                    />
+                                    <img 
+                                        src="/exchange/ex2.png" 
+                                        alt="교환 이미지 2" 
+                                        onClick={() => handleImageClick(2)}
+                                        style={{ 
+                                            width: '32%', 
+                                            cursor: 'pointer',
+                                            border: selec === 2 ? '3px solid #007bff' : '1px solid #dee2e6',
+                                            borderRadius: '5px'
+                                        }}
+                                    />
+                                    <img 
+                                        src="/exchange/ex3.png" 
+                                        alt="교환 이미지 3" 
+                                        onClick={() => handleImageClick(3)}
+                                        style={{ 
+                                            width: '32%', 
+                                            cursor: 'pointer',
+                                            border: selec === 3 ? '3px solid #007bff' : '1px solid #dee2e6',
+                                            borderRadius: '5px'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>보내는 분:</label>
-                    <input type="text" value={sender} onChange={(evt) => setSender(evt.target.value)} ref={senderRef}  style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} required/>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }} >받는 분:</label>
-                    <input type="text" value={receiver} onChange={(evt) => setReceiver(evt.target.value)} ref={receiverRef}  style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} required />
-                </div>  
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">배송 정보</div>
+                            <div className="col-10 py-2">
+                                <button type='button' onClick={handleReceiverInfo} className="btn btn-outline-secondary mb-3">
+                                    내 정보 불러오기
+                                </button>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>보내는 분</strong></label>
+                                    <input type="text" value={sender} onChange={(evt) => setSender(evt.target.value)} ref={senderRef} className="form-control" required/>
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>받는 분</strong></label>
+                                    <input type="text" value={receiver} onChange={(evt) => setReceiver(evt.target.value)} ref={receiverRef} className="form-control" required/>
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>우편번호</strong></label>
+                                    <div className="input-group">
+                                        <input type="text" value={post} readOnly className="form-control"/>
+                                        <button type="button" onClick={handleDaumPost} className="btn btn-outline-secondary">우편번호 찾기</button>
+                                    </div>
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>주소</strong></label>
+                                    <input type="text" value={addr1} readOnly className="form-control"/>
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>상세주소</strong></label>
+                                    <input type="text" value={addr2} onChange={(evt) => setAddr2(evt.target.value)} className="form-control"/>
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label"><strong>전화번호</strong></label>
+                                    <input type="text" value={tel} onChange={(evt) => setTel(evt.target.value)} ref={telRef} className="form-control"/>
+                                </div>
+                            </div>
+                        </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>우편번호:</label>
-                    <input type="text" value={post} readOnly style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
-                    <button type="button" onClick={handleDaumPost} style={{ marginLeft: '10px' }}>우편번호 찾기</button>
-                </div>
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">요청 및<br/>배송 메세지</div>
+                            <div className="col-10 py-2">
+                                <textarea 
+                                    value={content} 
+                                    onChange={(evt) => {
+                                        const newContent = evt.target.value;
+                                        if (!newContent.trim()) {
+                                            setContent(defaultMessage);
+                                        } else if (newContent !== defaultMessage) {
+                                            setContent(newContent);
+                                        }
+                                    }}
+                                    ref={contentRef} 
+                                    className="form-control"
+                                    style={{ 
+                                        minHeight: '100px',
+                                        color: content === defaultMessage ? '#888' : '#000'
+                                    }} 
+                                />
+                            </div>
+                        </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>주소:</label>
-                    <input type="text" value={addr1} readOnly style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
+                        <div className="d-flex justify-content-center gap-2">
+                            <button type="submit" className="btn btn-primary">등록하기</button>
+                            <button type='button' onClick={handleTextReset} className="btn btn-secondary">다시작성</button>
+                            <button type='button' onClick={() => window.location.href = '/exchange/list'} className="btn btn-outline-secondary">
+                                작성취소
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>상세주소:</label>
-                    <input type="text" value={addr2} onChange={(evt) => setAddr2(evt.target.value)} style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>전화번호:</label>
-                    <input type="text" value={tel} onChange={(evt) => setTel(evt.target.value)} ref={telRef}    style={{ flex: '1', padding: '8px', border: '1px solid #ccc' }} />
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                    <label style={{ flex: '0 0 150px', backgroundColor: '#cce5ff', padding: '10px' }}>요청 및 <br/> 배송 메세지:</label>
-                    <textarea 
-                        value={content} 
-                        onChange={(evt) => {
-                            const newContent = evt.target.value;
-                            if (!newContent.trim()) {
-                                setContent(defaultMessage);
-                            } else if (newContent !== defaultMessage) {
-                                setContent(newContent);
-                            }
-                        }}
-                        ref={contentRef} 
-                        style={{ 
-                            flex: '1', 
-                            padding: '8px', 
-                            border: '1px solid #ccc', 
-                            minHeight: '100px',
-                            color: content === defaultMessage ? '#888' : '#000'
-                        }} 
-                    />
-                </div>
-
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <button type="submit" style={{ margin: '5px' }}>등록하기</button>
-                    <button type='button' onClick={handleTextReset} style={{ margin: '5px' }}>다시작성</button>
-                    <button type='button' onClick={() => window.location.href = '/exchange/list'} style={{ margin: '5px' }}>작성취소</button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 };
