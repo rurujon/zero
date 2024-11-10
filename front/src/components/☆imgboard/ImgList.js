@@ -188,7 +188,7 @@ function ImgList() {
                                     board.images.map((img) => (
                                         <img
                                             key={img.imgId}
-                                            src={`http://localhost:8080/images/imgboard/${img.saveFileName}`}
+                                            src={`/images/imgboard/${img.saveFileName}`}
                                             alt={img.saveFileName}
                                             style={{ 
                                                 width: '100%',           
