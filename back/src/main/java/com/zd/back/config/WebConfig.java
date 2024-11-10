@@ -29,5 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/notices/");
     } 
 
+
 }
  
