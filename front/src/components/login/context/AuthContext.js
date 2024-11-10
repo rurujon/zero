@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, [token, logout, refreshAccessToken]);
 
+
     const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
             if (typeof newToken !== 'string') {

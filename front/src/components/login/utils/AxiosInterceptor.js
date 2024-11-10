@@ -16,7 +16,7 @@ const AxiosInterceptor = ({ children, navigate }) => {
                         return axios.request(error.config);
                     } else {
                         logout();
-                        navigate('/login');
+                        navigate('/mainpage');
                     }
                 }
                 return Promise.reject(error);
