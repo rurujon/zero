@@ -50,6 +50,7 @@ const HeaderSample = () => {
                     <Link to="/orgList"><div className='small-menu'>환경봉사단체추천</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-activity')}>
+                    <Link to="/notices"><div className='small-menu'>공&nbsp;지&nbsp;사&nbsp;항</div></Link>
                     <Link to="/board/list"><div className='small-menu'>참여게시판</div></Link>
                     <Link to="/imgboard/list"><div className='small-menu'>인증게시판</div></Link>
                 </div>
