@@ -33,10 +33,10 @@ const NoticeList = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                        <th>조회수</th>
+                        <th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+                        <th>작&nbsp;&nbsp;성&nbsp;&nbsp;자</th>
+                        <th>작&nbsp;&nbsp;성&nbsp;&nbsp;일</th>
+                        <th>조&nbsp;&nbsp;회&nbsp;&nbsp;수</th>
                     </tr>
                 </thead>
                 <tbody>

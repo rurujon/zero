@@ -37,13 +37,13 @@ const NoticeDetail = () => {
         <div className="notice-detail container mt-5">
             <h2 className="title" style={{marginBottom: '30px'}}>{notice.title}</h2>
             <div className='notice-r'>
-                <span className="label">작성자: {notice.author}</span>
-                <span className="label">작성일: {new Date(notice.createdAt).toLocaleString()}</span>
-                <span className="label">조회수: {notice.views}</span>
+                <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;자&nbsp;&nbsp;:&nbsp;&nbsp;{notice.author}</span>
+                <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;일&nbsp;&nbsp;:&nbsp;&nbsp;{new Date(notice.createdAt).toLocaleString()}</span>
+                <span className="label">조&nbsp;&nbsp;회&nbsp;&nbsp;수&nbsp;&nbsp;:&nbsp;&nbsp;{notice.views}</span>
             </div>
             <hr />
             <NoticeContent dangerouslySetInnerHTML={{ __html: notice.content }} />
-            <Button onClick={() => navigate('/notices')} className="mt-3">목록으로</Button>
+            <Button onClick={() => navigate('/notices')} className="mt-3">공지사항 목록으로 돌아가기</Button>
         </div>
     );
 };
