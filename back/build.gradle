@@ -72,6 +72,9 @@ dependencies {
 	//2024-11-05 타임리프 추가
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+	//2024-11-10 정우준 react-quill 에디터 이미지 처리 기능추가
+	implementation 'net.coobird:thumbnailator:0.4.14'
+
 }
 
 tasks.named('test') {

@@ -7,16 +7,28 @@ import com.zd.back.notice.service.NoticeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import net.coobird.thumbnailator.Thumbnails;
+import java.io.File;
+import java.nio.file.Path;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/notices")
@@ -26,6 +38,9 @@ public class NoticeController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -91,6 +106,30 @@ public class NoticeController {
             return ResponseEntity.ok("공지사항이 삭제되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("공지사항 삭제 실패: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+            Path filePath = uploadPath.resolve(fileName);
+            File outputFile = filePath.toFile();
+
+            Thumbnails.of(file.getInputStream())
+                .size(800, 600) // 원하는 크기로 조정
+                .outputQuality(0.85) // 품질 설정
+                .toFile(outputFile);
+
+            String fileUrl = "/images/notices/" + fileName;
+            return ResponseEntity.ok(fileUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미지 업로드 실패");
         }
     }
 }
