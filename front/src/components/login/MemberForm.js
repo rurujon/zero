@@ -221,7 +221,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
           if (isEditing) {
             onSubmit(member);
           } else {
-            navigate('/login');
+            navigate('/mainpage');
           }
         }
       } catch (error) {
