@@ -214,7 +214,8 @@ const ImgArticle = () => {
                                     {article.images && article.images.map(img => (
                                         <img 
                                             key={img.imgId} 
-                                            src={`http://localhost:8080/images/imgboard/${img.saveFileName}`}                                            alt='게시물 이미지' 
+                                            src={`/images/imgboard/${img.saveFileName}`} 
+                                            alt='게시물 이미지' 
                                             style={{ maxWidth: "40%", marginTop: "20px", marginBottom: "20px" }}
                                         />
                                     ))}
