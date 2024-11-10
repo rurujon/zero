@@ -25,5 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/imgboard/**")  // 제공할 URL 패턴
                 .addResourceLocations("file:///C:/VSCode/zero/front/public/images/imgboard/");  // 실제 파일 경로
+        registry.addResourceHandler("/images/notices/**")
+                .addResourceLocations("file:///C:/VSCode/zero/front/public/images/notices/");
     }
 }
