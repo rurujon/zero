@@ -85,6 +85,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                         />
                     </dd>
                 </div>
+                <hr/>
                 <div className="dl-item" style={{ marginBottom: '15px' }}>
                     <button
                         type="submit"

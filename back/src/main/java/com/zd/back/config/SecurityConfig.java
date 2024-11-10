@@ -49,35 +49,36 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-        .antMatchers(
-            "/member/register", "/member/login", "/member/find-id", "/member/find-password",
-            "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**",
-            "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy",
-            "/member/terms", "/member/check-id", "/member/check-email",
-            "/quiz.action", "/index", "/checkQH", "/getQuiz", "/insertQH", "/member/info",
-            "/exchange/list", "/imgboard/list"
-        ).permitAll()
-        .antMatchers(HttpMethod.GET, "/api/notices/**", "/board/**", "/comment/**").permitAll()
-        .antMatchers("/api/notices/**","member/delete/**").hasRole("ADMIN")
-        .antMatchers("/imgboard/created", "/imgboard/update", "/imgboard/delete").authenticated()
-        .anyRequest().authenticated()
+            .antMatchers(
+                "/member/register", "/member/login", "/member/find-id", "/member/find-password",
+                "/api/auth/**", "/member/refresh-token", "/api/naver/**", "/api/seoul/**",
+                "/api/rss/**", "/api/org/**", "/api/smartMap/**", "/member/privacy",
+                "/member/terms", "/member/check-id", "/member/check-email",
+                "/quiz.action", "/index", "/checkQH", "/getQuiz", "/insertQH", "/member/info",
+                "/exchange/list", "/imgboard/list"
+            ).permitAll()
+            .antMatchers(HttpMethod.GET, "/api/notices/**", "/board/**", "/comment/**").permitAll()
+            .antMatchers("/api/notices/**","member/delete/**").hasRole("ADMIN")
+            .antMatchers("/imgboard/created", "/imgboard/update", "/imgboard/delete").authenticated()
+            .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
                 .logoutUrl("/member/logout")
                 .addLogoutHandler(logoutService)
                 .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getWriter().write("{\"message\": \"로그아웃 성공\"}");
                 })
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .deleteCookies("JSESSIONID", "refreshToken")
             .and()
             .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.getWriter().write("{\"error\": \"인증 정보가 없습니다.\"}");
+                    response.getWriter().write("{\"error\": \"인증 정보가 없습니다.\", \"message\": \"다시 로그인해주세요.\"}");
                 })
             .and()
             .userDetailsService(userDetailsService);

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const AxiosInterceptor = ({ children, navigate }) => {
-    const { refreshAccessToken, logout } = useContext(AuthContext);
+const AxiosInterceptor = ({ children }) => {
+  const { refreshAccessToken, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
     useEffect(() => {
         const interceptor = axios.interceptors.response.use(
@@ -23,12 +25,12 @@ const AxiosInterceptor = ({ children, navigate }) => {
             }
         );
 
-        return () => {
-            axios.interceptors.response.eject(interceptor);
-        };
-    }, [refreshAccessToken, logout, navigate]);
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, [refreshAccessToken, logout, navigate]);
 
-    return <>{children}</>;
+  return <>{children}</>;
 };
 
 export default AxiosInterceptor;
