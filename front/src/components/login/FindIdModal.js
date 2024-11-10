@@ -35,6 +35,7 @@ const FindIdModal = ({ show, onHide }) => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder='가입한 이메일을 입력하세요.'
                             required
                         />
                         <hr/>

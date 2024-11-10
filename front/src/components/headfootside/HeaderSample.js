@@ -47,7 +47,7 @@ const HeaderSample = () => {
                     <Link to="/naverNewsList"><div className='small-menu'>네이버 환경소식</div></Link>
                     <Link to="/minEnv"><div className='small-menu'>환경부 정책소식</div></Link>
                     <Link to="/seoulNews/All"><div className='small-menu'>서울시 환경소식</div></Link>
-                    <Link to="/orgList"><div className='small-menu'>환경봉사단체추천</div></Link>
+                    <Link to="/orgList"><div className='small-menu'>환경봉사단체목록</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-activity')}>
                     <Link to="/notices"><div className='small-menu'>공&nbsp;지&nbsp;사&nbsp;항</div></Link>
@@ -55,7 +55,7 @@ const HeaderSample = () => {
                     <Link to="/imgboard/list"><div className='small-menu'>인증게시판</div></Link>
                 </div>
                 <div className='header-submenu' onMouseEnter={() => handleMouseEnter('zero-consumer')}>
-                    <Link to="/googleMap"><div className='small-menu'>서울시 제로웨이스트 상점</div></Link>
+                    <Link to="/googleMap"><div className='small-menu'>서울 제로웨이스트 상점</div></Link>
                     <Link to="/exchange/list"><div className='small-menu'>에코백 교환신청</div></Link>
                 </div>
             </>

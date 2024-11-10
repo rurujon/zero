@@ -36,6 +36,7 @@ const FindPasswordModal = ({ show, onHide }) => {
                             type="text"
                             value={memId}
                             onChange={(e) => setMemId(e.target.value)}
+                            placeholder='아이디를 입력하세요'
                             required
                         />
                     </Form.Group>
@@ -45,6 +46,7 @@ const FindPasswordModal = ({ show, onHide }) => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            placeholder='이메일을 입력하세요'
                             required
                         />
                         <hr/>

@@ -115,7 +115,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: rgba(85, 85, 85, 0.2); /* 투명도 적용 */
+    background-color: rgba(85, 85, 85, 0.6); /* 투명도 적용 */
     z-index: 100;
 }
 
