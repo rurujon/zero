@@ -160,7 +160,7 @@ return (
     <div className="container" style={{ maxWidth: "900px" }}>
         <div className="card mb-4">
             <div className="card-body">
-                <div className="row mb-3">
+                <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">제목</div>
                     <div className="col-10 py-2 d-flex justify-content-between align-items-center">
                         <span>{article.title}</span>
@@ -172,18 +172,17 @@ return (
                     </div>
                 </div>
 
-
-                <div className="row mb-3">
+                <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">작성자</div>
                     <div className="col-10 py-2">{article.memId}</div>
                 </div>
 
-                <div className="row mb-3">
+                <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">작성일</div>
                     <div className="col-10 py-2">{new Date(article.created).toLocaleDateString()}</div>
                 </div>
                 
-                <div className="row mb-3">
+                <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">승인여부</div>
                     <div className="col-10 py-2 d-flex align-items-center">
                         {getAuthLabel(article.auth)}
@@ -195,7 +194,7 @@ return (
                     </div>
                 </div>
 
-                <div className="row mb-3">
+                <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">배송 정보</div>
                     <div className="col-10 py-2">
                         <div className="mb-2"><strong>보내는 분:</strong> {article.sender}</div>
@@ -207,15 +206,17 @@ return (
                     </div>
                 </div>
 
-                <div className="row mb-3">
+                < div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6', borderTop: '1px solid #dee2e6' }}>
+                
                     <div className="col-2 bg-light py-2">요청 및 <br/> 배송 메세지</div>
                     <div className="col-10 py-2" style={{ whiteSpace: "pre-line" }}>
                         {article.content}
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-2 bg-light py-2">선택한 상품</div>
+                <div className="row mb-3" style={{ borderTop: '1px solid #dee2e6' }}>
+                <div className="col-2 bg-light py-2" >
+                        선택한 상품</div>
                     <div className="col-10 py-2">
                         {article.selec && (
                             <img 

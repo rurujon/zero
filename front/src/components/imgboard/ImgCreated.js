@@ -225,86 +225,122 @@ const ImgCreated = () => {
         return <p>로딩 중...</p>;
     }
     return (
-        <div style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', maxWidth: '800px', margin: 'auto' }}>
-            <h1 style={{ textAlign: 'center' }}>이미지 게시물 등록</h1>
-            <form onSubmit={updatedMode ? handleUpdateSubmit : handleInsertSubmit} method='post'>
-                <div style={{ marginBottom: '15px' }}>
-                    <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>사용자 ID:</label>
-                    <input type="text" value={memId} readOnly style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} />
-                </div>
-    
-                <div style={{ marginBottom: '15px' }}>
-                    <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>인증유형:</label>
-                    <select value={cate} onChange={(evt) => setCate(evt.target.value)} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required>
-                        <option value="">인증 유형을 선택하세요</option>
-                        <option value="tum">텀블러 이용</option>
-                        <option value="buy">물품 구매</option>
-                        <option value="group">단체활동 참여</option>
-                    </select>
-                </div>
-    
-                <div style={{ marginBottom: '15px' }}>
-                    <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>제목:</label>
-                    <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required />
-                </div>
-    
-                <div style={{ marginBottom: '15px' }}>
-                    <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>내용:</label>
-                    <textarea value={content} onChange={(evt) => setContent(evt.target.value)} ref={contentRef} style={{ width: '100%', padding: '8px', border: '1px solid #ccc' }} required />
-                </div>
-    
-                <div style={{ marginBottom: '15px' }}>
-                    <button type='button' onClick={handleTextReset} style={{ margin: '5px' }}>다시작성</button>
-                </div>
-    
-             { !updatedMode && 
-                <div style={{ marginBottom: '15px' }}>
-                    <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>이미지 선택:</label>
-                    {images.map((image, index) => (
-                        <div key={index} style={{ marginBottom: '10px' }}>
-                            <input
-                                type="file"
-                                ref={el => fileInputRefs.current[index] = el}
-                                onChange={(evt) => handleImageChange(index, evt)}
-                                accept="image/*"
-                                style={{ marginBottom: '5px' }}
-                            />
-                            {imagePreviews[index] && (
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <img
-                                        src={imagePreviews[index]}
-                                        alt='선택이미지 미리보기'
-                                        style={{ width: '100px', height: '100px', objectFit: 'cover', marginRight: '10px' }}
-                                    />
-                                    <button type="button" onClick={() => handleImageRemove(index)}>파일 선택 취소</button>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div> }
-    
-                {updatedMode && (
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ display: 'block', backgroundColor: '#cce5ff', padding: '10px' }}>이미지 선택:</label>
-                        {imagePreviews.map((preview, index) => (
-                            <div key={index}>
-                                {preview && (
-                                    <img
-                                        src={preview}
-                                        alt='기존이미지 미리보기'
-                                        style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }}
-                                    />
-                                )}
+        <div className="container" style={{ maxWidth: "900px" }}>
+            <div className="card mb-4">
+                <div className="card-body">
+                    <form onSubmit={updatedMode ? handleUpdateSubmit : handleInsertSubmit} method='post'>
+                        <div className="row mb-3" style={{ borderTop: '1px solid #dee2e6', borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">사용자 ID</div>
+                            <div className="col-10 py-2">
+                                <input type="text" value={memId} readOnly className="form-control" />
                             </div>
-                        ))}
-                    </div>
-                )}
-    
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <button type="submit" style={{ margin: '5px' }}>{updatedMode ? '수정하기' : '등록하기'}</button>
-                    <button type='button' onClick={() => window.location.href = '/imgboard/list'} style={{ margin: '5px' }}>작성취소</button>
+                        </div>
+
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">인증유형</div>
+                            <div className="col-10 py-2">
+                                <select value={cate} onChange={(evt) => setCate(evt.target.value)} className="form-control" required>
+                                    <option value="">인증 유형을 선택하세요</option>
+                                    <option value="tum">텀블러 이용</option>
+                                    <option value="buy">물품 구매</option>
+                                    <option value="group">단체활동 참여</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">제목</div>
+                            <div className="col-10 py-2">
+                                <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} className="form-control" required />
+                            </div>
+                        </div>
+
+                        <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                            <div className="col-2 bg-light py-2">내용</div>
+                            <div className="col-10 py-2">
+                                <textarea 
+                                    value={content} 
+                                    onChange={(evt) => setContent(evt.target.value)} 
+                                    ref={contentRef} 
+                                    className="form-control"
+                                    style={{ minHeight: '100px' }}
+                                    required 
+                                />
+                            </div>
+                        </div>
+
+                        {!updatedMode && (
+                            <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                                <div className="col-2 bg-light py-2">이미지 선택</div>
+                                <div className="col-10 py-2">
+                                    {images.map((image, index) => (
+                                        <div key={index} className="mb-3">
+                                            <div className="input-group">
+                                                <input
+                                                    type="file"
+                                                    ref={el => fileInputRefs.current[index] = el}
+                                                    onChange={(evt) => handleImageChange(index, evt)}
+                                                    accept="image/*"
+                                                    className="form-control"
+                                                />
+                                                {imagePreviews[index] && (
+                                                    <button 
+                                                        type="button" 
+                                                        className="btn btn-outline-secondary"
+                                                        onClick={() => handleImageRemove(index)}
+                                                    >
+                                                        파일 선택 취소
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {imagePreviews[index] && (
+                                                <img
+                                                    src={imagePreviews[index]}
+                                                    alt='선택이미지 미리보기'
+                                                    className="mt-2"
+                                                    style={{ maxWidth: '200px', height: 'auto' }}
+                                                />
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {updatedMode && (
+                            <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
+                                <div className="col-2 bg-light py-2">기존 이미지</div>
+                                <div className="col-10 py-2">
+                                    <div className="d-flex gap-2">
+                                        {imagePreviews.map((preview, index) => (
+                                            preview && (
+                                                <img
+                                                    key={index}
+                                                    src={preview}
+                                                    alt='기존이미지 미리보기'
+                                                    style={{ width: '200px', height: 'auto', objectFit: 'contain' }}
+                                                />
+                                            )
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="d-flex justify-content-center gap-2">
+                            <button type="submit" className="btn btn-primary">
+                                {updatedMode ? '수정하기' : '등록하기'}
+                            </button>
+                            <button type='button' onClick={handleTextReset} className="btn btn-secondary">
+                                다시작성
+                            </button>
+                            <button type='button' onClick={() => window.location.href = '/imgboard/list'} className="btn btn-outline-secondary">
+                                작성취소
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     );
     
