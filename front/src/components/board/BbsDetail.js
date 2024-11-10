@@ -33,12 +33,9 @@ function BbsDetail() {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { readerId: memId || "" }
             });
-            console.log("[BbsDetail.js] getBbsDetail() success :D");
-
             setBoard(response.data.board);
         } catch (err) {
-            console.log("[BbsDetail.js] getBbsDetail() error :<");
-            console.log(err);
+            console.log("[BbsDetail.js] getBbsDetail() error :<", err);
         }
     };
 
@@ -50,7 +47,6 @@ function BbsDetail() {
             const response = await axios.get(`http://localhost:8080/board/delete/${boardno}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log("[BbsDetail.js] deleteBoard() success :D");
 
             if (response.data.deletedRecordCount === 1) {
                 alert("게시글이 삭제되었습니다.");
@@ -58,8 +54,7 @@ function BbsDetail() {
                 navigate(`/board/list?page=${page}`);
             }
         } catch (err) {
-            console.log("[BbsDetail.js] deleteBbs() error :<");
-            console.log(err);
+            console.log("[BbsDetail.js] deleteBbs() error :<", err);
         }
     };
 
@@ -81,7 +76,6 @@ function BbsDetail() {
                 : part
         )).join('');
     };
-    
 
     const getMaxBoardNo = async () => {
         try {
@@ -95,7 +89,7 @@ function BbsDetail() {
     useEffect(() => {
         getBbsDetail();
         getMaxBoardNo();
-    }, [boardno]);
+    }, [boardno]); // boardno가 변경될 때마다 호출
 
     const updateBoard = {
         boardno: board.boardno,
@@ -180,24 +174,23 @@ function BbsDetail() {
                         <td>{board.hitcount}</td>
                     </tr>
                     <tr>
-    <th>내용</th>
-    <td style={{ textAlign: 'left'}}>
-        {board.urlFile && (
-            <div>
-                <img 
-                    src={board.urlFile} 
-                    alt="첨부된 이미지" 
-                    style={{ maxWidth: "40%", marginTop: "20px", marginLeft: "20px", marginBottom: "20px"}}
-                />
-            </div>
-        )}
-        <div 
-            dangerouslySetInnerHTML={{ __html: renderContentWithLinks(board.content) }} 
-            style={{ marginTop: "20px", marginLeft: "20px", marginBottom: "20px" }} 
-        />
-    </td>
-</tr>
-
+                        <th>내용</th>
+                        <td style={{ textAlign: 'left'}}>
+                            {board.urlFile && (
+                                <div>
+                                    <img 
+                                        src={board.urlFile} 
+                                        alt="첨부된 이미지" 
+                                        style={{ maxWidth: "40%", marginTop: "20px", marginLeft: "20px", marginBottom: "20px"}}
+                                    />
+                                </div>
+                            )}
+                            <div 
+                                dangerouslySetInnerHTML={{ __html: renderContentWithLinks(board.content) }} 
+                                style={{ marginTop: "20px", marginLeft: "20px", marginBottom: "20px" }} 
+                            />
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -208,7 +201,7 @@ function BbsDetail() {
             </div><br/><br/>
 
             {memId && <CommentWrite boardno={boardno} />}
-            <CommentList boardno={boardno} />
+            <CommentList boardno={boardno} /> {/* boardno를 전달하여 댓글이 맞춰져 불러오게 함 */}
         </div>
     );
 }
