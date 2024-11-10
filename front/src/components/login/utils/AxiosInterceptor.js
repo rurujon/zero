@@ -18,7 +18,7 @@ const AxiosInterceptor = ({ children }) => {
             return axios.request(error.config);
           } else {
             logout();
-            navigate('/login', { state: { message: '세션이 만료되었습니다. 다시 로그인해주세요.' } });
+            navigate('/mainpage', { state: { message: '세션이 만료되었습니다. 다시 로그인해주세요.' } });
           }
         }
         return Promise.reject(error);
