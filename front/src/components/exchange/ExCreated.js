@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
 
+
 const ExCreated = () => {
     const navigate = useNavigate();
     const titleRef = useRef(null);

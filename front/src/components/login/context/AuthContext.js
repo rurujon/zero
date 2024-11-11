@@ -13,11 +13,13 @@ export const AuthProvider = ({ children }) => {
 
     const logout = useCallback(async () => {
         try {
-            await axios.post('/member/logout', null, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            if (token) {
+                await axios.post('/member/logout', null, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+            }
         } catch (error) {
-            console.error('Logout error:', error);
+            console.error('로그아웃 오류:', error);
         } finally {
             setToken(null);
             setRefreshToken(null);
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const refreshAccessToken = useCallback(async () => {
-        if (isRefreshing) return null;
+        if (isRefreshing || !refreshToken) return null;
         setIsRefreshing(true);
         try {
             const response = await axios.post('/member/refresh-token', { refreshToken });
@@ -45,8 +47,8 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
             return newToken;
         } catch (error) {
-            console.error('Token refresh failed:', error);
-            logout();
+            console.error('토큰 갱신 실패:', error);
+            await logout();
             return null;
         } finally {
             setIsRefreshing(false);
@@ -54,27 +56,31 @@ export const AuthProvider = ({ children }) => {
     }, [refreshToken, logout, isRefreshing]);
 
     useEffect(() => {
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
-                if (decoded.exp * 1000 < Date.now()) {
-                    refreshAccessToken();
-                } else {
-                    const timeUntilExpiry = decoded.exp * 1000 - Date.now();
-                    setTimeout(() => refreshAccessToken(), timeUntilExpiry - 60000); // 만료 1분 전에 갱신
+        const checkTokenExpiration = async () => {
+            if (token) {
+                try {
+                    const decoded = jwtDecode(token);
+                    const currentTime = Date.now() / 1000;
+                    if (decoded.exp < currentTime) {
+                        await refreshAccessToken();
+                    } else {
+                        const timeUntilExpiry = (decoded.exp - currentTime) * 1000;
+                        setTimeout(() => refreshAccessToken(), timeUntilExpiry - 60000);
+                    }
+                } catch (error) {
+                    console.error('토큰 디코딩 실패:', error);
+                    await logout();
                 }
-            } catch (error) {
-                console.error('Token decoding failed:', error);
-                logout();
             }
-        }
+        };
+
+        checkTokenExpiration();
     }, [token, logout, refreshAccessToken]);
 
-
-    const login = useCallback((newToken, newRefreshToken, id, userRole) => {
+    const login = useCallback(async (newToken, newRefreshToken, id, userRole) => {
         try {
-            if (typeof newToken !== 'string') {
-                throw new Error('Invalid token format');
+            if (typeof newToken !== 'string' || typeof newRefreshToken !== 'string') {
+                throw new Error('유효하지 않은 토큰 형식');
             }
             const decoded = jwtDecode(newToken);
             setToken(newToken);
@@ -87,8 +93,8 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('role', userRole);
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         } catch (error) {
-            console.error('Login failed:', error);
-            logout();
+            console.error('로그인 실패:', error);
+            await logout();
             throw error;
         }
     }, [logout]);
