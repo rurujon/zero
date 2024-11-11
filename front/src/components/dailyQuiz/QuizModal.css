@@ -22,7 +22,7 @@
     background-color: #f8f9fa;
     padding: 20px; /* 패딩 추가 */
     box-sizing: border-box; /* 패딩을 포함한 전체 크기 계산 */
-    box-shadow: 0 2px 15px #03c75a;
+    box-shadow: 0 2px 15px #008000;
     backdrop-filter: blur(10px);
     z-index: 1001; /* 모달의 z-index 설정 */
 }
@@ -145,7 +145,7 @@
     margin: auto;
 
     padding-bottom: 0%;
-    box-shadow: 0 2px 10px #03c75a;
+    box-shadow: 0 2px 10px #008000;
     border-radius: 15px;
 
     display: flex;
@@ -153,7 +153,7 @@
 }
 
 .Qmodal .OX .oxBox .btn{
-    background-color: #03c75a;
+    background-color: #008000;
 
     width: 45%;
     height: 80%;
@@ -165,7 +165,26 @@
     justify-content: center;
     align-items: center;
 
-} 
+}
+
+
+
+
+/* .Qmodal .OX .oxBox button {
+
+    background-color: #008000;
+
+    width: 45%;
+    height: 80%;
+
+    margin: auto;
+    transition: background-color 0.3s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+} */
 
 
 .Qmodal .OX .oxBox .btn:hover {
@@ -201,7 +220,7 @@
     width: 90%;
 
     align-items: center;
-    box-shadow: 0 2px 10px #03c75a;
+    box-shadow: 0 2px 10px #008000;
     border-radius: 15px;
 }
 

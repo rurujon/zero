@@ -86,8 +86,8 @@ const HomePage = () => {
                         onClick={() => setShowLogin(true)}
                         className="btn btn-primary btn-lg"
                         style={{
-                            backgroundColor: '#03c75a',
-                            borderColor: '#03c75a',
+                            backgroundColor: '#0080000',
+                            borderColor: '#0080000',
                             marginBottom: '15px',
                             fontWeight: 'bold',
                             textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)',
@@ -135,7 +135,7 @@ const HomePage = () => {
                             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
                         }}
                     >
-                        안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
+                        안녕하세요 <span style={{ color: '#008000' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
                     </h5>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                         {/* 이미지 */}

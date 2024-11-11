@@ -293,7 +293,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
   return (
     <Container className="member-form-container mt-5">
-      <h2 className="text-center mb-4">{isEditing ? '회원정보 수정' : '회원가입'}</h2>
+      <h2 className="text-center mb-4" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535' }}>{isEditing ? '회원정보 수정' : '회원가입'}</h2><br/>
       {serverError && <div className="alert alert-danger">{serverError}</div>}
       {isLoading && <div className="alert alert-info">처리 중입니다...</div>}
       <Form onSubmit={handleSubmit}>
