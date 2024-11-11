@@ -6,7 +6,7 @@ import '../board/bbs.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-//토큰(+)
+//토큰(-)
 const ExArticle = () => {
     const { token } = useContext(AuthContext);
 
@@ -188,11 +188,39 @@ return (
                 <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2 bg-light py-2">승인여부</div>
                     <div className="col-10 py-2 d-flex align-items-center">
-                        {getAuthLabel(article.auth)}
-                        {role === 'ADMIN' && article.auth === 0 && (
-                            <button className="btn btn-outline-primary ms-3" onClick={handleAuth}>
-                                <i className="fas fa-check"></i> 인증승인
+                        {role === 'ADMIN' && article.auth === 0 ? (
+                            <button 
+                                onClick={handleAuth}
+                                style={{
+                                    display: 'inline-block',
+                                    border: '3px solid #D2D2D2',
+                                    borderRadius: '5px',
+                                    backgroundColor: '#D2D2D2',
+                                    padding: '5px 15px',
+                                    textAlign: 'center',
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    border: 'none'
+                                }}
+                            >
+                                미승인
                             </button>
+                        ) : (
+                            <div style={{
+                                display: 'inline-block',
+                                border: article.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
+                                borderRadius: '5px',
+                                backgroundColor: article.auth === 0 ? '#D2D2D2' : '#008000',
+                                padding: '5px 15px',
+                                textAlign: 'center'
+                            }}>
+                                <span style={{
+                                    color: '#fff',
+                                    margin: 0
+                                }}>
+                                    {getAuthLabel(article.auth)}
+                                </span>
+                            </div>
                         )}
                     </div>
                 </div>

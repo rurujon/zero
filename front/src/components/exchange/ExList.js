@@ -171,25 +171,41 @@ function ExList() {
                     </thead>
                     <tbody>
                         {getPaginatedResults().map((board, index) => (
-                            <tr key={`${board.exchangeId}_${index}`}>
-                                <td className="table-cell-bold">{board.exchangeId}</td>
-                                <td>{getAuthLabel(board.auth)}</td>
-                                <td><i className="bi bi-lock-fill"></i></td>
-                                <td>
-                                    {
-                                        // 관리자이거나 게시글 작성자인 경우
-                                        (role === 'ADMIN' || memId === board.memId) ? (
-                                            <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} style={{ color: 'black', textDecoration: 'none' , cursor: 'pointer' }}>
-                                                {board.title}
-                                            </Link>
-                                        ) : (
-                                            <span onClick={() => alert("작성자만 조회 가능합니다.")}
-                                                  style={{color: 'gray', cursor: 'not-allowed'}}>
-                                                {board.title}
-                                            </span>
-                                        )
+                            <tr 
+                                key={`${board.exchangeId}_${index}`}
+                                onClick={() => {
+                                    if (role === 'ADMIN' || memId === board.memId) {
+                                        window.location.href = `/exchange/article?exchangeId=${board.exchangeId}`;
+                                    } else {
+                                        alert("작성자만 조회 가능합니다.");
                                     }
+                                }}
+                                style={{
+                                    cursor: (role === 'ADMIN' || memId === board.memId) ? 'pointer' : 'not-allowed'
+                                }}
+                            >
+                                <td className="table-cell-bold">{board.exchangeId}</td>
+                                <td>
+                                    <div style={{
+                                        border: board.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
+                                        borderRadius: '5px',
+                                        backgroundColor: board.auth === 0 ? '#D2D2D2' : '#008000',
+                                        padding: '3px',
+                                        textAlign: 'center',
+                                        width: '100px',
+                                        margin: '0 auto'
+                                    }}>
+                                        <span style={{
+                                            color: '#fff',
+                                            margin: 0,
+                                            fontSize: '14px'
+                                        }}>
+                                            {getAuthLabel(board.auth)}
+                                        </span>
+                                    </div>
                                 </td>
+                                <td><i className="bi bi-lock-fill"></i></td>
+                                <td>{board.title}</td>
                                 <td>{board.memId}</td>
                                 <td>{new Date(board.created).toLocaleDateString()}</td>
                             </tr>
