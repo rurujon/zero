@@ -221,10 +221,20 @@ const ImgCreated = () => {
         }
         return true;
     };
-
     if (loading) {
-        return <p>로딩 중...</p>;
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <h4 style={{color: 'gray'}}>로딩 중...</h4>
+                </div>
+        );
     }
+
+    
     return (
         <div className="container" style={{ maxWidth: "900px" }}>
             <div className="card mb-4">

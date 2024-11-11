@@ -59,8 +59,18 @@ const ImgArticle = () => {
         if (token) fetchArticle();
     }, [imgPostId, token, navigate]);
 
+
     if (!article || !article.imgPost) {
-        return <p>게시물을 찾을 수 없습니다.</p>;
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <h4 style={{color: 'gray'}}>게시물을 찾을 수 없습니다.</h4>
+            </div>
+        );
     }
 
 
@@ -159,32 +169,40 @@ const ImgArticle = () => {
     };
 
     if (loading) {
-        return <p>로딩 중...</p>;
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+            }}>
+                <h4 style={{color: 'gray'}}>로딩 중...</h4>
+                </div>
+        );
     }
 
-    if (!article) {
-        return <p>게시물을 찾을 수 없습니다.</p>;
-    }
 
     return (
         <div className="container" style={{ maxWidth: '1200px' }}>
             <div className="article-container">
                 <div className="my-3">
-                    <div className="text-center position-relative">
-                        <h2 className="article-title">{article.imgPost.title}</h2>
-                        {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
-                            <div style={{ position: 'absolute', right: 0, top: 0 }}>
+                <div className="text-center position-relative">
+                <h2 className="article-title">{article.imgPost.title}</h2>
+                        <div style={{ position: 'absolute', right: 0, top: 0 }}>
+                            {(memId === article?.imgPost.memId && article?.imgPost.auth === 0) && (
                                 <button className="btn btn-outline-secondary me-2" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
                                     <i className="fas fa-edit"></i> 수정
                                 </button>
+                            )}
+                            {((memId === article?.imgPost.memId) || role === 'ADMIN') && (
                                 <button className="btn btn-outline-danger" onClick={handleDelete}>
                                     <i className="fas fa-trash-alt"></i> 삭제
                                 </button>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
-
+                
                 <table className="table table-striped">
                     <tbody>
                         <tr>

@@ -290,7 +290,7 @@ function ImgList() {
                         }}>
                             <p style={{ fontSize: '18px', color: '#6c757d' }}>
                                 <i className="fas fa-search" style={{ marginRight: '10px' }}></i>
-                                검색 결과가 없습니다.
+                                해당하는 게시물을 찾을 수 없습니다.
                             </p>
                         </div>
                     )}
