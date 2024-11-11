@@ -9,7 +9,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
     const uppoint = async () => {
         console.log("포인트 변동 시작")
         try {
-            const response = await axios.post('http://localhost:8080/api/point/update', {
+            const response = await axios.post('/api/point/update', {
                 memId: member.memId,
                 oper: '+',  // 또는 '-'
                 updown: 5, // 추가하거나 차감할 포인트 수
@@ -29,7 +29,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
     const insertQH = async () => {
         console.log("퀴즈기록추가 시작")
         try{
-            await axios.post('http://localhost:8080/insertQH', {
+            await axios.post('/insertQH', {
                 memId: member.memId,
                 quizid: quizId,
                 quizResult: "정답"

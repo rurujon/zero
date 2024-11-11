@@ -16,7 +16,7 @@ const SuccessPage = () => {
       <p className="info">이메일: <span className="highlight">{memberInfo.email}</span></p>
       <p className="info">전화번호: <span className="highlight">{memberInfo.tel}</span></p>
       <p className="info">주소: <span className="highlight">{memberInfo.addr1} {memberInfo.addr2}</span></p>
-      <a href="http://localhost:3000/mainpage" className="back-btn">메인 페이지로 돌아가기</a>
+      <a href="http://192.168.16.20:3000/mainpage" className="back-btn">메인 페이지로 돌아가기</a>
     </div>
   );
 };

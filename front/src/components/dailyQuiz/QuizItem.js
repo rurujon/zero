@@ -5,7 +5,7 @@ const QuizItem = ({setQuiz, quiz}) => {
 
     useEffect(()=> {
         //boot호출
-        axios.get('http://localhost:8080/getQuiz')
+        axios.get('/getQuiz')
         .then(response => {
 
             // quiz가 로딩된 후 answer을 설정

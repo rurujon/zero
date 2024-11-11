@@ -11,7 +11,7 @@ const FailurePage = () => {
       <h1 className="title">결제 실패</h1>
       <p className="info">실패 원인: <span className="highlight">{error}</span></p>
 
-      <a href="http://localhost:3000/mainpage" className="back-btn">메인 페이지로 돌아가기</a>
+      <a href="http://192.168.16.20:3000/mainpage" className="back-btn">메인 페이지로 돌아가기</a>
     </div>
   );
 };
