@@ -47,7 +47,7 @@
     padding: 0;
     overflow: visible !important;
     position: relative;
-    
+
 }
 
 .board_tab_wrap ul.tabs li button {
@@ -65,7 +65,7 @@
 }
 
 .board_tab_wrap ul.tabs li button:hover {
-    background: #03c75a;
+    background: #008000;
     border-radius: 20px;
     color: #fff;
 }
@@ -74,7 +74,7 @@
 .board_tab_wrap ul.tabs li.active a:hover,
 .board_tab_wrap ul.tabs li.active button{
     border-radius: 25px;
-    background: #03c75a;
+    background: #008000;
     color: #fff;
 }
 

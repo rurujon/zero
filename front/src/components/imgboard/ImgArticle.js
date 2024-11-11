@@ -17,7 +17,7 @@ const ImgArticle = () => {
 
     // token에서 memId와 role 가져오기
     const getTokenInfo = (token) => {
-        if (token) { 
+        if (token) {
             const payloadBase64 = token.split('.')[1]; //토큰의 2번째 인덱스 가져옴
             const decodedPayload = JSON.parse(atob(payloadBase64));
             return {
@@ -79,12 +79,12 @@ const ImgArticle = () => {
             }
         }
     };
-    
+
     if (!article || !article.imgPost) {
         return <p>게시물을 찾을 수 없습니다.</p>;
     }
 
-    const point = article.imgPost.cate === 'tum' ?  10 
+    const point = article.imgPost.cate === 'tum' ?  10
                 :article.imgPost.cate === 'buy' ?  20
                 :article.imgPost.cate === 'group' ? 30 : 0;
 
@@ -92,7 +92,7 @@ const ImgArticle = () => {
     :article.imgPost.cate === 'buy' ?  '물품 구매'
     :article.imgPost.cate === 'group' ?  '단체활동 참여'
     : '';
-    
+
     //포인트 상승
     const uppoint = async () => {
         try {
@@ -188,16 +188,16 @@ const ImgArticle = () => {
                         <tr>
                             <th className="col-2">승인여부</th>
                             <td>
-                                <div style={{ 
+                                <div style={{
                                     display: 'inline-block',
                                     border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
-                                    borderRadius: '5px', 
-                                    backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
+                                    borderRadius: '5px',
+                                    backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#008000',
                                     padding: '5px 15px',
                                     textAlign: 'center',
                                     marginRight: '10px'
                                 }}>
-                                    <span style={{ 
+                                    <span style={{
                                         color: '#fff',
                                         margin: 0
                                     }}>
@@ -205,8 +205,8 @@ const ImgArticle = () => {
                                     </span>
                                 </div>
                                 {role === 'ADMIN' && article?.imgPost.auth === 0 && (
-                                    <button 
-                                        className="btn ms-3" 
+                                    <button
+                                        className="btn ms-3"
                                         onClick={handleAuth}
                                         style={{
                                             backgroundColor: '#FFA7A7',
@@ -237,11 +237,11 @@ const ImgArticle = () => {
                                 <p>{article.imgPost.content}</p>
                                 <div className="image-gallery d-flex flex-column align-items-center">
                                     {article.images && article.images.map(img => (
-                                        <img 
-                                            key={img.imgId} 
-                                            src={`/images/imgboard/${img.saveFileName}`} 
-                                            alt='게시물 이미지' 
-                                            style={{ 
+                                        <img
+                                            key={img.imgId}
+                                            src={`/images/imgboard/${img.saveFileName}`}
+                                            alt='게시물 이미지'
+                                            style={{
                                                 width: "60%",
                                                 marginBottom: "20px",
                                                 maxHeight: "auto"
