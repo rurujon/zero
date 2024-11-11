@@ -158,7 +158,9 @@ const MemberInfoPage = () => {
               <div className="info-box mb-3 row">
                 <label className="col-sm-2 col-form-label">주소</label>
                 <div className="col-sm-10">
-                  <label className="col-sm-7 col-form-label">{`${member.addr1} ${member.addr2}`}</label>
+                <label className="col-sm-7 col-form-label" style={{ whiteSpace: 'pre-line' }}>
+                  {`${member.addr1}\n${member.addr2}`}
+                </label>
                 </div>
               </div>
 
