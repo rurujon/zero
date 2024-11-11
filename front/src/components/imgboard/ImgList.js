@@ -163,98 +163,114 @@ function ImgList() {
                 {/* 게시물 */}
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
-                    {getPaginatedResults().map((board, index) => (
-                        <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
-                            border: '2px solid #D3D3D3', 
-                            margin: '15px',
-                            padding: '10px', 
-                            borderRadius: '5px', 
-                            backgroundColor: '#F6F6F6', 
-                            width: '22%',
-                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-
-                        }}>
-                            <div style={{ 
-                                width: '260px', 
-                                height: '150px', 
-                                overflow: 'hidden',
-                                borderRadius: '5px',
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center',
-                                border: '1px solid #E8E8E8'
-                            }}>
-                                {board.images && board.images.length > 0 ? (
-                                    board.images.map((img) => (
-                                        <img
-                                            key={img.imgId}
-                                            src={`/images/imgboard/${img.saveFileName}`}
-                                            alt={img.saveFileName}
-                                            style={{ 
-                                                width: '100%',           
-                                                height: '100%',          
-                                                maxHeight: '200px',    
-                                                margin: 0,             
-                                                display: 'block',
-                                                objectFit: 'cover',
-                                                verticalAlign: 'top',
-                                                borderRadius: '5px'
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <p>등록된 이미지가 없습니다.</p>
-                                )}
-                            </div>
-                            <p></p>
-                            <div style={{ 
-                                border: board.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
+                    {getPaginatedResults().length > 0 ? (
+                        getPaginatedResults().map((board, index) => (
+                            <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
+                                border: '2px solid #D3D3D3', 
+                                margin: '15px',
+                                padding: '10px', 
                                 borderRadius: '5px', 
-                                backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
-                                padding: '5px', 
-                                textAlign: 'center',
-                                marginTop: '1px',
-                                width: '260px',
-                                margin: '0 auto'
+                                backgroundColor: '#F6F6F6', 
+                                width: '22%',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+
                             }}>
-                                <p style={{ 
-                                    color:  '#fff' ,
-                                    margin: 0
+                                <div style={{ 
+                                    width: '260px', 
+                                    height: '150px', 
+                                    overflow: 'hidden',
+                                    borderRadius: '5px',
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    border: '1px solid #E8E8E8'
                                 }}>
-                               {getAuthLabel(board.imgPost.auth)}
-                                </p>
+                                    {board.images && board.images.length > 0 ? (
+                                        board.images.map((img) => (
+                                            <img
+                                                key={img.imgId}
+                                                src={`/images/imgboard/${img.saveFileName}`}
+                                                alt={img.saveFileName}
+                                                style={{ 
+                                                    width: '100%',           
+                                                    height: '100%',          
+                                                    maxHeight: '200px',    
+                                                    margin: 0,             
+                                                    display: 'block',
+                                                    objectFit: 'cover',
+                                                    verticalAlign: 'top',
+                                                    borderRadius: '5px'
+                                                }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <p>등록된 이미지가 없습니다.</p>
+                                    )}
+                                </div>
+                                <p></p>
+                                <div style={{ 
+                                    border: board.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
+                                    borderRadius: '5px', 
+                                    backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
+                                    padding: '5px', 
+                                    textAlign: 'center',
+                                    marginTop: '1px',
+                                    width: '260px',
+                                    margin: '0 auto'
+                                }}>
+                                    <p style={{ 
+                                        color:  '#fff' ,
+                                        margin: 0
+                                    }}>
+                                   {getAuthLabel(board.imgPost.auth)}
+                                    </p>
+                                </div>
+                                <p></p>
+                                <table style={{ 
+                                    width: '100%', 
+                                    borderCollapse: 'collapse',
+                                    border: 'none'  
+                                }}>
+                                    <tbody>
+                                        <tr style={{ border: 'none' }}>  
+                                            <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성자</td>
+                                            <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{board.imgPost.memId}</td>
+                                        </tr>
+                                        <tr style={{ border: 'none' }}>
+                                            <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
+                                            <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
+                                            <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                                 <b> {board.imgPost.title}</b>  
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                        <tr style={{ border: 'none' }}>
+                                            <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>인증유형</td>
+                                            <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{getCateLabel(board.imgPost.cate)}</td>
+                                        </tr>
+                                        <tr style={{ border: 'none' }}>
+                                            <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성일</td>
+                                            <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{new Date(board.imgPost.created).toLocaleDateString()}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <p></p>
-                            <table style={{ 
-                                width: '100%', 
-                                borderCollapse: 'collapse',
-                                border: 'none'  
-                            }}>
-                                <tbody>
-                                    <tr style={{ border: 'none' }}>  
-                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성자</td>
-                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{board.imgPost.memId}</td>
-                                    </tr>
-                                    <tr style={{ border: 'none' }}>
-                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
-                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
-                                        <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                             <b> {board.imgPost.title}</b>  
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                    <tr style={{ border: 'none' }}>
-                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>인증유형</td>
-                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{getCateLabel(board.imgPost.cate)}</td>
-                                    </tr>
-                                    <tr style={{ border: 'none' }}>
-                                        <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성일</td>
-                                        <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{new Date(board.imgPost.created).toLocaleDateString()}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        ))
+                    ) : (
+                        <div style={{ 
+                            width: '100%', 
+                            textAlign: 'center', 
+                            padding: '50px',
+                            backgroundColor: '#f8f9fa',
+                            borderRadius: '5px',
+                            margin: '20px 0'
+                        }}>
+                            <p style={{ fontSize: '18px', color: '#6c757d' }}>
+                                <i className="fas fa-search" style={{ marginRight: '10px' }}></i>
+                                검색 결과가 없습니다.
+                            </p>
                         </div>
-                    ))}
+                    )}
                 </div>
 
                 {/* 페이지네이션 및 글쓰기 버튼 */}

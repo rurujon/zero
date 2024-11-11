@@ -160,7 +160,7 @@
 }
 
 .Qmodal .OX .oxBox .btn{
-    /* background-color: black; */
+    background-color: rgba(0, 0, 0, 0);
 
     width: 45%;
     height: 80%;
@@ -197,7 +197,7 @@
 
         color: black;
 
-        background: none;
+        background-color: none;
 
         border: 1px solid currentColor;
 
@@ -205,7 +205,7 @@
 }
 
 .Qmodal .OX .oxBox button:hover {
-    background-color: #a52a2a;
+    background-color: #03c75a;
     transition: background-color 0.3s ease;
 }
 .Qmodal .Quiz {

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./QuizModal.css"
 const QuizOX = ({setResult}) => {
     return (
     <div className='OX'>

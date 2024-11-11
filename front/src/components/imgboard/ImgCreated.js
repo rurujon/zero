@@ -51,6 +51,8 @@ const ImgCreated = () => {
 
     useEffect(() => {
         if (updatedMode) {
+            alert("기존이미지는 수정할 수 없습니다.");
+            
             const fetchArticle = async () => {
                 setLoading(true);
                 try {
