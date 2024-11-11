@@ -30,7 +30,7 @@ const Zerodongheng = () => {
                     <fieldset style={{width:'70%'}}>
                         <legend>1. 포인트 제도와 참여 유도</legend>
                         <div>
-                            <ui style={{fontSize:'20px'}}>
+                            <ul style={{fontSize:'20px'}}>
                                 <li>
                                 출석체크, 퀴즈 풀기, 커뮤니티 게시판 활동 등으로 사용자에게 친환경 활동 시 할인 혜택을 제공합니다.
                                 </li>
@@ -38,11 +38,11 @@ const Zerodongheng = () => {
                                 <li>
                                 온라인뿐만 아니라 실생활에서도 지속적인 참여를 유도할 수 있습니다.
                                 </li>
-                            </ui>
+                            </ul>
                         </div>
                     </fieldset>
                     <div >
-                        <fieldset fieldset style={{width:'auto'}}>
+                        <fieldset style={{width:'auto'}}>
                             <img src='/images/zerodonghaeng/change.png' style={{width:'99%', height:'99%', objectFit:'cover', borderRadius:'5px'}} alt='change'/>
                         </fieldset>
                     </div>
