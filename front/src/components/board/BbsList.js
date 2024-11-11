@@ -21,7 +21,7 @@ function BbsList() {
     const getBbsList = async (choice, search, page, memId = "") => {
         try {
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
-            const response = await axios.get("http://localhost:8080/board/list", {
+            const response = await axios.get("/board/list", {
                 headers: headers,
                 params: { choice, search, page, category, memId }
             });

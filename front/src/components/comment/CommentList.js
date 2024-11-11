@@ -9,7 +9,7 @@ function CommentList({ boardno }) {
 
     const getCommentList = async (page) => {
         try {
-            const resp = await axios.get(`http://localhost:8080/comment/list`, {
+            const resp = await axios.get(`/comment/list`, {
                 params: { "boardno": boardno, "page": page }
             });
 

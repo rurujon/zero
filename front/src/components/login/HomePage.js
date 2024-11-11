@@ -148,12 +148,12 @@ const HomePage = () => {
                         {/* 버튼 그룹 */}
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <div style={{ display: 'flex', marginBottom: '5px' }}>
-                                <button onClick={handleMemberInfo} className="btn btn-info">회&nbsp;원&nbsp;정&nbsp;보&nbsp;</button>&nbsp;
-                                <button onClick={handlePointInfo} className="btn btn-success">회원포인트</button>&nbsp;
+                                <button onClick={handleMemberInfo} className="btn btn-info" style={{border:'none'}}>회&nbsp;원&nbsp;정&nbsp;보&nbsp;</button>&nbsp;
+                                <button onClick={handlePointInfo} className="btn btn-success" style={{border:'none'}}>회원포인트</button>&nbsp;
                             </div>
                             <div style={{ display: 'flex' }}>
-                                <button onClick={openQuizModal} className="btn btn-primary">오늘의퀴즈</button>&nbsp;
-                                <button onClick={handleLogout} className="btn btn-danger">로&nbsp;그&nbsp;아&nbsp;웃&nbsp;</button>&nbsp;
+                                <button onClick={openQuizModal} className="btn btn-primary" style={{border:'none'}}>오늘의퀴즈</button>&nbsp;
+                                <button onClick={handleLogout} className="btn btn-danger" style={{border:'none'}}>로&nbsp;그&nbsp;아&nbsp;웃&nbsp;</button>&nbsp;
                                 {/* 관리자 페이지 버튼 */}
                                 {role === 'ADMIN' && (
                                     <button onClick={() => navigate('/admin')} className="btn btn-warning">관리자모드</button>

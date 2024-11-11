@@ -42,7 +42,7 @@ function BbsWrite() {
 
 		setLoading(true);
 		try {
-			await axios.post("http://localhost:8080/board/uploadFile", formData, {
+			await axios.post("/board/uploadFile", formData, {
 				headers: {
 					...headers,
 					"Content-Type": "multipart/form-data",
@@ -90,7 +90,7 @@ function BbsWrite() {
 
 		setLoading(true);
 		try {
-			const resp = await axios.post("http://localhost:8080/board/write", formData, {
+			const resp = await axios.post("/board/write", formData, {
 				headers: {
 					...headers,
 					"Content-Type": "multipart/form-data",

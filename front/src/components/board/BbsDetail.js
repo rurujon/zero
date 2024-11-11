@@ -29,7 +29,7 @@ function BbsDetail() {
 
     const getBbsDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/board/${boardno}`, {
+            const response = await axios.get(`/board/${boardno}`, {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { readerId: memId || "" }
             });
@@ -44,7 +44,7 @@ function BbsDetail() {
         if (!confirmed) return;
 
         try {
-            const response = await axios.get(`http://localhost:8080/board/delete/${boardno}`, {
+            const response = await axios.get(`/board/delete/${boardno}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -79,7 +79,7 @@ function BbsDetail() {
 
     const getMaxBoardNo = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/board/maxBoardNo`);
+            const response = await axios.get(`/board/maxBoardNo`);
             setMaxBoardNo(response.data.maxBoardNo);
         } catch (err) {
             console.log("[BbsDetail.js] getMaxBoardNo() error :<", err);
@@ -119,17 +119,13 @@ function BbsDetail() {
                         <button 
                             className="btn btn-outline-secondary" 
                             onClick={() => navigate(`/board/${parseInt(boardno) - 1}`)}
-                        >
-                            <i className="fas fa-arrow-left"></i> 이전글
-                        </button>
+                        >이전글</button>
                     )} &nbsp;
                     {maxBoardNo && parseInt(boardno) < maxBoardNo && (
                         <button 
                             className="btn btn-outline-secondary" 
                             onClick={() => navigate(`/board/${parseInt(boardno) + 1}`)}
-                        >
-                            다음글 <i className="fas fa-arrow-right"></i>
-                        </button>
+                        >다음글</button>
                     )}
                 </div>
 

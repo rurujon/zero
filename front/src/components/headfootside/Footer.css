@@ -24,7 +24,9 @@
 /* Footer left */
 
 .footer-distributed .footer-left{
-	width: 40%;
+	width: 320px;
+    margin-right: 130px;
+    margin-left: 110px;
 }
 
 /* The company logo */
@@ -65,7 +67,8 @@
 /* Footer Center */
 
 .footer-distributed .footer-center{
-	width: 35%;
+	width: 310px;
+    margin: 0 180px;
 }
 
 .footer-distributed .footer-center i{
@@ -123,7 +126,9 @@
 /* Footer Right */
 
 .footer-distributed .footer-right{
-	width: 20%;
+	width: 340px;
+    margin-right: 120px;
+    margin-left: 100px;
 }
 
 .footer-distributed .footer-company-about{
@@ -157,7 +162,7 @@
 	.footer-distributed .footer-center,
 	.footer-distributed .footer-right{
 		display: block;
-		width: 100%;
+		width: 400px;
 		margin-bottom: 40px;
 		text-align: center;
 	}
