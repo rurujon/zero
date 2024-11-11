@@ -51,7 +51,6 @@ const ImgCreated = () => {
 
     useEffect(() => {
         if (updatedMode) {
-            alert("기존이미지는 수정할 수 없습니다.");
             
             const fetchArticle = async () => {
                 setLoading(true);
@@ -265,7 +264,7 @@ const ImgCreated = () => {
                                     onChange={(evt) => setContent(evt.target.value)} 
                                     ref={contentRef} 
                                     className="form-control"
-                                    style={{ minHeight: '100px' }}
+                                    style={{ minHeight: '100px', whiteSpace: 'pre-wrap' }}
                                     required 
                                 />
                             </div>
