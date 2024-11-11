@@ -114,11 +114,12 @@ function RssData() {
     return (
         <div className='RSS-container'>
             <div className='RSS-main-title'>
-                <h1>환경부</h1>
-                {role === 'ADMIN' && (
+                <h1>환경부 정책소식</h1>
+                
+            </div>
+            {role === 'ADMIN' && (
                         <button onClick={handleUpdate}>Crawl News</button>
                     )}
-            </div>
 
             <div className='rss-search-line'>
                 
