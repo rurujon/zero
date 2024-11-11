@@ -50,7 +50,7 @@ function CommentWrite(props) {
 	
 			// `boardno`를 URL 쿼리 파라미터로 전달
 			const resp = await axios.post(
-				`http://localhost:8080/comment/write?boardno=${boardno}`,
+				`/comment/write?boardno=${boardno}`,
 				req, // JSON 형식으로 전송
 				{ headers }
 			);

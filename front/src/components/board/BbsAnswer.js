@@ -40,7 +40,7 @@ function BbsAnswer() {
         };
         
         try {
-            const resp = await axios.post(`http://localhost:8080/board/${parentno}/answer`, req, { headers });
+            const resp = await axios.post(`/board/${parentno}/answer`, req, { headers });
             console.log("[BbsAnswer.js] createBbsAnswer() success :D");
 
             alert("답글이 등록되었습니다.");

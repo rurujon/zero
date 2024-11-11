@@ -22,7 +22,7 @@ function MainPageApp() {
             </div>
             <div className="main-right-banner2">
               <a href="http://192.168.16.4:3000/" target="_blank">
-              <img src="images/logo_gray2.png" ></img></a>
+              <img src="images/logo_red2.png" ></img></a>
             </div>
             <div className="main-right-banner3">
               <a href="http://192.168.16.23:3000/" target="_blank">

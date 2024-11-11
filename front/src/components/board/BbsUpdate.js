@@ -40,7 +40,7 @@ function BbsUpdate() {
         };
 
         try {
-            const resp = await axios.post(`http://localhost:8080/board/update/${board.boardno}`, req, { headers });
+            const resp = await axios.post(`/board/update/${board.boardno}`, req, { headers });
             console.log("[BbsUpdate.js] updateBoard() success :D");
 
             if (resp.data.updatedRecordCount === 1) {

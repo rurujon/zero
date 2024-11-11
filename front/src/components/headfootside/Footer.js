@@ -9,44 +9,46 @@ import { faGithub, faInstagram, faSquareFacebook, faTwitter } from '@fortawesome
 const Footer = () => {
   return (
     <footer className="footer-distributed">
-      <div className="footer-left">
-      <Link to="/mainpage"><img src='/images/login/elogo.png' style={{width: '250px', cursor: 'pointer'}} alt="홈" /></Link>
-        <p className="footer-links">
-          <a href="#" className="link-1">Home</a>
-          <a href="#">Notice</a>
-          <a href="#">About</a>
-          <a href="#">Faq</a>
-          <a href="#">Contact</a>
-        </p>
-        <p className="footer-company-name">ZERO TOGETHER © 2024</p>
-      </div>
-
-      <div className="footer-center">
-        <div>
-          <FontAwesomeIcon icon={faLocationDot} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
-          <p><span>Samwon Tower 406</span>124 Teheran-ro, Gangnam-gu, Seoul</p>
-        </div><br/>
-        <div>
-          <FontAwesomeIcon icon={faPhone} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
-          <p>+82.10.8012.1965</p>
-        </div><br/>
-        <div>
-          <FontAwesomeIcon icon={faEnvelope} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
-          <p><a href="mailto:support@company.com">zerotogather@gmail.com</a></p>
+      <div style={{display:'flex', justifyContent:'center', alignContent:'center'}}>
+        <div className="footer-left">
+        <Link to="/mainpage"><img src='/images/login/elogo.png' style={{width: '250px', cursor: 'pointer'}} alt="홈" /></Link>
+          <p className="footer-links">
+            <a href="#" className="link-1">Home</a>
+            <a href="#">Notice</a>
+            <a href="#">About</a>
+            <a href="#">Faq</a>
+            <a href="#">Contact</a>
+          </p>
+          <p className="footer-company-name">ZERO TOGETHER © 2024</p>
         </div>
-      </div>
 
-      <div className="footer-right">
-        <p className="footer-company-about">
-          <span>About the Zero Together</span>
-          Your guide to sustainable living, offering tips, resources, and community insights on zero waste.
-        </p>
-        {/* <div className="footer-icons">
-          <a href="#"><FontAwesomeIcon icon={faInstagram} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
-          <a href="#"><FontAwesomeIcon icon={faTwitter} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
-          <a href="#"><FontAwesomeIcon icon={faSquareFacebook} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
-          <a href="#"><FontAwesomeIcon icon={faGithub} size="2xl" style={{color: "#ffffff",}} /></a>
-        </div> */}
+        <div className="footer-center">
+          <div>
+            <FontAwesomeIcon icon={faLocationDot} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
+            <p><span>Samwon Tower 406</span>124 Teheran-ro, Gangnam-gu, Seoul</p>
+          </div><br/>
+          <div>
+            <FontAwesomeIcon icon={faPhone} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
+            <p>+82.10.8012.1965</p>
+          </div><br/>
+          <div>
+            <FontAwesomeIcon icon={faEnvelope} size="xl" style={{color: "#ffffff", marginRight:'20'}} />
+            <p><a href="mailto:support@company.com">zerotogather@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div className="footer-right">
+          <p className="footer-company-about">
+            <span>About the Zero Together</span>
+            Your guide to sustainable living, offering tips, resources, and community insights on zero waste.
+          </p>
+          {/* <div className="footer-icons">
+            <a href="#"><FontAwesomeIcon icon={faInstagram} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
+            <a href="#"><FontAwesomeIcon icon={faTwitter} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
+            <a href="#"><FontAwesomeIcon icon={faSquareFacebook} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
+            <a href="#"><FontAwesomeIcon icon={faGithub} size="2xl" style={{color: "#ffffff",}} /></a>
+          </div> */}
+        </div>
       </div>
     </footer>
   );

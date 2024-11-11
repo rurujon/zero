@@ -33,7 +33,7 @@ function Comment(props) {
 		const req = { content };
 		
 		try {
-			const resp = await axios.post(`http://localhost:8080/comment/${comment.commentno}?boardno=${comment.boardno}`, req, { headers });
+			const resp = await axios.post(`/comment/${comment.commentno}?boardno=${comment.boardno}`, req, { headers });
 			console.log("[Comment.js] updateComment() success :D", resp.data);
 			
 			if (resp.data.updatedContent) {
@@ -56,7 +56,7 @@ function Comment(props) {
 	
 		try {
 			const headers = { Authorization: `Bearer ${token}` };
-			const resp = await axios.delete(`http://localhost:8080/comment/${comment.commentno}`, { headers });
+			const resp = await axios.delete(`/comment/${comment.commentno}`, { headers });
 			console.log("[Comment.js] deleteComment() success :D", resp.data);
 	
 			if (resp.data.deletedRecordCount === 1) {
