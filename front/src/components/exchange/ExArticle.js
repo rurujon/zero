@@ -6,7 +6,7 @@ import '../board/bbs.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-//토큰(-)
+//토큰(+)
 const ExArticle = () => {
     const { token } = useContext(AuthContext);
 
@@ -101,7 +101,6 @@ const uppoint = async () => {
             reason:  "장바구니 교환"// 변경 사유
         });
         console.log('포인트 업데이트 성공:', response.data);
-        alert("포인트 업데이트 성공 ")
 
     } catch (error) {
         console.error('포인트 업데이트 실패:', error.response ? error.response.data : error.message);
