@@ -28,7 +28,7 @@ public class CrawlerController {
     public ResponseEntity<String> crawlSeoulNews(@RequestParam String group) {
         //TODO: process POST request
 
-        int totalPage = 10;
+        int totalPage = 5;
 
         crawlerService.crawling(totalPage, group);
         
