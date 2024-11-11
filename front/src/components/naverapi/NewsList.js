@@ -11,9 +11,12 @@ const NewsContainer = styled.div`
 `;
 
 const NewsHeader = styled.h1`
-  color: #333;
+  color: #2ecc71;
   text-align: center;
   margin-bottom: 30px;
+  font-size : 2rem;
+  font-weight : bold;
+  
 `;
 
 const NewsListContainer = styled.ul`
@@ -311,7 +314,7 @@ const NewsList = () => {
 
   return (
     <NewsContainer>
-      <NewsHeader>Naver NEWS</NewsHeader>
+      <NewsHeader>네이버 환경소식</NewsHeader>
       {role === 'ADMIN' && (
                         <button onClick={updateNewsData}>Crawl News</button>
                     )}

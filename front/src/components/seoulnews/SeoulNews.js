@@ -163,7 +163,7 @@ const SeoulNews = () => {
 
   return (
     <div className='seoul_container'>
-      <h1>Seoul News</h1>
+      <h1>서울시 환경소식</h1>
       <div className='seoul-tab-bar'>
         <div className='seoul-tab-bar'>
           <button className={`seoul_tab_btn ${selectedCategory === 'all' ? 'active' : ''}`}
