@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
-import '../board/bbs.css';
+import './exlist.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthContext } from '../login/context/AuthContext';
@@ -39,6 +39,8 @@ function ExList() {
     };
 
     useEffect(() => {
+        console.log('Current role:', role);  // 디버깅용
+        console.log('Current memId:', memId);  // 디버깅용
         fetchExchanges();
     }, []);
 
@@ -170,46 +172,53 @@ function ExList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {getPaginatedResults().map((board, index) => (
-                            <tr 
-                                key={`${board.exchangeId}_${index}`}
-                                onClick={() => {
-                                    if (role === 'ADMIN' || memId === board.memId) {
-                                        window.location.href = `/exchange/article?exchangeId=${board.exchangeId}`;
-                                    } else {
-                                        alert("작성자만 조회 가능합니다.");
-                                    }
-                                }}
-                                style={{
-                                    cursor: (role === 'ADMIN' || memId === board.memId) ? 'pointer' : 'not-allowed'
-                                }}
-                            >
-                                <td className="table-cell-bold">{board.exchangeId}</td>
-                                <td>
-                                    <div style={{
-                                        border: board.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
-                                        borderRadius: '5px',
-                                        backgroundColor: board.auth === 0 ? '#D2D2D2' : '#008000',
-                                        padding: '3px',
-                                        textAlign: 'center',
-                                        width: '100px',
-                                        margin: '0 auto'
-                                    }}>
-                                        <span style={{
-                                            color: '#fff',
-                                            margin: 0,
-                                            fontSize: '14px'
+                        {getPaginatedResults().map((board, index) => {
+                            console.log('Board row - role:', role);  // 각 행별 role 확인
+                            console.log('Board row - memId:', memId);  // 각 행별 memId 확인
+                            console.log('Board row - board.memId:', board.memId);  // 게시글 작성자 ID 확인
+                            
+                            return (
+                                <tr 
+                                    key={`${board.exchangeId}_${index}`}
+                                    onClick={() => {
+                                        if (role === 'ADMIN' || memId === board.memId) {
+                                            window.location.href = `/exchange/article?exchangeId=${board.exchangeId}`;
+                                        } else {
+                                            alert("작성자만 조회 가능합니다.");
+                                        }
+                                    }}
+                                    style={{
+                                        cursor: (role === 'ADMIN' || memId === board.memId) ? 'pointer' : 'not-allowed',
+                                        backgroundColor: (role === 'ADMIN' || memId === board.memId) ? 'white' : '#e9ecef'  // 조건부 배경색 적용
+                                    }}
+                                >
+                                    <td className="table-cell-bold">{board.exchangeId}</td>
+                                    <td>
+                                        <div style={{
+                                            border: board.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
+                                            borderRadius: '5px',
+                                            backgroundColor: board.auth === 0 ? '#D2D2D2' : '#008000',
+                                            padding: '3px',
+                                            textAlign: 'center',
+                                            width: '100px',
+                                            margin: '0 auto'
                                         }}>
-                                            {getAuthLabel(board.auth)}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td><i className="bi bi-lock-fill"></i></td>
-                                <td>{board.title}</td>
-                                <td>{board.memId}</td>
-                                <td>{new Date(board.created).toLocaleDateString()}</td>
-                            </tr>
-                        ))}
+                                            <span style={{
+                                                color: '#fff',
+                                                margin: 0,
+                                                fontSize: '14px'
+                                            }}>
+                                                {getAuthLabel(board.auth)}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td><i className="bi bi-lock-fill"></i></td>
+                                    <td>{board.title}</td>
+                                    <td>{board.memId}</td>
+                                    <td>{new Date(board.created).toLocaleDateString()}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
