@@ -224,8 +224,8 @@ const ExCreated = () => {
     }
 
     return (
-        <div className="container" style={{ maxWidth: "900px" }}>
-            <div className="card mb-4">
+        < div className="container" style={{ maxWidth: "900px" }} >
+            <div className="card mb-4" style={{ backgroundColor: '#FDFBF9' }}>
                 <div className="card-body">
                     <h4 className="mb-4 text-center">장바구니 교환 신청하기</h4>
                     <form onSubmit={handleInsertSubmit} method='post'>
