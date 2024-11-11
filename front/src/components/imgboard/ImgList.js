@@ -196,7 +196,7 @@ function ImgList() {
                                                 maxHeight: '200px',    
                                                 margin: 0,             
                                                 display: 'block',
-                                                objectFit: 'cover',      
+                                                objectFit: 'cover',
                                                 verticalAlign: 'top',
                                                 borderRadius: '5px'
                                             }}

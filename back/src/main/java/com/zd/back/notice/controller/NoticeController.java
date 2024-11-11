@@ -27,8 +27,6 @@ import java.util.UUID;
 import net.coobird.thumbnailator.Thumbnails;
 import java.io.File;
 import java.nio.file.Path;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/notices")
@@ -39,7 +37,7 @@ public class NoticeController {
     @Autowired
     private NoticeService noticeService;
 
-    @Value("${file.upload-dir}")
+    @Value("${file.upload-dir.notices}")
     private String uploadDir;
 
     @PostMapping
@@ -117,7 +115,7 @@ public class NoticeController {
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
-            Path filePath = uploadPath.resolve(fileName);
+            Path filePath = Paths.get(uploadDir).resolve(fileName).normalize();
             File outputFile = filePath.toFile();
 
             Thumbnails.of(file.getInputStream())

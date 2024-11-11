@@ -29,16 +29,16 @@ function AppContent() {
   }, [location]);
 
   return (
-    
+
     <div id='wrap'>
       {/* 헤더는 모든 페이지에서 공통적으로 사용 */}
-      {!isHiddenPage && <HeaderSample/>} 
+      {!isHiddenPage && <HeaderSample/>}
 
-      <div className='container'>  
+      <div className='container'>
 
         {/* 사이드바가 나오는 페이지는 flex 레이아웃을 적용 */}
         <div className={isMainPage ? 'main-content' : 'main-layout'}>
-          
+
           <div className={isMainPage ? 'main-content' : 'content'}>
             <Routes>
               {routes.map((route) => (
@@ -47,7 +47,7 @@ function AppContent() {
             </Routes>
           </div>
         </div>
-      </div>  
+      </div>
 
       {/* 풋터는 모든 페이지에서 공통적으로 사용 */}
       {!isHiddenPage && <Footer className='footer' />}
@@ -62,11 +62,11 @@ function App() {
   return (
     <AuthProvider>
       <HttpHeadersProvider>
-        <AxiosInterceptor>
-          <BrowserRouter>
-            <AppContent/>
-          </BrowserRouter>
-        </AxiosInterceptor>
+        <BrowserRouter>
+          <AxiosInterceptor>
+            <AppContent />
+          </AxiosInterceptor>
+        </BrowserRouter>
       </HttpHeadersProvider>
     </AuthProvider>
   );

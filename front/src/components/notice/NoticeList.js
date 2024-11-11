@@ -29,7 +29,7 @@ const NoticeList = () => {
 
     return (
         <div className="notice-list">
-            <h2 style={{margin:'20px 0'}}>공지사항</h2>
+            <h2 style={{margin:'20px 0'}}>공지사항 게시판</h2>
             <Table striped bordered hover>
                 <thead>
                     <tr>
