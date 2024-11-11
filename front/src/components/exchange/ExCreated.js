@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
 
-//토큰에러해결(-)
+//토큰에러해결(+)
 const ExCreated = () => {
     const navigate = useNavigate();
     const titleRef = useRef(null);
@@ -225,6 +225,7 @@ const ExCreated = () => {
         <div className="container" style={{ maxWidth: "900px" }}>
             <div className="card mb-4">
                 <div className="card-body">
+                    <h4 className="mb-4 text-center">장바구니 교환 신청하기</h4>
                     <form onSubmit={handleInsertSubmit} method='post'>
                         <div className="row mb-3" style={{ borderTop: '1px solid #dee2e6', borderBottom: '1px solid #dee2e6' }}>
                             <div className="col-2 bg-light py-2">사용자 ID</div>
