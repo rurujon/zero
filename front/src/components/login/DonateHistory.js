@@ -76,17 +76,17 @@ const DonateHistory = () => {
 
     return (
         <div>
-            <h2>후원 기록</h2>
+            <h2><b>후원 기록</b></h2>
             {currentData.length > 0 ? (
                 <table >
                     <thead>
-                        <tr>
-                            <th>결제일</th>
-                            <th>구매자 이름</th>
-                            <th>금액(원)</th>
-                            <th>결제 방법</th>
-                            <th>주문 ID</th>
-                            <th>결제 ID</th>
+                        <tr >
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제일</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>구매자 이름</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>금액(원)</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제 방법</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>주문 ID</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제 ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,7 +118,7 @@ const DonateHistory = () => {
                 </button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px' }}>회원정보</button>
+                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px', backgroundColor:'#008000', color:'white'}}>회원정보</button>
             </div>
         </div>
     );
