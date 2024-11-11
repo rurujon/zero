@@ -103,6 +103,7 @@ const ExCreated = () => {
                 setPost(memberData.post);
                 setAddr1(memberData.addr1);
                 setAddr2(memberData.addr2);
+                setTel(memberData.tel);
       
             } catch (error) {
                 console.error('회원 정보 가져오기 오류:', error);
