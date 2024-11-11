@@ -178,13 +178,13 @@ function ExList() {
                                 <td>
                                     {
                                         // 관리자이거나 게시글 작성자인 경우
-                                        (role === 'ADMIN') || (memId !== null && memId === board.memId) ? (
+                                        (role === 'ADMIN' || memId === board.memId) ? (
                                             <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} style={{ color: 'black', textDecoration: 'none' , cursor: 'pointer' }}>
                                                 {board.title}
                                             </Link>
                                         ) : (
                                             <span onClick={() => alert("작성자만 조회 가능합니다.")}
-                                            style={{background:'gray'}}>
+                                                  style={{color: 'gray', cursor: 'not-allowed'}}>
                                                 {board.title}
                                             </span>
                                         )
