@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Table, Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import { Emoji } from 'react-emoji-render';
+import './PointInfoModal.css';
+
+
 const gradeEmojis = {
     'LEVEL1': '🥉',
     'LEVEL2': '🥈',
@@ -53,7 +56,7 @@ const PointInfoModal = ({ show, onHide, memId }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide} size="lg">
+        <Modal show={show} onHide={onHide} size="lg" className="point-info-modal">
             <Modal.Header closeButton>
                 <Modal.Title>포인트 정보</Modal.Title>
             </Modal.Header>
