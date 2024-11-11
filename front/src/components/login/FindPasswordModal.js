@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import './PointInfoModal.css';
 
 const FindPasswordModal = ({ show, onHide }) => {
     const [memId, setMemId] = useState('');
@@ -24,7 +25,7 @@ const FindPasswordModal = ({ show, onHide }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide} className='find-pwd-modal'>
+        <Modal show={show} onHide={onHide} className='point-info-modal'>
             <Modal.Header closeButton>
                 <Modal.Title>비밀번호 찾기</Modal.Title>
             </Modal.Header>

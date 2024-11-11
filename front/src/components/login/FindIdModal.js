@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import axios from 'axios'
+import './PointInfoModal.css';
 
 const FindIdModal = ({ show, onHide }) => {
     const [email, setEmail] = useState('')
@@ -23,7 +24,7 @@ const FindIdModal = ({ show, onHide }) => {
     };
 
     return (
-        <Modal show={show} onHide={onHide} className='find-id-modal'>
+        <Modal show={show} onHide={onHide} className='point-info-modal'>
             <Modal.Header closeButton>
                 <Modal.Title>아이디 찾기</Modal.Title>
             </Modal.Header>
