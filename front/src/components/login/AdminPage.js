@@ -6,6 +6,7 @@ import { Table, Form, Button, Pagination, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
+import './PointInfoModal.css';
 
 ReactQuill.Quill.register('modules/imageResize', ImageResize);
 
@@ -288,7 +289,7 @@ const AdminPage = () => {
       </Pagination>
 
       {/* 포인트 관리 모달 */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} className="point-info-modal">
         <Modal.Header closeButton>
           <Modal.Title>포인트 조정</Modal.Title>
         </Modal.Header>
@@ -327,7 +328,7 @@ const AdminPage = () => {
       </Modal>
 
      {/* 공지사항 모달 */}
-<Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)}>
+<Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)} className="point-info-modal">
   <Modal.Header closeButton>
     <Modal.Title>{noticeOperation === 'create' ? '새 공지사항 작성' : '공지사항 수정'}</Modal.Title>
   </Modal.Header>

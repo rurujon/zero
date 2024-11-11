@@ -45,7 +45,7 @@ const NoticeList = () => {
                             <td>
                                 <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
                             </td>
-                            <td>{notice.author}</td>
+                            <td>ADMIN</td>
                             <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
                             <td>{notice.views}</td>
                         </tr>

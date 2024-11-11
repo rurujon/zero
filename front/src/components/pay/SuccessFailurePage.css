@@ -12,7 +12,7 @@ h1, h2 {
 
 .title {
   font-size: 2.5em;
-  color: #2ecc71; /* 초록색 포인트 */
+  color: #008000; /* 초록색 포인트 */
   margin-bottom: 10px;
 }
 
@@ -44,7 +44,7 @@ h1, h2 {
 }
 
 .success-page .highlight {
-  color: #2ecc71; /* 초록색 포인트 */
+  color: #008000; /* 초록색 포인트 */
   font-weight: bold;
 }
 
@@ -60,7 +60,7 @@ h1, h2 {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 1.2em;
-  background-color: #2ecc71; /* 초록색 */
+  background-color: #008000; /* 초록색 */
   color: white;
   border-radius: 5px;
   text-align: center;
