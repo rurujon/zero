@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('memId');
             localStorage.removeItem('role');
+            localStorage.setItem('logoutEvent', Date.now().toString());
             delete axios.defaults.headers.common['Authorization'];
         }
     }, [token]);
@@ -54,6 +55,20 @@ export const AuthProvider = ({ children }) => {
             setIsRefreshing(false);
         }
     }, [refreshToken, logout, isRefreshing]);
+
+    useEffect(() => {
+        const handleStorageChange = (e) => {
+            if (e.key === 'logoutEvent') {
+                logout();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [logout]);
 
     useEffect(() => {
         const checkTokenExpiration = async () => {
