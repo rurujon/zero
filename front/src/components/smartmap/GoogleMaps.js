@@ -83,17 +83,17 @@ const GoogleMaps = () => {
       .then(data => setStores(data))
       .catch(error => console.error('Error fetching data:', error));
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error('Error getting location', error);
-        }
-      );
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       const { latitude, longitude } = position.coords;
+    //       setCurrentLocation({ lat: latitude, lng: longitude });
+    //     },
+    //     (error) => {
+    //       console.error('Error getting location', error);
+    //     }
+    //   );
+    // }
     
   }
 
@@ -238,7 +238,7 @@ const GoogleMaps = () => {
               return null;
             })}
 
-            {currentLocation && mapLoaded && (
+            {/* {currentLocation && mapLoaded && (
               <Marker
                 position={currentLocation}
                 title="현재 위치"
@@ -255,7 +255,7 @@ const GoogleMaps = () => {
 
             <button className="current-location-button" onClick={handlePanToCurrentLocation}>
               홈
-            </button>
+            </button> */}
           </GoogleMap>
         
         
