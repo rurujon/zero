@@ -3,7 +3,7 @@ import './Maincss.css'
 const Upcycling = () => {
     return (
         <div className="zero-waste-intro">
-        <h2 style={{textAlign:'center', marginBottom:'20px'}}>업사이클링이란?</h2>
+        <h2 style={{textAlign:'center', marginBottom:'20px'}}><strong>업사이클링이란?</strong></h2>
         <p>
           업사이클링은 기존에 버려지거나 쓸모없어진 물건을 창의적으로 재활용하여 새로운 가치를 만들어내는 과정입니다. 
           자원 낭비를 줄이고 환경을 보호하는 중요한 활동으로, 일상 속에서 쉽게 실천할 수 있습니다.
@@ -13,7 +13,7 @@ const Upcycling = () => {
         <hr/>
         <br/><br/>
 
-        <h3>업사이클링의 효과</h3>
+        <h3><strong>업사이클링의 효과</strong></h3>
 
         <ul>
           <li><strong>자원 절약:</strong> 새로운 제품을 만들기 위해 필요한 자원을 줄입니다.</li>
@@ -24,7 +24,7 @@ const Upcycling = () => {
         <br/><br/>
         <hr/>
 
-        <h3 style={{textAlign:'center'}}>업사이클링 아이디어</h3>
+        <h3 style={{textAlign:'center'}}><strong>업사이클링 아이디어</strong></h3>
         <div className="image-container">
         
           <div className='image1'>

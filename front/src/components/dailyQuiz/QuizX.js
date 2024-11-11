@@ -28,9 +28,9 @@ return (
 
 
         <div>
-            <span> ❌오답입니다!❌ </span>
+            <span> <h1>❌오답입니다!❌ </h1></span>
             <br/>
-            <span>정답: {result}</span>
+            <span>정답은! {result}</span>
         </div>
         <div>
         <fieldset>
