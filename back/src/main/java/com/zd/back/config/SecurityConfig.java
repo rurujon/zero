@@ -95,6 +95,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://192.168.16.21:3000"); // +클라이언트의 실제 주소를 추가
+        configuration.addAllowedOrigin("http://192.168.16.24:3000"); // +클라이언트의 실제 주소를 추가
         configuration.addAllowedOrigin("http://192.168.16.20:3000"); // +클라이언트의 실제 주소를 추가
         configuration.addAllowedOrigin("http://192.168.16.15:3000"); // +클라이언트의 실제 주소를 추가
         configuration.addAllowedOrigin("http://192.168.16.2:3000");

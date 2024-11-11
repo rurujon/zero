@@ -11,7 +11,7 @@ const Pay = () => {
   const [amount, setAmount] = useState("");
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
-  const { token, setToken } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [memId] = useState(localStorage.getItem('memId'));
 
   const [memberInfo, setMemberInfo] = useState({
@@ -113,12 +113,18 @@ const Pay = () => {
           };
 
           if (response.success) {
-              await axios.post('/payment/paymentHistory', paymentData);
-              navigate('/success', { state: { amount, memberInfo, response } });
-          } else {
-              await axios.post('/payment/paymentHistory', paymentData);
-              navigate('/failure', { state: { error: response.error_msg, response } });
-          }
+            await axios.post('/payment/paymentHistory', paymentData, {
+                headers: { Authorization: `Bearer ${token}` } // Authorization 헤더 추가
+            });
+            navigate('/success', { state: { amount, memberInfo, response } });
+        } else {
+            await axios.post('/payment/paymentHistory', paymentData, {
+                headers: { Authorization: `Bearer ${token}` } // Authorization 헤더 추가
+            });
+            console.log(response);
+            navigate('/failure', { state: { error: response.error_msg, response } });
+        }
+        
       }
     );
   };
