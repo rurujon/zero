@@ -31,6 +31,9 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('role');
             localStorage.setItem('logoutEvent', Date.now().toString());
             delete axios.defaults.headers.common['Authorization'];
+            // 로그아웃 후 /mainpage로 리다이렉션
+            window.location.href = '/mainpage';
+
         }
     }, [token]);
 

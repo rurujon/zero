@@ -89,7 +89,7 @@ const MemberInfoPage = () => {
           logout();
           window.close();
           if (window.opener) {
-            window.opener.location.reload();
+            window.opener.location.href = '/mainpage';
           }
         })
         .catch((error) => {

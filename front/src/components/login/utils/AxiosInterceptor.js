@@ -36,7 +36,7 @@ const AxiosInterceptor = ({ children }) => {
                     } catch (refreshError) {
                         console.error('토큰 갱신 중 오류:', refreshError);
                         await logout();
-                        navigate('/login', { state: { message: '인증 정보가 만료되었습니다. 다시 로그인해주세요.' } });
+                        navigate('/mainpage', { state: { message: '인증 정보가 만료되었습니다. 다시 로그인해주세요.' } });
                         return Promise.reject(error);
                     }
                 }
@@ -46,7 +46,7 @@ const AxiosInterceptor = ({ children }) => {
 
         const handleStorageChange = (e) => {
             if (e.key === 'logoutEvent') {
-                navigate('/login', { state: { message: '다른 탭에서 로그아웃되었습니다.' } });
+                navigate('/mainpage', { state: { message: '다른 탭에서 로그아웃되었습니다.' } });
             }
         };
 
