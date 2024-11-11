@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
             delete axios.defaults.headers.common['Authorization'];
             // 로그아웃 후 /mainpage로 리다이렉션
             window.location.href = '/mainpage';
-
         }
     }, [token]);
 
@@ -49,6 +48,13 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', newToken);
             localStorage.setItem('refreshToken', newRefreshToken);
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+
+            // 콘솔 메시지 추가
+            console.log('토큰이 자동으로 갱신되었습니다.');
+
+            // 사용자 알림 추가
+            alert('보안을 위해 인증이 갱신되었습니다. 계속해서 서비스를 이용해 주세요.');
+
             return newToken;
         } catch (error) {
             console.error('토큰 갱신 실패:', error);
