@@ -6,7 +6,7 @@ import '../board/bbs.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-//토큰(+)
+//토큰(-)
 const ExArticle = () => {
     const { token } = useContext(AuthContext);
 
@@ -46,8 +46,7 @@ const ExArticle = () => {
                 const response = await axios.get('/exchange/article', {
                     params: { exchangeId }
                 });
-                setArticle(response.data);
-                
+                setArticle(response.data);                
                 setLoading(false);
             } catch (error) {
                 console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
@@ -92,7 +91,7 @@ const ExArticle = () => {
 //포인트 상승
 const uppoint = async () => {
     try {
-        const response = await axios.post('http://localhost:8080/api/point/update', {
+        const response = await axios.post('/api/point/update', {
             memId: article.memId,
             oper: '-',  // 또는 '-'
             updown: 300, // 추가하거나 차감할 포인트 수
