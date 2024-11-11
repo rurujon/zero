@@ -119,7 +119,7 @@ const NoticeDetail = () => {
             <h2 style={{margin:'20px 0'}}>공지사항 본문</h2>
             <h2 className="title" style={{marginBottom: '30px'}}>제&nbsp;&nbsp;&nbsp;목&nbsp;:&nbsp;{notice.title}</h2>
             <div className='notice-r'>
-                <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;자&nbsp;&nbsp;:&nbsp;&nbsp;{notice.author}</span>
+                <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;자&nbsp;&nbsp;:&nbsp;&nbsp;ADMIN</span>
                 <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;일&nbsp;&nbsp;:&nbsp;&nbsp;{new Date(notice.createdAt).toLocaleString()}</span>
                 <span className="label">조&nbsp;&nbsp;회&nbsp;&nbsp;수&nbsp;&nbsp;:&nbsp;&nbsp;{notice.views}</span>
             </div>
