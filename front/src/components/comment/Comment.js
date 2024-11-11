@@ -88,7 +88,7 @@ function Comment(props) {
 						<div>
 							<button className="btn btn-sm btn-link" onClick={() => setIsEditing(!isEditing)}>
 								{isEditing ? "취소" : "수정"}
-							</button>
+							</button>&nbsp;
 							<button className="btn btn-sm btn-link text-danger" onClick={deleteComment}>
 								삭제
 							</button>
