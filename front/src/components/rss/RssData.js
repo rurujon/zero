@@ -161,7 +161,7 @@ function RssData() {
                                 state={{ previousPage: currentPage }}>
                                 <p className='rss-NewsDescription'>{item.description}</p>
                             </Link>
-                            <span className='rss-NewsDate'>등록일 : {item.pubDate}</span>
+                            <span className='rss-NewsDate'>조회수 : {item.pubDate}</span>
                         </li>
                     ))}
                 </ul>
