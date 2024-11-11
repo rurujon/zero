@@ -83,17 +83,17 @@ const GoogleMaps = () => {
       .then(data => setStores(data))
       .catch(error => console.error('Error fetching data:', error));
 
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(
-    //     (position) => {
-    //       const { latitude, longitude } = position.coords;
-    //       setCurrentLocation({ lat: latitude, lng: longitude });
-    //     },
-    //     (error) => {
-    //       console.error('Error getting location', error);
-    //     }
-    //   );
-    // }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error('Error getting location', error);
+        }
+      );
+    }
     
   }
 
