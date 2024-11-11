@@ -44,12 +44,15 @@ const ExArticle = () => {
         const fetchArticle = async () => {
             try {
                 const response = await axios.get('/exchange/article', {
-                    params: { exchangeId }
+                    params: { exchangeId },
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
                 setArticle(response.data);                
                 setLoading(false);
             } catch (error) {
-                console.error('게시물을 가져오는 데 오류가 발생했습니다.', error);
+                console.error('게시물을 가져오는 데 오류가 발생했습니다!!', error);
                 setLoading(false);
                 navigate('/exchange/list');
             }

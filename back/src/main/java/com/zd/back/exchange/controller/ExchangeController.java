@@ -102,6 +102,7 @@ public class ExchangeController {
     } 
 
     @GetMapping("/article")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") //인증된 사용자만 
     public ResponseEntity<Exchange> getExArticle(@RequestParam int exchangeId
                                                 ) {
         Exchange exchange = exchangeService.getExArticle(exchangeId);
