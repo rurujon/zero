@@ -190,7 +190,7 @@ const ImgArticle = () => {
                             <td>
                                 <div style={{
                                     display: 'inline-block',
-                                    border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
+                                    border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
                                     borderRadius: '5px',
                                     backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#008000',
                                     padding: '5px 15px',
