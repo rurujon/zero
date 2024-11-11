@@ -78,7 +78,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.getWriter().write("{\"error\": \"인증 정보가 없습니다.\", \"message\": \"다시 로그인해주세요.\"}");
+                    response.getWriter().write("{\"error\": \"인증 정보가 유효하지 않습니다.\", \"message\": \"다시 로그인해주세요.\"}");
                 })
             .and()
             .userDetailsService(userDetailsService);
@@ -95,11 +95,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
-        configuration.addAllowedOrigin("http://192.168.16.20:3000"); // +클라이언트의 실제 주소를 추가
-        configuration.addAllowedOrigin("http://192.168.16.15:3000"); // +클라이언트의 실제 주소를 추가
+        configuration.addAllowedOrigin("http://192.168.16.20:3000");
+        configuration.addAllowedOrigin("http://192.168.16.15:3000");
         configuration.addAllowedOrigin("http://192.168.16.2:3000");
         configuration.addAllowedOrigin("http://192.168.16.1:3000");
-
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
