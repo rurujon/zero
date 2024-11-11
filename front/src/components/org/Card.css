@@ -20,9 +20,11 @@ body, html {
     padding-top: 20px;
     padding-bottom: 20px;
     margin-bottom: 20px;
-    font-size: 28px;
+    font-size: 2rem;
     font-weight: 700;
     text-align: center;
+    color: black;
+
 }
 
 .card {
