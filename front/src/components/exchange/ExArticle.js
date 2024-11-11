@@ -6,6 +6,7 @@ import '../board/bbs.css';
 import '../board/page.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+//토큰(+)
 const ExArticle = () => {
     const { token } = useContext(AuthContext);
 
