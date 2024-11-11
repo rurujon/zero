@@ -8,7 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthContext } from '../login/context/AuthContext';
 
 
-
+//토큰 에러해결(+)
 function ExList() {
     const { token } = useContext(AuthContext);
 
@@ -28,6 +28,7 @@ function ExList() {
                     page: 1,
                     size: 1000
                 }
+               
             }); 
             setExchanges(response.data.content);
             setSearchResults(response.data.content);
@@ -43,15 +44,20 @@ function ExList() {
 
     // token에서 memId와 role 가져오기
     const getTokenInfo = (token) => {
-        if (token) { 
+        if (!token) {
+            return { memId: null, role: 'GUEST' };  // 토큰이 없을 때 GUEST로 처리
+        }
+        try {
             const payloadBase64 = token.split('.')[1]; 
             const decodedPayload = JSON.parse(atob(payloadBase64));
             return {
                 memId: decodedPayload.sub,
                 role: decodedPayload.role
             };
+        } catch (error) {
+            console.error('토큰 디코딩 실패:', error);
+            return { memId: null, role: 'GUEST' };  // 토큰 디코딩 실패시 GUEST로 처리
         }
-        return { memId: null, role: null };
     };
     
     const { memId, role } = getTokenInfo(token);
@@ -170,23 +176,19 @@ function ExList() {
                                 <td>{getAuthLabel(board.auth)}</td>
                                 <td><i className="bi bi-lock-fill"></i></td>
                                 <td>
-                                    {role === 'ADMIN' || memId === board.memId ? (
-                                        <Link 
-                                            to={`/exchange/article?exchangeId=${board.exchangeId}`} 
-                                            style={{ textDecoration: 'none', color: 'inherit' }}
-                                            className="underline bbs-title"
-                                        >
-                                            {board.title}
-                                        </Link>
-                                    ) : (
-                                        <span 
-                                            onClick={() => alert("작성자만 조회 가능합니다.")}
-                                            style={{ cursor: 'pointer' }}
-                                            className="underline bbs-title"
-                                        >
-                                            {board.title}
-                                        </span>
-                                    )}
+                                    {
+                                        // 관리자이거나 게시글 작성자인 경우
+                                        (role === 'ADMIN') || (memId !== null && memId === board.memId) ? (
+                                            <Link to={`/exchange/article?exchangeId=${board.exchangeId}`} style={{ color: 'black', textDecoration: 'none' , cursor: 'pointer' }}>
+                                                {board.title}
+                                            </Link>
+                                        ) : (
+                                            <span onClick={() => alert("작성자만 조회 가능합니다.")}
+                                            style={{background:'gray'}}>
+                                                {board.title}
+                                            </span>
+                                        )
+                                    }
                                 </td>
                                 <td>{board.memId}</td>
                                 <td>{new Date(board.created).toLocaleDateString()}</td>

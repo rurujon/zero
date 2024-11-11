@@ -5,10 +5,12 @@ const QuizOX = ({setResult}) => {
     <div className='OX'>
         <div className='oxBox'>
             <div className='btn'>
-                <qbutton onClick={()=> setResult("O")}>O</qbutton>
+                <qbutton onClick={()=> setResult("O")}>
+                    <h1>O</h1>
+                </qbutton>
             </div>
             <div className='btn'>
-                <qbutton onClick={()=> setResult("X")}>X</qbutton>
+                <qbutton onClick={()=> setResult("X")}><h1>X</h1></qbutton>
             </div>
                 <span></span>
         </div>

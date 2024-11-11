@@ -6,6 +6,12 @@
     justify-content: center;
     align-items: center; /* 수평 중앙 정렬 */
 }
+.seoul_container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #2ecc71;
+}
   
   .seoul-tab-bar {
 

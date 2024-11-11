@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
 
-
+//토큰에러해결(+)
 const ExCreated = () => {
     const navigate = useNavigate();
     const titleRef = useRef(null);
@@ -12,7 +12,8 @@ const ExCreated = () => {
     const receiverRef = useRef(null);
     const telRef = useRef(null);    
 
-    const { token, memId } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
+    const [memId, setMemId] = useState('');
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n');
@@ -27,8 +28,20 @@ const ExCreated = () => {
 
     const [loading, setLoading] = useState(true);
 
-
     const defaultMessage = '상품을 선택하지 않으면 무작위로 배송 됩니다.\n원하시는 상품이 있다면 위 이미지를 클릭해 주세요.\n';
+
+
+    const getTokenInfo = (token) => {
+        if (!token) return null;
+        try {
+            const payloadBase64 = token.split('.')[1]; 
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return decodedPayload.sub;
+        } catch (error) {
+            console.error('토큰 디코딩 실패:', error);
+            return null;
+        }
+    };
 
     useEffect(() => {
         const checkUserPoint = async () => {
@@ -38,8 +51,17 @@ const ExCreated = () => {
                 return;
             }
 
+            const extractedMemId = getTokenInfo(token);
+            if (!extractedMemId) {
+                alert('사용자 정보를 확인할 수 없습니다.');
+                navigate('/mainpage');
+                return;
+            }
+
+            setMemId(extractedMemId);
+
             try {
-                const response = await axios.get(`/api/point/info/${memId}`);
+                const response = await axios.get(`/api/point/info/${extractedMemId}`);
                 const pointInfo = response.data;
                 
                 if (pointInfo.usedPoint < 300) {
@@ -56,7 +78,7 @@ const ExCreated = () => {
         };
 
         checkUserPoint();
-    }, [token, navigate, memId]);
+    }, [token, navigate]);
 
         const handleReceiverInfo = async () => {
 
