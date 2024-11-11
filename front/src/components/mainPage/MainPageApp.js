@@ -17,12 +17,12 @@ function MainPageApp() {
           <div className="main-right-wrap">
             <HomePage/>
             <div className="main-right-banner1">
-              <a href="https://www.kcen.kr/USR_main2016.jsp??=MAIN/index" target="_blank">
-              <img src="images/airEnv.jpg"></img></a>
+              <a href="http://192.168.16.20:3000/donate" target="_blank">
+              <img src="images/donate.png"></img></a>
             </div>
             <div className="main-right-banner2">
               <a href="http://192.168.16.4:3000/" target="_blank">
-              <img src="images/logo_gray2.png" ></img></a>
+              <img src="images/logo_gray2.png"  style={{width:'500px', height:'90px'}}></img></a>
             </div>
             <div className="main-right-banner3">
               <a href="http://192.168.16.23:3000/" target="_blank">

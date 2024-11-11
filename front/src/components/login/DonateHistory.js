@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns'; // date-fns에서 format 함수 임포트
 
 const DonateHistory = () => {
     const { token, memId } = useContext(AuthContext);
@@ -8,10 +10,14 @@ const DonateHistory = () => {
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 오류 상태
     const [page, setPage] = useState(1); // 현재 페이지 (기본값: 1)
-    const [size] = useState(5); // 페이지당 표시할 후원 내역 수 (예: 5개)
+    const [size] = useState(10); // 페이지당 표시할 후원 내역 수 
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
-
+    const navigate = useNavigate();
     const buyerId = 'someBuyerId'; // 실제로는 로그인된 사용자의 ID를 사용해야 함
+
+    const backMemberInfoPage=()=> {
+        navigate('/member-info')
+    }
 
     // 전체 후원 내역을 불러오는 API 요청
     useEffect(() => {
@@ -86,7 +92,8 @@ const DonateHistory = () => {
                     <tbody>
                         {currentData.map((donate, index) => (
                             <tr key={index}>
-                                <td>{donate.createdAt}</td>
+                                {/* 결제일 포맷팅 */}
+                                <td>{format(new Date(donate.createdAt), 'yyyy년 MM월 dd일 HH시 mm분')}</td>
                                 <td>{donate.buyerName}</td>
                                 <td>{donate.amount}</td>
                                 <td>{donate.paymentMethod}</td>
@@ -109,6 +116,9 @@ const DonateHistory = () => {
                 <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
                     다음
                 </button>
+            </div>
+            <div style={{display:'flex', justifyContent:'center'}}>
+                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px' }}>회원정보</button>
             </div>
         </div>
     );
