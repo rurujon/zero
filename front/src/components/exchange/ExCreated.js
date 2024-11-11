@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../login/context/AuthContext';
 
-//토큰에러해결(+)
+//토큰에러해결(-)
 const ExCreated = () => {
     const navigate = useNavigate();
     const titleRef = useRef(null);
