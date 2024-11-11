@@ -132,31 +132,31 @@ const MemberInfoPage = () => {
             <div style={{ marginLeft: '20px' }}>
               <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>회원 정보</h2>
               <div className="info-box mb-3 row">
-                <label className="col-sm-2 col-form-label">아이디</label>
+                <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>아이디</label>
                 <div className="col-sm-10">
                   <label className="col-sm-7 col-form-label">{member.memId}</label>
                 </div>
               </div>
               <div className="info-box mb-3 row">
-                <label className="col-sm-2 col-form-label">이름</label>
+                <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>이름</label>
                 <div className="col-sm-10">
                   <label className="col-sm-7 col-form-label">{member.memName}</label>
                 </div>
               </div>
               <div className="info-box mb-3 row">
-                <label className="col-sm-2 col-form-label">이메일</label>
+                <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>이메일</label>
                 <div className="col-sm-10">
                   <label className="col-sm-7 col-form-label">{member.email}</label>
                 </div>
               </div>
               <div className="info-box mb-3 row">
-                <label className="col-sm-2 col-form-label">전화번호</label>
+                <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>전화번호</label>
                 <div className="col-sm-10">
                   <label className="col-sm-7 col-form-label">{member.tel}</label>
                 </div>
               </div>
               <div className="info-box mb-3 row">
-                <label className="col-sm-2 col-form-label">주소</label>
+                <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>주소</label>
                 <div className="col-sm-10">
                 <label className="col-sm-7 col-form-label" style={{ whiteSpace: 'pre-line' }}>
                   {`${member.addr1}\n${member.addr2}`}
