@@ -43,8 +43,22 @@ const ExCreated = () => {
         }
     };
 
+    const checkUserPoint = async (token, extractedMemId) => {
+        try {
+            const response = await axios.get(`/api/point/info/${extractedMemId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('포인트 정보 조회 중 오류:', error);
+            throw error;
+        }
+    };
+
     useEffect(() => {
-        const checkUserPoint = async () => {
+        const validateAndCheckPoint = async () => {
             if (!token) { 
                 alert('로그인이 필요합니다.');
                 navigate('/mainpage');
@@ -61,23 +75,19 @@ const ExCreated = () => {
             setMemId(extractedMemId);
 
             try {
-                const response = await axios.get(`/api/point/info/${extractedMemId}`);
-                const pointInfo = response.data;
-                
+                const pointInfo = await checkUserPoint(token, extractedMemId);
                 if (pointInfo.usedPoint < 300) {
                     alert('포인트가 300 이상일 때 신청 가능합니다.');
                     navigate('/exchange/list');
                     return;
                 }
                 setLoading(false);
-
-            } catch (error) {
-                console.error('포인트 정보 조회 중 오류:', error);
+            } catch {
                 navigate('/mainpage');
             }
         };
 
-        checkUserPoint();
+        validateAndCheckPoint();
     }, [token, navigate]);
 
         const handleReceiverInfo = async () => {
