@@ -6,15 +6,15 @@
 
 .member-form-group {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 160px 1fr;
   gap: 10px;
   align-items: start;
   margin-bottom: 20px;
 }
 
 .member-form-label {
-  background-color: #008000;
-  color: white;
+  background-color: #ffffff;
+  color: #212121;
   padding: 5px 10px;
   border-radius: 15px;
   display: inline-block;
@@ -22,10 +22,11 @@
   text-align: right;
   text-shadow: 3px 3x 4px rgba(0, 0, 0, 0.4);
   font-weight: bold;
+  font-size: 17px;
 }
 
 .member-form-control {
-  border-color: #008000;
+  border-color: #BDBDBD;
   width: 100%;
   box-sizing: border-box;
 }
