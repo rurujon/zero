@@ -59,6 +59,11 @@ const ImgArticle = () => {
         if (token) fetchArticle();
     }, [imgPostId, token, navigate]);
 
+    if (!article || !article.imgPost) {
+        return <p>게시물을 찾을 수 없습니다.</p>;
+    }
+
+
     const handleDelete = async () => {
         try {
             const response = await axios.delete('/imgboard/deleted', {
@@ -80,9 +85,6 @@ const ImgArticle = () => {
         }
     };
 
-    if (!article || !article.imgPost) {
-        return <p>게시물을 찾을 수 없습니다.</p>;
-    }
 
     const point = article.imgPost.cate === 'tum' ?  10
                 :article.imgPost.cate === 'buy' ?  20
