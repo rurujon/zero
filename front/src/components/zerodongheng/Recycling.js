@@ -4,7 +4,7 @@ import './Maincss.css'
 const Recycling = () => {
     return (
         <div className="recycling-container">
-            <h2>리사이클링이란?</h2>
+            <h2><strong>리사이클링이란?</strong></h2>
             <p>
                 리사이클링은 사용된 물건을 새로운 제품으로 만드는 과정으로, 자원의 낭비를 줄이고 환경을 보호하는 중요한 방법입니다. <br/>
                 많은 자원을 절약할 수 있으며, 쓰레기를 줄이는 데 기여할 수 있습니다.
@@ -19,7 +19,7 @@ const Recycling = () => {
                     <img src='/images/zerodonghaeng/recy.png' alt='recycle' />
                 </div>
                 <div className="recycling-info">
-                    <h3 className='left-align'>리사이클링의 필요성</h3>
+                    <h3 className='left-align'><strong>리사이클링의 필요성</strong></h3>
                     <ul>
                         <li style={{fontSize:'16px'}}><strong>자원 절약:</strong> 원자재의 필요성을 줄여 자원을 보존합니다. 이를통해 원료추출과 가공에 필요한 에너지를 절약하는데 도움이 됩니다.</li>
                         <li style={{fontSize:'16px'}}><strong>환경 보호:</strong> 매립지와 소각장에서 발생하는 환경 오염을 감소시킵니다.</li>
@@ -34,10 +34,12 @@ const Recycling = () => {
             <br/><br/>
 
             <div className="recycling-method">
-                <h3>리사이클링 방법</h3>
+                <h3><strong>리사이클링 방법</strong></h3>
                 <p>
-                    리사이클링을 실천하기 위해 가정에서 분리 배출을 철저히 하고, <br/>
-                    재활용이 가능한 자원을 분류하여 올바르게 버리는 습관을 들이는 것이 중요합니다.
+                리싸이클은 자원을 재활용하는 중요한 방법입니다.<br/>
+                플라스틱, 종이, 유리, 금속 등을 분리 배출하여 재활용 센터에서 새로운 제품으로 재탄생시킬 수 있습니다. <br/> 
+                전자기기나 의류도 리싸이클이 가능하므로, 불필요한 물건은 기부하거나 전문 업체에 맡겨 재활용하는 것이 좋습니다. <br/> 
+                올바른 분리배출 습관을 통해 자원 낭비를 줄이고 환경 보호에 기여할 수 있습니다. <br/>
                 </p>
             </div>
         </div>

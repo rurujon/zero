@@ -98,7 +98,7 @@ const uppoint = async () => {
             memId: article.memId,
             oper: '-',  // 또는 '-'
             updown: 300, // 추가하거나 차감할 포인트 수
-            reason:  "포인트 리워드"// 변경 사유
+            reason:  "장바구니 교환"// 변경 사유
         });
         console.log('포인트 업데이트 성공:', response.data);
         alert("포인트 업데이트 성공 ")

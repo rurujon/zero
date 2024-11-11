@@ -66,16 +66,6 @@
     background-color: rgba(78, 10, 235, 0.895);
 }
 
-.Qmodal qbutton{
-    /* position: absolute; */
-    margin-right: 10px;
-    margin-top: 10px;
-
-    font-size: 17px;
-}
-
-
-
 .minimodal-header {
     width: 100%; /* 헤더가 전체 너비를 사용하게 함 */
     text-align: center; /* 텍스트 중앙 정렬 */
@@ -176,25 +166,6 @@
     align-items: center;
 
 } 
-
-    
-
-
-/* .Qmodal .OX .oxBox button {
-
-    background-color: #03c75a;
-
-    width: 45%;
-    height: 80%;
-
-    margin: auto;
-    transition: background-color 0.3s ease;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-} */
 
 
 .Qmodal .OX .oxBox .btn:hover {

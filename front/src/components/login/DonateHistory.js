@@ -10,7 +10,7 @@ const DonateHistory = () => {
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 오류 상태
     const [page, setPage] = useState(1); // 현재 페이지 (기본값: 1)
-    const [size] = useState(10); // 페이지당 표시할 후원 내역 수 
+    const [size] = useState(5); // 페이지당 표시할 후원 내역 수 
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const navigate = useNavigate();
     const buyerId = 'someBuyerId'; // 실제로는 로그인된 사용자의 ID를 사용해야 함
