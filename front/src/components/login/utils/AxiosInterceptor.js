@@ -44,9 +44,18 @@ const AxiosInterceptor = ({ children }) => {
             }
         );
 
+        const handleStorageChange = (e) => {
+            if (e.key === 'logoutEvent') {
+                navigate('/login', { state: { message: '다른 탭에서 로그아웃되었습니다.' } });
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
         return () => {
             axios.interceptors.request.eject(requestInterceptor);
             axios.interceptors.response.eject(responseInterceptor);
+            window.removeEventListener('storage', handleStorageChange);
         };
     }, [refreshAccessToken, logout, navigate]);
 

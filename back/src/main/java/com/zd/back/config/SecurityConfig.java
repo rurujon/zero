@@ -70,6 +70,9 @@ public class SecurityConfig {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getWriter().write("{\"message\": \"로그아웃 성공\"}");
+
+                    // 모든 세션 무효화
+                    request.getSession().invalidate();
                 })
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "refreshToken")
@@ -99,8 +102,8 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("http://192.168.16.2:3000");
         configuration.addAllowedOrigin("http://192.168.16.15:3000");
         configuration.addAllowedOrigin("http://192.168.16.20:3000");
-        configuration.addAllowedOrigin("http://192.168.16.21:3000"); // +클라이언트의 실제 주소를 추가
-        configuration.addAllowedOrigin("http://192.168.16.24:3000"); // +클라이언트의 실제 주소를 추가
+        configuration.addAllowedOrigin("http://192.168.16.21:3000");
+        configuration.addAllowedOrigin("http://192.168.16.24:3000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

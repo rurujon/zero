@@ -18,39 +18,43 @@ const MemberInfoPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { token, logout } = useContext(AuthContext);
 
-  // 창 크기 관련 상태
   const [initialSize, setInitialSize] = useState({ width: 1000, height: 800 });
 
-  // 창 크기 저장 및 복원 함수
   useEffect(() => {
-    // 창이 처음 열릴 때의 크기를 저장
     setInitialSize({ width: window.outerWidth, height: window.outerHeight });
+
+    const handleStorageChange = (e) => {
+      if (e.key === 'logoutEvent') {
+        window.close();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const resetWindowSize = () => {
-    window.resizeTo(initialSize.width, initialSize.height); // 창 크기 복원
+    window.resizeTo(initialSize.width, initialSize.height);
   };
-
-
 
   const fetchMemberInfo = useCallback(() => {
     return axios
-            .get('/member/info', { headers: { Authorization: `Bearer ${token}` } })
-            .then((response) => {
-              setMember(response.data);  // 회원 정보 상태 업데이트
-              return response.data; // 데이터를 반환하여 이후 처리 가능하게 함
-              })
-            .catch((error) => {
-              console.error('회원 정보 조회 실패:', error);
-              // 필요 시 사용자에게 오류 메시지 표시 가능
-              })
-            }, [token]);
+      .get('/member/info', { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => {
+        setMember(response.data);
+        return response.data;
+      })
+      .catch((error) => {
+        console.error('회원 정보 조회 실패:', error);
+      });
+  }, [token]);
 
-
-  // useEffect를 통해 fetchMemberInfo 호출
   useEffect(() => {
     if (token) {
-      fetchMemberInfo();  // 이미 비동기로 처리되므로 추가적인 then() 필요 없음
+      fetchMemberInfo();
     }
   }, [fetchMemberInfo, token]);
 
@@ -70,8 +74,6 @@ const MemberInfoPage = () => {
   const handleDeleteConfirmation = (e) => {
     setDeleteConfirmation(e.target.value);
   };
-
-
 
   const handleFinalDelete = () => {
     if (deleteConfirmation.toLowerCase() === '탈퇴') {
@@ -117,9 +119,6 @@ const MemberInfoPage = () => {
   const handleCloseWindow = () => {
     resetWindowSize();
     window.close();
-    if (!window.closed) {
-      alert("창을 닫을 수 없습니다. 브라우저 설정을 확인해주세요.");
-    }
   };
 
   if (!member)
@@ -172,7 +171,7 @@ const MemberInfoPage = () => {
               <button className="btn btn-primary btn-sm"
               onClick={() => navigate('/donatehistory')} >
                 후원 내역
-                </button>&nbsp;
+              </button>&nbsp;
               <button
                 className="btn btn-outline-secondary btn-sm"
                 onClick={handleDeleteRequest}
@@ -234,7 +233,6 @@ const MemberInfoPage = () => {
           )}
         </div>
 
-        {/* 달력을 항상 오른쪽에 표시 */}
         {!isEditing && (
           <div className="col-md-6">
             <h2>월별 출석현황</h2>
