@@ -15,6 +15,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
                 updown: 5, // 추가하거나 차감할 포인트 수
                 reason: '일일 퀴즈 정답' // 변경 사유
             });
+            alert("정답!!  [+5p]")
             console.log('포인트 업데이트 성공:', response.data);
 
             insertQH();
@@ -50,7 +51,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
                         <legend>
                             <span>⭕정답입니다!⭕</span>
                             <br/>
-                            <span>정답: {result}</span>
+                            <span>정답은! {result}</span>
                         </legend>
                         <fieldset>
                             <legend>해설</legend>

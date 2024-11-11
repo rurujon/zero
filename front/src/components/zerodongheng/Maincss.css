@@ -6,7 +6,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: #f1f9eb;  /* 부드러운 배경색 */
-
+    padding: 10px 25px 10px 25px;
   }
   
   .zero-waste-intro .highlight-box {
@@ -32,8 +32,9 @@
   .zero-waste-intro p {
     color: #666;
     line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     font-size: 1.45em;
+    letter-spacing: -0.05em;
   }
   
   .zero-waste-intro ul {
@@ -120,6 +121,7 @@
   background-color: #f1f9eb;  /* 부드러운 배경색 */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding:10px 25px 10px 25px
 }
 
 /* 제목 스타일 */
@@ -132,12 +134,14 @@
 
 /* 리사이클링 텍스트 스타일 */
 .recycling-container p {
-  font-size: 1.2em;
+  font-size: 1.45em;
   line-height: 1.6;
   color: #666;
   text-align: justify;
   margin-bottom: 20px;
+  letter-spacing: -0.05em;
 }
+
 
 /* 리사이클링 관련 이미지와 텍스트 배치 */
 .recycling-content {
@@ -190,8 +194,10 @@
 }
 
 .recycling-method p {
-  font-size: 1.2em;
+  font-size: 1.45em;
   line-height: 1.6;
   color: #666;
   text-align: justify;
+  margin-bottom: 20px;
+  letter-spacing: -0.05em;
 }
