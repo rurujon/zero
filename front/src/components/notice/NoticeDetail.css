@@ -45,3 +45,18 @@
 .notice-r div{
     margin: 0 auto;
 }
+.notice-r {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.notice-r .label {
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.notice-r .label:last-child {
+    margin-right: 0;
+}
