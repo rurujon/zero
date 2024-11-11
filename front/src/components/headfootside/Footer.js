@@ -39,8 +39,8 @@ const Footer = () => {
 
         <div className="footer-right">
           <p className="footer-company-about">
-            <span>About the Zero Together</span>
-            Your guide to sustainable living, offering tips, resources, and community insights on zero waste.
+            <span>About &nbsp;&nbsp; ZERO TOGETHER</span>
+            Your guide to sustainable living, offering tips, resources, and community insights on Zero waste, Recycling and Upcycling.
           </p>
           {/* <div className="footer-icons">
             <a href="#"><FontAwesomeIcon icon={faInstagram} size="2xl" style={{color: "#ffffff"}} /></a>&nbsp;&nbsp;&nbsp;
