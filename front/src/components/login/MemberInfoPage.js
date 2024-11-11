@@ -130,7 +130,7 @@ const MemberInfoPage = () => {
         <div className="col-md-6">
           {!isEditing ? (
             <div style={{ marginLeft: '20px' }}>
-              <h2>회원 정보</h2>
+              <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>회원 정보</h2>
               <div className="info-box mb-3 row">
                 <label className="col-sm-2 col-form-label">아이디</label>
                 <div className="col-sm-10">
@@ -237,7 +237,7 @@ const MemberInfoPage = () => {
 
         {!isEditing && (
           <div className="col-md-6">
-            <h2>월별 출석현황</h2>
+            <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>월별 출석현황</h2>
             <Calendar memId={member.memId} />
           </div>
         )}

@@ -29,7 +29,7 @@ const NoticeList = () => {
 
     return (
         <div className="notice-list">
-            <h2 style={{margin:'20px 0'}}>공지사항 게시판</h2>
+            <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>공지사항 게시판</h2>
             <Table striped bordered hover>
                 <thead>
                     <tr>

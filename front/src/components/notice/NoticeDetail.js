@@ -116,7 +116,7 @@ const NoticeDetail = () => {
 
     return (
         <div className="notice-detail container mt-5">
-            <h2 style={{margin:'20px 0'}}>공지사항 본문</h2>
+            <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>공지사항 본문</h2>
             <h2 className="title" style={{marginBottom: '30px'}}>제&nbsp;&nbsp;&nbsp;목&nbsp;:&nbsp;{notice.title}</h2>
             <div className='notice-r'>
                 <span className="label">작&nbsp;&nbsp;성&nbsp;&nbsp;자&nbsp;&nbsp;:&nbsp;&nbsp;ADMIN</span>
