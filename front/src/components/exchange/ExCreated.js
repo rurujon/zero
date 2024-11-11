@@ -11,7 +11,7 @@ const ExCreated = () => {
     const senderRef = useRef(null); 
     const receiverRef = useRef(null);
     const telRef = useRef(null);    
-
+    const postRef = useRef(null);
     const { token } = useContext(AuthContext);
     const [memId, setMemId] = useState('');
 
@@ -161,11 +161,12 @@ const ExCreated = () => {
         }   
         if (!post) {
             alert("우편번호를 입력해야합니다.");
+            postRef.current.focus();
             return false;
         }
 
         if (!tel) {
-            alert("전화번호를 입력해야합니다.");
+            telRef.current.focus();
             return false;
         }   
         return true;
@@ -299,7 +300,7 @@ const ExCreated = () => {
                                 <div className="mb-2">
                                     <label className="form-label"><strong>우편번호</strong></label>
                                     <div className="input-group">
-                                        <input type="text" value={post} readOnly className="form-control"/>
+                                        <input type="text" value={post} readOnly className="form-control" ref={postRef}/>
                                         <button type="button" onClick={handleDaumPost} className="btn btn-outline-secondary">우편번호 찾기</button>
                                     </div>
                                 </div>
@@ -313,7 +314,7 @@ const ExCreated = () => {
                                 </div>
                                 <div className="mb-2">
                                     <label className="form-label"><strong>전화번호</strong></label>
-                                    <input type="text" value={tel} onChange={(evt) => setTel(evt.target.value)} ref={telRef} className="form-control"/>
+                                    <input type="text" value={tel} onChange={(evt) => setTel(evt.target.value)} ref={telRef} className="form-control" required/>
                                 </div>
                             </div>
                         </div>
