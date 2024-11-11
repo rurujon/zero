@@ -227,22 +227,24 @@ public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String 
             }
         }
 
-    @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> refreshTokenRequest) {
-        String refreshToken = refreshTokenRequest.get("refreshToken");
-        if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
-            String memId = jwtUtil.extractMemId(refreshToken);
-            Member member = memberService.getMemberById(memId);
-            if (member != null) {
-                String role = member.getRole().name(); // 멤버의 역할을 가져옵니다.
-                String newToken = jwtUtil.generateToken(memId, role);
-                Map<String, String> response = new HashMap<>();
-                response.put("token", newToken);
-                return ResponseEntity.ok(response);
+        @PostMapping("/refresh-token")
+        public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> refreshTokenRequest) {
+            String refreshToken = refreshTokenRequest.get("refreshToken");
+            if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
+                String memId = jwtUtil.extractMemId(refreshToken);
+                Member member = memberService.getMemberById(memId);
+                if (member != null) {
+                    String role = member.getRole().name();
+                    String newToken = jwtUtil.generateToken(memId, role);
+                    String newRefreshToken = jwtUtil.generateRefreshToken(memId);
+                    Map<String, String> response = new HashMap<>();
+                    response.put("token", newToken);
+                    response.put("refreshToken", newRefreshToken);
+                    return ResponseEntity.ok(response);
+                }
             }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
-    }
 
 
     @GetMapping("/info")
@@ -305,11 +307,12 @@ public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String 
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
         if (token != null && token.startsWith("Bearer ")) {
             String jwtToken = token.substring(7);
-            logoutService.logout(null, null, null); // HttpServletRequest, HttpServletResponse, Authentication 객체는 null로 전달
-            return ResponseEntity.ok().body("로그아웃 성공");
+            logoutService.logout(null, null, null);
+            return ResponseEntity.ok().body("{\"message\": \"로그아웃 성공\", \"redirectUrl\": \"/mainpage\"}");
         }
         return ResponseEntity.badRequest().body("유효하지 않은 토큰");
     }
+
 
     @DeleteMapping("/{memId}")
     public ResponseEntity<String> deleteMember(@PathVariable String memId, @RequestHeader("Authorization") String authHeader) {
