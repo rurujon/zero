@@ -162,15 +162,26 @@ function ImgList() {
 
                 {/* 게시물 */}
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
+                <div style={{ 
+                    display: 'flex', 
+                    flexWrap: 'wrap', 
+                    padding: 0,
+                    gap: '20px',
+                    justifyContent: 'flex-start'
+                }}>
                     {getPaginatedResults().length > 0 ? (
                         getPaginatedResults().map((board, index) => (
                             <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} 
-                                  style={{ textDecoration: 'none', color: 'inherit', width: '22%' }} 
+                                  style={{ 
+                                      textDecoration: 'none', 
+                                      color: 'inherit', 
+                                      width: 'calc(25% - 15px)',  // 너비 유지
+                                      marginBottom: '20px',
+                                      minWidth: '280px'  // 최소 너비 추가
+                                  }} 
                                   key={`${board.imgPost.imgPostId}_${index}`}>
                                 <div style={{
                                     border: '2px solid #D3D3D3',
-                                    margin: '15px',
                                     padding: '10px',
                                     borderRadius: '5px',
                                     backgroundColor: '#F6F6F6',
@@ -240,8 +251,19 @@ function ImgList() {
                                             </tr>
                                             <tr style={{ border: 'none' }}>
                                                 <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
-                                                <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
-                                                    <b>{board.imgPost.title}</b>
+                                                <td style={{ 
+                                                    padding: '5px', 
+                                                    textAlign: 'left', 
+                                                    border: 'none',
+                                                    width: '70%',  // 너비 비율 설정
+                                                    maxWidth: '140px'  // 최대 너비 줄임
+                                                }}>
+                                                    <b style={{
+                                                        display: 'block',
+                                                        whiteSpace: 'nowrap',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis'
+                                                    }}>{board.imgPost.title}</b>
                                                 </td>
                                             </tr>
                                             <tr style={{ border: 'none' }}>

@@ -240,7 +240,14 @@ const ImgArticle = () => {
                         <tr>
                             <th>내용</th>
                             <td>
-                                <p>{article.imgPost.content}</p>
+                                <p style={{ whiteSpace: 'pre-wrap' }}>
+                                    {article.imgPost.content.split('\n').map((line, i) => (
+                                        <React.Fragment key={i}>
+                                            {line}
+                                            {i !== article.imgPost.content.split('\n').length - 1 && <br />}
+                                        </React.Fragment>
+                                    ))}
+                                </p>
                                 <div className="image-gallery d-flex flex-column align-items-center">
                                     {article.images && article.images.map(img => (
                                         <img
