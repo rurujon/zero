@@ -15,6 +15,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
                 updown: 5, // 추가하거나 차감할 포인트 수
                 reason: '일일 퀴즈 정답' // 변경 사유
             });
+            alert("정답!!  [+5p]")
             console.log('포인트 업데이트 성공:', response.data);
 
             insertQH();
@@ -45,18 +46,19 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
     return (
         <>
             <div className="expl">
-                <div className="minimodal-headerr">
-                    <fieldset style={{border:'none',textAlign:'center'}}>
-                        <legend>
-                            <span>⭕정답입니다!⭕</span>
-                            <br/>
-                            <span>정답: {result}</span>
-                        </legend>
-                        <fieldset>
-                            <legend>해설</legend>
-                            <h2>{explanation}</h2>
-                    </fieldset>
-                    </fieldset>
+                <div className="minimodal-header">
+                <div>
+                    <span> <h1>⭕정답입니다!⭕</h1></span>
+                    <br/>
+                    <span>정답은! {result}</span>
+                </div>
+                <div>
+                <fieldset>
+                    <legend>해설</legend>
+                    <h2>{explanation}</h2>
+                </fieldset>
+                </div>
+
                 </div>
                 <div style={{width:'80%',display:'felx', justifyContent:'center', alignContent:'center'}}>
                     <button onClick={() => {uppoint()}} 

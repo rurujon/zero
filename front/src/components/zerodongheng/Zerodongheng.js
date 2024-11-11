@@ -11,7 +11,7 @@ const Zerodongheng = () => {
 
     return (
         <div className="zero-waste-intro" >
-          <h2 style={{textAlign:'center', margin:'20px 0 40px 0'}}>제로 동행(Zero together)</h2>
+          <h2 style={{textAlign:'center', margin:'20px 0 40px 0'}}><strong>제로동행 (ZERO TOGETHER)</strong></h2>
 
             <div className="highlight-box" style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
                 <p style={{textAlign:'center', fontSize:'21px', padding:'auto'}}>
@@ -19,7 +19,7 @@ const Zerodongheng = () => {
                     사용자의 노력에 가치를 더하다.""
                 </p>
                 <button className="btn btn-outline-dark" type="submit" onClick={handleDonateClick}>
-                    발전을 위한 후원하기
+                    캠페인 발전을 위한 후원하기
                 </button>
             </div>
 
@@ -34,7 +34,7 @@ const Zerodongheng = () => {
                                 <li>
                                 출석체크, 퀴즈 풀기, 커뮤니티 게시판 활동 등으로 사용자에게 친환경 활동 시 할인 혜택을 제공합니다.
                                 </li>
-
+                                <hr/>
                                 <li>
                                 온라인뿐만 아니라 실생활에서도 지속적인 참여를 유도할 수 있습니다.
                                 </li>
@@ -62,7 +62,7 @@ const Zerodongheng = () => {
             <div>
 
             </div>
-        
+
         </div>
     );
 };

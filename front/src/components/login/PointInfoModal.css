@@ -70,3 +70,8 @@
     margin-bottom: 10px;
     font-weight: bold;
 }
+
+.notice-modal-custom-width .modal-dialog {
+    max-width: 1000px;
+    width: 100%;
+  }

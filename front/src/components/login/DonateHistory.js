@@ -10,7 +10,7 @@ const DonateHistory = () => {
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 오류 상태
     const [page, setPage] = useState(1); // 현재 페이지 (기본값: 1)
-    const [size] = useState(10); // 페이지당 표시할 후원 내역 수 
+    const [size] = useState(5); // 페이지당 표시할 후원 내역 수 
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const navigate = useNavigate();
     const buyerId = 'someBuyerId'; // 실제로는 로그인된 사용자의 ID를 사용해야 함
@@ -76,17 +76,17 @@ const DonateHistory = () => {
 
     return (
         <div>
-            <h2>후원 기록</h2>
+            <h2><b>후원 기록</b></h2>
             {currentData.length > 0 ? (
                 <table >
                     <thead>
-                        <tr>
-                            <th>결제일</th>
-                            <th>구매자 이름</th>
-                            <th>금액(원)</th>
-                            <th>결제 방법</th>
-                            <th>주문 ID</th>
-                            <th>결제 ID</th>
+                        <tr >
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제일</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>구매자 이름</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>금액(원)</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제 방법</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>주문 ID</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>결제 ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,7 +118,7 @@ const DonateHistory = () => {
                 </button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px' }}>회원정보</button>
+                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px', backgroundColor:'#008000', color:'white'}}>회원정보</button>
             </div>
         </div>
     );

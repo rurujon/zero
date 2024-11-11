@@ -94,74 +94,91 @@ const MainPageNewsCopy = () => {
                     <button onClick={() => handleTabClick('tab1')} title="">공지사항</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab2' ? 'active' : ''}`}>
-                    <button onClick={() => handleTabClick('tab2')} title="">네이버 뉴스</button>
+                    <button onClick={() => handleTabClick('tab2')} title="">네이버 환경소식</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab3' ? 'active' : ''}`}>
-                    <button onClick={() => handleTabClick('tab3')} title="">서울시 뉴스</button>
+                    <button onClick={() => handleTabClick('tab3')} title="">서울시 환경소식</button>
                 </li>
                 <li className={`tab ${activeTab === 'tab4' ? 'active' : ''}`}>
-                    <button onClick={() => handleTabClick('tab4')} title="">환경부 환경정책</button>
+                    <button onClick={() => handleTabClick('tab4')} title="">환경부 정책소식</button>
                 </li>
             </ul>
 
             <div className="tab_container">
-                {activeTab === 'tab1' && (
-                    <div id="tab1" className="tab_content">
-                        <h3 className="hidden_only">공지사항</h3>
-                        <ul className="board_list">
-                            {notices.map((notice, index) => (
-                                <li key={index}>
-                                    <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
-                                    <span className="board_date">{new Date(notice.createdAt).toISOString().split('T')[0]}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link to="/notices" className="more-link">더 보기</Link>
-                    </div>
-                )}
-                {activeTab === 'tab2' && (
-                    <div id="tab2" className="tab_content">
-                        <h3 className="hidden_only">네이버 뉴스</h3>
-                        <ul className="board_list">
-                            {naverNews.map((news, index) => (
-                                <li key={index}>
-                                    <a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a>
-                                    <span className="board_date">{new Date(news.pubDate).toISOString().split('T')[0]}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link to="/naverNewsList" className="more-link">더 보기</Link>
-                    </div>
-                )}
-                {activeTab === 'tab3' && (
-                    <div id="tab3" className="tab_content">
-                        <h3 className="hidden_only">서울시 뉴스</h3>
-                        <ul className="board_list">
-                            {seoulNews.map((news, index) => (
-                                <li key={index}>
-                                    <Link to={`/seoulNewsArticle/${news.seoulId}`}>{news.title}</Link>
-                                    <span className="board_date">{new Date(news.publishedDate).toISOString().split('T')[0]}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link to="/seoulNews/All" className="more-link">더 보기</Link>
-                    </div>
-                )}
-                {activeTab === 'tab4' && (
-                    <div id="tab4" className="tab_content">
-                        <h3 className="hidden_only">환경부 환경정책</h3>
-                        <ul className="board_list">
-                            {envLaw.map((law, index) => (
-                                <li key={index}>
-                                    <Link to={`/minEnv/${law.rssId}`}>{law.title}</Link>
-                                    <span className='board_date'>{law.pubDate}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <Link to="/minEnv" className="more-link">더 보기</Link>
-                    </div>
-                )}
+    {activeTab === 'tab1' && (
+        <div id="tab1" className="tab_content">
+            {/* 공지사항 제목과 더 보기 링크를 한 줄에 배치 */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', marginBottom: '20px' }}>
+                <h3 className="hidden_only" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '600', color: '#454545' }}>공지사항</h3>
+                <Link to="/notices" className="more-link" style={{ color: '#008000', fontWeight: 'bold', textDecoration: 'none' }}>더 보기</Link>
             </div>
+
+            <ul className="board_list">
+                {notices.map((notice, index) => (
+                    <li key={index}>
+                        <Link to={`/notices/${notice.noticeId}`}>{notice.title}</Link>
+                        <span className="board_date">{new Date(notice.createdAt).toISOString().split('T')[0]}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+    
+    {activeTab === 'tab2' && (
+        <div id="tab2" className="tab_content">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', marginBottom: '20px' }}>
+                <h3 className="hidden_only" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '600', color: '#454545' }}>네이버 환경소식</h3>
+                <Link to="/naverNewsList" className="more-link" style={{ color: '#008000', fontWeight: 'bold', textDecoration: 'none' }} >더 보기</Link>
+            </div>
+
+            <ul className="board_list">
+                {naverNews.map((news, index) => (
+                    <li key={index}>
+                        <a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a>
+                        <span className="board_date">{new Date(news.pubDate).toISOString().split('T')[0]}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+    
+    {activeTab === 'tab3' && (
+        <div id="tab3" className="tab_content">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', marginBottom: '20px' }}>
+                <h3 className="hidden_only" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '600', color: '#454545' }}>서울시 환경소식</h3>
+                <Link to="/seoulNews/All" className="more-link" style={{ color: '#008000', fontWeight: 'bold', textDecoration: 'none' }}>더 보기</Link>
+            </div>
+
+            <ul className="board_list">
+                {seoulNews.map((news, index) => (
+                    <li key={index}>
+                        <Link to={`/seoulNewsArticle/${news.seoulId}`}>{news.title}</Link>
+                        <span className="board_date">{new Date(news.publishedDate).toISOString().split('T')[0]}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+    
+    {activeTab === 'tab4' && (
+        <div id="tab4" className="tab_content">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px', marginBottom: '20px' }}>
+                <h3 className="hidden_only" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '600', color: '#454545' }}>환경부 정책소식</h3>
+                <Link to="/minEnv" className="more-link" style={{ color: '#008000', fontWeight: 'bold', textDecoration: 'none' }}>더 보기</Link>
+            </div>
+
+            <ul className="board_list">
+                {envLaw.map((law, index) => (
+                    <li key={index}>
+                        <Link to={`/minEnv/${law.rssId}`}>{law.title}</Link>
+                        <span className="board_date">{law.pubDate}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
+</div>
+
         </div>
     );
 };

@@ -135,7 +135,7 @@ const HomePage = () => {
                             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
                         }}
                     >
-                        안녕하세요 <span style={{ color: '#47C83E' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
+                        안녕하세요 <span style={{ color: '#008000' }}>{memId}</span> 님, 오늘도 행복한 하루되세요
                     </h5>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                         {/* 이미지 */}

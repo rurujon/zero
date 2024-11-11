@@ -6,6 +6,7 @@ import { Table, Form, Button, Pagination, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
+import './PointInfoModal.css';
 
 ReactQuill.Quill.register('modules/imageResize', ImageResize);
 
@@ -195,7 +196,7 @@ const AdminPage = () => {
   return (
     <div className="container mt-5">
       {/* 공지사항 관리 */}
-      <h2 className="mt-4">공지사항 관리</h2>
+      <h2 className="mt-4" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535' }}>공지사항 관리</h2>
       <Button onClick={() => openNoticeModal('create')} className="mb-3">새 공지사항 작성하기</Button>
       <Table striped bordered hover className="table table-bordered">
         <thead>
@@ -229,7 +230,7 @@ const AdminPage = () => {
       </Pagination>
 
       {/* 회원 관리 */}
-      <h2 className="mt-4">회원관리 목록</h2>
+      <h2 className="mt-4" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535' }}>회원관리 목록</h2>
       <Form onSubmit={handleSearch} className="mb-3">
         <div className="d-flex">
           <Form.Control
@@ -288,7 +289,7 @@ const AdminPage = () => {
       </Pagination>
 
       {/* 포인트 관리 모달 */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} className="point-info-modal">
         <Modal.Header closeButton>
           <Modal.Title>포인트 조정</Modal.Title>
         </Modal.Header>
@@ -327,7 +328,7 @@ const AdminPage = () => {
       </Modal>
 
      {/* 공지사항 모달 */}
-<Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)}>
+<Modal show={showNoticeModal} onHide={() => setShowNoticeModal(false)} className="point-info-modal  notice-modal-custom-width">
   <Modal.Header closeButton>
     <Modal.Title>{noticeOperation === 'create' ? '새 공지사항 작성' : '공지사항 수정'}</Modal.Title>
   </Modal.Header>

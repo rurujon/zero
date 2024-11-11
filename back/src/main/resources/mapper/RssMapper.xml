@@ -34,8 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM (
             SELECT *
             FROM rssItems
-            WHERE pubDate &lt; (SELECT pubDate FROM rssItems WHERE rssId = #{rssId})
-            ORDER BY pubDate DESC, rssId DESC
+            WHERE rssId &lt; #{rssId}
+            ORDER BY rssId DESC
         ) WHERE ROWNUM = 1
     </select>
 
@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM (
             SELECT *
             FROM rssItems
-            WHERE pubDate &gt; (SELECT pubDate FROM rssItems WHERE rssId = #{rssId})
-            ORDER BY pubDate ASC, rssId ASC
+            WHERE rssId &gt; #{rssId}
+            ORDER BY rssId ASC
         ) WHERE ROWNUM = 1
     </select>
 
