@@ -22,7 +22,7 @@ const Quiz = ({ setIsOpen,  setResult, setAnswer, setExplanation, setQuizId}) =>
             <div 
                 style={{ textAlign: 'right', marginBottom: '10px' }}
             >
-                <button onClick={() => setIsOpen(false)} className="close">나가기</button>
+                <qbutton onClick={() => setIsOpen(false)} className="close">나가기</qbutton>
             </div>
 
             <QuizItem setQuiz={setQuiz} quiz={quiz}/>
