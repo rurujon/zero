@@ -188,34 +188,40 @@ const ImgArticle = () => {
                         <tr>
                             <th className="col-2">승인여부</th>
                             <td>
-                                <div style={{
-                                    display: 'inline-block',
-                                    border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
-                                    borderRadius: '5px',
-                                    backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#008000',
-                                    padding: '5px 15px',
-                                    textAlign: 'center',
-                                    marginRight: '10px'
-                                }}>
-                                    <span style={{
-                                        color: '#fff',
-                                        margin: 0
-                                    }}>
-                                        {getAuthLabel(article.imgPost.auth)}
-                                    </span>
-                                </div>
-                                {role === 'ADMIN' && article?.imgPost.auth === 0 && (
-                                    <button
-                                        className="btn ms-3"
+                                {role === 'ADMIN' && article?.imgPost.auth === 0 ? (
+                                    <button 
                                         onClick={handleAuth}
                                         style={{
-                                            backgroundColor: '#FFA7A7',
-                                            color: '#000',
-                                            border: '3px solid #FF6C6C'
+                                            display: 'inline-block',
+                                            border: '3px solid #D2D2D2',
+                                            borderRadius: '5px',
+                                            backgroundColor: '#D2D2D2',
+                                            padding: '5px 15px',
+                                            textAlign: 'center',
+                                            marginRight: '10px',
+                                            color: '#fff',
+                                            cursor: 'pointer'
                                         }}
                                     >
-                                        <i className="fas fa-check"></i> 인증승인
+                                        미승인
                                     </button>
+                                ) : (
+                                    <div style={{
+                                        display: 'inline-block',
+                                        border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #008000',
+                                        borderRadius: '5px',
+                                        backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#008000',
+                                        padding: '5px 15px',
+                                        textAlign: 'center',
+                                        marginRight: '10px'
+                                    }}>
+                                        <span style={{
+                                            color: '#fff',
+                                            margin: 0
+                                        }}>
+                                            {getAuthLabel(article.imgPost.auth)}
+                                        </span>
+                                    </div>
                                 )}
                             </td>
                         </tr>
