@@ -165,20 +165,22 @@ const ImgArticle = () => {
     }
 
     return (
-        <div className="container">
-            <div className="article-container" >
-                <div className="my-3 d-flex justify-content-between">
-                    <h2 className="article-title">{article.imgPost.title}</h2>
-                    {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
-                        <div>
-                            <button className="btn btn-outline-secondary me-2" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
-                                <i className="fas fa-edit"></i> 수정
-                            </button>
-                            <button className="btn btn-outline-danger" onClick={handleDelete}>
-                                <i className="fas fa-trash-alt"></i> 삭제
-                            </button>
-                        </div>
-                    )}
+        <div className="container" style={{ maxWidth: '1200px' }}>
+            <div className="article-container">
+                <div className="my-3">
+                    <div className="text-center position-relative">
+                        <h2 className="article-title">{article.imgPost.title}</h2>
+                        {((memId === article?.imgPost.memId && article?.imgPost.auth === 0) || role === 'ADMIN') && (
+                            <div style={{ position: 'absolute', right: 0, top: 0 }}>
+                                <button className="btn btn-outline-secondary me-2" onClick={() => navigate(`/imgboard/updated?imgPostId=${imgPostId}`)}>
+                                    <i className="fas fa-edit"></i> 수정
+                                </button>
+                                <button className="btn btn-outline-danger" onClick={handleDelete}>
+                                    <i className="fas fa-trash-alt"></i> 삭제
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <table className="table table-striped">
@@ -186,9 +188,32 @@ const ImgArticle = () => {
                         <tr>
                             <th className="col-2">승인여부</th>
                             <td>
-                                {getAuthLabel(article.imgPost.auth)}
+                                <div style={{ 
+                                    display: 'inline-block',
+                                    border: article.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
+                                    borderRadius: '5px', 
+                                    backgroundColor: article.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
+                                    padding: '5px 15px',
+                                    textAlign: 'center',
+                                    marginRight: '10px'
+                                }}>
+                                    <span style={{ 
+                                        color: '#fff',
+                                        margin: 0
+                                    }}>
+                                        {getAuthLabel(article.imgPost.auth)}
+                                    </span>
+                                </div>
                                 {role === 'ADMIN' && article?.imgPost.auth === 0 && (
-                                    <button className="btn btn-outline-primary ms-3" onClick={handleAuth}>
+                                    <button 
+                                        className="btn ms-3" 
+                                        onClick={handleAuth}
+                                        style={{
+                                            backgroundColor: '#FFA7A7',
+                                            color: '#000',
+                                            border: '3px solid #FF6C6C'
+                                        }}
+                                    >
                                         <i className="fas fa-check"></i> 인증승인
                                     </button>
                                 )}
@@ -210,13 +235,17 @@ const ImgArticle = () => {
                             <th>내용</th>
                             <td>
                                 <p>{article.imgPost.content}</p>
-                                <div className="image-gallery">
+                                <div className="image-gallery d-flex flex-column align-items-center">
                                     {article.images && article.images.map(img => (
                                         <img 
                                             key={img.imgId} 
                                             src={`/images/imgboard/${img.saveFileName}`} 
                                             alt='게시물 이미지' 
-                                            style={{ maxWidth: "40%", marginTop: "20px", marginBottom: "20px" }}
+                                            style={{ 
+                                                width: "60%",
+                                                marginBottom: "20px",
+                                                maxHeight: "auto"
+                                            }}
                                         />
                                     ))}
                                 </div>

@@ -160,7 +160,7 @@ function ExList() {
                             <th></th>
                             <th className="col-5">제목</th>
                             <th className="col-2">작성자</th>
-                            <th className="col-2">등록일</th>
+                            <th className="col-2">작성일</th>
                         </tr>
                     </thead>
                     <tbody>

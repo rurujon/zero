@@ -3,7 +3,8 @@
     border-radius: 8px;
     padding: 20px;
     margin: 20px auto;
-    width: 600px;
+    width: 100%;
+    max-width: 1200px;
     background-color: #fafafa;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -11,6 +12,7 @@
 .article-title {
     font-size: 24px;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .article-meta-container {

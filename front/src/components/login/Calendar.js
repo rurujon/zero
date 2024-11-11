@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Calendar.css';
+import { AuthContext } from './context/AuthContext';
 
-const Calendar = ({ memId }) => {
+const Calendar = () => {
     const [date, setDate] = useState(new Date());
     const [attendanceData, setAttendanceData] = useState([]);
+    const { memId } = useContext(AuthContext);
 
     const fetchAttendanceData = async () => {
+        if (!memId) {
+            console.error('회원 ID가 없습니다.');
+            return;
+        }
         try {
             const response = await axios.get(`/attendance/dates`, {
                 params: { memId }
@@ -19,7 +25,9 @@ const Calendar = ({ memId }) => {
     };
 
     useEffect(() => {
-        fetchAttendanceData();
+        if (memId) {
+            fetchAttendanceData();
+        }
     }, [date, memId]);
 
     const getDaysInMonth = (year, month) => {
