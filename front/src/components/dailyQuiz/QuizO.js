@@ -49,6 +49,8 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
                     <fieldset style={{border:'none',textAlign:'center'}}>
                         <legend>
                             <span>⭕정답입니다!⭕</span>
+                            <br/>
+                            <span>정답: {result}</span>
                         </legend>
                         <fieldset>
                             <legend>해설</legend>
