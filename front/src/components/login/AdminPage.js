@@ -201,10 +201,10 @@ const AdminPage = () => {
       <Table striped bordered hover className="table table-bordered">
         <thead>
           <tr>
-            <th>제목</th>
-            <th>작성일</th>
-            <th>조회수</th>
-            <th>관리</th>
+            <th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+            <th>작&nbsp;성&nbsp;일</th>
+            <th>조&nbsp;회&nbsp;수</th>
+            <th>관&nbsp;리&nbsp;기&nbsp;능</th>
           </tr>
         </thead>
         <tbody>
@@ -214,8 +214,8 @@ const AdminPage = () => {
               <td>{new Date(notice.createdAt).toLocaleDateString()}</td>
               <td>{notice.views}</td>
               <td>
-                <Button variant="info" size="sm" onClick={() => openNoticeModal('edit', notice)} className="me-2">수정</Button>
-                <Button variant="danger" size="sm" onClick={() => handleDeleteNotice(notice.noticeId)}>삭제</Button>
+                <Button variant="info" size="sm" onClick={() => openNoticeModal('edit', notice)} className="me-2">글수정</Button>
+                <Button variant="danger" size="sm" onClick={() => handleDeleteNotice(notice.noticeId)}>글삭제</Button>
               </td>
             </tr>
           ))}
@@ -228,7 +228,7 @@ const AdminPage = () => {
           </Pagination.Item>
         ))}
       </Pagination>
-
+<hr/>
       {/* 회원 관리 */}
       <h2 className="mt-4" style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535' }}>회원관리 목록</h2>
       <Form onSubmit={handleSearch} className="mb-3">
@@ -241,18 +241,18 @@ const AdminPage = () => {
             className="me-2"
             style={{ width: '75%' }}
           />
-          <Button type="submit" style={{ width: '25%' }}>검색</Button>
+          <Button type="submit" style={{ width: '25%' }}>검&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;색</Button>
         </div>
       </Form>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>회원 ID</th>
-            <th>이름</th>
-            <th>이메일</th>
+            <th>회&nbsp;원&nbsp;I&nbsp;D</th>
+            <th>이&nbsp;&nbsp;&nbsp;&nbsp;름</th>
+            <th>이&nbsp;메&nbsp;일</th>
             <th>전화번호</th>
             <th>역할변경</th>
-            <th>포인트 조정 / 회원삭제</th>
+            <th>관리기능</th>
           </tr>
         </thead>
         <tbody>
@@ -319,10 +319,10 @@ const AdminPage = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            취소
+            취&nbsp;&nbsp;소
           </Button>
           <Button variant="primary" onClick={handlePointSubmit}>
-            저장
+            저&nbsp;&nbsp;장
           </Button>
         </Modal.Footer>
       </Modal>
@@ -335,7 +335,7 @@ const AdminPage = () => {
   <Modal.Body>
     <Form>
       <Form.Group className="mb-3">
-        <Form.Label>제목</Form.Label>
+        <Form.Label>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</Form.Label>
         <Form.Control
           type="text"
           value={currentNotice.title}
@@ -343,7 +343,7 @@ const AdminPage = () => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>내용</Form.Label>
+        <Form.Label>내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</Form.Label>
         <ReactQuill
           value={currentNotice.content}
           onChange={handleContentChange}
@@ -354,10 +354,10 @@ const AdminPage = () => {
   </Modal.Body>
   <Modal.Footer>
     <Button variant="secondary" onClick={() => setShowNoticeModal(false)}>
-      취소
+      취&nbsp;&nbsp;소
     </Button>
     <Button variant="primary" onClick={handleSaveNotice}>
-      저장
+      저&nbsp;&nbsp;장
     </Button>
   </Modal.Footer>
 </Modal>

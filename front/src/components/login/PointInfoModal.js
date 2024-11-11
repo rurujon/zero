@@ -65,15 +65,15 @@ const PointInfoModal = ({ show, onHide, memId }) => {
                     <p className="text-danger">{error}</p>
                 ) : pointInfo ? (
                     <div>
-                        <p>현재 포인트: {pointInfo.usedPoint}</p>
-                        <p>회원등급: {pointInfo.grade} {gradeEmojis[pointInfo.grade]}</p>
-                        <h5>포인트 히스토리</h5>
+                        <p>포&nbsp;&nbsp;인&nbsp;&nbsp;트&nbsp;:&nbsp;&nbsp; {pointInfo.usedPoint}</p>
+                        <p>회원등급&nbsp;:&nbsp;&nbsp; {pointInfo.grade} {gradeEmojis[pointInfo.grade]}</p>
+                        <h5>포인트내역</h5>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>날짜</th>
-                                    <th>변동</th>
-                                    <th>사유</th>
+                                    <th>날&nbsp;&nbsp;&nbsp;&nbsp;짜</th>
+                                    <th>변&nbsp;&nbsp;&nbsp;&nbsp;동</th>
+                                    <th>사&nbsp;&nbsp;&nbsp;&nbsp;유</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,7 +104,7 @@ const PointInfoModal = ({ show, onHide, memId }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>
-                    닫기
+                    닫&nbsp;&nbsp;기
                 </Button>
             </Modal.Footer>
         </Modal>

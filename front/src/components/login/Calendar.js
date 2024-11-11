@@ -92,7 +92,7 @@ const Calendar = () => {
         <div className="calendar">
             <div className="calendar-header">
                 <button onClick={handlePrevMonth}>&lt;</button>
-                <h3>{date.getFullYear()}년 {date.getMonth() + 1}월</h3>
+                <h4 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535' }}>{date.getFullYear()}&nbsp;년 {date.getMonth() + 1}&nbsp;월</h4>
                 <button onClick={handleNextMonth}>&gt;</button>
             </div>
             <table>
@@ -112,7 +112,7 @@ const Calendar = () => {
             <div className="calendar-legend">
                 <div className="legend-item">
                     <span className="legend-color attended"></span>
-                    <span className="legend-text">출석</span>
+                    <span className="legend-text">출&nbsp;&nbsp;석</span>
                 </div>
                 <div className="legend-item">
                     <span className="legend-color not-attended"></span>

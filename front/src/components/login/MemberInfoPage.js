@@ -130,7 +130,7 @@ const MemberInfoPage = () => {
         <div className="col-md-6">
           {!isEditing ? (
             <div style={{ marginLeft: '20px' }}>
-              <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>회원 정보</h2>
+              <h2 style={{ fontFamily: '"Noto Sans KR", "나눔고딕", "맑은 고딕", sans-serif', fontWeight: '700', color: '#353535',margin:'20px 0' }}>회&nbsp;원&nbsp;정&nbsp;보</h2>
               <div className="info-box mb-3 row">
                 <label className="col-sm-2 col-form-label" style={{ fontWeight: 'bold' }}>아&nbsp;&nbsp;이&nbsp;&nbsp;디</label>
                 <div className="col-sm-10">
@@ -165,20 +165,20 @@ const MemberInfoPage = () => {
               </div>
 
               <button className="btn btn-primary btn-sm" onClick={handleCloseWindow}>
-                창 닫기
+                창&nbsp;&nbsp;닫&nbsp;&nbsp;기
               </button>&nbsp;
               <button className="btn btn-primary btn-sm" onClick={handleEditClick}>
-                정보 수정
+                정&nbsp;보&nbsp;수&nbsp;정
               </button>&nbsp;
               <button className="btn btn-primary btn-sm"
               onClick={() => navigate('/donatehistory')} >
-                후원 내역
+                후&nbsp;원&nbsp;내&nbsp;역
               </button>&nbsp;
               <button
                 className="btn btn-outline-secondary btn-sm"
                 onClick={handleDeleteRequest}
               >
-                회원 탈퇴
+                회&nbsp;원&nbsp;탈&nbsp;퇴
               </button><br /><br />
             </div>
           ) : (
@@ -200,14 +200,14 @@ const MemberInfoPage = () => {
                 onClick={handleConfirmDelete}
                 style={{ marginBottom: '20px' }}
               >
-                확인
+                확&nbsp;&nbsp;인
               </button>&nbsp;
               <button
                 className="btn btn-secondary"
                 onClick={handleCancelDelete}
                 style={{ marginBottom: '20px' }}
               >
-                취소
+                취&nbsp;&nbsp;소
               </button>
             </div>
           )}
@@ -229,7 +229,7 @@ const MemberInfoPage = () => {
                 onClick={handleFinalDelete}
                 style={{ marginBottom: '20px' }}
               >
-                확인
+                확&nbsp;&nbsp;인
               </button>
             </div>
           )}

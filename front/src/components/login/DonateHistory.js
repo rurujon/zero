@@ -10,7 +10,7 @@ const DonateHistory = () => {
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 오류 상태
     const [page, setPage] = useState(1); // 현재 페이지 (기본값: 1)
-    const [size] = useState(5); // 페이지당 표시할 후원 내역 수 
+    const [size] = useState(5); // 페이지당 표시할 후원 내역 수
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const navigate = useNavigate();
     const buyerId = 'someBuyerId'; // 실제로는 로그인된 사용자의 ID를 사용해야 함
@@ -76,7 +76,7 @@ const DonateHistory = () => {
 
     return (
         <div>
-            <h2><b>후원 기록</b></h2>
+            <h2><b>후원 내역</b></h2>
             {currentData.length > 0 ? (
                 <table >
                     <thead>
@@ -110,15 +110,15 @@ const DonateHistory = () => {
             {/* 페이지 버튼 */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-                    이전
+                    이&nbsp;&nbsp;전
                 </button>
                 <span> 페이지 {page} </span>
                 <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
-                    다음
+                    다&nbsp;&nbsp;음
                 </button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px', backgroundColor:'#008000', color:'white'}}>회원정보</button>
+                <button onClick={backMemberInfoPage} style={{ padding: '5px 10px 5px 10px', backgroundColor:'#008000', color:'white'}}>회원정보로 돌아가기</button>
             </div>
         </div>
     );
