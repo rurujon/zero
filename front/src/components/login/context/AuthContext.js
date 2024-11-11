@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
     const [memId, setMemId] = useState(localStorage.getItem('memId'));
     const [role, setRole] = useState(localStorage.getItem('role'));
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const logout = useCallback(async () => {
         try {
@@ -31,19 +32,26 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const refreshAccessToken = useCallback(async () => {
+        if (isRefreshing) return null;
+        setIsRefreshing(true);
         try {
             const response = await axios.post('/member/refresh-token', { refreshToken });
             const newToken = response.data.token;
+            const newRefreshToken = response.data.refreshToken;
             setToken(newToken);
+            setRefreshToken(newRefreshToken);
             localStorage.setItem('token', newToken);
+            localStorage.setItem('refreshToken', newRefreshToken);
             axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
             return newToken;
         } catch (error) {
             console.error('Token refresh failed:', error);
             logout();
             return null;
+        } finally {
+            setIsRefreshing(false);
         }
-    }, [refreshToken, logout]);
+    }, [refreshToken, logout, isRefreshing]);
 
     useEffect(() => {
         if (token) {
@@ -52,7 +60,8 @@ export const AuthProvider = ({ children }) => {
                 if (decoded.exp * 1000 < Date.now()) {
                     refreshAccessToken();
                 } else {
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    const timeUntilExpiry = decoded.exp * 1000 - Date.now();
+                    setTimeout(() => refreshAccessToken(), timeUntilExpiry - 60000); // 만료 1분 전에 갱신
                 }
             } catch (error) {
                 console.error('Token decoding failed:', error);
@@ -61,10 +70,10 @@ export const AuthProvider = ({ children }) => {
         }
     }, [token, logout, refreshAccessToken]);
 
+
     const login = useCallback((newToken, newRefreshToken, id, userRole) => {
         try {
             if (typeof newToken !== 'string') {
-                console.error('Token is not a string:', newToken);
                 throw new Error('Invalid token format');
             }
             const decoded = jwtDecode(newToken);
