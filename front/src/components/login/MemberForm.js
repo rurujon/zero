@@ -76,18 +76,23 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
   const checkDuplicateId = () => {
     if (!member.memId || member.memId.trim() === '') {
-      alert('아이디를 입력해주세요.');
-      return;
+        alert('아이디를 입력해주세요.');
+        return;
     }
+    setIsLoading(true);
     axios.get('/member/check-id', { params: { memId: member.memId } })
-      .then(response => {
-        setIsDuplicate(response.data.isDuplicate);
-        setIsChecked(true);
-      })
-      .catch(error => {
-        console.error('아이디 중복 체크 오류:', error);
-      });
-  };
+        .then(response => {
+            setIsDuplicate(response.data);
+            setIsChecked(true);
+        })
+        .catch(error => {
+            console.error('아이디 중복 체크 오류:', error);
+            alert('아이디 중복 확인 중 오류가 발생했습니다.');
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
+};
 
   const checkDuplicateEmail = () => {
     if (!member.email || member.email.trim() === '') {
@@ -147,6 +152,7 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
 
     if (name === 'memId') {
       setIsChecked(false);
+      setIsDuplicate(false);
     }
 
     if (name === 'tel' && isEditing) {
@@ -283,6 +289,8 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
     setPhoneNumber(member.tel);
   };
 
+
+
   return (
     <Container className="member-form-container mt-5">
       <h2 className="text-center mb-4">{isEditing ? '회원정보 수정' : '회원가입'}</h2>
@@ -302,9 +310,9 @@ const MemberForm = ({ initialData, onSubmit, onCancel, isEditing }) => {
               required
             />
             {!isEditing && (
-              <Button onClick={checkDuplicateId} className="btn btn-primary btn-sm mt-2">
-                ID중복 확인
-              </Button>
+              <Button onClick={checkDuplicateId} className="btn btn-primary btn-sm mt-2" disabled={isLoading}>
+              {isLoading ? '확인 중...' : 'ID중복 확인'}
+          </Button>
             )}
             {isChecked && (
               <div>
