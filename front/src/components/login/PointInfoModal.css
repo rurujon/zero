@@ -6,7 +6,7 @@
 }
 
 .point-info-modal .modal-header {
-    background-color: #03C75A;
+    background-color: #008000;
     color: white;
     border-bottom: none;
 }
@@ -25,7 +25,7 @@
 }
 
 .point-info-modal .table th {
-    background-color: #03C75A;
+    background-color: #008000;
     color: white;
     padding: 10px;
 }
@@ -41,19 +41,19 @@
 }
 
 .point-info-modal .pagination .page-item .page-link {
-    color: #03C75A;
-    border-color: #03C75A;
+    color: #008000;
+    border-color: #008000;
 }
 
 .point-info-modal .pagination .page-item.active .page-link {
-    background-color: #03C75A;
-    border-color: #03C75A;
+    background-color: #008000;
+    border-color: #008000;
     color: white;
 }
 
 .point-info-modal .btn-secondary {
-    background-color: #03C75A;
-    border-color: #03C75A;
+    background-color: #008000;
+    border-color: #008000;
 }
 
 .point-info-modal .btn-secondary:hover {

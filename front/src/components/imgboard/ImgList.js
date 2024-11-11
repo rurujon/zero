@@ -22,21 +22,21 @@ function ImgList() {
     const [searchResults, setSearchResults] = useState([]); //검색결과
 
     // 전체 이미지 게시물을 가져오는 함수
-    const fetchImgPosts = async () => { 
+    const fetchImgPosts = async () => {
 
         try {
             const config = {
                 params: { page: 1, size: 1000 },
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             };
-            
+
             const response = await axios.get('/imgboard/list', config);
             setImgPosts(response.data.content);
             setSearchResults(response.data.content); // 초기 검색 결과는 전체 게시물
             setTotalItems(response.data.totalElements);
         } catch (error) {
             console.error('이미지를 찾을 수 없습니다.', error);
-    
+
         }
     };
 
@@ -52,8 +52,8 @@ function ImgList() {
     const handleSearch = () => {
         const filtered = imgPosts.filter(board => {
             switch (searchKey) {
-                case 'cate': 
-                    return searchValue === "" ? true : board.imgPost.cate === searchValue;  
+                case 'cate':
+                    return searchValue === "" ? true : board.imgPost.cate === searchValue;
                     case 'memId':
                     return board.imgPost.memId.includes(searchValue);
                 case 'title':
@@ -113,12 +113,12 @@ function ImgList() {
                         <tbody>
                             <tr className="category-filter">
                                 <td>
-                                    <select 
-                                        value={searchKey} 
+                                    <select
+                                        value={searchKey}
                                         onChange={(e) => {
                                             setSearchKey(e.target.value);
                                             setSearchValue('');
-                                        }} 
+                                        }}
                                         className="form-control"
                                         style={{ border: 0 }}
                                     >
@@ -129,7 +129,7 @@ function ImgList() {
                                 </td>
                                 <td>
                                     {searchKey === 'cate' ? (
-                                        <select 
+                                        <select
                                             className="form-control"
                                             onChange={(e) => setSearchValue(e.target.value)}
                                         >
@@ -139,10 +139,10 @@ function ImgList() {
                                             <option value='group'>단체활동 참여</option>
                                         </select>
                                     ) : (
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            placeholder="검색어" 
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="검색어"
                                             value={searchValue}
                                             onChange={(e) => setSearchValue(e.target.value)}
                                         />
@@ -159,29 +159,29 @@ function ImgList() {
                 </div>
 
                 <br />
-                
+
                 {/* 게시물 */}
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', padding: 0 }}>
                     {getPaginatedResults().length > 0 ? (
                         getPaginatedResults().map((board, index) => (
-                            <div key={`${board.imgPost.imgPostId}_${index}`} style={{ 
-                                border: '2px solid #D3D3D3', 
+                            <div key={`${board.imgPost.imgPostId}_${index}`} style={{
+                                border: '2px solid #D3D3D3',
                                 margin: '15px',
-                                padding: '10px', 
-                                borderRadius: '5px', 
-                                backgroundColor: '#F6F6F6', 
+                                padding: '10px',
+                                borderRadius: '5px',
+                                backgroundColor: '#F6F6F6',
                                 width: '22%',
                                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
 
                             }}>
-                                <div style={{ 
-                                    width: '260px', 
-                                    height: '150px', 
+                                <div style={{
+                                    width: '260px',
+                                    height: '150px',
                                     overflow: 'hidden',
                                     borderRadius: '5px',
-                                    display: 'flex', 
-                                    alignItems: 'center', 
+                                    display: 'flex',
+                                    alignItems: 'center',
                                     justifyContent: 'center',
                                     border: '1px solid #E8E8E8'
                                 }}>
@@ -191,11 +191,11 @@ function ImgList() {
                                                 key={img.imgId}
                                                 src={`/images/imgboard/${img.saveFileName}`}
                                                 alt={img.saveFileName}
-                                                style={{ 
-                                                    width: '100%',           
-                                                    height: '100%',          
-                                                    maxHeight: '200px',    
-                                                    margin: 0,             
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    maxHeight: '200px',
+                                                    margin: 0,
                                                     display: 'block',
                                                     objectFit: 'cover',
                                                     verticalAlign: 'top',
@@ -208,17 +208,17 @@ function ImgList() {
                                     )}
                                 </div>
                                 <p></p>
-                                <div style={{ 
+                                <div style={{
                                     border: board.imgPost.auth === 0 ? '3px solid #D2D2D2' : '3px solid #0BC904',
-                                    borderRadius: '5px', 
-                                    backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#03c75a',
-                                    padding: '5px', 
+                                    borderRadius: '5px',
+                                    backgroundColor: board.imgPost.auth === 0 ? '#D2D2D2' : '#008000',
+                                    padding: '5px',
                                     textAlign: 'center',
                                     marginTop: '1px',
                                     width: '260px',
                                     margin: '0 auto'
                                 }}>
-                                    <p style={{ 
+                                    <p style={{
                                         color:  '#fff' ,
                                         margin: 0
                                     }}>
@@ -226,13 +226,13 @@ function ImgList() {
                                     </p>
                                 </div>
                                 <p></p>
-                                <table style={{ 
-                                    width: '100%', 
+                                <table style={{
+                                    width: '100%',
                                     borderCollapse: 'collapse',
-                                    border: 'none'  
+                                    border: 'none'
                                 }}>
                                     <tbody>
-                                        <tr style={{ border: 'none' }}>  
+                                        <tr style={{ border: 'none' }}>
                                             <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>작성자</td>
                                             <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>{board.imgPost.memId}</td>
                                         </tr>
@@ -240,7 +240,7 @@ function ImgList() {
                                             <td style={{ width: '30%', padding: '5px', textAlign: 'left', border: 'none' }}>제목</td>
                                             <td style={{ padding: '5px', textAlign: 'left', border: 'none' }}>
                                             <Link to={`/imgboard/article?imgPostId=${board.imgPost.imgPostId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                                 <b> {board.imgPost.title}</b>  
+                                                 <b> {board.imgPost.title}</b>
                                                 </Link>
                                             </td>
                                         </tr>
@@ -257,9 +257,9 @@ function ImgList() {
                             </div>
                         ))
                     ) : (
-                        <div style={{ 
-                            width: '100%', 
-                            textAlign: 'center', 
+                        <div style={{
+                            width: '100%',
+                            textAlign: 'center',
                             padding: '50px',
                             backgroundColor: '#f8f9fa',
                             borderRadius: '5px',
