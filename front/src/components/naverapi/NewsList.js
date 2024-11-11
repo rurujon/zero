@@ -11,7 +11,7 @@ const NewsContainer = styled.div`
 `;
 
 const NewsHeader = styled.h1`
-  color: #2ecc71;
+  color: black;
   text-align: center;
   margin-bottom: 30px;
   font-size : 2rem;
