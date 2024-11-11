@@ -114,12 +114,12 @@ const Pay = () => {
 
           if (response.success) {
             await axios.post('/payment/paymentHistory', paymentData, {
-                headers: { Authorization: `Bearer ${token}` } // Authorization 헤더 추가
+                headers: { Authorization: `Bearer ${token}` } 
             });
             navigate('/success', { state: { amount, memberInfo, response } });
         } else {
             await axios.post('/payment/paymentHistory', paymentData, {
-                headers: { Authorization: `Bearer ${token}` } // Authorization 헤더 추가
+                headers: { Authorization: `Bearer ${token}` } 
             });
             console.log(response);
             navigate('/failure', { state: { error: response.error_msg, response } });
