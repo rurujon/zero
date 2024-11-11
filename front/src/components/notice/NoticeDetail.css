@@ -2,7 +2,7 @@
 
 /* 공지사항 상세 페이지의 가로 사이즈를 50%로 줄이기 */
 .notice-detail {
-    width: 70%;
+    width: 75%;
     margin: 10px auto; /* 가운데 정렬 */
 }
 
@@ -61,12 +61,12 @@
 .notice-r {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .notice-r .label {
     flex: 1;
-    margin-right: 10px;
+    margin-right: 5px;
     text-align: center;
 }
 
