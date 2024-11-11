@@ -70,8 +70,6 @@ public class SecurityConfig {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getWriter().write("{\"message\": \"로그아웃 성공\", \"redirectUrl\": \"/mainpage\"}");
-
-                    // 모든 세션 무효화
                     request.getSession().invalidate();
                 })
                 .invalidateHttpSession(true)
