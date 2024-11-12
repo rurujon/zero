@@ -160,7 +160,7 @@ const uppoint = async () => {
 
 return (
     <div className="container" style={{ maxWidth: "900px" }}>
-        <div className="card mb-4" style={{ backgroundColor: '#FDFBF9' }}>
+        <div className="card mb-4" >
             <div className="card-body">
                 <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
                     <div className="col-2" style={{ backgroundColor: '#F5F3F0' }} py-2>제목</div>
