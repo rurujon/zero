@@ -114,8 +114,6 @@ const ImgArticle = () => {
                 updown: point, // 추가하거나 차감할 포인트 수
                 reason:  reason// 변경 사유
             });
-            alert('point: '+point)
-            alert('reason: '+article?.imgPost?.cate)
             console.log('포인트 업데이트 성공:', response.data);
 
         } catch (error) {
@@ -132,7 +130,16 @@ const ImgArticle = () => {
             });
             uppoint();
             alert(response.data);
-            window.location.reload();
+            
+            // 게시글 데이터만 새로 불러오기
+            const updatedArticle = await axios.get('/imgboard/article', {
+                params: { imgPostId },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setArticle(updatedArticle.data);
+            
         } catch (error) {
             if (error.response?.status === 401) {
                 alert('로그인이 필요합니다.');
