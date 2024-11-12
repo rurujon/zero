@@ -168,6 +168,9 @@ const ImgArticle = () => {
         }
     };
 
+
+    
+
     if (loading) {
         return (
             <div style={{ 
