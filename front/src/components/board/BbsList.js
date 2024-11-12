@@ -207,7 +207,7 @@ function TableRow(props) {
                 </>
             ) : (
                 <>
-                    <td colSpan="3" className="deleted-post">&emsp;&emsp;&emsp;
+                    <td colSpan="3" className="deleted-post" style={{ cursor: 'not-allowed', pointerEvents: 'none' }}>&emsp;&emsp;&emsp;
                         {/* <Arrow depth={board.depth} /> */}
                         <span className="del-span" >⚠️ 삭제된 게시물입니다.</span>
                     </td>

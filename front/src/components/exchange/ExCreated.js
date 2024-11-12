@@ -224,27 +224,27 @@ const ExCreated = () => {
     }
 
     return (
-        < div className="container" style={{ maxWidth: "900px" }} >
-            <div className="card mb-4" style={{ backgroundColor: '#FDFBF9' }}>
+        <div className="container" style={{ maxWidth: "900px" }}>
+            <div className="card mb-4">
                 <div className="card-body">
                     <h4 className="mb-4 text-center">장바구니 교환 신청하기</h4>
                     <form onSubmit={handleInsertSubmit} method='post'>
                         <div className="row mb-3" style={{ borderTop: '1px solid #dee2e6', borderBottom: '1px solid #dee2e6' }}>
-                            <div className="col-2 bg-light py-2">사용자 ID</div>
+                            <div className="col-2 py-2" style={{ backgroundColor: '#F5F3F0' }}>사용자 ID</div>
                             <div className="col-10 py-2">
                                 <input type="text" value={memId} readOnly className="form-control" />
                             </div>
                         </div>
 
                         <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
-                            <div className="col-2 bg-light py-2">제목</div>
+                            <div className="col-2 py-2" style={{ backgroundColor: '#F5F3F0' }}>제목</div>
                             <div className="col-10 py-2">
                                 <input type="text" value={title} onChange={(evt) => setTitle(evt.target.value)} ref={titleRef} className="form-control" required/>
                             </div>
                         </div>
 
                         <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
-                            <div className="col-2 bg-light py-2">상품 선택</div>
+                            <div className="col-2 py-2" style={{ backgroundColor: '#F5F3F0' }}>상품 선택</div>
                             <div className="col-10 py-2">
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <img 
@@ -285,7 +285,7 @@ const ExCreated = () => {
                         </div>
 
                         <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
-                            <div className="col-2 bg-light py-2">배송 정보</div>
+                            <div className="col-2 py-2" style={{ backgroundColor: '#F5F3F0' }}>배송 정보</div>
                             <div className="col-10 py-2">
                                 <button type='button' onClick={handleReceiverInfo} className="btn btn-outline-secondary mb-3">
                                     내 정보 불러오기
@@ -321,7 +321,7 @@ const ExCreated = () => {
                         </div>
 
                         <div className="row mb-3" style={{ borderBottom: '1px solid #dee2e6' }}>
-                            <div className="col-2 bg-light py-2">요청 및<br/>배송 메세지</div>
+                            <div className="col-2 py-2" style={{ backgroundColor: '#F5F3F0' }}>요청 및<br/>배송 메세지</div>
                             <div className="col-10 py-2">
                                 <textarea 
                                     value={content} 
