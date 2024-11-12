@@ -81,7 +81,7 @@ const DonateHistory = () => {
                 <table >
                     <thead>
                         <tr >
-                            <th style={{backgroundColor:'#008000', color:"white"}}>결제일</th>
+                            <th style={{backgroundColor:'#008000', color:"white"}}>후원일</th>
                             <th style={{backgroundColor:'#008000', color:"white"}}>구매자 이름</th>
                             <th style={{backgroundColor:'#008000', color:"white"}}>금액(원)</th>
                             <th style={{backgroundColor:'#008000', color:"white"}}>결제 방법</th>
