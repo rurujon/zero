@@ -58,23 +58,21 @@ public class QuizController {
     }
 
     @GetMapping(value="/quiz.action")
-    public ModelAndView test() throws Exception{
-        ModelAndView mav = new ModelAndView();
+    public ResponseEntity<?> test(@RequestParam String filename) throws Exception{
         try {
-            System.out.println("Returning quiz view");
+            System.out.println("quiz.action");
             ReadJSON rj = new ReadJSON();
-            JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\zerowaste");
+            JSONArray array = rj.jsonToArray("C:/quiz/"+filename);
             // JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\upcycling");
             // JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\recycling");
             Map<Integer, String[]> map = rj.unzipArray(array);
             quizService.insertquiz(map);
-            mav.setViewName("JY/quiz");
+            return ResponseEntity.ok("퀴즈 저장 성공");
         } catch (Exception e) {
             System.err.println("Error occurred in /quiz: " + e.getMessage());
             e.printStackTrace();  // 추가로 예외 스택 추적을 출력
-            mav.setViewName("error");  // 오류 페이지로 이동
+            return ResponseEntity.status(500).body("퀴즈 히스토리 저장 실패: " + e.getMessage());
         }
-        return mav;
     }
     
     @GetMapping("/getQuiz")
