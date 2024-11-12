@@ -121,13 +121,13 @@ function BbsWrite() {
 			<table className="custom-table">
 				<tbody>
 					<tr>
-						<th className="table-primary">작성자</th>
+						<th className="table-primary" style={{ textAlign: 'center'}}>작성자</th>
 						<td>
 							<input type="text" className="form-control" value={memId || ''} size="50px" readOnly />
 						</td>
 					</tr>
 					<tr>
-						<th className="table-primary">정보유형</th>
+						<th className="table-primary" style={{ textAlign: 'center'}}>정보유형</th>
 						<td>
 							<select value={category} onChange={changeCategory} className="form-control">
 								<option value="">정보 유형을 선택하세요</option>
@@ -139,13 +139,13 @@ function BbsWrite() {
 						</td>
 					</tr>
 					<tr>
-						<th className="table-primary">제목</th>
+						<th className="table-primary" style={{ textAlign: 'center'}}>제목</th>
 						<td>
 							<input type="text" className="form-control" value={title} onChange={changeTitle} size="50px" />
 						</td>
 					</tr>
 					<tr>
-						<th className="table-primary">내용</th>
+						<th className="table-primary" style={{ textAlign: 'center'}}>내용</th>
 						<td style={{ padding: '0', verticalAlign: 'top', height: '400px' }}> {/* 테이블 셀 높이 조정 */}
     <ReactQuill
         value={content}
@@ -164,7 +164,7 @@ function BbsWrite() {
 
 					</tr>
 					<tr>
-						<th className="table-primary">파일 업로드</th>
+						<th className="table-primary" style={{ textAlign: 'center'}}>파일 업로드</th>
 						<td>
 							<input type="file" onChange={handleFileChange} />
 						</td>
