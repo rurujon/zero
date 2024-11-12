@@ -16,4 +16,6 @@ public interface ExchangeMapper {
     Exchange getExArticle(int exchangeId);
     void deleteExchange(int exchangeId);
     void updateAuth(int exchangeId);
+
+    void deleteExchangesByMemberId(@Param("memId") String memId);
 }

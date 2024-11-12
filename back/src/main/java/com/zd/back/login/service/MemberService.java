@@ -2,6 +2,7 @@ package com.zd.back.login.service;
 
 import com.zd.back.JY.domain.attendance.AttendanceService;
 import com.zd.back.JY.domain.point.PointService;
+import com.zd.back.exchange.service.ExchangeService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.model.Role;
@@ -46,6 +47,9 @@ public class MemberService {
 
     @Autowired
     private BlacklistService blacklistService;
+
+    @Autowired
+    private ExchangeService exchangeService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -181,6 +185,8 @@ public class MemberService {
     @Transactional
     public void deleteMember(String memId) {
         try {
+            //1.교환내역삭제
+            exchangeService.deleteExchangesByMemberId(memId);
             // 1. 포인트 이력 삭제
             pointService.deletePointHistory(memId);
 
@@ -191,14 +197,17 @@ public class MemberService {
             attendanceService.deleteAttendance(memId);
 
             // 4. 회원 정보 삭제
-            memberMapper.deleteMember(memId);
+            int deletedRows = memberMapper.deleteMember(memId);
+            if (deletedRows == 0) {
+                throw new RuntimeException("회원 정보를 찾을 수 없습니다: " + memId);
+            }
 
-            logger.info("회원 탈퇴 완료: {}", memId);
-        } catch (Exception e) {
-            logger.error("회원 탈퇴 중 오류 발생: {}", e.getMessage(), e);
-            throw new RuntimeException("회원 탈퇴 처리 중 문제가 발생했습니다: " + e.getMessage(), e);
+            logger.info("회원 {} 삭제 완료", memId);
+            } catch (Exception e) {
+                logger.error("회원 삭제 중 오류 발생: {}", e.getMessage(), e);
+                throw new RuntimeException("회원 삭제 중 오류가 발생했습니다: " + e.getMessage(), e);
+            }
         }
-    }
 
     public String findIdByEmail(String email) {
         return memberMapper.findIdByEmail(email);
