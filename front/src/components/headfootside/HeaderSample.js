@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import QuizModal from '../dailyQuiz/QuizModal';
 import { AuthContext } from '../login/context/AuthContext';
 import './HeaderSample.css';
 import LoginPage from '../login/LoginPage';

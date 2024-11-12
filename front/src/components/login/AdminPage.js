@@ -355,7 +355,7 @@ const handleQuizFileSubmit = async () => {
           onChange={(e) => setQuizFilePath(e.target.value)}
           style={{
             border: '1px solid #D3D3D3',
-            width: '60%',  // 인풋박스 너비를 늘림 (필요에 맞게 조정)
+            width: '65%',  // 인풋박스 너비를 늘림 (필요에 맞게 조정)
             padding: '8px',
             fontSize: '16px',
             borderRadius: '4px',
