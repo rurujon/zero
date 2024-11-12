@@ -188,10 +188,7 @@ function ExList() {
                                                 alert("작성자만 조회 가능합니다.");
                                             }
                                         }}
-                                        style={{
-                                            cursor: (role === 'ADMIN' || memId === board.memId) ? 'pointer' : 'not-allowed',
-                                            backgroundColor: (role === 'ADMIN' || memId === board.memId) ? 'white' : '#e9ecef'  // 조건부 배경색 적용
-                                        }}
+                                        className={(role !== 'ADMIN' && memId !== board.memId) ? 'tr-disabled' : 'tr-abled'}
                                     >
                                         <td className="table-cell-bold">{board.exchangeId}</td>
                                         <td>
