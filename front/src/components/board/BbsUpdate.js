@@ -64,19 +64,19 @@ function BbsUpdate() {
             <table className="custom-table">
                 <tbody>
                     <tr>
-                        <th className="table-primary">작성자</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>작성자</th>
                         <td>
                             <input type="text" className="form-control" value={board.memId} size="50px" readOnly />
                         </td>
                     </tr>
                     <tr>
-                        <th className="table-primary">제목</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>제목</th>
                         <td>
                             <input type="text" className="form-control" value={title} onChange={changeTitle} size="50px" />
                         </td>
                     </tr>
                     <tr>
-                        <th className="table-primary">내용</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>내용</th>
                         <td>
                             <ReactQuill value={content} onChange={changeContent} modules={{ toolbar: true }} theme="snow" />
                         </td>
