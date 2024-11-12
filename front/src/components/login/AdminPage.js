@@ -320,7 +320,7 @@ const AdminPage = () => {
           fontWeight: '700',
           color: '#353535'
         }}>
-          퀴즈 삽입
+          퀴즈 데이터 업데이트
         </h2>
       </div>
       <div style={{
@@ -340,7 +340,7 @@ const AdminPage = () => {
             padding: '8px',
             fontSize: '16px',
             borderRadius: '4px',
-            marginBottom: '10px',
+            
           }}
         />
         &nbsp;&nbsp;
