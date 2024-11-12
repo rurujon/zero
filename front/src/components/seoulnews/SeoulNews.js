@@ -28,6 +28,7 @@ const SeoulNews = () => {
   const [filteredNewsList, setFilteredNewsList] = useState([]); // 검색된 뉴스 리스트 상태
 
   // 검색 기준을 추가하는 상태
+  const [criteria, setCriteria] = useState('');
   const [searchCriteria, setSearchCriteria] = useState('both'); // 'title', 'content', 'both'로 검색 기준 설정
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const SeoulNews = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1); // 카테고리 변경 시 첫 페이지로 이동
-    filterNews(category, searchQuery); // 카테고리 변경 시 필터링
+    filterNews(category, searchQuery, criteria); // 카테고리 변경 시 필터링
   };
 
   const handleSearch = () => {
@@ -77,6 +78,7 @@ const SeoulNews = () => {
       ? newsList
       : newsList.filter(news => news.seoulNewsGroup === category);
 
+    setCriteria(criteria);
     // 검색 기준에 맞는 필터링 추가
     if (criteria === 'title') {
       filtered = filtered.filter(news => 
@@ -187,21 +189,26 @@ const SeoulNews = () => {
         </ul>
         {/* 검색 기능 추가 부분 */}
         <div className="search-box">
-          {/* 검색 기준 선택을 위한 select 추가 */}
-          <select value={searchCriteria} onChange={handleCriteriaChange}>
-            <option value="both">제목 + 내용</option>
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-          </select>
+          {/* form 태그로 묶어서 submit 기능 추가 */}
+          <form onSubmit={(e) => {
+            e.preventDefault(); // 페이지 리로드 방지
+            handleSearch(); // 검색 기능 실행
+          }}>
+            {/* 검색 기준 선택을 위한 select 추가 */}
+            <select value={searchCriteria} onChange={handleCriteriaChange}>
+              <option value="both">제목 + 내용</option>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
+            </select>
 
-          <input
-            type="text"
-            placeholder="검색어 입력"
-            value={searchQuery} // 검색어 바인딩
-            onChange={(e) => setSearchQuery(e.target.value)} // 검색어 변경 시 상태 업데이트
-          />
-          <button onClick={handleSearch}>검색</button> {/* 버튼 클릭 시 검색 */}
-          
+            <input
+              type="text"
+              placeholder="검색어 입력"
+              value={searchQuery} // 검색어 바인딩
+              onChange={(e) => setSearchQuery(e.target.value)} // 검색어 변경 시 상태 업데이트
+            />
+            <button type="submit">검색</button> {/* 버튼 클릭 시 검색 */}
+          </form>
         </div>
       </div>
       <ul className='NewsListContainer'>
