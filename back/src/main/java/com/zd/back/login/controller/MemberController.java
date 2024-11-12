@@ -315,26 +315,30 @@ public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String 
 
 
     @DeleteMapping("/{memId}")
-    public ResponseEntity<String> deleteMember(@PathVariable String memId, @RequestHeader("Authorization") String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("인증 토큰이 없습니다");
-        }
-        String token = authHeader.substring(7);
+public ResponseEntity<?> deleteMember(@PathVariable String memId, @RequestHeader("Authorization") String authHeader) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        return ResponseEntity.status(401).body("인증 토큰이 없거나 유효하지 않습니다.");
+    }
+
+    String token = authHeader.substring(7);
+
+    try {
         if (!jwtUtil.validateToken(token)) {
             return ResponseEntity.status(401).body("유효하지 않은 토큰입니다.");
         }
+
         String loggedInMemId = jwtUtil.extractMemId(token);
         if (!loggedInMemId.equals(memId)) {
             return ResponseEntity.status(403).body("권한이 없습니다.");
         }
-        try {
-            memberService.deleteMember(memId);
-            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다");
-        } catch (Exception e) {
-            logger.error("회원 탈퇴 중 오류 발생", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴 처리 중 오류가 발생했습니다.");
-        }
+
+        memberService.deleteMember(memId);
+        return ResponseEntity.ok("계정이 성공적으로 삭제되었습니다.");
+    } catch (Exception e) {
+        logger.error("회원 삭제 중 오류 발생", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 삭제 중 오류가 발생했습니다: " + e.getMessage());
     }
+}
 
     @PostMapping("/find-id")
     public ResponseEntity<?> findId(@RequestBody Map<String, String> payload) {

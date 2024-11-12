@@ -58,6 +58,7 @@ const MemberInfoPage = () => {
     }
   }, [fetchMemberInfo, token]);
 
+  //회원탈퇴/삭제 처리
   const handleDeleteRequest = () => {
     setShowConfirmDialog(true);
   };
@@ -78,14 +79,14 @@ const MemberInfoPage = () => {
   const handleFinalDelete = () => {
     if (deleteConfirmation.toLowerCase() === '탈퇴') {
       if (!token) {
-        console.error('인증 토큰이 없습니다.');
-        alert('로그인 상태를 확인해주세요.');
+        console.error('유효한 토큰이 없습니다.');
+        alert('로그인이 필요합니다.');
         return;
       }
       axios
         .delete(`/member/${member.memId}`, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => {
-          alert('회원 탈퇴가 완료되었습니다.');
+          alert('계정이 성공적으로 삭제되었습니다.');
           logout();
           window.close();
           if (window.opener) {
@@ -93,11 +94,29 @@ const MemberInfoPage = () => {
           }
         })
         .catch((error) => {
-          console.error('회원 탈퇴 실패:', error);
-          alert('회원 탈퇴 중 오류가 발생했습니다.');
+          console.error('계정 삭제 중 오류 발생:', error);
+          if (error.response) {
+            switch (error.response.status) {
+              case 401:
+                alert('인증에 실패했습니다. 다시 로그인해주세요.');
+                logout();
+                window.location.href = '/mainpage';
+                break;
+              case 403:
+                alert('권한이 없습니다.');
+                break;
+              case 500:
+                alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                break;
+              default:
+                alert('계정 삭제 중 오류가 발생했습니다.');
+            }
+          } else {
+            alert('네트워크 오류가 발생했습니다.');
+          }
         });
     } else {
-      alert('올바른 확인 단어를 입력해주세요.');
+      alert('잘못된 확인 문구입니다. 다시 시도해주세요.');
     }
   };
 
