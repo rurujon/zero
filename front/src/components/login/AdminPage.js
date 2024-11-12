@@ -36,19 +36,37 @@ const AdminPage = () => {
   // 퀴즈 파일 경로 상태
   const [quizFilePath, setQuizFilePath] = useState('');
 
-  // 퀴즈 입력을 백엔드로 전송하는 함수 (변경된 부분)
-  const handleQuizFileSubmit = async () => {
-    try {
-      // 입력받은 파일 경로를 서버에 전송
-      await axios.get('/quiz.action', {
-        params: { filename: quizFilePath }
-      });
-      alert('퀴즈 파일이 성공적으로 전송되었습니다.');
-    } catch (error) {
-      console.error('퀴즈 파일 전송 중 오류 발생:', error);
-      alert('퀴즈 파일 전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
+// 퀴즈 입력을 백엔드로 전송하는 함수
+const handleQuizFileSubmit = async () => {
+  // 파일 경로가 비어 있거나 파일명이 입력되지 않았으면 에러 처리
+  if (!quizFilePath || quizFilePath.trim() === '') {
+    alert('파일명을 입력해 주세요.');
+    return;
+  }
+
+  // 파일명이 올바르게 입력되었는지 확인 (파일 경로가 아닌 그냥 파일명만)
+  const fileName = quizFilePath.trim();  // 공백을 제거한 후 파일명만 사용
+  if (fileName === '') {
+    alert('파일명을 입력해 주세요.');
+    return;
+  }
+
+  try {
+    // 입력받은 파일 경로를 서버에 전송
+    await axios.get('/quiz.action', {
+      params: { filename: fileName }
+    });
+    alert('퀴즈 파일이 성공적으로 전송되었습니다.');
+  } catch (error) {
+    if (error.response.status === 404) {
+      // 404 에러 처리
+      alert('파일을 찾을 수 없습니다. 파일명을 확인해 주세요.');
     }
-  };
+    console.error('퀴즈 파일 전송 중 오류 발생:', error);
+    alert('퀴즈 파일 전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
+  } 
+
+};
 
   const quillModules = {
     toolbar: [
