@@ -27,7 +27,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 if (onLoginSuccess) {
                     onLoginSuccess(token, refreshToken, memId, response.data.role);
                 }
-                navigate('/mainpage');
+                navigate(0);
             } else {
                 alert("로그인 정보가 올바르지 않습니다.");
             }

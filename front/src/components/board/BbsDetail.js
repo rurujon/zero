@@ -172,7 +172,7 @@ function BbsDetail() {
                                     <img 
                                         src={board.urlFile} 
                                         alt="첨부된 이미지" 
-                                        style={{ maxWidth: "40%", marginTop: "20px", marginBottom: "20px" }}
+                                        style={{ maxWidth: "60%", marginTop: "20px", marginBottom: "20px" }}
                                     />
                                 </div>
                             )}
