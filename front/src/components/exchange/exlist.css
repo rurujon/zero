@@ -92,3 +92,16 @@
     filter: brightness(95%); /* 호버 시 약간 어둡게 */
     background-color: inherit !important; /* 기존 배경색 유지 */
 }
+
+.tr-disabled {
+    cursor: not-allowed;
+}
+
+.tr-abled {
+    cursor: pointer;
+    
+}
+
+.tr-disabled td {
+    background-color: #e9ecef !important;
+}
