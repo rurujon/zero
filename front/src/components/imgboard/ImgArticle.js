@@ -204,7 +204,7 @@ const ImgArticle = () => {
                                     <i className="fas fa-edit"></i> 수정
                                 </button>
                             )}
-                            {((memId === article?.imgPost.memId) || role === 'ADMIN') && (
+                            {((article?.imgPost.auth === 0 && memId === article?.imgPost.memId) || role === 'ADMIN') && (
                                 <button className="btn btn-outline-danger" onClick={handleDelete}>
                                     <i className="fas fa-trash-alt"></i> 삭제
                                 </button>
