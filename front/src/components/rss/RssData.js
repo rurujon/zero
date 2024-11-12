@@ -69,6 +69,9 @@ function RssData() {
                     return false;
             }
         });
+
+        // rssId 내림차순으로 정렬
+        filteredResults.sort((a, b) => b.rssId - a.rssId);
         
         setFilteredRssItems(filteredResults);
         setCurrentPage(1); // 검색 후 1페이지로 이동
@@ -127,21 +130,26 @@ function RssData() {
                 
                 {/* 검색 기능 UI */}
                 <div className='rss-SearchContainer'>
-                    <select 
-                        value={searchCriteria}
-                        onChange={(e) => setSearchCriteria(e.target.value)}
-                    >
-                        <option value='both'>제목 + 내용</option>
-                        <option value='title'>제목</option>
-                        <option value='description'>내용</option>
-                    </select>
-                    <input 
-                        type='text'
-                        placeholder='검색어 입력'
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <button onClick={handleSearch}>검색</button>
+                    <form onSubmit={(e) => {
+                        e.preventDefault(); // 페이지 리로딩 방지
+                        handleSearch();
+                    }}>
+                        <select 
+                            value={searchCriteria}
+                            onChange={(e) => setSearchCriteria(e.target.value)}
+                        >
+                            <option value='both'>제목 + 내용</option>
+                            <option value='title'>제목</option>
+                            <option value='description'>내용</option>
+                        </select>
+                        <input 
+                            type='text'
+                            placeholder='검색어 입력'
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button onClick={handleSearch}>검색</button>
+                    </form>
                 </div>
             </div>
             <div className='rss-NewsListContainer'>
