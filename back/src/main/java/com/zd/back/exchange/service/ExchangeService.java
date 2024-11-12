@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ExchangeService {
-    
+
     @Autowired
     private ExchangeMapper exchangeMapper;
-    
+
     public int maxExchangeId() {
         return exchangeMapper.maxExchangeId();
     }
@@ -42,4 +42,9 @@ public class ExchangeService {
     public void updateAuth(int exchangeId) {
         exchangeMapper.updateAuth(exchangeId);
     }
+
+    @Transactional
+    public void deleteExchangesByMemberId(String memId) {
+        exchangeMapper.deleteExchangesByMemberId(memId);
+}
 }

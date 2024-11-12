@@ -17,8 +17,8 @@
 
 
     <select id="getExchanges" resultType="com.zd.back.exchange.model.Exchange">
-        SELECT exchangeId, memId, title, created, auth 
-        FROM exchange 
+        SELECT exchangeId, memId, title, created, auth
+        FROM exchange
         WHERE exchangeId BETWEEN #{pageStart} AND #{pageEnd}
         ORDER BY exchangeId desc
     </select>
@@ -31,16 +31,20 @@
     <select id="getExArticle" parameterType="int" resultType="com.zd.back.exchange.model.Exchange">
         SELECT * FROM exchange WHERE exchangeId = #{exchangeId}
     </select>
-    
+
     <delete id="deleteExchange" parameterType="int">
         DELETE FROM exchange WHERE exchangeId = #{exchangeId}
     </delete>
 
     <update id="updateAuth" parameterType="int">
-        UPDATE exchange 
+        UPDATE exchange
         SET auth = 1,
             authDate = CURRENT_TIMESTAMP
         WHERE exchangeId = #{exchangeId}
     </update>
+
+    <delete id="deleteExchangesByMemberId" parameterType="string">
+        DELETE FROM exchange WHERE memId = #{memId}
+    </delete>
 
 </mapper>
