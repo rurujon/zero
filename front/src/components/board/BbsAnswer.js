@@ -70,18 +70,18 @@ function BbsAnswer() {
             <table className="table table-striped">
                 <tbody>
                     <tr>
-                    <th style={{ width: '10%', padding: '20px' }}>작성자</th>
-                    <td style={{ textAlign: 'left', width: '30%', padding: '20px' }}>{parentBbs.memId}</td>
+                    <th style={{ width: '10%', padding: '15px' }}>작성자</th>
+                    <td style={{ textAlign: 'left', width: '30%', padding: '15px' }}>{parentBbs.memId}🌳</td>
                     </tr>
 
                     <tr>
-                    <th style={{ width: '10%', padding: '20px' }}>제목</th>
-                    <td style={{ textAlign: 'left', width: '60%', padding: '20px' }} colSpan="5">{parentBbs.title}</td>
+                    <th style={{ width: '10%', padding: '15px' }}>제목</th>
+                    <td style={{ textAlign: 'left', width: '60%', padding: '15px', fontWeight: 'bold' }} colSpan="5">{parentBbs.title}</td>
                     </tr>
 
                     <tr>
     <th style={{ width: '10%', verticalAlign: 'middle' }}>내용</th>
-    <td colSpan="5" style={{ textAlign: 'left', paddingLeft: '20px' }}>
+    <td colSpan="5" style={{ textAlign: 'left', paddingLeft: '15px' }}>
         {parentBbs.urlFile && (
             <div>
                 <img 
