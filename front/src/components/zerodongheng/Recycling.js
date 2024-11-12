@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Maincss.css'
-
+import './Recycling.css'
 const Recycling = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImageSrc, setModalImageSrc] = useState('');
+
+    // 이미지 클릭 시 모달을 열고, 이미지 경로를 설정하는 함수
+    const openModal = (imageSrc) => {
+        setModalImageSrc(imageSrc);
+        setIsModalOpen(true);
+    };
+
+    // 모달 닫기 함수
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalImageSrc('');
+    };
+
     return (
         <div className="recycling-container">
             <h2><strong>리사이클링이란?</strong></h2>
@@ -16,7 +32,12 @@ const Recycling = () => {
             
             <div className="recycling-content">
                 <div>
-                    <img src='/images/zerodonghaeng/recy.png' alt='recycle' />
+                <img 
+                        src='/images/zerodonghaeng/recy.png' 
+                        alt='recycle' 
+                        onClick={() => openModal('/images/zerodonghaeng/recy.png')} // 이미지 클릭 시 openModal 함수 실행
+                        style={{ cursor: 'pointer' }}
+                    />
                 </div>
                 <div className="recycling-info">
                     <h3 className='left-align'><strong>리사이클링의 필요성</strong></h3>
@@ -42,6 +63,16 @@ const Recycling = () => {
                 올바른 분리배출 습관을 통해 자원 낭비를 줄이고 환경 보호에 기여할 수 있습니다. <br/>
                 </p>
             </div>
+
+            {isModalOpen && (
+                <div className="modal" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <img src={modalImageSrc} alt="enlarged" className="modal-image" />
+                        <button className="close-btn" onClick={closeModal}>Close</button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
