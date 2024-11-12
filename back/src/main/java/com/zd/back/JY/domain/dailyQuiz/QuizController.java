@@ -1,5 +1,6 @@
 package com.zd.back.JY.domain.dailyQuiz;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,16 @@ public class QuizController {
     public ResponseEntity<?> test(@RequestParam String filename) throws Exception{
         try {
             System.out.println("quiz.action");
+
+            String filePath = "C:/quiz/" + filename;
+        
+            // 파일 존재 여부 확인
+            File file = new File(filePath);
+            if (!file.exists()) {
+                // 파일이 존재하지 않으면 404 응답 반환
+                return ResponseEntity.status(404).body("파일을 찾을 수 없습니다: " + filePath);
+            }
+
             ReadJSON rj = new ReadJSON();
             JSONArray array = rj.jsonToArray("C:/quiz/"+filename);
             // JSONArray array = rj.jsonToArray("C:\\vscode\\project\\back\\src\\main\\resources\\quiz\\upcycling");
