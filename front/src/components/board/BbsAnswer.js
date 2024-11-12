@@ -70,34 +70,30 @@ function BbsAnswer() {
             <table className="table table-striped">
                 <tbody>
                     <tr>
-                        <th className="col-3">작성자</th>
-                        <td>
-                            <span>{parentBbs.memId}</span>
-                        </td>
+                    <th style={{ width: '10%', padding: '20px' }}>작성자</th>
+                    <td style={{ textAlign: 'left', width: '30%', padding: '20px' }}>{parentBbs.memId}</td>
                     </tr>
 
                     <tr>
-                        <th>제목</th>
-                        <td>
-                            <span>{parentBbs.title}</span>
-                        </td>
+                    <th style={{ width: '10%', padding: '20px' }}>제목</th>
+                    <td style={{ textAlign: 'left', width: '60%', padding: '20px' }} colSpan="5">{parentBbs.title}</td>
                     </tr>
 
                     <tr>
-    <th>내용</th>
-    <td>
+    <th style={{ width: '10%', verticalAlign: 'middle' }}>내용</th>
+    <td colSpan="5" style={{ textAlign: 'left', paddingLeft: '20px' }}>
         {parentBbs.urlFile && (
             <div>
                 <img 
                     src={parentBbs.urlFile} 
                     alt="첨부된 이미지" 
-                    style={{ maxWidth: "30%", marginTop: "20px", marginLeft: "20px", marginBottom: "20px"}}
+                    style={{ maxWidth: "30%", marginTop: "20px", marginBottom: "20px"}}
                 />
             </div>
         )}
         <div 
             dangerouslySetInnerHTML={{ __html: parentBbs.content }} 
-            style={{ marginTop: "20px", marginLeft: "20px", marginBottom: "20px" }} 
+            style={{ marginTop: "20px", marginBottom: "20px" }} 
         />
     </td>
 </tr>
@@ -110,21 +106,21 @@ function BbsAnswer() {
             <table className="custom-table">
                 <tbody>
                     <tr>
-                        <th className="table-primary">작성자</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>작성자</th>
                         <td>
                             <input type="text" className="form-control" value={memId || ""} size="50px" readOnly />
                         </td>
                     </tr>
 
                     <tr>
-                        <th className="table-primary">제목</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>제목</th>
                         <td>
                             <input type="text" className="form-control" value={title} onChange={changeTitle} size="50px" />
                         </td>
                     </tr>
 
                     <tr>
-                        <th className="table-primary">내용</th>
+                        <th className="table-primary" style={{ textAlign: 'center'}}>내용</th>
                         <td>
                             <ReactQuill value={content} onChange={changeContent} modules={{ toolbar: true }} theme="snow" />
                         </td>

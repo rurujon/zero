@@ -150,40 +150,34 @@ function BbsDetail() {
             <table className="table table-striped">
                 <tbody>
                     <tr>
-                        <th className="col-2">카테고리</th>
-                        <td>[{board.category}]</td>
+                        <th style={{ width: '10%', padding: '20px' }}>작성자</th>
+                        <td style={{ textAlign: 'left', width: '30%', padding: '20px' }}>{board.memId}</td>
+                        <th style={{ width: '10%', padding: '20px' }}>작성일</th>
+                        <td style={{ width: '10%', padding: '20px' }}>{formatDate(board.created)}</td>
+                        <th style={{ width: '10%', padding: '20px' }}>조회수</th>
+                        <td style={{ width: '10%', padding: '20px' }}>{board.hitcount}</td>
                     </tr>
+
                     <tr>
-                        <th>제목</th>
-                        <td>{board.title}</td>
+                        <th style={{ width: '10%', padding: '20px' }}>제목</th>
+                        <td style={{ textAlign: 'left', width: '60%', padding: '20px' }} colSpan="5">[{board.category}]&ensp;{board.title}</td>
                     </tr>
+
                     <tr>
-                        <th>작성자</th>
-                        <td>{board.memId}</td>
-                    </tr>
-                    <tr>
-                        <th>작성일</th>
-                        <td>{formatDate(board.created)}</td>
-                    </tr>
-                    <tr>
-                        <th>조회수</th>
-                        <td>{board.hitcount}</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td style={{ textAlign: 'left'}}>
+                        <th style={{ width: '10%', verticalAlign: 'middle' }}>내용</th>
+                        <td colSpan="5" style={{ textAlign: 'left', paddingLeft: '20px' }}>
                             {board.urlFile && (
                                 <div>
                                     <img 
                                         src={board.urlFile} 
                                         alt="첨부된 이미지" 
-                                        style={{ maxWidth: "40%", marginTop: "20px", marginLeft: "20px", marginBottom: "20px"}}
+                                        style={{ maxWidth: "40%", marginTop: "20px", marginBottom: "20px" }}
                                     />
                                 </div>
                             )}
                             <div 
                                 dangerouslySetInnerHTML={{ __html: renderContentWithLinks(board.content) }} 
-                                style={{ marginTop: "20px", marginLeft: "20px", marginBottom: "20px" }} 
+                                style={{ marginTop: "20px", marginBottom: "20px" }} 
                             />
                         </td>
                     </tr>
