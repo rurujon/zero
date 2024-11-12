@@ -304,6 +304,7 @@ const AdminPage = () => {
           </Pagination.Item>
         ))}
       </Pagination>
+      <hr/>
       <div style={{
       border: '1px solid #D3D3D3',  // 연한 회색 테두리 추가
       display: 'flex',               // flexbox로 자식 요소들을 배치
@@ -312,7 +313,7 @@ const AdminPage = () => {
       alignItems: 'center',          // 가로로 중앙 정렬
       padding: '20px',               // padding 추가하여 여백 확보
       height: '150px',               // 높이를 설정해줘서 중앙 정렬이 잘 되게 함
-      
+
     }}>
       <div>
         <h2 style={{
@@ -329,8 +330,8 @@ const AdminPage = () => {
         justifyContent: 'center',      // 세로로 중앙 정렬
         alignItems: 'center',          // 가로로 중앙 정렬
         }}>
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder='C:/quiz/"파일명을 입력해주세요".json'
           value={quizFilePath}
           onChange={(e) => setQuizFilePath(e.target.value)}

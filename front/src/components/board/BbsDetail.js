@@ -150,17 +150,18 @@ function BbsDetail() {
             <table className="table table-striped">
                 <tbody>
                     <tr>
-                        <th style={{ width: '10%', padding: '20px' }}>작성자</th>
-                        <td style={{ textAlign: 'left', width: '30%', padding: '20px' }}>{board.memId}</td>
-                        <th style={{ width: '10%', padding: '20px' }}>작성일</th>
-                        <td style={{ width: '10%', padding: '20px' }}>{formatDate(board.created)}</td>
-                        <th style={{ width: '10%', padding: '20px' }}>조회수</th>
-                        <td style={{ width: '10%', padding: '20px' }}>{board.hitcount}</td>
+                        <th style={{ width: '10%', padding: '15px' }}>작성자</th>
+                        <td style={{ textAlign: 'center', width: '30%', padding: '15px' }}>{board.memId}🌳</td>
+                        <th style={{ width: '10%', padding: '15px' }}>작성일</th>
+                        <td style={{ width: '10%', padding: '15px' }}>{formatDate(board.created)}</td>
+                        <th style={{ width: '10%', padding: '15px' }}>조회수</th>
+                        <td style={{ width: '10%', padding: '15px' }}>{board.hitcount}</td>
                     </tr>
 
                     <tr>
-                        <th style={{ width: '10%', padding: '20px' }}>제목</th>
-                        <td style={{ textAlign: 'left', width: '60%', padding: '20px' }} colSpan="5">[{board.category}]&ensp;{board.title}</td>
+                        <th style={{ width: '10%', padding: '15px' }}>제목</th>
+                        <td style={{ textAlign: 'left', width: '60%', padding: '15px' }} colSpan="5"><span style={{ color: 'gray' }}>[{board.category}]</span>&ensp;
+                        <span style={{ fontWeight: 'bold' }}>{board.title}</span></td>
                     </tr>
 
                     <tr>
