@@ -114,8 +114,6 @@ const ImgArticle = () => {
                 updown: point, // 추가하거나 차감할 포인트 수
                 reason:  reason// 변경 사유
             });
-            alert('point: '+point)
-            alert('reason: '+article?.imgPost?.cate)
             console.log('포인트 업데이트 성공:', response.data);
 
         } catch (error) {
@@ -132,7 +130,16 @@ const ImgArticle = () => {
             });
             uppoint();
             alert(response.data);
-            window.location.reload();
+            
+            // 게시글 데이터만 새로 불러오기
+            const updatedArticle = await axios.get('/imgboard/article', {
+                params: { imgPostId },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setArticle(updatedArticle.data);
+            
         } catch (error) {
             if (error.response?.status === 401) {
                 alert('로그인이 필요합니다.');
@@ -197,7 +204,7 @@ const ImgArticle = () => {
                                     <i className="fas fa-edit"></i> 수정
                                 </button>
                             )}
-                            {((memId === article?.imgPost.memId) || role === 'ADMIN') && (
+                            {((article?.imgPost.auth === 0 && memId === article?.imgPost.memId) || role === 'ADMIN') && (
                                 <button className="btn btn-outline-danger" onClick={handleDelete}>
                                     <i className="fas fa-trash-alt"></i> 삭제
                                 </button>
