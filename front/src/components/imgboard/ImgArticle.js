@@ -108,7 +108,7 @@ const ImgArticle = () => {
     //포인트 상승
     const uppoint = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/point/update', {
+            const response = await axios.post('/api/point/update', {
                 memId: article.imgPost.memId,
                 oper: '+',  // 또는 '-'
                 updown: point, // 추가하거나 차감할 포인트 수

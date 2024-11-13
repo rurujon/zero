@@ -254,7 +254,7 @@ const NewsList = () => {
 
   const updateNewsData = () => {
     axios
-      .post("http://localhost:8080/api/naver/news/update") // DB 갱신
+      .post("/api/naver/news/update") // DB 갱신
       .then((response) => {
         setError(null); // 에러 초기화
         alert('갱신 완료');

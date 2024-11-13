@@ -8,7 +8,7 @@ const QuizX = ({setIsOpen, explanation,member, result, quizId}) => {
 const insertQH = async () => {
     console.log("퀴즈기록추가 시작")
     try{
-        await axios.post('http://localhost:8080/insertQH', {
+        await axios.post('/insertQH', {
             memId: member.memId,
             quizid: quizId,
             quizResult: "오답"
