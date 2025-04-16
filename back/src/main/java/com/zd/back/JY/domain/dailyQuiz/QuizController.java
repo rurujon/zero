@@ -69,6 +69,7 @@ public class QuizController {
             File file = new File(filePath+".json");
             if (!file.exists()) {
                 // 파일이 존재하지 않으면 404 응답 반환
+                System.out.println("there_is_no_search_file");
                 return ResponseEntity.status(404).body("파일을 찾을 수 없습니다: " + filePath);
             }
 

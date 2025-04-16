@@ -110,7 +110,7 @@ public class MemberController {
     @PostMapping("/login")
 public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String pwd) {
     try {
-        Map<String, Object> result = memberService.validateLoginAndPerformActions(memId, pwd);
+        Map<String, Object> result = memberService.isFirstLogin(memId, pwd);
         boolean isValid = (boolean) result.get("isValid");
 
         if (isValid) {
@@ -152,7 +152,7 @@ public ResponseEntity<?> login(@RequestParam String memId, @RequestParam String 
     } catch (Exception e) {
         logger.error("로그인 중 오류 발생", e);
         Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "로그인 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        errorResponse.put("error", e.getMessage().toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }

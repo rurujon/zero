@@ -129,7 +129,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Map<String, Object> validateLoginAndPerformActions(String memId, String rawPassword) {
+    public Map<String, Object> isFirstLogin(String memId, String rawPassword) {
         Map<String, Object> result = new HashMap<>();
         result.put("isValid", false);
         result.put("isFirstLoginToday", false);

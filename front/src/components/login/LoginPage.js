@@ -46,6 +46,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                         break;
                     default:
                         alert("로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                        alert(error);
                 }
             } else if (error.request) {
                 alert("서버에 연결할 수 없습니다. 네트워크 연결을 확인해주세요.");
