@@ -53,13 +53,13 @@ public class QuizController {
             } catch (Exception e) {
                 // 예외 발생 시 에러 메시지 반환
                 Map<String, String> errorResponse = new HashMap<>();
-                errorResponse.put("error", "왜 이따구야");
+                errorResponse.put("error", "관리자에게 문의 바랍니다");
                 return ResponseEntity.badRequest().body(errorResponse);
             }
     }
 
     @GetMapping(value="/quiz.action")
-    public ResponseEntity<?> test(@RequestParam String filename) throws Exception{
+    public ResponseEntity<?> insertQuiz(@RequestParam String filename) throws Exception{
         try {
             System.out.println("quiz.action");
 

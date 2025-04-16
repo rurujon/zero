@@ -16,7 +16,7 @@ const QuizItem = ({setQuiz, quiz}) => {
             }
         })
         .catch(error => {
-            console.error("데이터 없음 ㅋㅋ", error);
+            console.error("데이터가 없습니다.", error);
         })
     },[setQuiz])
 

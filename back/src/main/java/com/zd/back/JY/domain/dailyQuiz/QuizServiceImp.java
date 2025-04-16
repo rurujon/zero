@@ -24,7 +24,6 @@ public class QuizServiceImp implements QuizService {
     }
 
     
-    @Transactional(readOnly = true)
     public int checkToday(String memId){
         
         return quizHistoryMapper.checkToday(memId);
@@ -46,9 +45,7 @@ public class QuizServiceImp implements QuizService {
 
             
             System.out.println(id+"번째 퀴즈 삽입 완료");
-            System.out.println(qae[0]);
-            System.out.println(qae[1]);
-            System.out.println(qae[2]+"\n\n");
+            System.out.println(qae[0]+"\n\n"+qae[1]+"\n\n"+qae[2]+"\n\n");
 
             quizMapper.insertquiz(dto);
         }
