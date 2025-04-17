@@ -7,9 +7,9 @@ const QuizResult = ({setIsOpen, answer, result,explanation,member, quizId}) => {
     return (
         <>
             {
-                answer===result ? <QuizO setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
+                answer===result ? <QuizO answer={answer}setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
                 :
-                <QuizX setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
+                <QuizX answer={answer} setIsOpen={setIsOpen} explanation={explanation} member={member} result={result} quizId={quizId}/>
             }
         </>
     );

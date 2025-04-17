@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.attendance;
+package com.zd.back.JY.arch.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,10 @@ import java.util.Date;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.zd.back.JY.arch.DTO.AttendanceDTO;
+
+
 
 @Mapper
 public interface AttendanceMapper {

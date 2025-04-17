@@ -3,19 +3,18 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.JY.domain.dailyQuiz.QuizMapper">
-
+<mapper namespace="com.zd.back.JY.arch.mapper.QuizMapper">
     <select id="maxNum" resultType="int">
         SELECT NVL(MAX(QUIZID), 0) FROM quiz
     </select>
 
-    <insert id="insertquiz" parameterType="com.zd.back.JY.domain.dailyQuiz.QuizDTO">
+    <insert id="insertquiz" parameterType="com.zd.back.JY.arch.DTO.QuizDTO">
         insert into quiz
         (QUIZID, question, answer, explanation)
         values(#{QUIZID}, #{question},#{answer},#{explanation})
     </insert>
 
-    <select id="getRandomQuiz" resultType="com.zd.back.JY.domain.dailyQuiz.QuizDTO">
+    <select id="getRandomQuiz" resultType="com.zd.back.JY.arch.DTO.QuizDTO">
         select QUIZID, question, answer, explanation from 
         (select QUIZID, question, answer, explanation from quiz order by DBMS_RANDOM.VALUE) 
         where ROWNUM =1

@@ -1,8 +1,11 @@
-package com.zd.back.JY.domain.payment;
+package com.zd.back.JY.arch.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.zd.back.JY.arch.DTO.PaymentDTO;
+
 
 @Mapper
 public interface PaymentMapper {

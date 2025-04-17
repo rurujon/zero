@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.dailyQuiz;
+package com.zd.back.JY.arch.controller;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.zd.back.JY.arch.DTO.QuizDTO;
+import com.zd.back.JY.arch.service.QuizServiceImp;
 import com.zd.back.JY.work.ReadJSON;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class QuizController {
     
     @Resource
-    private QuizService quizService;
+    private QuizServiceImp quizService;
 
 
     @PostMapping("/checkQH")

@@ -12,7 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.zd.back.JY.domain.dailyQuiz.QuizDTO;
+import com.zd.back.JY.arch.DTO.QuizDTO;
 
 
 

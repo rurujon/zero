@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './QuizModal.css';
 // 퀴즈가 오답인경우
-const QuizX = ({setIsOpen, explanation,member, result, quizId}) => {
+const QuizX = ({setIsOpen, explanation,member, result, quizId,answer}) => {
 
 // 문제 결과를 전송
 const insertQH = async () => {
@@ -30,7 +30,7 @@ return (
         <div>
             <span> <h1>❌오답입니다!❌ </h1></span>
             <br/>
-            <span>정답은! {result}</span>
+            <span>정답은! {answer}</span>
         </div>
         <div>
         <fieldset>

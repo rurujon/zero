@@ -1,7 +1,10 @@
-package com.zd.back.JY.domain.point;
+package com.zd.back.JY.arch.mapper;
 
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.zd.back.JY.arch.DTO.PointDTO;
+
 
 @Mapper
 public interface PointMapper {

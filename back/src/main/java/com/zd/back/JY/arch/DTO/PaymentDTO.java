@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.payment;
+package com.zd.back.JY.arch.DTO;
 
 import java.time.LocalDateTime;
 

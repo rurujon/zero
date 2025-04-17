@@ -1,9 +1,12 @@
-package com.zd.back.JY.domain.dailyQuiz;
+package com.zd.back.JY.arch.mapper;
 
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.zd.back.JY.arch.DTO.QuizHistoryDTO;
+
 
 
 @Mapper

@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.dailyQuiz;
+package com.zd.back.JY.arch.service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -6,6 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.zd.back.JY.arch.DTO.QuizDTO;
+import com.zd.back.JY.arch.DTO.QuizHistoryDTO;
+import com.zd.back.JY.arch.mapper.QuizHistoryMapper;
+import com.zd.back.JY.arch.mapper.QuizMapper;
+
 
 @Service
 public class QuizServiceImp implements QuizService {

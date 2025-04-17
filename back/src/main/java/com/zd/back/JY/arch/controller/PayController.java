@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.payment;
+package com.zd.back.JY.arch.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.zd.back.JY.arch.DTO.PaymentDTO;
+import com.zd.back.JY.arch.service.PayService;
+
 
 
 @Controller

@@ -3,12 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.JY.domain.payment.PaymentMapper">
+<mapper namespace="com.zd.back.JY.arch.mapper.PaymentMapper">
     <select id="maxNum" resultType="int">
         SELECT NVL(MAX(paymentId), 0) FROM payment
     </select>
 
-    <insert id="insertpayment" parameterType="com.zd.back.JY.domain.payment.PaymentDTO">
+    <insert id="insertpayment" parameterType="com.zd.back.JY.arch.DTO.PaymentDTO">
     INSERT INTO payment (
         paymentId,
         orderId,
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
 
-    <select id='getDonateHistory' parameterType="String" resultType="com.zd.back.JY.domain.payment.PaymentDTO">
+    <select id='getDonateHistory' parameterType="String" resultType="com.zd.back.JY.arch.DTO.PaymentDTO">
     select CREATEDAT, BUYERNAME, AMOUNT, PAYMENTMETHOD, ORDERID, PAYMENTID
     from payment
     where BUYERID=#{BUYERID} AND STATUS='성공'

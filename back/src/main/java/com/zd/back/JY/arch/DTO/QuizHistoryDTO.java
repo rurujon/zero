@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.dailyQuiz;
+package com.zd.back.JY.arch.DTO;
 
 import java.time.LocalDateTime;
 import java.util.Date;

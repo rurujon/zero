@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.point;
+package com.zd.back.JY.arch.DTO;
 
 
 import lombok.Data;

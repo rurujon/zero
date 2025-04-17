@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zd.back.JY.domain.dailyQuiz.QuizHistoryMapper">
+<mapper namespace="com.zd.back.JY.arch.mapper.QuizHistoryMapper">
 
     <select id="QHMaxNum" resultType="int">
         SELECT NVL(MAX(quizHistoryId), 0) FROM QUIZHISTORY
@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert 
         id="insertQH" 
-        parameterType="com.zd.back.JY.domain.dailyQuiz.QuizHistoryDTO"
+        parameterType="com.zd.back.JY.arch.DTO.QuizHistoryDTO"
     >
         insert into QUIZHISTORY
         (quizHistoryId, quizResult, quizDate, memId, quizid)

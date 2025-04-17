@@ -1,7 +1,7 @@
 package com.zd.back.login.service;
 
-import com.zd.back.JY.domain.attendance.AttendanceService;
-import com.zd.back.JY.domain.point.PointService;
+import com.zd.back.JY.arch.service.AttendanceService;
+import com.zd.back.JY.arch.service.PointService;
 import com.zd.back.exchange.service.ExchangeService;
 import com.zd.back.login.mapper.MemberMapper;
 import com.zd.back.login.model.Member;

@@ -1,4 +1,4 @@
-package com.zd.back.JY.domain.point;
+package com.zd.back.JY.arch.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.zd.back.JY.arch.DTO.PointDTO;
+import com.zd.back.JY.arch.DTO.PointHistoryDTO;
+import com.zd.back.JY.arch.service.PointService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;

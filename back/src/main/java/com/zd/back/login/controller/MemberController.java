@@ -1,6 +1,6 @@
 package com.zd.back.login.controller;
 
-import com.zd.back.JY.domain.point.PointService;
+import com.zd.back.JY.arch.service.PointService;
 import com.zd.back.login.model.Member;
 import com.zd.back.login.model.Role;
 import com.zd.back.login.service.LogoutService;

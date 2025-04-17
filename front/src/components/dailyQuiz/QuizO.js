@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './QuizModal.css';
 import axios from 'axios';
 //퀴즈가 정답인 경우
-const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
+const QuizO = ({setIsOpen, explanation, member, result, quizId,answer}) => {
 
 
     //정답: 5포인트 상승
@@ -50,7 +50,7 @@ const QuizO = ({setIsOpen, explanation, member, result, quizId}) => {
                 <div>
                     <span> <h1>⭕정답입니다!⭕</h1></span>
                     <br/>
-                    <span>정답은! {result}</span>
+                    <span>정답은! {answer}</span>
                 </div>
                 <div>
                 <fieldset>

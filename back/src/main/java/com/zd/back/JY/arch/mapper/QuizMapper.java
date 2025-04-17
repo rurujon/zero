@@ -1,8 +1,12 @@
-package com.zd.back.JY.domain.dailyQuiz;
-
+package com.zd.back.JY.arch.mapper;
 
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.zd.back.JY.arch.DTO.QuizDTO;
+import com.zd.back.JY.arch.DTO.QuizHistoryDTO;
+
+
 
 
 
