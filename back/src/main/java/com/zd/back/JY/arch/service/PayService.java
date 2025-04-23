@@ -24,7 +24,17 @@ import com.zd.back.JY.arch.mapper.PaymentMapper;
 public class PayService {
     
     private IamportClient api;
-
+/*api 호출값
+ * imp_uid
+ * merchant_uid
+ * status
+ * amount
+ * pay_method : 결제방법
+ * buyer_name
+ * buyer_email
+ * car_name
+ * paid_at
+ */
     @Autowired
     private PaymentMapper paymentMapper;
 
