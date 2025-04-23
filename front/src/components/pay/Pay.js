@@ -99,37 +99,49 @@ const Pay = () => {
         buyer_postcode: memberInfo.post,
       },
       async function (response) {
-          const paymentData = {
-              orderId: response.imp_uid,
-              pgTid: response.merchant_uid,
-              paymentMethod: 'card',
-              amount: amount,
-              buyerId: memberInfo.memId,
-              memName: memberInfo.memName,
-              buyerEmail: memberInfo.email,
-              buyerTel: memberInfo.tel,
-              status: response.success ? '성공' : '실패',
-              failReason: response.error_msg,
-          };
-
-          if (response.success) {
-            await axios.post('/payment/paymentHistory', paymentData, {
-                headers: { Authorization: `Bearer ${token}` } 
-            });
+        const paymentData = {
+          imp_uid: response.imp_uid,
+          merchant_uid: response.merchant_uid,
+          paymentMethod: 'card',
+          amount: amount,
+          buyerId: memberInfo.memId,
+          memName: memberInfo.memName,
+          buyerEmail: memberInfo.email,
+          buyerTel: memberInfo.tel,
+          status: response.success ? '성공' : '실패',
+          failReason: response.error_msg,
+        };
+    
+        try {
+          const result = await axios.post('/payment/paymentHistory', paymentData, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+    
+          if (result.data.result === "success") {
             navigate('/success', { state: { amount, memberInfo, response } });
-        } else {
-            await axios.post('/payment/paymentHistory', paymentData, {
-                headers: { Authorization: `Bearer ${token}` } 
+          } else {
+            navigate('/failure', {
+              state: {
+                error: result.data.message || "결제 실패: 서버에서 검증되지 않았습니다.",
+                response
+              }
             });
-            console.log(response);
-            navigate('/failure', { state: { error: response.error_msg, response } });
+          }
+    
+        } catch (err) {
+          const serverMsg = err.response?.data?.message || "결제 처리 중 서버 오류가 발생했습니다.";
+          navigate('/failure', {
+            state: {
+              error: serverMsg,
+              response
+            }
+          });
         }
-        
       }
     );
   };
 
-  // 동적 클래스명 설정
+
   const stepClass = (stepNumber) => {
     return step === stepNumber ? 'step active' : 'step';
   };

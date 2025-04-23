@@ -9,6 +9,7 @@
     </select>
 
     <!-- 변경: attId 제거 -->
+    <!-- 왜 attId를 삭제했지? 언제?-->
     <insert id="insertAtt" parameterType="map">
         INSERT INTO attendance (attDate, memId)
         VALUES (SYSTIMESTAMP, #{memId})

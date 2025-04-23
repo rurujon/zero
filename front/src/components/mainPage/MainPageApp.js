@@ -17,7 +17,7 @@ function MainPageApp() {
           <div className="main-right-wrap">
             <HomePage/>
             <div className="main-right-banner1">
-              <a href="http://localhost/donate" target="_blank">
+              <a href="http://localhost:3000/donate" target="_blank">
               <img src="images/donate.png"></img></a>
             </div>
             <div className="main-right-banner2">

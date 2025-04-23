@@ -1,5 +1,7 @@
 package com.zd.back.JY.arch.service;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import com.zd.back.JY.arch.DTO.PaymentDTO;
 import com.zd.back.JY.arch.mapper.PaymentMapper;
 
@@ -84,4 +89,36 @@ public class PayService {
     public List<PaymentDTO> getDonateHistory(String buyerId) {
         return paymentMapper.getDonateHistory(buyerId);
     }
+
+    public boolean checkServer(Map<Object, Object> response) throws IamportResponseException, IOException {
+        try {
+            String impUid = response.get("imp_uid").toString();
+            BigDecimal clientAmount = new BigDecimal(response.get("amount").toString());
+    
+            IamportResponse<Payment> iamportResponse = api.paymentByImpUid(impUid);
+            Payment payment = iamportResponse.getResponse();
+    
+            if (payment == null) {
+                System.err.println("[아임포트]에서 결제 정보를 조회할 수 없습니다.");
+                return false;
+            }
+
+            if (!"paid".equals(payment.getStatus())) {
+                System.err.println("결제 중간 취소: 상태=" + payment.getStatus());
+                return false;
+            }
+            if (payment.getAmount().compareTo(clientAmount) != 0) {
+                System.err.println("\"금액 불일치: impUid={}, 실제금액={}, 요청금액={}\", impUid, payment.getAmount(), clientAmount");
+                return false;
+            }
+    
+            System.out.println("결제 검증 성공: " + payment.getAmount());
+            return true;
+    
+        } catch (Exception e) {
+            System.err.println("결제 검증 중 오류: " + e.getMessage());
+            return false;
+        }
+    }
+    
 }
