@@ -16,3 +16,4 @@
 
 ## 📊 프로젝트 역할
 
+![Image](https://github.com/user-attachments/assets/c57586ff-e92a-4dcf-9315-b9cf4c55ba9e)
