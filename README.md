@@ -19,4 +19,4 @@
 ![Image](https://github.com/user-attachments/assets/c57586ff-e92a-4dcf-9315-b9cf4c55ba9e)
 
 
-**프로젝트에서 맡은 역할에 대한 자세한 설명은 이력서를 참고해주세요 **
+**프로젝트에서 맡은 역할에 대한 자세한 설명은 이력서를 참고해주세요**
