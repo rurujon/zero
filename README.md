@@ -12,3 +12,7 @@
 
 ![Image](https://github.com/user-attachments/assets/be072823-4278-454f-935b-6ec551d8bb78)
 
+
+
+## 📊 프로젝트 역할
+
